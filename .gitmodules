@@ -1,0 +1,3 @@
+[submodule "icarus_theme"]
+	path = icarus_theme
+	url = https://github.com/cyr9210/icarus_theme.git
