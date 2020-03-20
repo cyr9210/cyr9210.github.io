@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html >
+<head>
+    <meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 4.2.0" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>Spring, Maven, DI, 객체주입, AOP (KOSTA) - Bong&#39;s blog</title>
+
+
+    <meta name="description" content="KOSTA DAY55Springframework">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring, Maven, DI, 객체주입, AOP (KOSTA)">
+<meta property="og:url" content="http://yoursite.com/2019/01/24/spring/kosta_spring01/index.html">
+<meta property="og:site_name" content="Bong&#39;s blog">
+<meta property="og:description" content="KOSTA DAY55Springframework">
+<meta property="og:image" content="http://yoursite.com/images/og_image.png">
+<meta property="article:published_time" content="2019-01-23T19:29:52.000Z">
+<meta property="article:modified_time" content="2020-03-20T07:57:35.745Z">
+<meta property="article:author" content="Bong&#39;s blog">
+<meta property="article:tag" content="Springframework_kosta">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/images/og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+<style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+    
+    
+    
+    
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+    
+    
+    
+    
+    
+    
+    
+    <link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-2-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/blog_logo.png" alt="Spring, Maven, DI, 객체주입, AOP (KOSTA)" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                href="/">Home</a>
+                
+                <a class="navbar-item"
+                href="/archives">Archives</a>
+                
+                <a class="navbar-item"
+                href="/tags">Tags</a>
+                
+                <a class="navbar-item"
+                href="/about">About</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    <a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/cyr9210">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="Search" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-8-widescreen has-order-2 column-main">
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-01-23T19:29:52.000Z">2019-01-24</time>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    13 minutes read (About 1911 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                Spring, Maven, DI, 객체주입, AOP (KOSTA)
+            
+        </h1>
+        <div class="content">
+            <p><img src="/images/springframwork-logo.png" alt="springf"></p>
+<h1 id="KOSTA-DAY55"><a href="#KOSTA-DAY55" class="headerlink" title="KOSTA DAY55"></a>KOSTA DAY55</h1><h2 id="Springframework"><a href="#Springframework" class="headerlink" title="Springframework"></a>Springframework</h2><a id="more"></a>
+<h3 id="Spring"><a href="#Spring" class="headerlink" title="Spring"></a>Spring</h3><ul>
+<li>오픈소스 프레임 워크</li>
+<li>엔터프라이즈 어플리케이션 개발의 복잡성을 줄여주기 위한 목적</li>
+<li>EJB 사용으로 수행되었던 모든 기능을 일반 POJO(Plain Old Java Object) 를 사용해서 가능하게 함.</li>
+</ul>
+<h4 id="장점"><a href="#장점" class="headerlink" title="장점"></a>장점</h4><ul>
+<li>경량 컨테이너</li>
+<li>DI ( Dependency Injection) 지원</li>
+</ul>
+<blockquote>
+<p><strong>DI</strong><br>프로그래밍에서 구성요소간의 의존 관계가 소스코드 내부가 아닌 외부의 설정파일 등을 통해 정의되게 하는 디자인 패턴 중의 하나이다.</p>
+</blockquote>
+<ul>
+<li>AOP(AspectOrientedProgramming)지원</li>
+</ul>
+<blockquote>
+<p><strong>AOP</strong><br>관점 지향 프로그래밍으로 “기능을 핵심 비즈니스 기능과 공통 기능으로 ‘구분’하고, 공통 기능을 개발자의 코드 밖에서 필요한 시점에 적용하는 프로그래밍 방법</p>
+</blockquote>
+<ul>
+<li>POJO(PlainOldJavaObject)지원</li>
+</ul>
+<blockquote>
+<p><strong>POJO</strong><br>기존에 만들어진 자바 객체</p>
+</blockquote>
+<ul>
+<li>JDBC를 위한 다양한 API 지원</li>
+<li>Transaction 처리를 위한 일관된 방법제공</li>
+<li>다양한 API와의 연동 지원<br><br><br></li>
+</ul>
+<h3 id="Maven"><a href="#Maven" class="headerlink" title="Maven"></a>Maven</h3><ul>
+<li>자바용 프로젝트 관리 툴</li>
+<li>협업 작업시 , 라이브러리 버전이 다르거나, 유무 때문에 에러발생을 줄일 수 있다.</li>
+</ul>
+<h4 id="사용법"><a href="#사용법" class="headerlink" title="사용법"></a>사용법</h4><p><img src="/images/springk/springk01-01.png" alt="springk"></p>
+<ul>
+<li>poem.xml 생성</li>
+</ul>
+<p><img src="/images/springk/springk01-02.png" alt="springk"><br><img src="/images/springk/springk01-03.png" alt="springk"></p>
+<ul>
+<li>Maven Repository 사이트에서 필요한 라이브러리를 검색하여 값을 poem.xml에 넣어주어야 한다.</li>
+<li>메이븐 문제 발생시, 빨간색 느낌표 발생<br>해결방안<br>툴을 종료 → 유저폴더에서 숨김파일 확인(Mac : cmd + shift + .) → m2 → Repository 삭제 후 툴 재실행<br><br><br></li>
+</ul>
+<h3 id="DI-Dependency-Injection"><a href="#DI-Dependency-Injection" class="headerlink" title="DI(Dependency Injection)"></a>DI(Dependency Injection)</h3><ul>
+<li>의존성주입</li>
+<li>Spring에서 DI를 지원<ul>
+<li>Spring Container가 DI조립기를 제공</li>
+<li><ul>
+<li>스프링 설정파일을 통하여 객체간의 의존관계를 설정한다.</li>
+</ul>
+</li>
+<li><ul>
+<li>Spring Container가 제공하는 api를 이용해 객체를 사용한다.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>설정 파일은 xml or java 두가지 종류로 설정이 가능하다.</li>
+</ul>
+<h4 id="Spring-Container"><a href="#Spring-Container" class="headerlink" title="Spring Container"></a>Spring Container</h4><p><img src="/images/springk/springk01-04.png" alt="springk"></p>
+<ul>
+<li>객체를 관리하는 컨테이너</li>
+<li>위의 interface들을 구현한다.</li>
+</ul>
+<h4 id="Resource-구현-클래스"><a href="#Resource-구현-클래스" class="headerlink" title="Resource 구현 클래스"></a>Resource 구현 클래스</h4><ul>
+<li>Resource interface : 다양한 종류의 자원을 동일한 방식으로 통일하여 표현할 수 있게 한다.</li>
+<li>XmlBeanFactory는 객체 생성시 설정 파일의 위치를 알려줘야한다.<br>(Resource를 이용)<br><br><br></li>
+</ul>
+<h3 id="객체-및-DI-설정"><a href="#객체-및-DI-설정" class="headerlink" title="객체 및 DI 설정"></a>객체 및 DI 설정</h3><p>크게 3가지 방법으로 나눌 수 있다.</p>
+<ul>
+<li>xml 사용하여 객체들을 각각 주입 및 DI 설정</li>
+<li>xml사용하여 패키지 단위로 객체들을 주입 후, annotation 사용하여 DI설정</li>
+<li>java 클래스를 사용하여 메소드와 annotation을 사용하여 객체주입 및 DI 설정</li>
+</ul>
+<p>주입된 객체들은 모두 Spring Container에 담기며, 호출을 위해서는 SpringContainer에서 호출한다.</p>
+<h4 id="xml-사용하여-객체들을-각각-주입-및-DI-설정"><a href="#xml-사용하여-객체들을-각각-주입-및-DI-설정" class="headerlink" title="xml 사용하여 객체들을 각각 주입 및 DI 설정"></a>xml 사용하여 객체들을 각각 주입 및 DI 설정</h4><p><img src="/images/springk/springk01-05.png" alt="springk"></p>
+<ul>
+<li>service객체를 implements하는 객체를 생성한다.</li>
+<li>Dao를 생성자를 통해 호출</li>
+<li>해당 클래스 안에서는 new를 통한 Dao객체 생성을 하지않는다.</li>
+<li>xml상에서 연결시킬 예정</li>
+</ul>
+<p><img src="/images/springk/springk01-06.png" alt="springk"></p>
+<ul>
+<li>Spring Bean Configuration File 생성(xml파일)</li>
+</ul>
+<p><img src="/images/springk/springk01-07.png" alt="springk"><br><img src="/images/springk/springk01-08.png" alt="springk"></p>
+<ul>
+<li>각각의 객체들을 bean으로 주입<ul>
+<li>id :주입받을곳에서호출할이름설정(‘/’ 값으로못가짐)</li>
+<li>class : 주입할 객체의 클래스</li>
+</ul>
+</li>
+<li>oracleDao라는 객체를 SpringContainer에 담도록하고 bean태그에 명시되있는 클래스에 dao를 사용할 수 있도록 주입한다. (DI설정)<br>constructor 또는 property를 사용하여 설정한다.</li>
+<li>value or ref 같은 속성을 이용한다. (객체 = ref , 값 = value)</li>
+</ul>
+<p><img src="/images/springk/springk01-09.png" alt="springk"></p>
+<ul>
+<li>Resource 객체를 통해 xml 파일을 받아온 후, BeanFactory를 통해 Bean객체를 받아 Spring Container생성.</li>
+<li><strong>getBean(“*”) 의 * 은 DI설정시 id 값과 동일하도록 설정해야 한다.</strong></li>
+</ul>
+<h4 id="xml사용하여-패키지-단위로-객체들을-주입-후-annotation-사용하여-DI설정"><a href="#xml사용하여-패키지-단위로-객체들을-주입-후-annotation-사용하여-DI설정" class="headerlink" title="xml사용하여 패키지 단위로 객체들을 주입 후, annotation 사용하여 DI설정"></a>xml사용하여 패키지 단위로 객체들을 주입 후, annotation 사용하여 DI설정</h4><p><img src="/images/springk/springk01-10.png" alt="springk"></p>
+<ul>
+<li>xml 작성 시, Namespaces에서 context를 활성화 시킨다.</li>
+</ul>
+<p><img src="/images/springk/springk01-11.png" alt="springk"></p>
+<ul>
+<li><p>context: annotation-config 설정한다.(어노테이션이 달린 객체를 담는다.)</p>
+</li>
+<li><p>context:component-scan base-package=”*”<br>해당 패키지 영역을 지정한다.</p>
+</li>
+<li><p>DI를 설정해주는 것은 앞서 1번 방식과 같으나, 직접 constructor 나 property를 통해 지정해주지 않는다.</p>
+</li>
+</ul>
+<p><img src="/images/springk/springk01-12.png" alt="springk"></p>
+<ul>
+<li>담고싶은 Bean객체에 Repository 어노테이션을 작성한다.</li>
+</ul>
+<p><img src="/images/springk/springk01-13.png" alt="springk"></p>
+<ul>
+<li><p>주입할 부분에 Inject 또는 Autowired 어노테이션을 작성<br>@ Inject → 선언부 상단<br>@Autowired → set메소드 상단</p>
+</li>
+<li><p>Inject 어노테이션 활용 시, 라이브러리 추가 필요</p>
+</li>
+</ul>
+<p><img src="/images/springk/springk01-14.png" alt="springk"></p>
+<ul>
+<li>ApplicationContext를 통해 정보를 받아서 Spring Container를 생성</li>
+<li><strong>getBean(“*”) 의 * 은 DI설정시 id 값과 동일하도록 설정해야 한다.</strong></li>
+</ul>
+<h4 id="java-클래스를-사용하여-메소드와-annotation을-사용하여-객체주입-및-DI-설정"><a href="#java-클래스를-사용하여-메소드와-annotation을-사용하여-객체주입-및-DI-설정" class="headerlink" title="java 클래스를 사용하여 메소드와 annotation을 사용하여 객체주입 및 DI 설정"></a>java 클래스를 사용하여 메소드와 annotation을 사용하여 객체주입 및 DI 설정</h4><p><img src="/images/springk/springk01-15.png" alt="springk"></p>
+<ul>
+<li>클래스에 Configuration 어노테이션을 작성한다.</li>
+<li>xml파일이 아닌 자바 파일로 생성 해당 객체들에 Bean어노테이션을 작성한다.</li>
+<li>메소드이름이 xml방식의 id값 역할을 한다.</li>
+</ul>
+<p><img src="/images/springk/springk01-13.png" alt="springk"></p>
+<ul>
+<li><p>주입할 부분에 Inject 또는 Autowired 어노테이션을 작성<br>@ Inject → 선언부 상단<br>@Autowired → set메소드 상단</p>
+</li>
+<li><p>Inject 어노테이션 활용 시, 라이브러리 추가 필요</p>
+</li>
+</ul>
+<p><img src="/images/springk/springk01-16.png" alt="springk"></p>
+<ul>
+<li>ApplicationContext객체를 통해 Spring Container 생성</li>
+<li><strong>getBean(“*”)을 통해 객체를 호출한다. (*값은 메소드 이름)</strong><br><br><br></li>
+</ul>
+<h3 id="AOP"><a href="#AOP" class="headerlink" title="AOP"></a>AOP</h3><p><img src="/images/springk/springk01-17.png" alt="springk"></p>
+<ul>
+<li>핵심 관심사항(core concern)과 공통 관심사항 (cross-cutting concern)</li>
+<li>기존 OOP 에서는 공통관심사항을 여러 모듈에서 적용하는데 중복된 코드를 양산과 같은 한계가 존재 → 이를 극복하기 위해 AOP 가 등장</li>
+<li>Aspect Oriented Programming은 문제를 해결 하기 위한 핵심 관심사항과 전체에 적용되는 공통 관심사항을 기준으로 프로그래밍함으로써 공통 모듈을 손쉽게 적용할 수 있게 해준다.</li>
+<li>반복되는 공통관심사항 코드들을 줄일 수 잇다.</li>
+</ul>
+<h4 id="Spring-AOP-용어"><a href="#Spring-AOP-용어" class="headerlink" title="Spring AOP 용어"></a>Spring AOP 용어</h4><ul>
+<li>Aspect : 여러 객체에서 공통으로 적용되는 공통 관심사항<br>(ex:트랜 잭션, 로깅, 보안)</li>
+<li>JoinPoint : Aspect가 적용 될 수 있는 지점(ex:메소드, 필드)</li>
+<li>Pointcut : 공통관심사항이 적용될 Joinpoint<br>→ pointcut에 의해 joinpoint가 결정된다.</li>
+<li>Advice : 어느 시점(ex: 메소드 수행 전/후, 예외발생 후 등)에 어 떤 공통 관심기능(Aspect)을 적용할지 정의한 것.</li>
+<li>Weaving : 어떤 Advice를 어떤 Pointcut(핵심사항)에 적용시킬 것 인지에 대한 설정 (Advisor)</li>
+</ul>
+<blockquote>
+<p>example)<br>남자들 오늘 술먹자.<br>Aspect = 술먹자<br>joinpoint = 각각 남자<br>pointcut = 남자들<br>advice = 오늘</p>
+</blockquote>
+<h4 id="AOP-사용법"><a href="#AOP-사용법" class="headerlink" title="AOP 사용법"></a>AOP 사용법</h4><ul>
+<li>라이브러리 추가<br>Maven → Spring aspect 추가</li>
+</ul>
+<p><img src="/images/springk/springk01-18.png" alt="springk"></p>
+<ul>
+<li>공통관심사항에 대한 메소드 작성후, try catch를 통해 Object 객체를 통해 핵심관심사항 로직을 호출한다.</li>
+<li>호출 뒤 실행문에 대하여는 finally 부분에 넣어준다.</li>
+</ul>
+<p><img src="/images/springk/springk01-19.png" alt="springk"></p>
+<ul>
+<li>Bean태그를 통해 공통관심사항 객체 지정</li>
+<li>&lt;aop:pointcut expression=”execution(pointcut지정)” id =”포인트컷이름지정”&gt;</li>
+<li>&lt;aop : aspect id=”이름지정” ref=”공통관심사항 해당객체 이름”&gt;</li>
+<li>&lt;aop:around method=”공통관심사항객체실행메소드이름” pointcut-ref=”포인트컷이름”&gt;</li>
+</ul>
+<p><img src="/images/springk/springk01-20.png" alt="springk"></p>
+<ul>
+<li>두가지 이상의 xml 사용시 스트링 배열에 담은후, ApplicationContext객체를 통해 Spring Container 생성</li>
+<li>해당메소드 실행시, 공통관심사항객체의 메소드가 실행된다.</li>
+</ul>
+<p>결과<br><img src="/images/springk/springk01-21.png" alt="springk"><br><br></p>
+
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/Springframework-kosta/" rel="tag">Springframework_kosta</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">Like this article? Support the author with</h3>
+        <div class="buttons is-centered">
+            
+                
+<div class="notification is-danger">
+    You forgot to set the <code>qrcode</code> for Alipay. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                
+<div class="notification is-danger">
+    You forgot to set the <code>qrcode</code> for Wechat. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                <!-- Visit https://www.paypal.com/donate/buttons/ to get your donate button -->
+
+<div class="notification is-danger">
+    You forgot to set the <code>business</code> and <code>currency_code</code> for Paypal. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                
+<div class="notification is-danger">
+    You forgot to set the <code>url</code> Patreon. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2019/01/25/spring/kosta_spring02/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">Spring MVC, valid이용 검증, mybatis 연동 (KOSTA)</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2019/01/23/Project/Kogile-Intermediate/">
+                <span class="level-item">Project_Kogile_JSP</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+</div>
+                
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-4-widescreen  has-order-3 column-right is-sticky">
+    
+        
+
+    <div class="card widget" id="toc">
+        <div class="card-content">
+            <div class="menu">
+                <h3 class="menu-label">
+                    Catalogue
+                </h3>
+                <ul class="menu-list"><li>
+        <a class="is-flex" href="#KOSTA-DAY55">
+        <span class="has-mr-6">1</span>
+        <span>KOSTA DAY55</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#Springframework">
+        <span class="has-mr-6">1.1</span>
+        <span>Springframework</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#Spring">
+        <span class="has-mr-6">1.1.1</span>
+        <span>Spring</span>
+        </a></li><li>
+        <a class="is-flex" href="#Maven">
+        <span class="has-mr-6">1.1.2</span>
+        <span>Maven</span>
+        </a></li><li>
+        <a class="is-flex" href="#DI-Dependency-Injection">
+        <span class="has-mr-6">1.1.3</span>
+        <span>DI(Dependency Injection)</span>
+        </a></li><li>
+        <a class="is-flex" href="#객체-및-DI-설정">
+        <span class="has-mr-6">1.1.4</span>
+        <span>객체 및 DI 설정</span>
+        </a></li><li>
+        <a class="is-flex" href="#AOP">
+        <span class="has-mr-6">1.1.5</span>
+        <span>AOP</span>
+        </a></li></ul></li></ul></li></ul>
+            </div>
+        </div>
+    </div>
+
+    
+        <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            Tag Cloud
+        </h3>
+        <a href="/tags/Algorithm/" style="font-size: 11.11px;">Algorithm</a> <a href="/tags/DataBase/" style="font-size: 10px;">DataBase</a> <a href="/tags/Etc/" style="font-size: 11.11px;">Etc</a> <a href="/tags/Git/" style="font-size: 13.33px;">Git</a> <a href="/tags/Interview/" style="font-size: 14.44px;">Interview</a> <a href="/tags/JPA/" style="font-size: 20px;">JPA</a> <a href="/tags/JSP/" style="font-size: 14.44px;">JSP</a> <a href="/tags/Java/" style="font-size: 18.89px;">Java</a> <a href="/tags/JavaScript/" style="font-size: 12.22px;">JavaScript</a> <a href="/tags/OracleDB/" style="font-size: 14.44px;">OracleDB</a> <a href="/tags/Process/" style="font-size: 11.11px;">Process</a> <a href="/tags/RestAPI/" style="font-size: 14.44px;">RestAPI</a> <a href="/tags/Seminar/" style="font-size: 10px;">Seminar</a> <a href="/tags/SpringBoot/" style="font-size: 20px;">SpringBoot</a> <a href="/tags/SpringSecurity/" style="font-size: 12.22px;">SpringSecurity</a> <a href="/tags/SpringWebMvc/" style="font-size: 16.67px;">SpringWebMvc</a> <a href="/tags/Springframework/" style="font-size: 17.78px;">Springframework</a> <a href="/tags/Springframework-kosta/" style="font-size: 14.44px;">Springframework_kosta</a> <a href="/tags/Web/" style="font-size: 12.22px;">Web</a> <a href="/tags/debug/" style="font-size: 11.11px;">debug</a> <a href="/tags/jQuery/" style="font-size: 12.22px;">jQuery</a> <a href="/tags/%EC%A0%95%EB%B3%B4%EC%B2%98%EB%A6%AC%EA%B8%B0%EC%82%AC-%ED%95%84%EA%B8%B0/" style="font-size: 13.33px;">정보처리기사_필기</a> <a href="/tags/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%ED%9A%8C%EA%B3%A0/" style="font-size: 15.56px;">프로젝트_회고</a>
+    </div>
+</div>
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/blog_logo.png" alt="Spring, Maven, DI, 객체주입, AOP (KOSTA)" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2020 Bong&#39;s blog&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/cyr9210">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("en");</script>
+
+
+<script>
+var IcarusThemeSettings = {
+    site: {
+        url: 'http://yoursite.com',
+        external_link: {"enable":true,"exclude":[]}
+    },
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+<script src="/js/animation.js"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+<script src="/js/gallery.js" defer></script>
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+<a id="back-to-top" title="Back to Top" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: 'Posts',
+                PAGES: 'Pages',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
+                UNTITLED: '(Untitled)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

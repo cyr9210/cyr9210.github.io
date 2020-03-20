@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html >
+<head>
+    <meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 4.2.0" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>다중컬럼 다중로우, FROM절 서브쿼리, 인덱스, 시퀀스, 뷰, PLSQL - Bong&#39;s blog</title>
+
+
+    <meta name="description" content="KOSTA DAY23DataBase">
+<meta property="og:type" content="article">
+<meta property="og:title" content="다중컬럼 다중로우, FROM절 서브쿼리, 인덱스, 시퀀스, 뷰, PLSQL">
+<meta property="og:url" content="http://yoursite.com/2018/11/29/OracleDB/oracle04/index.html">
+<meta property="og:site_name" content="Bong&#39;s blog">
+<meta property="og:description" content="KOSTA DAY23DataBase">
+<meta property="og:image" content="http://yoursite.com/images/og_image.png">
+<meta property="article:published_time" content="2018-11-29T10:58:06.000Z">
+<meta property="article:modified_time" content="2020-03-20T07:57:35.731Z">
+<meta property="article:author" content="Bong&#39;s blog">
+<meta property="article:tag" content="OracleDB">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/images/og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+<style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+    
+    
+    
+    
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+    
+    
+    
+    
+    
+    
+    
+    <link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-2-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/blog_logo.png" alt="다중컬럼 다중로우, FROM절 서브쿼리, 인덱스, 시퀀스, 뷰, PLSQL" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                href="/">Home</a>
+                
+                <a class="navbar-item"
+                href="/archives">Archives</a>
+                
+                <a class="navbar-item"
+                href="/tags">Tags</a>
+                
+                <a class="navbar-item"
+                href="/about">About</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    <a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/cyr9210">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="Search" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-8-widescreen has-order-2 column-main">
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2018-11-29T10:58:06.000Z">2018-11-29</time>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    9 minutes read (About 1416 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                다중컬럼 다중로우, FROM절 서브쿼리, 인덱스, 시퀀스, 뷰, PLSQL
+            
+        </h1>
+        <div class="content">
+            <p><img src="/images/oracledb_logo.png" alt="DB"></p>
+<h1 id="KOSTA-DAY23"><a href="#KOSTA-DAY23" class="headerlink" title="KOSTA DAY23"></a>KOSTA DAY23</h1><h2 id="DataBase"><a href="#DataBase" class="headerlink" title="DataBase"></a>DataBase</h2><a id="more"></a>
+<h3 id="다중컬럼-다중로우-서브쿼리"><a href="#다중컬럼-다중로우-서브쿼리" class="headerlink" title="다중컬럼 다중로우 서브쿼리"></a>다중컬럼 다중로우 서브쿼리</h3><p>서브쿼리의 결과가 여러 컬럼 및 여러 행인 서브쿼리</p>
+<h4 id="예제"><a href="#예제" class="headerlink" title="예제"></a>예제</h4><ol>
+<li>직무별 최대 급여자의 사원내역을 출력하라.<br><img src="/images/database/DB04-01.png" alt="DB"></li>
+</ol>
+<ul>
+<li>상기 이미지와 같이 IN을 사용하여 직무별 최대급여를 포함하는 모든 사원의 정보를 호출하였다.<br>그러나, 타직무의 최대값과 같은 급여를 받는 사람도 호출되었다.</li>
+<li>그 문제를 해결하기위해 job_id라는 컬럼을 추가로 호출하고 메인쿼리에서도 받을 수 있도록 하였다.</li>
+</ul>
+<ol start="2">
+<li><p>01번 부서원들과 보너스가 같은 사원을 검색하라.<br><img src="/images/database/DB04-02.png" alt="DB"></p>
+</li>
+<li><p>부서번호 30번 최대급여자 보다 높은 사원을 출력하라.<br><img src="/images/database/DB04-03.png" alt="DB"></p>
+</li>
+</ol>
+<h4 id="IN-ANY-ALL"><a href="#IN-ANY-ALL" class="headerlink" title="IN, ANY, ALL"></a>IN, ANY, ALL</h4><ul>
+<li>IN : 검색된 값 중에 하나만 일치하면 참</li>
+<li>ANY : 검색된 값 중에 조건에 맞는 것이 하나 이상 있으면 참</li>
+<li>ALL : 검색된 값과 조건에 모두 일치해야함</li>
+<li>컬럼 &gt; ANY(서브쿼리) : 컬럼 &gt; MAX : 가장큰값 보다 크다.</li>
+<li>컬럼 &lt; ALL(서브쿼리) : 컬럼 &lt; MIN : 가장 작은값 보다 작다.</li>
+<li>컬럼 &gt; ANY(서브쿼리) : 컬럼 &gt; MIN : 가장 작은값 보다 크다.</li>
+<li>컬럼 &lt; ANY(서브쿼리) : 컬럼 &lt; MIN : 가장 큰값 보다 작다.</li>
+</ul>
+<h4 id="예제-1"><a href="#예제-1" class="headerlink" title="예제"></a>예제</h4><ul>
+<li>10번 부서에 가장 작은 급여자보다 작게 받는 급여자를 출력하라<br><img src="/images/database/DB04-04.png" alt="DB"><br>
+
+</li>
+</ul>
+<h3 id="FROM절-서브쿼리-TOP-N-SQL"><a href="#FROM절-서브쿼리-TOP-N-SQL" class="headerlink" title="FROM절 서브쿼리(TOP-N SQL)"></a>FROM절 서브쿼리(TOP-N SQL)</h3><p>FROM절에서 사용되는 서브쿼리를 <strong>인라인 뷰(Inline View)</strong> 라고 한다.</p>
+<h4 id="예제-2"><a href="#예제-2" class="headerlink" title="예제"></a>예제</h4><p><img src="/images/database/DB04-05.png" alt="DB"></p>
+<ul>
+<li>서브쿼리안에서 정렬시킨 후, ROWNUM 값으로 호출</li>
+<li>ROWNUM값으로 정렬된 서브쿼리의 값 중, 중간에 위치한 값을 호출하기 위해서는 ROWNUM으로 정렬 된 서브쿼리가 필요하다.<br>이해를 돕기 위해 아래 예시를 보자.</li>
+</ul>
+<p><img src="/images/database/DB04-06.png" alt="DB"></p>
+<ul>
+<li>BETWEEN AND 함수를 써서 5~9 번째 행을 호출하려 했지만 아무값도 나오지 않았다.</li>
+</ul>
+<p><img src="/images/database/DB04-07.png" alt="DB"></p>
+<ul>
+<li>ROWNUM 값과 함께 호출하는 서브쿼리를 만든후에 BETWEEN AND 함수를 사용하여 호출할 수 있다.</li>
+</ul>
+<p><br><br></p>
+<h3 id="인덱스"><a href="#인덱스" class="headerlink" title="인덱스"></a>인덱스</h3><p>어떤 데이터가 어디에 있다는 위치정보를 가진 주소록</p>
+<ul>
+<li>인덱스 생성 → 테이블의 데이터에 대한 Indexing → B-tree구조로 형성</li>
+</ul>
+<blockquote>
+<p><strong>B-tree 란?</strong><br>B-트리(B-tree)는 데이터베이스와 파일 시스템에서 널리 사용되는 트리 자료구조의 일종으로, 이진 트리를 확장해 하나의 노드가 가질 수 있는 자식 노드의 최대 숫자가 2보다 큰 트리 구조이다.</p>
+</blockquote>
+<p><img src="/images/database/DB04-08.png" alt="DB"></p>
+<h4 id="인덱스를-사용하는-이유"><a href="#인덱스를-사용하는-이유" class="headerlink" title="인덱스를 사용하는 이유"></a>인덱스를 사용하는 이유</h4><ul>
+<li>일정한 검색 속도를 유지 할 수 있다.</li>
+<li>데이터량이 많은 경우, 검색속도를 향상 시킬 수 있다.</li>
+<li>WHERE절이나 JOIN 조건으로 자주 되는 컬럼에 사용 됨</li>
+</ul>
+<h4 id="인덱스-생성방법"><a href="#인덱스-생성방법" class="headerlink" title="인덱스 생성방법"></a>인덱스 생성방법</h4><p><img src="/images/database/DB04-09.png" alt="DB"></p>
+<ul>
+<li>Index의 이름은 관례적으로 talbe명_컬럼명_idx 로 생성한다.</li>
+<li>B_tree형성의 기준이되는 컬럼값은 보통 PRIMARY KEY값을 사용<br><br><br></li>
+</ul>
+<h3 id="시퀀스-SEQUENCE"><a href="#시퀀스-SEQUENCE" class="headerlink" title="시퀀스(SEQUENCE)"></a>시퀀스(SEQUENCE)</h3><p>테이블 내의 유일한 숫자를 자동으로 생성하는 자동번호 발생기</p>
+<h4 id="시퀀스를-사용하는-이유"><a href="#시퀀스를-사용하는-이유" class="headerlink" title="시퀀스를 사용하는 이유"></a>시퀀스를 사용하는 이유</h4><ul>
+<li>오라클에서 데이터 베이스의 무결성을 위해 제약 조건을 설정하고, 그 중 행을 구분하기 위해 기본 키(PRIMARY KEY)를 설정한다.<br>이때 데이터가 입력되는 순서를 기본키로 지정한다고 하였을 때, 사용자가 직접 입력해야 한다면 어려움이 있을 것이다.<br>이 때, 시퀀스를 사용하요 키값을 설정한다면 사용자는 보다 편하게 작업이 가능하다.</li>
+</ul>
+<h4 id="시퀀스-사용-시-주의사항"><a href="#시퀀스-사용-시-주의사항" class="headerlink" title="시퀀스 사용 시, 주의사항"></a>시퀀스 사용 시, 주의사항</h4><ul>
+<li>시퀀스는 이전단계로 돌아올 방법이 없음. 생성에 실수가 있어도 돌이킬 수 없다.</li>
+<li>때문에 개발단계에서는 일단생성을 하고 추후 수정을 위해서는 DROP 후, 다시 생성해야한다.</li>
+</ul>
+<h4 id="시퀀스-사용방법"><a href="#시퀀스-사용방법" class="headerlink" title="시퀀스 사용방법"></a>시퀀스 사용방법</h4><p><img src="/images/database/DB04-10.png" alt="DB"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">CREATE SEQUENCE 시퀀스 이름;</span><br><span class="line">&#x2F;*sequence.CURRVAL &#x3D;&gt; dual테이블.&#x3D;&gt;sequence로 생성된 번호가 몇 번까지 있는지 알려줌*&#x2F;</span><br><span class="line"></span><br><span class="line">&#x2F;*시퀀스 사용*&#x2F;</span><br><span class="line">INSERT INTO board VALUES (seq_seq.NEXTVAL, ‘a1’, ‘a’, ‘a’, sysdate, 0);</span><br></pre></td></tr></table></figure>
+<br>
+
+<h3 id="뷰"><a href="#뷰" class="headerlink" title="뷰"></a>뷰</h3><p>반복적으로 쓰이는 문을 뷰로 생성하여 테이블처럼 사용 가능하게 만든 것</p>
+<ul>
+<li><p>보안적인 내용을 다룸<br>ex) 부서에 테이블을 제공할때, 급여 및 주민등록번호 등 보안관련 컬럼은 빼고 뷰로 생성하여 뷰를 제공</p>
+</li>
+<li><p>생성방법</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CREATE OR REPLACE VIEW [뷰명] AS 쿼리;</span><br></pre></td></tr></table></figure>
+<p><img src="/images/database/DB04-11.png" alt="DB"></p>
+<br>
+
+</li>
+</ul>
+<h3 id="PL-SQL"><a href="#PL-SQL" class="headerlink" title="PL/SQL"></a>PL/SQL</h3><p>Procedural Language Extension to Structured Query Language<br>SQL에 프로그래밍 언어기능을 위해 절차적으로 확장한 언어<br><img src="/images/database/DB04-12.png" alt="DB"></p>
+<ul>
+<li>output에서 출력하기 위해 set serveroutput on; 설정필요</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">set serveroutput on;</span><br><span class="line">DECLARE</span><br><span class="line">&#x2F;*변수선언( — : 주석처리)*&#x2F;</span><br><span class="line">v_no NUMBER(3) :&#x3D; 10;</span><br><span class="line">v_hiredate VARCHAR(30) :&#x3D; TO_CHAR(sysdate, ‘YYYY&#x2F;MM&#x2F;DD’);</span><br><span class="line">&#x2F;*상수선언*&#x2F;</span><br><span class="line">c_message CONSTANT VARCHAR(50) :&#x3D; ‘안녕하세요. PL&#x2F;SQL’;</span><br><span class="line">&#x2F;*실행부*&#x2F;</span><br><span class="line">BEGIN</span><br><span class="line">&#x2F;*DBMS_OUTPUT패키지 PUT_LINE 프로시저를 이용하여 결과 출력*&#x2F;</span><br><span class="line">dbms_output.put_line(‘오늘부터 pl&#x2F;sql 수업’);</span><br><span class="line">dbms_output.put_line(c_message);</span><br><span class="line">dbms_output.put_line(v_hiredate);</span><br><span class="line">END;</span><br></pre></td></tr></table></figure>
+
+<h4 id="예제-3"><a href="#예제-3" class="headerlink" title="예제"></a>예제</h4><ul>
+<li>사원번호 100번에 해당하는 사원이름과 부서명을 출력하세요.<br><img src="/images/database/DB04-13.png" alt="DB"><br>
+</li>
+</ul>
+
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/OracleDB/" rel="tag">OracleDB</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">Like this article? Support the author with</h3>
+        <div class="buttons is-centered">
+            
+                
+<div class="notification is-danger">
+    You forgot to set the <code>qrcode</code> for Alipay. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                
+<div class="notification is-danger">
+    You forgot to set the <code>qrcode</code> for Wechat. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                <!-- Visit https://www.paypal.com/donate/buttons/ to get your donate button -->
+
+<div class="notification is-danger">
+    You forgot to set the <code>business</code> and <code>currency_code</code> for Paypal. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                
+<div class="notification is-danger">
+    You forgot to set the <code>url</code> Patreon. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2018/12/03/OracleDB/oracle05/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">Reference 형 데이터, ROWTYPE, 제어문, 반복문, 예외처리, Cursor, for문, Procedure</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2018/11/28/OracleDB/oracle03/">
+                <span class="level-item">ANSI JOIN, INNER JOIN, OUTER JOIN, SELF JOIN, 서브쿼리</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+</div>
+                
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-4-widescreen  has-order-3 column-right is-sticky">
+    
+        
+
+    <div class="card widget" id="toc">
+        <div class="card-content">
+            <div class="menu">
+                <h3 class="menu-label">
+                    Catalogue
+                </h3>
+                <ul class="menu-list"><li>
+        <a class="is-flex" href="#KOSTA-DAY23">
+        <span class="has-mr-6">1</span>
+        <span>KOSTA DAY23</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#DataBase">
+        <span class="has-mr-6">1.1</span>
+        <span>DataBase</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#다중컬럼-다중로우-서브쿼리">
+        <span class="has-mr-6">1.1.1</span>
+        <span>다중컬럼 다중로우 서브쿼리</span>
+        </a></li><li>
+        <a class="is-flex" href="#FROM절-서브쿼리-TOP-N-SQL">
+        <span class="has-mr-6">1.1.2</span>
+        <span>FROM절 서브쿼리(TOP-N SQL)</span>
+        </a></li><li>
+        <a class="is-flex" href="#인덱스">
+        <span class="has-mr-6">1.1.3</span>
+        <span>인덱스</span>
+        </a></li><li>
+        <a class="is-flex" href="#시퀀스-SEQUENCE">
+        <span class="has-mr-6">1.1.4</span>
+        <span>시퀀스(SEQUENCE)</span>
+        </a></li><li>
+        <a class="is-flex" href="#뷰">
+        <span class="has-mr-6">1.1.5</span>
+        <span>뷰</span>
+        </a></li><li>
+        <a class="is-flex" href="#PL-SQL">
+        <span class="has-mr-6">1.1.6</span>
+        <span>PL/SQL</span>
+        </a></li></ul></li></ul></li></ul>
+            </div>
+        </div>
+    </div>
+
+    
+        <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            Tag Cloud
+        </h3>
+        <a href="/tags/Algorithm/" style="font-size: 11.11px;">Algorithm</a> <a href="/tags/DataBase/" style="font-size: 10px;">DataBase</a> <a href="/tags/Etc/" style="font-size: 11.11px;">Etc</a> <a href="/tags/Git/" style="font-size: 13.33px;">Git</a> <a href="/tags/Interview/" style="font-size: 14.44px;">Interview</a> <a href="/tags/JPA/" style="font-size: 20px;">JPA</a> <a href="/tags/JSP/" style="font-size: 14.44px;">JSP</a> <a href="/tags/Java/" style="font-size: 18.89px;">Java</a> <a href="/tags/JavaScript/" style="font-size: 12.22px;">JavaScript</a> <a href="/tags/OracleDB/" style="font-size: 14.44px;">OracleDB</a> <a href="/tags/Process/" style="font-size: 11.11px;">Process</a> <a href="/tags/RestAPI/" style="font-size: 14.44px;">RestAPI</a> <a href="/tags/Seminar/" style="font-size: 10px;">Seminar</a> <a href="/tags/SpringBoot/" style="font-size: 20px;">SpringBoot</a> <a href="/tags/SpringSecurity/" style="font-size: 12.22px;">SpringSecurity</a> <a href="/tags/SpringWebMvc/" style="font-size: 16.67px;">SpringWebMvc</a> <a href="/tags/Springframework/" style="font-size: 17.78px;">Springframework</a> <a href="/tags/Springframework-kosta/" style="font-size: 14.44px;">Springframework_kosta</a> <a href="/tags/Web/" style="font-size: 12.22px;">Web</a> <a href="/tags/debug/" style="font-size: 11.11px;">debug</a> <a href="/tags/jQuery/" style="font-size: 12.22px;">jQuery</a> <a href="/tags/%EC%A0%95%EB%B3%B4%EC%B2%98%EB%A6%AC%EA%B8%B0%EC%82%AC-%ED%95%84%EA%B8%B0/" style="font-size: 13.33px;">정보처리기사_필기</a> <a href="/tags/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%ED%9A%8C%EA%B3%A0/" style="font-size: 15.56px;">프로젝트_회고</a>
+    </div>
+</div>
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/blog_logo.png" alt="다중컬럼 다중로우, FROM절 서브쿼리, 인덱스, 시퀀스, 뷰, PLSQL" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2020 Bong&#39;s blog&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/cyr9210">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("en");</script>
+
+
+<script>
+var IcarusThemeSettings = {
+    site: {
+        url: 'http://yoursite.com',
+        external_link: {"enable":true,"exclude":[]}
+    },
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+<script src="/js/animation.js"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+<script src="/js/gallery.js" defer></script>
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+<a id="back-to-top" title="Back to Top" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: 'Posts',
+                PAGES: 'Pages',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
+                UNTITLED: '(Untitled)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

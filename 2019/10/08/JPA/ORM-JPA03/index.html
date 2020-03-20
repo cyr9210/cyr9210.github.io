@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html >
+<head>
+    <meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 4.2.0" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>ORM03 - 영속성 관리(내부 동작 방식)(영속성 컨텍스트(Dirty checking, 스냅샷..), 플러시, 준영속 상태) - Bong&#39;s blog</title>
+
+
+    <meta name="description" content="자바 ORM 표준 JPA 프로그래밍 - 기본편영속성 관리 - 내부 동작 방식">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ORM03 - 영속성 관리(내부 동작 방식)(영속성 컨텍스트(Dirty checking, 스냅샷..), 플러시, 준영속 상태)">
+<meta property="og:url" content="http://yoursite.com/2019/10/08/JPA/ORM-JPA03/index.html">
+<meta property="og:site_name" content="Bong&#39;s blog">
+<meta property="og:description" content="자바 ORM 표준 JPA 프로그래밍 - 기본편영속성 관리 - 내부 동작 방식">
+<meta property="og:image" content="http://yoursite.com/images/og_image.png">
+<meta property="article:published_time" content="2019-10-08T07:53:21.000Z">
+<meta property="article:modified_time" content="2020-03-20T07:57:35.717Z">
+<meta property="article:author" content="Bong&#39;s blog">
+<meta property="article:tag" content="JPA">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/images/og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+<style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+    
+    
+    
+    
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+    
+    
+    
+    
+    
+    
+    
+    <link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-2-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/blog_logo.png" alt="ORM03 - 영속성 관리(내부 동작 방식)(영속성 컨텍스트(Dirty checking, 스냅샷..), 플러시, 준영속 상태)" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                href="/">Home</a>
+                
+                <a class="navbar-item"
+                href="/archives">Archives</a>
+                
+                <a class="navbar-item"
+                href="/tags">Tags</a>
+                
+                <a class="navbar-item"
+                href="/about">About</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    <a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/cyr9210">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="Search" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-8-widescreen has-order-2 column-main">
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-10-08T07:53:21.000Z">2019-10-08</time>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    11 minutes read (About 1614 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                ORM03 - 영속성 관리(내부 동작 방식)(영속성 컨텍스트(Dirty checking, 스냅샷..), 플러시, 준영속 상태)
+            
+        </h1>
+        <div class="content">
+            <h1 id="자바-ORM-표준-JPA-프로그래밍-기본편"><a href="#자바-ORM-표준-JPA-프로그래밍-기본편" class="headerlink" title="자바 ORM 표준 JPA 프로그래밍 - 기본편"></a>자바 ORM 표준 JPA 프로그래밍 - 기본편</h1><h2 id="영속성-관리-내부-동작-방식"><a href="#영속성-관리-내부-동작-방식" class="headerlink" title="영속성 관리 - 내부 동작 방식"></a>영속성 관리 - 내부 동작 방식</h2><a id="more"></a>
+<ul>
+<li>JPA에서 가장 중요한 2가지<ul>
+<li>객체와 관계형 데이터베이스 매핑하기(설계)</li>
+<li><strong>영속성 컨텍스트</strong></li>
+</ul>
+</li>
+</ul>
+<h3 id="영속성-컨텍스트"><a href="#영속성-컨텍스트" class="headerlink" title="영속성 컨텍스트"></a>영속성 컨텍스트</h3><ul>
+<li><p>JPA를 이해하는데 가장 중요한 용어</p>
+</li>
+<li><p>‘엔티티를 영구 저장하는 환경’이라는 뜻</p>
+</li>
+<li><p>EntityManger.persist(entity);</p>
+<ul>
+<li>사실 이것은 DB에 저장한다는 뜻이아닌, 엔티티를 영속성컨텍스트에 저장한다는 뜻</li>
+</ul>
+</li>
+<li><p>영속성 컨텍스트는 논리적인 개념</p>
+</li>
+<li><p>눈에 보이지 않는다.</p>
+</li>
+<li><p>엔티티 매니저를 통해서 영속성 컨텍스트에 접근</p>
+<p><img src="/images/jpa/ORM-JPA/ORM03-1.png" alt="ORM03-1"></p>
+</li>
+</ul>
+<h4 id="엔티티의-생명주기"><a href="#엔티티의-생명주기" class="headerlink" title="엔티티의 생명주기"></a>엔티티의 생명주기</h4><p><img src="/images/jpa/ORM-JPA/ORM03-2.png" alt="ORM03-2"></p>
+<ul>
+<li>비영속 (new/transient)<ul>
+<li>영속성 컨텍스트와 전혀 관계가 없는 새로운 상태</li>
+</ul>
+</li>
+<li>영속 (managed)<ul>
+<li>영속성 컨텍스트에 관리되는 상태</li>
+</ul>
+</li>
+<li>준영속 (detached)<ul>
+<li>영속성 컨텍스트에 저장되었다가 분리된 상태</li>
+</ul>
+</li>
+<li>삭제 (removed)<ul>
+<li>삭제된 상태</li>
+</ul>
+</li>
+</ul>
+<p>코드로 살펴보자.</p>
+<h4 id="비영속"><a href="#비영속" class="headerlink" title="비영속"></a>비영속</h4><p><img src="/images/jpa/ORM-JPA/ORM03-3.png" alt="ORM03-3"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Member member = <span class="keyword">new</span> Member();</span><br><span class="line">member.setId(<span class="string">"member1"</span>);</span><br><span class="line">member.setUsername(<span class="string">"회원1"</span>);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>객체를 생성한 상태</li>
+<li>JPA와 전혀 상관없는 상태</li>
+</ul>
+<h4 id="영속"><a href="#영속" class="headerlink" title="영속"></a>영속</h4><p><img src="/images/jpa/ORM-JPA/ORM03-4.png" alt="ORM03-4"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Member member = <span class="keyword">new</span> Member();</span><br><span class="line">member.setId(<span class="string">"member1"</span>);</span><br><span class="line">member.setUsername(<span class="string">"회원1"</span>);</span><br><span class="line"></span><br><span class="line">EntityManager em = emf.createEntityManger();</span><br><span class="line">em.getTransaction().begin();</span><br><span class="line"></span><br><span class="line">em.persist(member);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>영속성 컨텍스트안에 Member객체가 들억간다.</p>
+</li>
+<li><p><strong>아직 DB에 저장되는것이 아니다.</strong></p>
+<p><img src="/images/jpa/ORM-JPA/ORM03-5.png" alt="ORM03-5"></p>
+<p>DB에 저장된다면 BEFORE와 AFTER사이에 쿼리가 찍혔을것이다.</p>
+</li>
+</ul>
+<h5 id="준영속"><a href="#준영속" class="headerlink" title="준영속"></a>준영속</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">em.detatch(member);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>영속성 컨텍스트에서 분리</li>
+</ul>
+<h4 id="삭제"><a href="#삭제" class="headerlink" title="삭제"></a>삭제</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">em.remove(member);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>객체를 DB에서 영구삭제</li>
+</ul>
+<p><br><br></p>
+<h3 id="영속성-컨텍스트의-이점"><a href="#영속성-컨텍스트의-이점" class="headerlink" title="영속성 컨텍스트의 이점"></a>영속성 컨텍스트의 이점</h3><ul>
+<li>1차 캐시</li>
+<li>동일성(identity) 보장</li>
+<li>트랜잭션을 지원하는 쓰기 지연(transactional write-behind)</li>
+<li>변경 감지(Dirty Checking)</li>
+<li>지연로딩(Lazy Loading)</li>
+</ul>
+<p>컨텍스트 이점들에 대해  자세히 알아보자.</p>
+<h4 id="엔티티-조회-1차-캐시"><a href="#엔티티-조회-1차-캐시" class="headerlink" title="엔티티 조회, 1차 캐시"></a>엔티티 조회, 1차 캐시</h4><ul>
+<li><p>엔티티를 영속하면 1차캐시에 저장된다.</p>
+<p><img src="/images/jpa/ORM-JPA/ORM03-6.png" alt="ORM03-6"></p>
+<ul>
+<li>@Id 값을 키값 Entity를 value값인 맵형태의 1차 캐시에 저장</li>
+</ul>
+</li>
+<li><p>1차캐시에서 조회</p>
+<p><img src="/images/jpa/ORM-JPA/ORM03-7.png" alt="ORM03-7"></p>
+<ul>
+<li>1차 캐시에서 먼저 찾는다.</li>
+</ul>
+</li>
+<li><p>데이터베이스에서 조회</p>
+<p><img src="/images/jpa/ORM-JPA/ORM03-8.png" alt="ORM03-8"></p>
+<ul>
+<li>1차캐시에 없을 경우 DB를 조회한 후, 결과를 1차캐시에 저장 후 반환한다.</li>
+</ul>
+</li>
+<li><p>테스트</p>
+<p><img src="/images/jpa/ORM-JPA/ORM03-9.png" alt="ORM03-9"></p>
+<ul>
+<li>1차캐시에 저장된 값을 반환했기 때문에  SELECT 쿼리문이 없다.</li>
+<li>commit 시에 데이터가 insert 된다.</li>
+</ul>
+<p><img src="/images/jpa/ORM-JPA/ORM03-10.png" alt="ORM03-10"></p>
+<ul>
+<li>조회 쿼리가 하나만 조회된다.</li>
+<li>조회할때 영속성컨텍스트의 1차캐시 안에 저장하고 반환하기 때문에 두번째 조회할때는 1차캐시 안의 값을 반환한다.</li>
+</ul>
+</li>
+</ul>
+<h4 id="영속-엔티티의-동일성-보장"><a href="#영속-엔티티의-동일성-보장" class="headerlink" title="영속 엔티티의 동일성 보장"></a>영속 엔티티의 동일성 보장</h4><p><img src="/images/jpa/ORM-JPA/ORM03-11.png" alt="ORM03-11"></p>
+<ul>
+<li>자바 컬렉션처럼 비교가 가능</li>
+</ul>
+<h4 id="엔티티-등록-시-트랜잭션을-지원하는-쓰기-지연"><a href="#엔티티-등록-시-트랜잭션을-지원하는-쓰기-지연" class="headerlink" title="엔티티 등록 시, 트랜잭션을 지원하는 쓰기 지연"></a>엔티티 등록 시, 트랜잭션을 지원하는 쓰기 지연</h4><ul>
+<li><p>기본적으로 commit, flush 전에는 DB에 반영하지 않고 쓰지 지연 SQL 저장소에 저장한다.</p>
+<p><img src="/images/jpa/ORM-JPA/ORM03-12.png" alt="ORM03-12"></p>
+</li>
+<li><p>flush, 또는 commit 시에, 일괄 </p>
+<p><img src="/images/jpa/ORM-JPA/ORM03-13.png" alt="ORM03-13"></p>
+<ul>
+<li>설정에서 <code>hibernate.jdbc.batch_size</code> 를 설정해주면 그 사이즈 만큼 모아서 쿼리를 날린다.(버퍼링 같은 기능)</li>
+</ul>
+</li>
+<li><p>테스트 코드 실행</p>
+<p><img src="/images/jpa/ORM-JPA/ORM03-14.png" alt="ORM03-14"></p>
+</li>
+</ul>
+<h4 id="변경감지-Dirty-Checking"><a href="#변경감지-Dirty-Checking" class="headerlink" title="변경감지(Dirty Checking)"></a>변경감지(Dirty Checking)</h4><p><img src="/images/jpa/ORM-JPA/ORM03-16.png" alt="ORM03-16"></p>
+<ul>
+<li><p>JPA는 commit 시 flush() 메소드를 호출한다.</p>
+</li>
+<li><p>flush를 할 때, 엔티티와 스냅샷을 비교한다.</p>
+<ul>
+<li>스냅샷은 1차 캐시안에 존재하는것으로, 해당 엔티티가 1차캐시로 들어올때의 값을 저장해둔것.</li>
+</ul>
+</li>
+<li><p>비교 후에 값의 변경이 있으면 쓰기 지연 SQL 저장소에 UPDATE 쿼리를 저장해둔다.</p>
+</li>
+<li><p>그 후에 데이터베이스에 반영</p>
+</li>
+<li><p>테스트 코드 실행</p>
+<p><img src="/images/jpa/ORM-JPA/ORM03-15.png" alt="ORM03-15"></p>
+</li>
+</ul>
+<p><br><br></p>
+<h3 id="플러시"><a href="#플러시" class="headerlink" title="플러시"></a>플러시</h3><ul>
+<li>영속성 컨텍스트의 변경내용을 데이터베이스에 반영</li>
+</ul>
+<h4 id="플러시-발생"><a href="#플러시-발생" class="headerlink" title="플러시 발생"></a>플러시 발생</h4><ul>
+<li>변경감지(Dirty Checking)</li>
+<li>수정된 엔티티 쓰기 지연 SQL 저장소에 등록</li>
+<li>쓰기 지연 SQL 저장소의 쿼리를 데이터베이스에 전송(등록, 수정, 삭제, 쿼리)</li>
+</ul>
+<h4 id="영속성-컨텍스트를-플러시하는-방법"><a href="#영속성-컨텍스트를-플러시하는-방법" class="headerlink" title="영속성 컨텍스트를 플러시하는 방법"></a>영속성 컨텍스트를 플러시하는 방법</h4><ul>
+<li><code>em.flush();</code> 직접 호출</li>
+<li>트랜잭션 커밋 : 플러시 자동 호출</li>
+<li>JPQL 쿼리 실행 : 플러시 자동 호출<ul>
+<li>무조건 플러시를 한번 호출</li>
+<li>왜냐하면 JPQL은 query를 날리는데 기존에 데이터들이 1차캐시에만 있고 DB에 반영이 안되어있다면 잘못된 결과를 불러올 수 있으므로, 기본모드가 query를 날리기전에 플러시를 한번 해주는것이다.</li>
+</ul>
+</li>
+</ul>
+<h4 id="플러시-모드-옵션"><a href="#플러시-모드-옵션" class="headerlink" title="플러시 모드 옵션"></a>플러시 모드 옵션</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">em.setFlushMode(FlushModeType.COMMIT);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>FlushModeType.AUTO<ul>
+<li>커밋이나 쿼리를 실행할 때 플러시 (기본값)</li>
+</ul>
+</li>
+<li>FlushModeType.COMMIT<ul>
+<li>커밋할 때만 플러시</li>
+<li>거의 사용하지 않는다.</li>
+<li>사용하는 경우 :  앞에서 insert한 데이터와 상관없는 테이블을 조회하는 쿼리를 날리는 경우 플러시를 하는 의미가 없기 때문에 사용할 수 도 있으나 … 거의 사용하지 않는다.</li>
+</ul>
+</li>
+</ul>
+<h4 id="주의사항"><a href="#주의사항" class="headerlink" title="주의사항"></a>주의사항</h4><ul>
+<li>쓰기 지연 SQL저장소에 있는 쿼리들이 데이터베이스에 반영되는것.</li>
+<li>영속성 컨텍스트를 비우지 않음(<strong>영속성 컨텍스트에 있는 1차캐시는 지워지지는 않는다.</strong>)</li>
+<li><strong>트랜잭션이라는 작업 단위가 중요</strong><ul>
+<li>커밋 직전에만 동기화 하면 된다.</li>
+<li>JPA는 기본적으로 데이터동기화등 동시성 관련내용은 트랜잭션에 위임한다.</li>
+</ul>
+</li>
+</ul>
+<p><br><br></p>
+<h3 id="준영속-상태"><a href="#준영속-상태" class="headerlink" title="준영속 상태"></a>준영속 상태</h3><ul>
+<li>영속 -&gt; 준영속</li>
+<li>영속 상태의 엔티티가 영속성 컨텍스트에서 분리(detached)</li>
+<li>영속성 컨텍스트가 제공하는 기능을 사용 못함</li>
+</ul>
+<h4 id="준영속-상태로-만드는-방법"><a href="#준영속-상태로-만드는-방법" class="headerlink" title="준영속 상태로 만드는 방법"></a>준영속 상태로 만드는 방법</h4><ul>
+<li><code>em.detach(entity);</code><ul>
+<li>특정 엔티티만 준영속 상태로 전환</li>
+</ul>
+</li>
+<li><code>em.clear();</code><ul>
+<li>영속성 컨텍스트를 완전히 초기화</li>
+</ul>
+</li>
+<li><code>em.close();</code><ul>
+<li>영속성 컨텍스트를 종료</li>
+</ul>
+</li>
+</ul>
+<h4 id="예시"><a href="#예시" class="headerlink" title="예시"></a>예시</h4><p><img src="/images/jpa/ORM-JPA/ORM03-17.png" alt="ORM03-17"></p>
+<ul>
+<li>상태값이 변경 됬지만, update 쿼리문이 날라가지 않는다.</li>
+</ul>
+<p><br><br></p>
+
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/JPA/" rel="tag">JPA</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">Like this article? Support the author with</h3>
+        <div class="buttons is-centered">
+            
+                
+<div class="notification is-danger">
+    You forgot to set the <code>qrcode</code> for Alipay. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                
+<div class="notification is-danger">
+    You forgot to set the <code>qrcode</code> for Wechat. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                <!-- Visit https://www.paypal.com/donate/buttons/ to get your donate button -->
+
+<div class="notification is-danger">
+    You forgot to set the <code>business</code> and <code>currency_code</code> for Paypal. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                
+<div class="notification is-danger">
+    You forgot to set the <code>url</code> Patreon. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2019/10/11/JPA/ORM-JPA04/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">ORM04 - 엔티티 매핑(객체와 테이블 매핑(@Table), 데이터베이스 스키마 자동생성, 필드와 컬럼 매핑(@Column), 기본 키 매핑(@Id, @GenerateValue))</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2019/10/08/JPA/ORM-JPA02/">
+                <span class="level-item">ORM02 - JPA 시작하기(프로젝트 생성, 애플리케이션 개발)</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+</div>
+                
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-4-widescreen  has-order-3 column-right is-sticky">
+    
+        
+
+    <div class="card widget" id="toc">
+        <div class="card-content">
+            <div class="menu">
+                <h3 class="menu-label">
+                    Catalogue
+                </h3>
+                <ul class="menu-list"><li>
+        <a class="is-flex" href="#자바-ORM-표준-JPA-프로그래밍-기본편">
+        <span class="has-mr-6">1</span>
+        <span>자바 ORM 표준 JPA 프로그래밍 - 기본편</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#영속성-관리-내부-동작-방식">
+        <span class="has-mr-6">1.1</span>
+        <span>영속성 관리 - 내부 동작 방식</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#영속성-컨텍스트">
+        <span class="has-mr-6">1.1.1</span>
+        <span>영속성 컨텍스트</span>
+        </a></li><li>
+        <a class="is-flex" href="#영속성-컨텍스트의-이점">
+        <span class="has-mr-6">1.1.2</span>
+        <span>영속성 컨텍스트의 이점</span>
+        </a></li><li>
+        <a class="is-flex" href="#플러시">
+        <span class="has-mr-6">1.1.3</span>
+        <span>플러시</span>
+        </a></li><li>
+        <a class="is-flex" href="#준영속-상태">
+        <span class="has-mr-6">1.1.4</span>
+        <span>준영속 상태</span>
+        </a></li></ul></li></ul></li></ul>
+            </div>
+        </div>
+    </div>
+
+    
+        <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            Tag Cloud
+        </h3>
+        <a href="/tags/Algorithm/" style="font-size: 11.11px;">Algorithm</a> <a href="/tags/DataBase/" style="font-size: 10px;">DataBase</a> <a href="/tags/Etc/" style="font-size: 11.11px;">Etc</a> <a href="/tags/Git/" style="font-size: 13.33px;">Git</a> <a href="/tags/Interview/" style="font-size: 14.44px;">Interview</a> <a href="/tags/JPA/" style="font-size: 20px;">JPA</a> <a href="/tags/JSP/" style="font-size: 14.44px;">JSP</a> <a href="/tags/Java/" style="font-size: 18.89px;">Java</a> <a href="/tags/JavaScript/" style="font-size: 12.22px;">JavaScript</a> <a href="/tags/OracleDB/" style="font-size: 14.44px;">OracleDB</a> <a href="/tags/Process/" style="font-size: 11.11px;">Process</a> <a href="/tags/RestAPI/" style="font-size: 14.44px;">RestAPI</a> <a href="/tags/Seminar/" style="font-size: 10px;">Seminar</a> <a href="/tags/SpringBoot/" style="font-size: 20px;">SpringBoot</a> <a href="/tags/SpringSecurity/" style="font-size: 12.22px;">SpringSecurity</a> <a href="/tags/SpringWebMvc/" style="font-size: 16.67px;">SpringWebMvc</a> <a href="/tags/Springframework/" style="font-size: 17.78px;">Springframework</a> <a href="/tags/Springframework-kosta/" style="font-size: 14.44px;">Springframework_kosta</a> <a href="/tags/Web/" style="font-size: 12.22px;">Web</a> <a href="/tags/debug/" style="font-size: 11.11px;">debug</a> <a href="/tags/jQuery/" style="font-size: 12.22px;">jQuery</a> <a href="/tags/%EC%A0%95%EB%B3%B4%EC%B2%98%EB%A6%AC%EA%B8%B0%EC%82%AC-%ED%95%84%EA%B8%B0/" style="font-size: 13.33px;">정보처리기사_필기</a> <a href="/tags/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%ED%9A%8C%EA%B3%A0/" style="font-size: 15.56px;">프로젝트_회고</a>
+    </div>
+</div>
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/blog_logo.png" alt="ORM03 - 영속성 관리(내부 동작 방식)(영속성 컨텍스트(Dirty checking, 스냅샷..), 플러시, 준영속 상태)" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2020 Bong&#39;s blog&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/cyr9210">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("en");</script>
+
+
+<script>
+var IcarusThemeSettings = {
+    site: {
+        url: 'http://yoursite.com',
+        external_link: {"enable":true,"exclude":[]}
+    },
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+<script src="/js/animation.js"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+<script src="/js/gallery.js" defer></script>
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+<a id="back-to-top" title="Back to Top" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: 'Posts',
+                PAGES: 'Pages',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
+                UNTITLED: '(Untitled)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

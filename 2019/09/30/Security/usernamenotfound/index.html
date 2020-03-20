@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html >
+<head>
+    <meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 4.2.0" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>인증 시, UsernameNotfoundException 발생 안함 문제(BadCredentials Exception만 발생) - Bong&#39;s blog</title>
+
+
+    <meta name="description" content="SpringSecurityDebug인증 시, UsernameNotfoundException 발생 안함 문제(BadCredentials Exception만 발생)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="인증 시, UsernameNotfoundException 발생 안함 문제(BadCredentials Exception만 발생)">
+<meta property="og:url" content="http://yoursite.com/2019/09/30/Security/usernamenotfound/index.html">
+<meta property="og:site_name" content="Bong&#39;s blog">
+<meta property="og:description" content="SpringSecurityDebug인증 시, UsernameNotfoundException 발생 안함 문제(BadCredentials Exception만 발생)">
+<meta property="og:image" content="http://yoursite.com/images/og_image.png">
+<meta property="article:published_time" content="2019-09-30T11:58:26.000Z">
+<meta property="article:modified_time" content="2020-03-20T07:57:35.738Z">
+<meta property="article:author" content="Bong&#39;s blog">
+<meta property="article:tag" content="SpringSecurity">
+<meta property="article:tag" content="debug">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/images/og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+<style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+    
+    
+    
+    
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+    
+    
+    
+    
+    
+    
+    
+    <link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-2-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/blog_logo.png" alt="인증 시, UsernameNotfoundException 발생 안함 문제(BadCredentials Exception만 발생)" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                href="/">Home</a>
+                
+                <a class="navbar-item"
+                href="/archives">Archives</a>
+                
+                <a class="navbar-item"
+                href="/tags">Tags</a>
+                
+                <a class="navbar-item"
+                href="/about">About</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    <a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/cyr9210">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="Search" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-8-widescreen has-order-2 column-main">
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-09-30T11:58:26.000Z">2019-09-30</time>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    8 minutes read (About 1274 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                인증 시, UsernameNotfoundException 발생 안함 문제(BadCredentials Exception만 발생)
+            
+        </h1>
+        <div class="content">
+            <h1 id="SpringSecurity"><a href="#SpringSecurity" class="headerlink" title="SpringSecurity"></a>SpringSecurity</h1><h2 id="Debug"><a href="#Debug" class="headerlink" title="Debug"></a>Debug</h2><h3 id="인증-시-UsernameNotfoundException-발생-안함-문제-BadCredentials-Exception만-발생"><a href="#인증-시-UsernameNotfoundException-발생-안함-문제-BadCredentials-Exception만-발생" class="headerlink" title="인증 시, UsernameNotfoundException 발생 안함 문제(BadCredentials Exception만 발생)"></a>인증 시, UsernameNotfoundException 발생 안함 문제(BadCredentials Exception만 발생)</h3><a id="more"></a>
+<h4 id="조건"><a href="#조건" class="headerlink" title="조건"></a>조건</h4><ul>
+<li>SpringSecurity 사용</li>
+<li>로그인 성공 시, 응답으로 authorization에 ‘success 200’ 문자열을 응답</li>
+<li>로그인 샐패 시, 응답으로 authorization에 ‘fail 에러코드’ 문자열을 응답<ul>
+<li>ExceptionHandler 설정 및 ReturnCodes 는 미리 설정해두었지만 생략..</li>
+</ul>
+</li>
+<li>UserDetailsService 및 PasswordEncoder를 생성 및 등록 -&gt; DaoAuthenticationProvider 생성</li>
+<li>AuthenticateManager에 DaoAuthenticationProvider를 Provider로 등록</li>
+</ul>
+<h4 id="과정"><a href="#과정" class="headerlink" title="과정"></a>과정</h4><p>Exception 및 DTO/VO설정은 제외하고 진행하겠습니다.</p>
+<ul>
+<li><p>Account 생성</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">@Entity</span><br><span class="line">@Table(name &#x3D; &quot;mt_account&quot;)</span><br><span class="line">@Getter</span><br><span class="line">@NoArgsConstructor</span><br><span class="line">@EqualsAndHashCode(callSuper &#x3D; false, of &#x3D; &#123; &quot;id&quot; &#125;)</span><br><span class="line">public class Account &#123;</span><br><span class="line"></span><br><span class="line">    @Id</span><br><span class="line">    @Column(name &#x3D; &quot;id&quot;, length &#x3D; 50)</span><br><span class="line">    @GenericGenerator(name &#x3D; &quot;system-uuid&quot;, strategy &#x3D; &quot;uuid2&quot;)</span><br><span class="line">    @GeneratedValue(generator &#x3D; &quot;system-uuid&quot;)</span><br><span class="line">    private String id;</span><br><span class="line"></span><br><span class="line">    @Column(name &#x3D; &quot;email&quot;, length &#x3D; 100, nullable &#x3D; false)</span><br><span class="line">    private String email;</span><br><span class="line"></span><br><span class="line">    @Column(name &#x3D; &quot;password&quot;, length &#x3D; 100, nullable &#x3D; false)</span><br><span class="line">    private String password;</span><br><span class="line"></span><br><span class="line">    @Column(name &#x3D; &quot;name&quot;, length &#x3D; 100)</span><br><span class="line">    private String name;</span><br><span class="line"></span><br><span class="line">    @ElementCollection(fetch &#x3D; FetchType.EAGER)</span><br><span class="line">    @Enumerated(EnumType.STRING)</span><br><span class="line">    private Set&lt;AccountRole&gt; roles;</span><br><span class="line"></span><br><span class="line">    @Builder</span><br><span class="line">    public Account(String email, String password, String name) &#123;</span><br><span class="line">        Set&lt;AccountRole&gt; set &#x3D; new HashSet&lt;&gt;();</span><br><span class="line">        set.add(AccountRole.USER);</span><br><span class="line"></span><br><span class="line">        this.email &#x3D; email;</span><br><span class="line">        this.password &#x3D; password;</span><br><span class="line">        this.name &#x3D; name;</span><br><span class="line">        this.roles &#x3D; set;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>id<ul>
+<li>String으로 자동생성</li>
+</ul>
+</li>
+<li>email<ul>
+<li>username으로 사용하기 위해 nullable=false 설정</li>
+</ul>
+</li>
+<li>password<ul>
+<li>password로 사용하기 위해 nullable=false 설정</li>
+</ul>
+</li>
+<li>name</li>
+</ul>
+</li>
+<li><p>테스트 작성</p>
+<ul>
+<li>ApplicationRunner를 빈으로 등록하여 미리 Account를 저장해 놓을것이다.</li>
+<li>성공<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">@Test</span><br><span class="line">public void getAuth_success() throws Exception &#123;</span><br><span class="line">    AccountDTO.LoginRequestDTO loginRequest &#x3D; AccountDTO.LoginRequestDTO.builder()</span><br><span class="line">            .email(&quot;bong@email.com&quot;)</span><br><span class="line">            .password(&quot;pass&quot;)</span><br><span class="line">            .build();</span><br><span class="line"></span><br><span class="line">    this.mockMvc.perform(post(&quot;&#x2F;getAuthorization&quot;)</span><br><span class="line">            .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)</span><br><span class="line">            .content(objectMapper.writeValueAsString(loginRequest))</span><br><span class="line">    )</span><br><span class="line">            .andDo(print())</span><br><span class="line">            .andExpect(jsonPath(&quot;authorization&quot;).value(&quot;true&quot;))</span><br><span class="line">    ;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>실패 - password 오류<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">@Test</span><br><span class="line">public void getAuth_bad_credentials_fail() throws Exception &#123;</span><br><span class="line">    AccountDTO.LoginRequestDTO loginRequest &#x3D; AccountDTO.LoginRequestDTO.builder()</span><br><span class="line">            .email(&quot;bong@email.com&quot;)</span><br><span class="line">            .password(&quot;passs&quot;)</span><br><span class="line">            .build();</span><br><span class="line"></span><br><span class="line">    this.mockMvc.perform(post(&quot;&#x2F;getAuthorization&quot;)</span><br><span class="line">            .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)</span><br><span class="line">            .content(objectMapper.writeValueAsString(loginRequest))</span><br><span class="line">    )</span><br><span class="line">            .andDo(print())</span><br><span class="line">            .andExpect(jsonPath(&quot;authorization&quot;).value(Matchers.containsString(ReturnCodes.BAD_CREDENTIALS)))</span><br><span class="line">            ;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>실패 - username 오류<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">@Test</span><br><span class="line">public void getAuth_bad_usernamenotfound_fail() throws Exception &#123;</span><br><span class="line">    AccountDTO.LoginRequestDTO loginRequest &#x3D; AccountDTO.LoginRequestDTO.builder()</span><br><span class="line">            .email(&quot;bong@email.com&quot;)</span><br><span class="line">            .password(&quot;passs&quot;)</span><br><span class="line">            .build();</span><br><span class="line"></span><br><span class="line">    this.mockMvc.perform(post(&quot;&#x2F;getAuthorization&quot;)</span><br><span class="line">            .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)</span><br><span class="line">            .content(objectMapper.writeValueAsString(loginRequest))</span><br><span class="line">    )</span><br><span class="line">            .andDo(print())</span><br><span class="line">            .andExpect(jsonPath(&quot;authorization&quot;).value(Matchers.containsString(ReturnCodes.USER_NOTFOUND)))</span><br><span class="line">    ;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>UserDetailsService 구현한 AccountService 생성</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="meta">@RequiredArgsConstructor</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AccountService</span> <span class="keyword">implements</span> <span class="title">UserDetailsService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> AccountRepository accountRepository;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> UserDetails <span class="title">loadUserByUsername</span><span class="params">(String email)</span> <span class="keyword">throws</span> UsernameNotFoundException </span>&#123;</span><br><span class="line">        Optional&lt;Account&gt; byEmail = accountRepository.findByEmail(email);</span><br><span class="line">        Account account = byEmail.orElseThrow(() -&gt; <span class="keyword">new</span> UsernameNotFoundException(<span class="string">"not found"</span>));</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> User(account.getEmail(), account.getPassword(), authorities(account.getRoles()));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Collection&lt;? extends GrantedAuthority&gt; authorities(Set&lt;AccountRole&gt; roles) &#123;</span><br><span class="line">        <span class="keyword">return</span> roles.stream().map(r -&gt; <span class="keyword">new</span> SimpleGrantedAuthority(<span class="string">"ROLE_"</span> + r.name())).collect(Collectors.toSet());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>username으로 email을 사용</li>
+<li>authorities로 사용할 AccountRole을 미리 enum 으로 만들어 놓았다.</li>
+</ul>
+</li>
+<li><p>passwordEncoder</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> PasswordEncoder <span class="title">passwordEncoder</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> PasswordEncoderFactories.createDelegatingPasswordEncoder();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>SpringSecurity 설정</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@EnableWebSecurity</span></span><br><span class="line"><span class="meta">@RequiredArgsConstructor</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WebSecurityConfig</span> <span class="keyword">extends</span> <span class="title">WebSecurityConfigurerAdapter</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> PasswordEncoder passwordEncoder;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> AccountService accountService;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">configure</span><span class="params">(WebSecurity web)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        web.ignoring().antMatchers(<span class="string">"/getAuthorization"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> DaoAuthenticationProvider <span class="title">daoAuthenticationProvider</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        DaoAuthenticationProvider authenticationProvider = <span class="keyword">new</span> DaoAuthenticationProvider();</span><br><span class="line">        authenticationProvider.setUserDetailsService(accountService);</span><br><span class="line">        authenticationProvider.setPasswordEncoder(passwordEncoder);</span><br><span class="line">        <span class="keyword">return</span> authenticationProvider;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">configure</span><span class="params">(AuthenticationManagerBuilder auth)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        auth.authenticationProvider(daoAuthenticationProvider());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> AuthenticationManager <span class="title">authenticationManagerBean</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">super</span>.authenticationManagerBean();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>테스트를 위해 시큐리티 필터 미적용(“/getAuthorization”)</li>
+<li>DaoAuthenticationProvider 생성<ul>
+<li>빈으로 등록한 passwordEncoder와 UserDetailsService의 구현체인 AccountService를 설정해준다.</li>
+</ul>
+</li>
+<li>생성한 DaoAuthenticationProvider를 AuthenticationManager에 등록한다.<ul>
+<li>configure(AuthenticationManagerBuilder auth) 메소드를 통해 AuthenticationManger를 만들고 해당 AuthenticationManager를 사용한다.</li>
+<li>configure(AuthenticationManagerBuilder auth) 메소드를 사용하지 않으면 빈으로 등록된 Provider를 찾아 AuthenticationManger를 만들고 사용한다.</li>
+</ul>
+</li>
+<li>AuthenticationManager를 빈으로 등록하기 위해 authenticationManagerBean() 을 오버라이딩하고 빈으로 등록해준다.</li>
+</ul>
+</li>
+<li><p>Login 맵핑</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@RequiredArgsConstructor</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AccountController</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> AuthenticationManager authenticationManager;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@PostMapping</span>(<span class="string">"/getAuthorization"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> ResponseEntity <span class="title">getAuthorization</span><span class="params">(@RequestBody AccountDTO.LoginRequestDTO requestDTO)</span> </span>&#123;</span><br><span class="line">        UsernamePasswordAuthenticationToken token = <span class="keyword">new</span> UsernamePasswordAuthenticationToken(requestDTO.getEmail(), requestDTO.getPassword());</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Authentication authenticate = authenticationManager.authenticate(token);</span><br><span class="line">            ResponseVO response = ResponseVO.builder().authorization(<span class="string">"success "</span> + ReturnCodes.OK).build();</span><br><span class="line">            <span class="keyword">return</span> ResponseEntity.ok(response);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (AuthenticationException e) &#123;</span><br><span class="line">            <span class="keyword">if</span> (e <span class="keyword">instanceof</span> BadCredentialsException)</span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> BadCredentials();</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (e <span class="keyword">instanceof</span> UsernameNotFoundException)</span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> AccountNotFound();</span><br><span class="line">        &#125;</span><br><span class="line">        ResponseVO fail = ResponseVO.builder().authorization(<span class="string">"fail"</span>).build();</span><br><span class="line">        <span class="keyword">return</span> ResponseEntity.ok(fail);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Exception발생 시, @ExceptionHandler, @ResponseBody를 사용하여 Json으로 응답하도록 하였다. (생략)</li>
+</ul>
+</li>
+<li><p>테스트 실행</p>
+<ul>
+<li><p>성공<br><img src="/images/springsecurity/usernamenotfoundexception/notfound1.png" alt="notfound1"></p>
+</li>
+<li><p>실패 - password 오류<br><img src="/images/springsecurity/usernamenotfoundexception/notfound2.png" alt="notfound2"></p>
+</li>
+<li><p>실패 - username 오류<br><img src="/images/springsecurity/usernamenotfoundexception/notfound3.png" alt="notfound3"></p>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="문제점"><a href="#문제점" class="headerlink" title="문제점"></a>문제점</h4><ul>
+<li>AuthenticationManager를 빈으로 등록 후, 다른 서비스에서 authenticateManager.authenticate()를 사용하여 인증할 때 username이 틀려도 password가 틀려도 <strong>모두 BadCredentialsException만 발생</strong></li>
+</ul>
+<h4 id="Debug-1"><a href="#Debug-1" class="headerlink" title="Debug"></a>Debug</h4><ul>
+<li><p>Controller<br><img src="/images/springsecurity/usernamenotfoundexception/notfound4.png" alt="notfound4"></p>
+</li>
+<li><p>WebSecurityConfigurerAdapter.authentiacate(Autentication authentication)<br><img src="/images/springsecurity/usernamenotfoundexception/notfound5.png" alt="notfound5"></p>
+<ul>
+<li>delegate(AuthenticationManager)가 있으면 사용</li>
+<li>없으면 빌더로 가져오기</li>
+</ul>
+</li>
+<li><p>ProviderManager.authenticate(Authentication authentication)<br><img src="/images/springsecurity/usernamenotfoundexception/notfound6.png" alt="notfound6"></p>
+<ul>
+<li>this.providers : AnonymousProvider (어떤 프로파이더인지는 잘모르겠다.)</li>
+<li>parents providers : DaoAuthenticationProvider (설정했던 provider)</li>
+<li>AnonymousProvider는 지원하지 않아서 지나감.</li>
+</ul>
+<p><img src="/images/springsecurity/usernamenotfoundexception/notfound7.png" alt="notfound7"></p>
+<ul>
+<li>result(파라미터로 넘긴 authentication.getClass())와 parent가 있으면 parent.authenticate(authenticate); 재귀함수 호출</li>
+</ul>
+<p><img src="/images/springsecurity/usernamenotfoundexception/notfound8.png" alt="notfound8"></p>
+<ul>
+<li>다시 왔을때는 provider가 설정한 DaoAuthenticationProvider인것을 알 수있다.</li>
+<li>provider.authenticate(authentication);을 호출한다.</li>
+</ul>
+<p><img src="/images/springsecurity/usernamenotfoundexception/notfound9.png" alt="notfound9"></p>
+<ul>
+<li>AbstractUserDetailsAuthenticationProvider</li>
+<li>retrieveUser() 안에서 UserDetailsService.loadUserByUsername(String email); 을 호출한다.<br><img src="/images/springsecurity/usernamenotfoundexception/notfound10.png" alt="notfound10"></li>
+<li><strong>hideUserNotFoundExceptions 를 확인해서 BadCredentialsException을 던지고 있다.</strong></li>
+</ul>
+</li>
+</ul>
+<p>hideUserNotFoundExceptions을 확인해보자.</p>
+<ul>
+<li><p>기본적으로 true<br><img src="/images/springsecurity/usernamenotfoundexception/notfound11.png" alt="notfound11"></p>
+</li>
+<li><p>setHideUserNotFoundException을 통해 false로 변경 될 수 있는데.. 이건 DaoAuthenticationProvider 설정 시에 설정할 수 있다.<br><img src="/images/springsecurity/usernamenotfoundexception/notfound12.png" alt="notfound12"></p>
+<p><img src="/images/springsecurity/usernamenotfoundexception/notfound13.png" alt="notfound13"></p>
+</li>
+</ul>
+<h4 id="이렇게-설정-되어있는-이유는"><a href="#이렇게-설정-되어있는-이유는" class="headerlink" title="이렇게 설정 되어있는 이유는 ?"></a>이렇게 설정 되어있는 이유는 ?</h4><p><img src="/images/springsecurity/usernamenotfoundexception/notfound14.png" alt="notfound14"></p>
+<ul>
+<li><strong>아이디 체크와 비밀번호 체크를 따로 exception을 날리는거보다 BadCredential Exception하나만 날리는것이 보다 더 보안이 강하기 때문에…</strong></li>
+</ul>
+<h4 id="해결"><a href="#해결" class="headerlink" title="해결"></a>해결</h4><p><img src="/images/springsecurity/usernamenotfoundexception/notfound15.png" alt="notfound15"></p>
+<ul>
+<li>AuthenticationProvider 생성 시에 setHideUserNotFoundException(false); 로 설정한다.</li>
+<li>그러나 더 강한 보안을 위해서라면 모두 BadCredential을 호출하는것이 맞다.<br><br><br></li>
+</ul>
+
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/SpringSecurity/" rel="tag">SpringSecurity</a>, <a class="has-link-grey -link" href="/tags/debug/" rel="tag">debug</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">Like this article? Support the author with</h3>
+        <div class="buttons is-centered">
+            
+                
+<div class="notification is-danger">
+    You forgot to set the <code>qrcode</code> for Alipay. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                
+<div class="notification is-danger">
+    You forgot to set the <code>qrcode</code> for Wechat. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                <!-- Visit https://www.paypal.com/donate/buttons/ to get your donate button -->
+
+<div class="notification is-danger">
+    You forgot to set the <code>business</code> and <code>currency_code</code> for Paypal. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                
+<div class="notification is-danger">
+    You forgot to set the <code>url</code> Patreon. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2019/10/04/JPA/ORM-JPA01/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">ORM01 - JPA 소개</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2019/09/23/RestAPI/restapi05/">
+                <span class="level-item">스프링 기반 REST API 개발05 - RestAPI 보안 적용(@Enumerated, @ElementCollection, 스프링 시큐리티 설정, auth서버, 리소스서버, @ConfigurationProperties, form-data  request body, 현재 사용자 조회, @JsonSerialize)</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+</div>
+                
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-4-widescreen  has-order-3 column-right is-sticky">
+    
+        
+
+    <div class="card widget" id="toc">
+        <div class="card-content">
+            <div class="menu">
+                <h3 class="menu-label">
+                    Catalogue
+                </h3>
+                <ul class="menu-list"><li>
+        <a class="is-flex" href="#SpringSecurity">
+        <span class="has-mr-6">1</span>
+        <span>SpringSecurity</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#Debug">
+        <span class="has-mr-6">1.1</span>
+        <span>Debug</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#인증-시-UsernameNotfoundException-발생-안함-문제-BadCredentials-Exception만-발생">
+        <span class="has-mr-6">1.1.1</span>
+        <span>인증 시, UsernameNotfoundException 발생 안함 문제(BadCredentials Exception만 발생)</span>
+        </a></li></ul></li></ul></li></ul>
+            </div>
+        </div>
+    </div>
+
+    
+        <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            Tag Cloud
+        </h3>
+        <a href="/tags/Algorithm/" style="font-size: 11.11px;">Algorithm</a> <a href="/tags/DataBase/" style="font-size: 10px;">DataBase</a> <a href="/tags/Etc/" style="font-size: 11.11px;">Etc</a> <a href="/tags/Git/" style="font-size: 13.33px;">Git</a> <a href="/tags/Interview/" style="font-size: 14.44px;">Interview</a> <a href="/tags/JPA/" style="font-size: 20px;">JPA</a> <a href="/tags/JSP/" style="font-size: 14.44px;">JSP</a> <a href="/tags/Java/" style="font-size: 18.89px;">Java</a> <a href="/tags/JavaScript/" style="font-size: 12.22px;">JavaScript</a> <a href="/tags/OracleDB/" style="font-size: 14.44px;">OracleDB</a> <a href="/tags/Process/" style="font-size: 11.11px;">Process</a> <a href="/tags/RestAPI/" style="font-size: 14.44px;">RestAPI</a> <a href="/tags/Seminar/" style="font-size: 10px;">Seminar</a> <a href="/tags/SpringBoot/" style="font-size: 20px;">SpringBoot</a> <a href="/tags/SpringSecurity/" style="font-size: 12.22px;">SpringSecurity</a> <a href="/tags/SpringWebMvc/" style="font-size: 16.67px;">SpringWebMvc</a> <a href="/tags/Springframework/" style="font-size: 17.78px;">Springframework</a> <a href="/tags/Springframework-kosta/" style="font-size: 14.44px;">Springframework_kosta</a> <a href="/tags/Web/" style="font-size: 12.22px;">Web</a> <a href="/tags/debug/" style="font-size: 11.11px;">debug</a> <a href="/tags/jQuery/" style="font-size: 12.22px;">jQuery</a> <a href="/tags/%EC%A0%95%EB%B3%B4%EC%B2%98%EB%A6%AC%EA%B8%B0%EC%82%AC-%ED%95%84%EA%B8%B0/" style="font-size: 13.33px;">정보처리기사_필기</a> <a href="/tags/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%ED%9A%8C%EA%B3%A0/" style="font-size: 15.56px;">프로젝트_회고</a>
+    </div>
+</div>
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/blog_logo.png" alt="인증 시, UsernameNotfoundException 발생 안함 문제(BadCredentials Exception만 발생)" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2020 Bong&#39;s blog&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/cyr9210">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("en");</script>
+
+
+<script>
+var IcarusThemeSettings = {
+    site: {
+        url: 'http://yoursite.com',
+        external_link: {"enable":true,"exclude":[]}
+    },
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+<script src="/js/animation.js"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+<script src="/js/gallery.js" defer></script>
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+<a id="back-to-top" title="Back to Top" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: 'Posts',
+                PAGES: 'Pages',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
+                UNTITLED: '(Untitled)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

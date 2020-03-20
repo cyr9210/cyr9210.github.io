@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html >
+<head>
+    <meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 4.2.0" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>Reference 형 데이터, ROWTYPE, 제어문, 반복문, 예외처리, Cursor, for문, Procedure - Bong&#39;s blog</title>
+
+
+    <meta name="description" content="KOSTA DAY24DataBase">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Reference 형 데이터, ROWTYPE, 제어문, 반복문, 예외처리, Cursor, for문, Procedure">
+<meta property="og:url" content="http://yoursite.com/2018/12/03/OracleDB/oracle05/index.html">
+<meta property="og:site_name" content="Bong&#39;s blog">
+<meta property="og:description" content="KOSTA DAY24DataBase">
+<meta property="og:image" content="http://yoursite.com/images/og_image.png">
+<meta property="article:published_time" content="2018-12-03T11:24:51.000Z">
+<meta property="article:modified_time" content="2020-03-20T07:57:35.731Z">
+<meta property="article:author" content="Bong&#39;s blog">
+<meta property="article:tag" content="OracleDB">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/images/og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+<style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+    
+    
+    
+    
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+    
+    
+    
+    
+    
+    
+    
+    <link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-2-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/blog_logo.png" alt="Reference 형 데이터, ROWTYPE, 제어문, 반복문, 예외처리, Cursor, for문, Procedure" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                href="/">Home</a>
+                
+                <a class="navbar-item"
+                href="/archives">Archives</a>
+                
+                <a class="navbar-item"
+                href="/tags">Tags</a>
+                
+                <a class="navbar-item"
+                href="/about">About</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    <a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/cyr9210">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="Search" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-8-widescreen has-order-2 column-main">
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2018-12-03T11:24:51.000Z">2018-12-03</time>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    6 minutes read (About 904 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                Reference 형 데이터, ROWTYPE, 제어문, 반복문, 예외처리, Cursor, for문, Procedure
+            
+        </h1>
+        <div class="content">
+            <p><img src="/images/oracledb_logo.png" alt="DB"></p>
+<h1 id="KOSTA-DAY24"><a href="#KOSTA-DAY24" class="headerlink" title="KOSTA DAY24"></a>KOSTA DAY24</h1><h2 id="DataBase"><a href="#DataBase" class="headerlink" title="DataBase"></a>DataBase</h2><a id="more"></a>
+<h3 id="Reference형-데이터-타입"><a href="#Reference형-데이터-타입" class="headerlink" title="Reference형 데이터 타입"></a>Reference형 데이터 타입</h3><ul>
+<li>선언방법   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[변수명] [ ] [해당데이터가 받을 컬럼명]%TYPE;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p><img src="/images/database/DB05-01.png" alt="DB"></p>
+<ul>
+<li>상기 이미지와 같이 해당 데이터의 데이터타입을 컬럼으로 설정</li>
+</ul>
+<h4 id="예제"><a href="#예제" class="headerlink" title="예제"></a>예제</h4><ol>
+<li>사원테이블에서 201번 사원의 이름과 이메일을 출력하라.(레퍼런스형)<br><img src="/images/database/DB05-02.png" alt="DB"></li>
+</ol>
+<ul>
+<li>찾을 사원번호를 v_search에 선언 후, 출력할 내용들을 reference 타입으로 선언 후, where문을 사용하여 각각의 내용들을 변수에 넣어 호출하였다.</li>
+</ul>
+<ol start="2">
+<li>employees 테이블에서 사원번호가 큰 사원을 찾은후 사원번호 +1 구해서 사원을 추가하라.(insert)<br>사원명(last_name) = &gt; hong gil dong<br>이메일 =&gt; <a href="mailto:aa@aa.com">aa@aa.com</a><br>입사일자 =&gt; sysdate<br>job_id =&gt; ad_vp</li>
+</ol>
+<p><img src="/images/database/DB05-03.png" alt="DB"></p>
+<ul>
+<li>사원번호가 가장 최근(가장높은)번호를 찾은 후, 최고값에 +1에 넣어 다른값들을 INSERT 하였다.<br><br><br></li>
+</ul>
+<h3 id="ROWTYPE"><a href="#ROWTYPE" class="headerlink" title="ROWTYPE"></a>ROWTYPE</h3><ul>
+<li>1개의 행값을 갖는다.(선언)</li>
+<li>선언방법<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">수명][ ][테이블명]%ROWTYPE</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h4 id="예제-1"><a href="#예제-1" class="headerlink" title="예제"></a>예제</h4><p><img src="/images/database/DB05-04.png" alt="DB"><br><br></p>
+<h3 id="제어문"><a href="#제어문" class="headerlink" title="제어문"></a>제어문</h3><h4 id="예시"><a href="#예시" class="headerlink" title="예시"></a>예시</h4><p>10<del>120 중 임의이 부서 버호를 받아서 해당부서의 평균 급여에 따라서 등급이 출력되도록 하자.<br>1</del>3000 낮음<br>3000~ 6000 적정<br>6000이상 우수</p>
+<ul>
+<li><p>ROUND(DBMS_RANDOM.VALUE(10, 120), -1); 랜덤함수</p>
+</li>
+<li><p>IF문<br><img src="/images/database/DB05-05.png" alt="DB"></p>
+</li>
+<li><p>IF, ELSIF, ELSE문<br><img src="/images/database/DB05-06.png" alt="DB"></p>
+</li>
+<li><p>CASE WHEN 문<br><img src="/images/database/DB05-07.png" alt="DB"></p>
+<br>
+
+</li>
+</ul>
+<h3 id="반복문"><a href="#반복문" class="headerlink" title="반복문"></a>반복문</h3><ul>
+<li><p>LOOP문<br><img src="/images/database/DB05-08.png" alt="DB"></p>
+</li>
+<li><p>WHILE문<br><img src="/images/database/DB05-09.png" alt="DB"></p>
+</li>
+<li><p>for문<br><img src="/images/database/DB05-10.png" alt="DB"></p>
+<br>
+
+</li>
+</ul>
+<h3 id="예외처리"><a href="#예외처리" class="headerlink" title="예외처리"></a>예외처리</h3><ul>
+<li>PL/SQL의 오류를 예외라고 한다.<br>(컴파일시 문접적 오류: 실행시 발생하는 오류)</li>
+<li>미리 정의 된 오라클 서버 예외 : 선언할 필요도 없고, 예외 발생 시, 예외절로 자동이용</li>
+<li>사용자 예외 강제 발생 : 선어부에서 예외를 정의 실행부에서 RAISE문 사용하여 예외발생</li>
+</ul>
+<h4 id="예시-1"><a href="#예시-1" class="headerlink" title="예시"></a>예시</h4><ul>
+<li><p>미리 정의 된 오라클 서버 예외<br><img src="/images/database/DB05-11.png" alt="DB"></p>
+</li>
+<li><p>사용자 강제 예외 발생<br><img src="/images/database/DB05-12.png" alt="DB"></p>
+</li>
+</ul>
+<h4 id="예제-2"><a href="#예제-2" class="headerlink" title="예제"></a>예제</h4><p>신입사원 입력 시 잘못된 부서번호에 대해서 사용자 예외 처리를 하시오(오류남)<br><img src="/images/database/DB05-13.png" alt="DB"></p>
+<ul>
+<li>먼저 예외발생을 위해 예외를 선언(ex_invalid_dept_id)</li>
+<li>count 함수를 사용해 해당부서의 인원을 검색하여 그 값을 v_cnt에 대입</li>
+<li>v_cnt 값이 0이면 해당부서가 없는것이므로, RAISE문 사용하여 예외발생<br><br><br></li>
+</ul>
+<h3 id="CURSOR"><a href="#CURSOR" class="headerlink" title="CURSOR"></a>CURSOR</h3><ul>
+<li>SELECT문 결과 집합이 다중로우일 경우 반드시 커서를 이용하여 처리<br>(RAWTYPE과 함께 사용)</li>
+</ul>
+<h4 id="예시-2"><a href="#예시-2" class="headerlink" title="예시"></a>예시</h4><p><img src="/images/database/DB05-14.png" alt="DB"></p>
+<h4 id="예제-3"><a href="#예제-3" class="headerlink" title="예제"></a>예제</h4><p>서를 이용하여 사원의 정보를 출력하세요(사원번호, 사원이름, 급여, 급여누계)<br><img src="/images/database/DB05-15.png" alt="DB"></p>
+<ul>
+<li>total salary 선언</li>
+<li>CURSOR 선언</li>
+<li>CURSOR를 받을 데이터 선언</li>
+<li>루프문을 사용해 삽입(FETCH, INTO, EXIT WHEN)<br>#%NOTFOUND : 더이상 없을때</li>
+<li>LOOP문은 for문을 대체 가능 하기 이미지 참고</li>
+</ul>
+<p><img src="/images/database/DB05-16.png" alt="DB"><br><br></p>
+<h3 id="프로시저-Procedure"><a href="#프로시저-Procedure" class="headerlink" title="프로시저(Procedure)"></a>프로시저(Procedure)</h3><p>자주 사용되는 PL/SQL 블록을 재사용하기 위해 모듈화 하는 것.</p>
+<ul>
+<li><p>선언방법</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CREATE OR REPLACE PROCEDURE [프로시저명][(변수명 IN 받을 데이터타입 컬럼명)]IS</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>실행방법</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">EXECUTE [프로시저명][입력값];</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h4 id="예시-3"><a href="#예시-3" class="headerlink" title="예시"></a>예시</h4><p>부서번호를 받아 사원리스트를 출력하라.<br><img src="/images/database/DB05-17.png" alt="DB"></p>
+<ul>
+<li>부서번호를 입력받는 프로시저 생성 (listbyDept)</li>
+<li>부서사람이 여러명이기 때문에 다중행 입력받기위해 CURSOR사용</li>
+<li>EXECUTE 사용하여 실행<br><br><br></li>
+</ul>
+
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/OracleDB/" rel="tag">OracleDB</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">Like this article? Support the author with</h3>
+        <div class="buttons is-centered">
+            
+                
+<div class="notification is-danger">
+    You forgot to set the <code>qrcode</code> for Alipay. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                
+<div class="notification is-danger">
+    You forgot to set the <code>qrcode</code> for Wechat. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                <!-- Visit https://www.paypal.com/donate/buttons/ to get your donate button -->
+
+<div class="notification is-danger">
+    You forgot to set the <code>business</code> and <code>currency_code</code> for Paypal. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                
+<div class="notification is-danger">
+    You forgot to set the <code>url</code> Patreon. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2018/12/04/OracleDB/DBmodeling01/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">실전 데이터 모델링&amp;데이터베이스 설계와 구축</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2018/11/29/OracleDB/oracle04/">
+                <span class="level-item">다중컬럼 다중로우, FROM절 서브쿼리, 인덱스, 시퀀스, 뷰, PLSQL</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+</div>
+                
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-4-widescreen  has-order-3 column-right is-sticky">
+    
+        
+
+    <div class="card widget" id="toc">
+        <div class="card-content">
+            <div class="menu">
+                <h3 class="menu-label">
+                    Catalogue
+                </h3>
+                <ul class="menu-list"><li>
+        <a class="is-flex" href="#KOSTA-DAY24">
+        <span class="has-mr-6">1</span>
+        <span>KOSTA DAY24</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#DataBase">
+        <span class="has-mr-6">1.1</span>
+        <span>DataBase</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#Reference형-데이터-타입">
+        <span class="has-mr-6">1.1.1</span>
+        <span>Reference형 데이터 타입</span>
+        </a></li><li>
+        <a class="is-flex" href="#ROWTYPE">
+        <span class="has-mr-6">1.1.2</span>
+        <span>ROWTYPE</span>
+        </a></li><li>
+        <a class="is-flex" href="#제어문">
+        <span class="has-mr-6">1.1.3</span>
+        <span>제어문</span>
+        </a></li><li>
+        <a class="is-flex" href="#반복문">
+        <span class="has-mr-6">1.1.4</span>
+        <span>반복문</span>
+        </a></li><li>
+        <a class="is-flex" href="#예외처리">
+        <span class="has-mr-6">1.1.5</span>
+        <span>예외처리</span>
+        </a></li><li>
+        <a class="is-flex" href="#CURSOR">
+        <span class="has-mr-6">1.1.6</span>
+        <span>CURSOR</span>
+        </a></li><li>
+        <a class="is-flex" href="#프로시저-Procedure">
+        <span class="has-mr-6">1.1.7</span>
+        <span>프로시저(Procedure)</span>
+        </a></li></ul></li></ul></li></ul>
+            </div>
+        </div>
+    </div>
+
+    
+        <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            Tag Cloud
+        </h3>
+        <a href="/tags/Algorithm/" style="font-size: 11.11px;">Algorithm</a> <a href="/tags/DataBase/" style="font-size: 10px;">DataBase</a> <a href="/tags/Etc/" style="font-size: 11.11px;">Etc</a> <a href="/tags/Git/" style="font-size: 13.33px;">Git</a> <a href="/tags/Interview/" style="font-size: 14.44px;">Interview</a> <a href="/tags/JPA/" style="font-size: 20px;">JPA</a> <a href="/tags/JSP/" style="font-size: 14.44px;">JSP</a> <a href="/tags/Java/" style="font-size: 18.89px;">Java</a> <a href="/tags/JavaScript/" style="font-size: 12.22px;">JavaScript</a> <a href="/tags/OracleDB/" style="font-size: 14.44px;">OracleDB</a> <a href="/tags/Process/" style="font-size: 11.11px;">Process</a> <a href="/tags/RestAPI/" style="font-size: 14.44px;">RestAPI</a> <a href="/tags/Seminar/" style="font-size: 10px;">Seminar</a> <a href="/tags/SpringBoot/" style="font-size: 20px;">SpringBoot</a> <a href="/tags/SpringSecurity/" style="font-size: 12.22px;">SpringSecurity</a> <a href="/tags/SpringWebMvc/" style="font-size: 16.67px;">SpringWebMvc</a> <a href="/tags/Springframework/" style="font-size: 17.78px;">Springframework</a> <a href="/tags/Springframework-kosta/" style="font-size: 14.44px;">Springframework_kosta</a> <a href="/tags/Web/" style="font-size: 12.22px;">Web</a> <a href="/tags/debug/" style="font-size: 11.11px;">debug</a> <a href="/tags/jQuery/" style="font-size: 12.22px;">jQuery</a> <a href="/tags/%EC%A0%95%EB%B3%B4%EC%B2%98%EB%A6%AC%EA%B8%B0%EC%82%AC-%ED%95%84%EA%B8%B0/" style="font-size: 13.33px;">정보처리기사_필기</a> <a href="/tags/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%ED%9A%8C%EA%B3%A0/" style="font-size: 15.56px;">프로젝트_회고</a>
+    </div>
+</div>
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/blog_logo.png" alt="Reference 형 데이터, ROWTYPE, 제어문, 반복문, 예외처리, Cursor, for문, Procedure" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2020 Bong&#39;s blog&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/cyr9210">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("en");</script>
+
+
+<script>
+var IcarusThemeSettings = {
+    site: {
+        url: 'http://yoursite.com',
+        external_link: {"enable":true,"exclude":[]}
+    },
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+<script src="/js/animation.js"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+<script src="/js/gallery.js" defer></script>
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+<a id="back-to-top" title="Back to Top" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: 'Posts',
+                PAGES: 'Pages',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
+                UNTITLED: '(Untitled)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

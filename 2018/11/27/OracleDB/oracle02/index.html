@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html >
+<head>
+    <meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 4.2.0" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>HAVING, 함수, DDL, DML, 제약조건, JOIN - Bong&#39;s blog</title>
+
+
+    <meta name="description" content="KOSTA DAY21DataBase">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HAVING, 함수, DDL, DML, 제약조건, JOIN">
+<meta property="og:url" content="http://yoursite.com/2018/11/27/OracleDB/oracle02/index.html">
+<meta property="og:site_name" content="Bong&#39;s blog">
+<meta property="og:description" content="KOSTA DAY21DataBase">
+<meta property="og:image" content="http://yoursite.com/images/og_image.png">
+<meta property="article:published_time" content="2018-11-27T09:02:10.000Z">
+<meta property="article:modified_time" content="2020-03-20T07:57:35.730Z">
+<meta property="article:author" content="Bong&#39;s blog">
+<meta property="article:tag" content="OracleDB">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/images/og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+<style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+    
+    
+    
+    
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+    
+    
+    
+    
+    
+    
+    
+    <link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-2-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/blog_logo.png" alt="HAVING, 함수, DDL, DML, 제약조건, JOIN" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                href="/">Home</a>
+                
+                <a class="navbar-item"
+                href="/archives">Archives</a>
+                
+                <a class="navbar-item"
+                href="/tags">Tags</a>
+                
+                <a class="navbar-item"
+                href="/about">About</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    <a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/cyr9210">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="Search" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-8-widescreen has-order-2 column-main">
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2018-11-27T09:02:10.000Z">2018-11-27</time>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    8 minutes read (About 1143 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                HAVING, 함수, DDL, DML, 제약조건, JOIN
+            
+        </h1>
+        <div class="content">
+            <p><img src="/images/oracledb_logo.png" alt="DB"></p>
+<h1 id="KOSTA-DAY21"><a href="#KOSTA-DAY21" class="headerlink" title="KOSTA DAY21"></a>KOSTA DAY21</h1><h2 id="DataBase"><a href="#DataBase" class="headerlink" title="DataBase"></a>DataBase</h2><a id="more"></a>
+<h3 id="HAVING"><a href="#HAVING" class="headerlink" title="HAVING"></a>HAVING</h3><ul>
+<li>조건<ul>
+<li>전체 그룹에서 일부의 그룹만 추출하기 위해 사용된다.</li>
+<li>WHERE와 비슷하게 사용된다.</li>
+</ul>
+</li>
+</ul>
+<h4 id="예제"><a href="#예제" class="headerlink" title="예제"></a>예제</h4><p><img src="/images/database/DB02-01.png" alt="DB"></p>
+<ul>
+<li><p>WHERE절 사용</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT department_id, avg(salary) FROM employees</span><br><span class="line">GROUP BY department_id</span><br><span class="line">WHERE avg(salary) &lt; 5000;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>HAVING절 사용</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT department_id, avg(salary) FROM employees</span><br><span class="line">GROUP BY department_id</span><br><span class="line">HAVING avg(salary) &lt; 5000;</span><br></pre></td></tr></table></figure>
+<p><br><br></p>
+</li>
+</ul>
+<h3 id="함수"><a href="#함수" class="headerlink" title="함수"></a>함수</h3><h4 id="문자함수"><a href="#문자함수" class="headerlink" title="문자함수"></a>문자함수</h4><p><img src="/images/database/DB02-02.png" alt="DB"></p>
+<ul>
+<li>LOWER() : 소문자 문자 변환</li>
+<li>UPPER() : 대문자 문자 변환</li>
+<li>SUBSTR(index, n) : 부분 문자열 추출(INDEX 1부터시작, 문자갯수)</li>
+</ul>
+<h4 id="예제-1"><a href="#예제-1" class="headerlink" title="예제"></a>예제</h4><p><img src="/images/database/DB02-03.png" alt="DB"></p>
+<h4 id="숫자함수"><a href="#숫자함수" class="headerlink" title="숫자함수"></a>숫자함수</h4><ul>
+<li>MOD : 나머지값 변환</li>
+<li>ROUND(n1, n2) : 반올림 값 리턴 (숫자, 소수자리수 -1 = 1의자리)</li>
+<li>CEIL() : 올림</li>
+<li>FLOOR() : 내림</li>
+</ul>
+<h4 id="날짜함수"><a href="#날짜함수" class="headerlink" title="날짜함수"></a>날짜함수</h4><ul>
+<li><p>SYSDATE : 현재 날짜를 출력하는 함수</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT sysdate-1 “어제”, sysdate “오늘”, sysdate+1 “내일” FROM dual;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>&lt;퀴즈&gt;신입사원의 근속년을 출력하라.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT first_name, last_name, hire_date “입사일”, round((SYSDATE-HIRE_DATE)&#x2F;365) “근속년수” FROM employees;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>&lt;퀴즈&gt; 07년에 입사한 사원의 목록을 출력하라. TO_CHAR 사용</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;(LIKE 함수 사용)</span><br><span class="line">SELECT hire_date FROM employees</span><br><span class="line">WHERE hire_date LIKE ‘07%’;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;(TO_CHAR사용)</span><br><span class="line">SELECT hire_date FROM employees</span><br><span class="line">WHERE TO_CHAR(hire_date, ‘YYYY’) &#x3D; ‘2007’;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h4 id="NVL"><a href="#NVL" class="headerlink" title="NVL()"></a>NVL()</h4><p>NULL을 0 또는 다른 값으로 반환</p>
+<ul>
+<li>퀴즈&gt; 사원의 연봉을 출력하라.(월급여 <em>12) + (월급여</em>12*커미션)<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT last_name, salary, nvl(commission_pct, 0), salary+salary*nvl(commission_pct, 0) “실연봉” from employees;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h4 id="DECODE"><a href="#DECODE" class="headerlink" title="DECODE()"></a>DECODE()</h4><p>괄호 안의 값을 변환</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT job_id, DECODE(job_id, ‘SH_CLERK’, ‘Sales Dept’,’SA_MAN’, ‘Sales Dept’, ‘Another’) FROM employees;</span><br></pre></td></tr></table></figure>
+
+<h4 id="CASEWHEN"><a href="#CASEWHEN" class="headerlink" title="CASEWHEN"></a>CASEWHEN</h4><p>WHEN뒤의 값을 THEN뒤의 값으로 변환</p>
+<ul>
+<li>DECODE와 비슷한 역할을 한다.<br><img src="/images/database/DB02-04.png" alt="DB"><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">SELECT job_id, </span><br><span class="line">CASE job_id</span><br><span class="line">WHEN ‘SA_MAN’ THEN ‘Sales Dept’</span><br><span class="line">WHEN ‘SH_CLERK’ THEN ‘Sales Dept’ </span><br><span class="line">ELSE ‘Another2’</span><br><span class="line">END</span><br><span class="line">From employees;</span><br></pre></td></tr></table></figure>
+<br>
+
+</li>
+</ul>
+<h3 id="DDL"><a href="#DDL" class="headerlink" title="DDL"></a>DDL</h3><p>Data Definition Language 데이터 정의어</p>
+<ul>
+<li>테이블 생성<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE 테이블명(</span><br><span class="line">컬럼명 데이터형,</span><br><span class="line">컬러명 데이터형</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<blockquote>
+<p><strong>데이터형</strong><br>문자형 : CHAR(size), VARCHAR2(size) 가변형(사이즈 알아서 수정)<br>숫자형 : NUMBER<br>날짜형 : DATE, TIMESTAMP(좀 더 디테일한 시간)<br>대용량(이미지, 파일) : LOB(문자데이터), BLOB(이진형데이터, ~4GB)</p>
+</blockquote>
+<ul>
+<li><p>테이블복사</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CREATE TALBE emp01</span><br><span class="line">AS SELECT * FROM employees;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>테이블 구조 복사</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE emp02</span><br><span class="line">AS SELECT * FROM employees WHERE 1&#x3D;0;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h4 id="테이블-구조-수정"><a href="#테이블-구조-수정" class="headerlink" title="테이블 구조 수정"></a>테이블 구조 수정</h4><ul>
+<li><p>컬럼추가</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ALTER TABLE emp02</span><br><span class="line">ADD(job VARCHAR2(50);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>컬럼수정</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ALTER TABLE emp02</span><br><span class="line">MODIFY(job VARCHAR2(100));</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>컬럼삭제</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ALTER TABLE emp02</span><br><span class="line">DROP COLUMN job;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>테이블 삭제</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DROP TABLE emp02 PURGE;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>테이블 이름 변경</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RENAME emp01 TO emp00;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>테이블 데이터만 삭제</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">TRUNCATE TABLE emp00; &#x2F;&#x2F; → DCL(트랙잭션 적용 불가, 복구불가)</span><br><span class="line">DELETE FROM emp00; &#x2F;&#x2F; → DML(트랙잭션 적용 가능)</span><br><span class="line">&#x2F;&#x2F; ※트랜잭션 : 상호작용 단위</span><br></pre></td></tr></table></figure>
+<p><br><br></p>
+</li>
+</ul>
+<h3 id="DML"><a href="#DML" class="headerlink" title="DML"></a>DML</h3><p>(INSERT, UPDATE, DELETE)</p>
+<h4 id="INSERT문"><a href="#INSERT문" class="headerlink" title="INSERT문"></a>INSERT문</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">INSERT INTO dept01 VALUES(300, ‘DEVELOPER’, 100, 10);</span><br><span class="line"></span><br><span class="line">INSERT INTO dept01(department_id, department_name)</span><br><span class="line">VALUES(310, ‘Innovation’);</span><br></pre></td></tr></table></figure>
+
+<h4 id="UPDATE문"><a href="#UPDATE문" class="headerlink" title="UPDATE문"></a>UPDATE문</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">UPDATE 테이블명 SET 컬럼명 &#x3D; 수정값, 컬럼명&#x3D;수정값</span><br><span class="line">WHERE 수정대상;</span><br></pre></td></tr></table></figure>
+
+<h4 id="DELETE문"><a href="#DELETE문" class="headerlink" title="DELETE문"></a>DELETE문</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">DLETE FROM 테이블명</span><br><span class="line">WHERE 삭제대상;</span><br></pre></td></tr></table></figure>
+<br>
+
+<h3 id="제약조건"><a href="#제약조건" class="headerlink" title="제약조건"></a>제약조건</h3><p>데이터를 추가,삭제,수정 하는 가운데 데이터의 무결성을 유지하기위해 사용</p>
+<h4 id="NOT-NULL"><a href="#NOT-NULL" class="headerlink" title="NOT NULL"></a>NOT NULL</h4><ul>
+<li>NULL값 입력 시 에러발생</li>
+</ul>
+<h4 id="UNIQUE"><a href="#UNIQUE" class="headerlink" title="UNIQUE"></a>UNIQUE</h4><ul>
+<li>같은값 입력 불가</li>
+</ul>
+<h4 id="PRIMARY-KEY"><a href="#PRIMARY-KEY" class="headerlink" title="PRIMARY KEY"></a>PRIMARY KEY</h4><ul>
+<li>UNIQUE + NOT NULL</li>
+<li>주키역할</li>
+<li>하나 이상 존재해야 TABLE의 역할을 한다.</li>
+</ul>
+<h4 id="CHECK"><a href="#CHECK" class="headerlink" title="CHECK()"></a>CHECK()</h4><ul>
+<li>괄호안의 보기중 입력하지 않으면 에러발생<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE emp08(</span><br><span class="line">empno NUMBER,</span><br><span class="line">ename VARCHAR2(20) NOT NULL,</span><br><span class="line">job VARCHAR2(20),</span><br><span class="line">deptno NUMBER,</span><br><span class="line">gender char(1) CHECK(gender IN(‘M’, ‘F’));</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h4 id="FOREIGN-KEY"><a href="#FOREIGN-KEY" class="headerlink" title="FOREIGN KEY"></a>FOREIGN KEY</h4><ul>
+<li>다른 테이블을 참조값으로 가져옴</li>
+</ul>
+<h4 id="예제-2"><a href="#예제-2" class="headerlink" title="예제"></a>예제</h4><ul>
+<li><p>테이블 생성 동시 조건</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE emp03(</span><br><span class="line">empno NUMBER PRIMARY KEY,</span><br><span class="line">ename VARCHAR2(20) NOT NULL,</span><br><span class="line">job VARCHAR2(20),</span><br><span class="line">deptno NUMBER REFERENCES departments(department_id));</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>테이블 레벨방식</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE emp06(</span><br><span class="line">empno NUMBER,</span><br><span class="line">ename VARCHAR2(20) NOT NULL,</span><br><span class="line">job VARCHAR2(20),</span><br><span class="line">deptno NUMBER,</span><br><span class="line">CONSTRAINT emp06_empno_pk PRIMARY KEY(empno),</span><br><span class="line">CONSTRAINT emp06_deptno_fk</span><br><span class="line">FOREIGN KEY(deptno)</span><br><span class="line">REFERENCES departments(department_id));</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>테이블 수정방식</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE emp07(</span><br><span class="line">empno NUMBER,</span><br><span class="line">ename VARCHAR2(20) NOT NULL,</span><br><span class="line">job VARCHAR2(20),</span><br><span class="line">deptno NUMBER);</span><br><span class="line"></span><br><span class="line">ALTER TABLE emp07</span><br><span class="line">ADD CONSTRAINT emp07_empno_pk PRIMARY KEY(empno);</span><br></pre></td></tr></table></figure>
+<br>
+
+</li>
+</ul>
+<h3 id="JOIN"><a href="#JOIN" class="headerlink" title="JOIN"></a>JOIN</h3><p>2개 이상의 테이블에서 데이터를 검색하기 위해서 사용</p>
+<ul>
+<li>INNER JOIN : 같은 컬럼 값에 관하여</li>
+<li>JOIN 사용방법<ol>
+<li>내가 원하는 데이터가 무엇인가?(컬럼목록작성)</li>
+<li>원하는 데이터가 어느 테이블에 있는가?</li>
+<li>여러테이블에 있다면 각각의 테이블에 공통된 컬럼이 무엇인가?</li>
+</ol>
+</li>
+</ul>
+<h4 id="예제-3"><a href="#예제-3" class="headerlink" title="예제"></a>예제</h4><ul>
+<li>‘송강’ 교수가 강의하는 과목을 검색해라<ol>
+<li>교수번호(pno), 교수이름(pname), 과목명(cname)</li>
+<li>professor, course</li>
+<li>pno<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SELECT p.pno, p.pname, c.cname</span><br><span class="line">FROM professor p,course c</span><br><span class="line">WHERE p.pno &#x3D; c.pno</span><br><span class="line">AND pname &#x3D; ‘송강’;</span><br></pre></td></tr></table></figure>
+<br>
+</li>
+</ol>
+</li>
+</ul>
+
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/OracleDB/" rel="tag">OracleDB</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">Like this article? Support the author with</h3>
+        <div class="buttons is-centered">
+            
+                
+<div class="notification is-danger">
+    You forgot to set the <code>qrcode</code> for Alipay. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                
+<div class="notification is-danger">
+    You forgot to set the <code>qrcode</code> for Wechat. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                <!-- Visit https://www.paypal.com/donate/buttons/ to get your donate button -->
+
+<div class="notification is-danger">
+    You forgot to set the <code>business</code> and <code>currency_code</code> for Paypal. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                
+<div class="notification is-danger">
+    You forgot to set the <code>url</code> Patreon. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2018/11/28/OracleDB/oracle03/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">ANSI JOIN, INNER JOIN, OUTER JOIN, SELF JOIN, 서브쿼리</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2018/11/26/OracleDB/oracle01/">
+                <span class="level-item">데이터베이스, Oracle , SELECT</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+</div>
+                
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-4-widescreen  has-order-3 column-right is-sticky">
+    
+        
+
+    <div class="card widget" id="toc">
+        <div class="card-content">
+            <div class="menu">
+                <h3 class="menu-label">
+                    Catalogue
+                </h3>
+                <ul class="menu-list"><li>
+        <a class="is-flex" href="#KOSTA-DAY21">
+        <span class="has-mr-6">1</span>
+        <span>KOSTA DAY21</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#DataBase">
+        <span class="has-mr-6">1.1</span>
+        <span>DataBase</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#HAVING">
+        <span class="has-mr-6">1.1.1</span>
+        <span>HAVING</span>
+        </a></li><li>
+        <a class="is-flex" href="#함수">
+        <span class="has-mr-6">1.1.2</span>
+        <span>함수</span>
+        </a></li><li>
+        <a class="is-flex" href="#DDL">
+        <span class="has-mr-6">1.1.3</span>
+        <span>DDL</span>
+        </a></li><li>
+        <a class="is-flex" href="#DML">
+        <span class="has-mr-6">1.1.4</span>
+        <span>DML</span>
+        </a></li><li>
+        <a class="is-flex" href="#제약조건">
+        <span class="has-mr-6">1.1.5</span>
+        <span>제약조건</span>
+        </a></li><li>
+        <a class="is-flex" href="#JOIN">
+        <span class="has-mr-6">1.1.6</span>
+        <span>JOIN</span>
+        </a></li></ul></li></ul></li></ul>
+            </div>
+        </div>
+    </div>
+
+    
+        <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            Tag Cloud
+        </h3>
+        <a href="/tags/Algorithm/" style="font-size: 11.11px;">Algorithm</a> <a href="/tags/DataBase/" style="font-size: 10px;">DataBase</a> <a href="/tags/Etc/" style="font-size: 11.11px;">Etc</a> <a href="/tags/Git/" style="font-size: 13.33px;">Git</a> <a href="/tags/Interview/" style="font-size: 14.44px;">Interview</a> <a href="/tags/JPA/" style="font-size: 20px;">JPA</a> <a href="/tags/JSP/" style="font-size: 14.44px;">JSP</a> <a href="/tags/Java/" style="font-size: 18.89px;">Java</a> <a href="/tags/JavaScript/" style="font-size: 12.22px;">JavaScript</a> <a href="/tags/OracleDB/" style="font-size: 14.44px;">OracleDB</a> <a href="/tags/Process/" style="font-size: 11.11px;">Process</a> <a href="/tags/RestAPI/" style="font-size: 14.44px;">RestAPI</a> <a href="/tags/Seminar/" style="font-size: 10px;">Seminar</a> <a href="/tags/SpringBoot/" style="font-size: 20px;">SpringBoot</a> <a href="/tags/SpringSecurity/" style="font-size: 12.22px;">SpringSecurity</a> <a href="/tags/SpringWebMvc/" style="font-size: 16.67px;">SpringWebMvc</a> <a href="/tags/Springframework/" style="font-size: 17.78px;">Springframework</a> <a href="/tags/Springframework-kosta/" style="font-size: 14.44px;">Springframework_kosta</a> <a href="/tags/Web/" style="font-size: 12.22px;">Web</a> <a href="/tags/debug/" style="font-size: 11.11px;">debug</a> <a href="/tags/jQuery/" style="font-size: 12.22px;">jQuery</a> <a href="/tags/%EC%A0%95%EB%B3%B4%EC%B2%98%EB%A6%AC%EA%B8%B0%EC%82%AC-%ED%95%84%EA%B8%B0/" style="font-size: 13.33px;">정보처리기사_필기</a> <a href="/tags/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%ED%9A%8C%EA%B3%A0/" style="font-size: 15.56px;">프로젝트_회고</a>
+    </div>
+</div>
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/blog_logo.png" alt="HAVING, 함수, DDL, DML, 제약조건, JOIN" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2020 Bong&#39;s blog&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/cyr9210">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("en");</script>
+
+
+<script>
+var IcarusThemeSettings = {
+    site: {
+        url: 'http://yoursite.com',
+        external_link: {"enable":true,"exclude":[]}
+    },
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+<script src="/js/animation.js"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+<script src="/js/gallery.js" defer></script>
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+<a id="back-to-top" title="Back to Top" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: 'Posts',
+                PAGES: 'Pages',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
+                UNTITLED: '(Untitled)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

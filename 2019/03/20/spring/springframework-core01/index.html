@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html >
+<head>
+    <meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 4.2.0" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>스프링 핵심기술01 - IoC 컨테이너와 빈 - Bong&#39;s blog</title>
+
+
+    <meta name="description" content="스프링 프레임워크 핵심기술01(inflearn) - 백기선Springframework">
+<meta property="og:type" content="article">
+<meta property="og:title" content="스프링 핵심기술01 - IoC 컨테이너와 빈">
+<meta property="og:url" content="http://yoursite.com/2019/03/20/spring/springframework-core01/index.html">
+<meta property="og:site_name" content="Bong&#39;s blog">
+<meta property="og:description" content="스프링 프레임워크 핵심기술01(inflearn) - 백기선Springframework">
+<meta property="og:image" content="http://yoursite.com/images/og_image.png">
+<meta property="article:published_time" content="2019-03-20T07:36:43.000Z">
+<meta property="article:modified_time" content="2020-03-20T07:57:35.782Z">
+<meta property="article:author" content="Bong&#39;s blog">
+<meta property="article:tag" content="Springframework">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/images/og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+<style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+    
+    
+    
+    
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+    
+    
+    
+    
+    
+    
+    
+    <link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-2-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/blog_logo.png" alt="스프링 핵심기술01 - IoC 컨테이너와 빈" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                href="/">Home</a>
+                
+                <a class="navbar-item"
+                href="/archives">Archives</a>
+                
+                <a class="navbar-item"
+                href="/tags">Tags</a>
+                
+                <a class="navbar-item"
+                href="/about">About</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    <a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/cyr9210">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="Search" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-8-widescreen has-order-2 column-main">
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-03-20T07:36:43.000Z">2019-03-20</time>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    17 minutes read (About 2537 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                스프링 핵심기술01 - IoC 컨테이너와 빈
+            
+        </h1>
+        <div class="content">
+            <p><img src="/images/springframwork-logo.png" alt="springf"></p>
+<h1 id="스프링-프레임워크-핵심기술01-inflearn-백기선"><a href="#스프링-프레임워크-핵심기술01-inflearn-백기선" class="headerlink" title="스프링 프레임워크 핵심기술01(inflearn) - 백기선"></a>스프링 프레임워크 핵심기술01(inflearn) - 백기선</h1><h2 id="Springframework"><a href="#Springframework" class="headerlink" title="Springframework"></a>Springframework</h2><a id="more"></a>
+<p>백기선님의 Spring 시리즈 두번째 강좌 ‘<a href="https://www.inflearn.com/course/spring-framework_core/">스프링프레임워크 핵심기술</a>‘ 수강을 시작하였습니다.<br>해당강좌는 스프링프레임워크 입문에 이어서 좀 더 심화적인 과정이며, 초급에서 중급수준으로 넘어가는 사람들에게 추천하느 강좌라고 소개하고 있습니다.<br>kosta에서 xml방식을 주로 사용하고 설명했었으나, 그 방법은 오래전에 사용되던 방법이라고 합니다..<br>이번에는 Java Class방식을 다루도록 하겠습니다.</p>
+<hr>
+<h3 id="IoC-컨테이너와-빈"><a href="#IoC-컨테이너와-빈" class="headerlink" title="IoC 컨테이너와 빈"></a>IoC 컨테이너와 빈</h3><h4 id="IoC-컨테이너"><a href="#IoC-컨테이너" class="headerlink" title="IoC 컨테이너"></a>IoC 컨테이너</h4><ul>
+<li>Inversion of Control</li>
+<li>의존 관계 주입(Dependency Injection)이라고도 한다.</li>
+<li>어떤 객체가 사용하는 의존객체를 직접 만들어 사용하는게 아니라 주입받아 사용하는 방법</li>
+<li>스프링 초기에느 xml로 설정하는것이 대세였지만, annotation기반의  의존성 주입을 지원</li>
+<li>최상위 인터페이스 : BeanFactory</li>
+</ul>
+<blockquote>
+<p><strong>POJO객체</strong><br>POJO(Plain Old Java Object) 특정 자바모델이나, 프레임워크 등을 따르지 않는 자바객체</p>
+</blockquote>
+<h4 id="빈-Bean"><a href="#빈-Bean" class="headerlink" title="빈(Bean)"></a>빈(Bean)</h4><ul>
+<li>IoC 컨테이너가 관리하는 객체</li>
+<li>장점<ul>
+<li>의존성 관리</li>
+<li>스코프<ul>
+<li>싱글톤 : 하나만 사용(항상 같은 객체)</li>
+<li>프로토타입 : 매번 다른 객체</li>
+</ul>
+</li>
+<li>라이프사이클 인터페이스<ul>
+<li>ex) 빈이 생성될 때, 무언가를 행함</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="Application-Context"><a href="#Application-Context" class="headerlink" title="Application Context"></a>Application Context</h4><p>BeanFactory를 상속받는다. 즉, BeanFactory의 기능을 하면서 추가적인 기능을 가진다.</p>
+<ul>
+<li>BeanFactory 기능</li>
+<li>메세지 소스 처리기능 (18n)</li>
+<li>리소스 로딩 기능</li>
+<li>이벤트 발행기능<br><br><br></li>
+</ul>
+<h3 id="Application-Context와-다양한-빈-설정방법"><a href="#Application-Context와-다양한-빈-설정방법" class="headerlink" title="Application Context와 다양한 빈 설정방법"></a>Application Context와 다양한 빈 설정방법</h3><h4 id="스프링-IoC-컨테이너의-역할"><a href="#스프링-IoC-컨테이너의-역할" class="headerlink" title="스프링 IoC 컨테이너의 역할"></a>스프링 IoC 컨테이너의 역할</h4><ul>
+<li>빈 인스턴스 생성</li>
+<li>의존 관계 설정</li>
+<li>빈제공</li>
+</ul>
+<h4 id="ApplicationContext"><a href="#ApplicationContext" class="headerlink" title="ApplicationContext"></a>ApplicationContext</h4><ul>
+<li>ClassPathXmlApplicationContext(XML)</li>
+<li><strong>AnnotationConfigApplicationContext(Java)</strong><br>최근에는 아래와 같이 Java형식을 사용한다.<br><img src="/images/springc/springcore01-01.png" alt="springcore"></li>
+</ul>
+<h4 id="ComponentScan"><a href="#ComponentScan" class="headerlink" title="ComponentScan"></a>ComponentScan</h4><p>Annotation이 붙은 객체를 빈 등록</p>
+<ul>
+<li>xml 설정 → context:componen-scan</li>
+<li>Java → @ComponentScan<br><img src="/images/springc/springcore01-03.png" alt="springcore">)<img src="/images/springc/springcore01-04.png" alt="springcore"><br>
+
+</li>
+</ul>
+<h3 id="Autowired"><a href="#Autowired" class="headerlink" title="Autowired"></a>Autowired</h3><ul>
+<li>필요한 의존 객체의 타입에 해당하는 빈을 찾아 주입한다.</li>
+<li>사용위치<ul>
+<li>생성자</li>
+<li>setter</li>
+<li>필드</li>
+</ul>
+</li>
+</ul>
+<h4 id="생성자"><a href="#생성자" class="headerlink" title="생성자"></a>생성자</h4><p><img src="/images/springc/springcore01-05.png" alt="springcore"></p>
+<ul>
+<li>해당 타입의 빈이 한개인 경우<ul>
+<li>정상</li>
+</ul>
+</li>
+<li>해당 타입의 빈이 없는 경우<ul>
+<li>에러발생</li>
+</ul>
+</li>
+<li>해당 타입의 빈이 여러 개인 경우<ul>
+<li>@Primary 사용하면 여러 개인경우 해당 빈을 주입<br><img src="/images/springc/springcore01-08.png" alt="springcore"></li>
+</ul>
+</li>
+</ul>
+<h4 id="setter-필드"><a href="#setter-필드" class="headerlink" title="setter, 필드"></a>setter, 필드</h4><p><img src="/images/springc/springcore01-06.png" alt="springcore"></p>
+<ul>
+<li><p>해당 타입의 빈이 한개인 경우</p>
+<ul>
+<li>정상</li>
+</ul>
+</li>
+<li><p>해당 타입의 빈이 없는경우</p>
+<ul>
+<li>required = false 설정 시, 없을경우 의존성을 주입하지 않는다.<br><img src="/images/springc/springcore01-07.png" alt="springcore"></li>
+</ul>
+</li>
+<li><p>해당 타입의 빈이 여러 개인 경우</p>
+<ul>
+<li>@Primary 사용하면 여러 개인경우 해당 빈을 주입</li>
+<li>@Qualifier 사용하여 빈이름 지정<br><img src="/images/springc/springcore01-09.png" alt="springcore"></li>
+</ul>
+<p>  <strong>Qualifier을 사용으로 해결 할 수 있지만, @Primary를 쓰는것을 추천한다.</strong></p>
+</li>
+</ul>
+<h4 id="해당-타입의-빈을-모두-받고-싶을때"><a href="#해당-타입의-빈을-모두-받고-싶을때" class="headerlink" title="해당 타입의 빈을 모두 받고 싶을때"></a>해당 타입의 빈을 모두 받고 싶을때</h4><ul>
+<li>List&lt;&gt;로 받는다.<br><img src="/images/springc/springcore01-10.png" alt="springcore"></li>
+</ul>
+<h4 id="동작-원리"><a href="#동작-원리" class="headerlink" title="동작 원리"></a>동작 원리</h4><ul>
+<li>라이프사이클에 의해 동작</li>
+<li>BeanPostProcessor<ul>
+<li>새로 만든 빈 인스턴스를 수정할 수 있는 라이프 사이클 인터페이스</li>
+</ul>
+</li>
+<li>AutowiredAnnotationBeanPostProcessor extends BeanPostProcessor<ul>
+<li>스프링이 제공하는 @Autowired와 @Value 애노테이션 그리고 JSR-330의 @Inject 애노테이션을 지원하는 애노테이션 처리기.<br><br><br></li>
+</ul>
+</li>
+</ul>
+<h3 id="Component와-ComponentScan"><a href="#Component와-ComponentScan" class="headerlink" title="@Component와 ComponentScan"></a>@Component와 ComponentScan</h3><h4 id="컨포넌트-스캔-주요-기능"><a href="#컨포넌트-스캔-주요-기능" class="headerlink" title="컨포넌트 스캔 주요 기능"></a>컨포넌트 스캔 주요 기능</h4><ul>
+<li><p>스캔 위치 설정(basePackage, basePackageClasses를 통해 위치 설정)<br><img src="/images/springc/springcore01-11.png" alt="springcore"><br>Myservice는 @Service를 사용했지만 스캔 범위에서 벗어나기 때문에 빈으로 등록되지 않는다.</p>
+</li>
+<li><p>필터: 어떤 애노테이션을 스캔 할지 또는 하지 않을지 </p>
+</li>
+</ul>
+<h4 id="Component"><a href="#Component" class="headerlink" title="@Component"></a>@Component</h4><p>다음 Annotation들은 @Component를 참조한다.</p>
+<ul>
+<li>@Repository</li>
+<li>@Service</li>
+<li>@Controller</li>
+<li>@Configuration</li>
+</ul>
+<h4 id="동작원리"><a href="#동작원리" class="headerlink" title="동작원리"></a>동작원리</h4><ul>
+<li>실제 스캐닝은 ConfigurationClassPostProcessor라는 BeanFactoryPostProcessor에 의해 처리 됨.</li>
+<li><strong>즉, 다른 빈(직접등록하는)들이 등록되기전에 빈으로 등록된다.</strong><br>  → 초기 시간이 오래걸릴 수 있다.(싱글톤타입의 경우)</li>
+</ul>
+<h4 id="펑션을-사용한-빈-등록"><a href="#펑션을-사용한-빈-등록" class="headerlink" title="펑션을 사용한 빈 등록"></a>펑션을 사용한 빈 등록</h4><ul>
+<li>ComponentsSan을 대체하는 것이 아닌, 직접 빈을 등록하는 경우를 아래와 같이 사용하는것이 좋다. </li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">public static void main(String[] args) &#123;</span><br><span class="line">       SpringApplication app &#x3D; new SpringApplication((SpringcoreApplication.class));</span><br><span class="line">       </span><br><span class="line">       app.addInitializers((ApplicationContextInitializer&lt;GenericApplicationContext&gt;) ctx -&gt; </span><br><span class="line">       ctx.registerBean(MyService.class));</span><br><span class="line">       </span><br><span class="line">       app.run(args);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/springc/springcore01-12.png" alt="springcore"></p>
+<ul>
+<li>ComponentScan 범위 밖이지만 위와같은 방법으로 빈을 등록해줬기 때문에 빈으로 등록이된 것을 볼 수 있다.<br><br><br></li>
+</ul>
+<h3 id="빈의-스코프"><a href="#빈의-스코프" class="headerlink" title="빈의 스코프"></a>빈의 스코프</h3><h4 id="스코프"><a href="#스코프" class="headerlink" title="스코프"></a>스코프</h4><ul>
+<li><p>싱글톤</p>
+<ul>
+<li>프로퍼티가 공유<ul>
+<li>여러곳에서 사용 시, thread safe 하지 않다.</li>
+</ul>
+</li>
+<li>ApplicationContext 초기 구동시 인스턴스 생성</li>
+</ul>
+</li>
+<li><p>프로토 타입<br>  <img src="/images/springc/springcore01-14.png" alt="springcore"></p>
+<ul>
+<li>@Scope를 사용하여 설정</li>
+<li>Request</li>
+<li>Session</li>
+<li>WebSocket</li>
+<li>…</li>
+</ul>
+</li>
+<li><p>프로토타입 빈이 싱글톤 빈을 참조하면 아무 문제 없다.</p>
+</li>
+<li><p>싱글톤 빈이 프로토타입 빈을 참조하면</p>
+<ul>
+<li>프로토타입 빈이 업데이트되지 않는다. (싱글톤처럼 계속 같은 값)</li>
+<li>업데이트 <ul>
+<li>scoped-proxy<br><img src="/images/springc/springcore01-13.png" alt="springcore"></li>
+<li>Object-Provider</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="예제"><a href="#예제" class="headerlink" title="예제"></a>예제</h4><ul>
+<li><p>싱글톤 및 프로토타입<br><img src="/images/springc/springcore01-15.png" alt="springcore"></p>
+</li>
+<li><p>싱글톤 빈이 프로토타입을 참조할 때<br><img src="/images/springc/springcore01-16.png" alt="springcore"></p>
+<ul>
+<li>프로토 타입은 전부 다른값을 가르켜야하는데 같은 값을 가르키는 문제가 발생(없데이트가 안됨)</li>
+</ul>
+</li>
+<li><p>프록시 시용<br>  <img src="/images/springc/springcore01-17.png" alt="springcore"></p>
+<ul>
+<li>프록시를 사용하여 상기 문제를 해결하였다.</li>
+<li>ScopedProxyMode의 Default는 프록시를 사용하지 않는다.<br>우리예제에서는 class로 설정되어 있어 TARGET_CLASS 로 변경해주었다. </li>
+</ul>
+</li>
+<li><p>Object provider 사용<br>  <img src="/images/springc/springcore01-18.png" alt="springcore"></p>
+<ul>
+<li>코드자체를 건드리기때문에 추천하지는 않는다.<br><br><br></li>
+</ul>
+</li>
+</ul>
+<h3 id="Environment"><a href="#Environment" class="headerlink" title="Environment"></a>Environment</h3><ul>
+<li>ApplicationContext는 EnvironmentCapable을 상속받는다.</li>
+<li>Environment가 가지는 기능<ul>
+<li>Profile</li>
+<li>Property</li>
+</ul>
+</li>
+<li>getEnvironment()를 통해 확인할 수 있다.<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ApplicationContext ctx;</span><br><span class="line"></span><br><span class="line">Environment environment &#x3D; ctx.getEnvironment();</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h4 id="Profile"><a href="#Profile" class="headerlink" title="Profile"></a>Profile</h4><ul>
+<li>빈들의 그룹</li>
+<li>특정 상황에서의 환경을 활성화하고 싶을 때, 사용한다.<ul>
+<li>ex)테스트 환경에서는 A라는 빈을 사용하고, 배포 환경에서는 B라는 빈을 쓰고 싶다.</li>
+<li>이 빈은 모니터링 용도니까 테스트할 때는 필요가 없고 배포할 때만 등록이 되면 좋겠다.</li>
+</ul>
+</li>
+</ul>
+<h4 id="Profile-정의하기"><a href="#Profile-정의하기" class="headerlink" title="Profile 정의하기"></a>Profile 정의하기</h4><ul>
+<li><p>클래스에 정의</p>
+<ul>
+<li><p>@Configuration @Profile(“[profile_name]“)<br><img src="/images/springc/springcore01-21.png" alt="springcore"></p>
+</li>
+<li><p>@Component @Profile(“[profile_name]“)<br><img src="/images/springc/springcore01-19.png" alt="springcore"></p>
+</li>
+</ul>
+</li>
+<li><p>메소드에 정의</p>
+<ul>
+<li>Bean @Profile(“[profile_name]“)<br><img src="/images/springc/springcore01-20.png" alt="springcore"></li>
+</ul>
+</li>
+</ul>
+<h4 id="Profile-설정하기"><a href="#Profile-설정하기" class="headerlink" title="Profile 설정하기"></a>Profile 설정하기</h4><ul>
+<li><p>-Dspring.prifiles.active=”[profile_name]“<br><img src="/images/springc/springcore01-23.png" alt="springcore"></p>
+</li>
+<li><p>ActivePrifiles<br><img src="/images/springc/springcore01-22.png" alt="springcore"></p>
+</li>
+</ul>
+<h4 id="Profile-표현식"><a href="#Profile-표현식" class="headerlink" title="Profile 표현식"></a>Profile 표현식</h4><ul>
+<li>! (not)</li>
+<li>&amp; (and)</li>
+<li>| (or)<br><br><br></li>
+</ul>
+<h3 id="Property"><a href="#Property" class="headerlink" title="Property"></a>Property</h3><ul>
+<li>다양한 방법으로 정의할 수 있는 설정값</li>
+<li>Environment의 역할은 프로퍼티 소스 설정 및 프로퍼티 값 가져외기</li>
+</ul>
+<h4 id="우선순위"><a href="#우선순위" class="headerlink" title="우선순위"></a>우선순위</h4><ul>
+<li><p>StandardServletEnvironment의 우선순위</p>
+<ul>
+<li><p>ServletConfig 매개변수</p>
+</li>
+<li><p>ServletContext 매개변수</p>
+</li>
+<li><p>JNDI (java:comp/env/)</p>
+</li>
+<li><p>JVM 시스템 프로퍼티 (-Dkey=”value”)<br><img src="/images/springc/springcore01-26.png" alt="springcore"></p>
+</li>
+<li><p>JVM 시스템 환경 변수 (운영 체제 환경 변수)</p>
+</li>
+</ul>
+</li>
+<li><p>@PropertySource</p>
+<ul>
+<li>Environment를 통해 프로퍼티 추가하는 방법<br><img src="/images/springc/springcore01-24.png" alt="springcore"></li>
+</ul>
+</li>
+<li><p>JVM 시스템 프로퍼티 vs @PropertySource<br>  <img src="/images/springc/springcore01-25.png" alt="springcore"><br><br><br></p>
+</li>
+</ul>
+<h3 id="MessageSource"><a href="#MessageSource" class="headerlink" title="MessageSource"></a>MessageSource</h3><p>국제화(i18n) 기능을 제공하는 인터페이스</p>
+<ul>
+<li><p>ApplicationContext는 MessageSource인터페이스를 상속한다.</p>
+</li>
+<li><p>스프링 부트를 사용한다면 별다른 설정 필요없이 messages.properties 사용할 수 있음</p>
+<ul>
+<li>messages.properties</li>
+<li>messages_ko_KR.properties</li>
+</ul>
+</li>
+</ul>
+<h4 id="릴로딩-기능이-있는-메세지-소스-사용하기"><a href="#릴로딩-기능이-있는-메세지-소스-사용하기" class="headerlink" title="릴로딩 기능이 있는 메세지 소스 사용하기"></a>릴로딩 기능이 있는 메세지 소스 사용하기</h4><ul>
+<li><p>직접 빈등록을 해준다.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">@Bean</span><br><span class="line">public MessageSource messageSource()&#123;</span><br><span class="line">    ReloadableResourceBundleMessageSource messageSource </span><br><span class="line">        &#x3D; new ReloadableResourceBundleMessageSource();</span><br><span class="line">    </span><br><span class="line">    messageSource.setBasename(&quot;classpath:&#x2F;messages&quot;);</span><br><span class="line">    messageSource.setDefaultEncoding(&quot;UTF-8&quot;);</span><br><span class="line">    messageSource.setCacheSeconds(3); &#x2F;*최대3초까지만 캐싱*&#x2F;</span><br><span class="line">    </span><br><span class="line">    return messageSource;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>테스트 코드 작성</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">@Component</span><br><span class="line">public class AppRun implements ApplicationRunner &#123;</span><br><span class="line">    @Autowired</span><br><span class="line">    MessageSource messageSource;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void run(ApplicationArguments args) throws Exception &#123;</span><br><span class="line">        while (true) &#123;</span><br><span class="line">            Locale.setDefault(Locale.CANADA);</span><br><span class="line">            System.out.println(messageSource.getMessage</span><br><span class="line">                (&quot;greeting&quot;, new String[]&#123;&quot;Bong!&quot;&#125;, Locale.KOREA));</span><br><span class="line">            System.out.println(messageSource.getMessage</span><br><span class="line">                (&quot;greeting&quot;, new String[]&#123;&quot;Bong!&quot;&#125;, Locale.getDefault()));</span><br><span class="line">            Thread.sleep(1000); &#x2F;*1초마다 찍어*&#x2F;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>실행결과<br><img src="/images/springc/springcore01-27.png" alt="springcore"></p>
+<br>
+
+</li>
+</ul>
+<h3 id="ApplicationEventPublisher"><a href="#ApplicationEventPublisher" class="headerlink" title="ApplicationEventPublisher"></a>ApplicationEventPublisher</h3><ul>
+<li>이벤트 프로그래밍에 필요한 인터페이스 제공</li>
+<li>옵저버 패턴 구현체</li>
+</ul>
+<blockquote>
+<p><strong>옵저버 패턴</strong><br>객체의 상태 변화를 관찰하는 관찰자들, 즉 옵저버들의 목록을 객체에 등록하여 상태 변화가 있을 때마다 메서드 등을 통해 객체가 직접 목록의 각 옵저버에게 통지하도록 하는 디자인 패턴</p>
+</blockquote>
+<h4 id="이벤트-만들기"><a href="#이벤트-만들기" class="headerlink" title="이벤트 만들기"></a>이벤트 만들기</h4><ul>
+<li>ApplicationEvent 상속<br><img src="/images/springc/springcore01-28.png" alt="springcore"></li>
+<li>스프링 4.2 부터는 이 클래스를 상속받지 않아도 이벤트로 사용할 수 있다.<br><img src="/images/springc/springcore01-31.png" alt="springcore"><ul>
+<li>스프링 프레임워크의 클래스를 상속받지 않아 깔끔한 POJO객체가 되었다.</li>
+<li>스프링 프레임워크의 철학 → <strong>비침투성</strong></li>
+</ul>
+</li>
+</ul>
+<h4 id="이벤트-발생시키기"><a href="#이벤트-발생시키기" class="headerlink" title="이벤트 발생시키기"></a>이벤트 발생시키기</h4><p><img src="/images/springc/springcore01-29.png" alt="springcore"></p>
+<ul>
+<li>ApplicationEventPublisher.publishEvent();</li>
+</ul>
+<h4 id="이벤트-처리하는-방법"><a href="#이벤트-처리하는-방법" class="headerlink" title="이벤트 처리하는 방법"></a>이벤트 처리하는 방법</h4><ul>
+<li><p>ApplicationListener&lt;이벤트&gt; implements한 클래스 만들어서 빈으로 등록하기.<br><img src="/images/springc/springcore01-30.png" alt="springcore"></p>
+</li>
+<li><p>스프링 4.2 부터는 @EventListener를 사용해서 빈의 메소드에 사용할 수 있다.<br><img src="/images/springc/springcore01-32.png" alt="springcore"></p>
+</li>
+<li><p>이벤트 핸들러가 여러개일 경우 모두 실행<br><img src="/images/springc/springcore01-33.png" alt="springcore"></p>
+<ul>
+<li>기본적으로는 순차적 (순서는 잘모르겠으나, 순처작으로 실행된다.)</li>
+</ul>
+</li>
+<li><p>순서를 정하고 싶다면 @Order와 함께 사용.<br><img src="/images/springc/springcore01-34.png" alt="springcore"></p>
+</li>
+<li><p>비동기적으로 실행하고 싶다면 @Async와 함께 사용.(멀티쓰레드)<br><img src="/images/springc/springcore01-35.png" alt="springcore"></p>
+</li>
+</ul>
+<h4 id="스프링이-제공하는-기본-이벤트"><a href="#스프링이-제공하는-기본-이벤트" class="headerlink" title="스프링이 제공하는 기본 이벤트"></a>스프링이 제공하는 기본 이벤트</h4><p><img src="/images/springc/springcore01-36.png" alt="springcore"></p>
+<ul>
+<li>ContextRefreshedEvent: ApplicationContext를 초기화 했더나 리프래시 했을 때 발생.</li>
+<li>ContextClosedEvent: ApplicationContext를 close()하여 싱글톤 빈 소멸되는 시점에 발생.</li>
+<li>ContextStartedEvent: ApplicationContext를 start()하여 라이프사이클 빈들이 시작신호를 받은 시점에 발생.</li>
+<li>ContextStoppedEvent: ApplicationContext를 stop()하여 라이프사이클 빈들이 정지신호를 받은 시점에 발생.</li>
+<li>RequestHandledEvent: HTTP 요청을 처리했을 때 발생.<br><br><br></li>
+</ul>
+<h3 id="ResourceLoader"><a href="#ResourceLoader" class="headerlink" title="ResourceLoader"></a>ResourceLoader</h3><ul>
+<li>리소스를 읽어오는 기능을 제공하는 인터페이스</li>
+<li>ApplicationContext는 ResourceLoader를 상속받는다.</li>
+</ul>
+<p><img src="/images/springc/springcore01-37.png" alt="springcore"><br><br></p>
+
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/Springframework/" rel="tag">Springframework</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">Like this article? Support the author with</h3>
+        <div class="buttons is-centered">
+            
+                
+<div class="notification is-danger">
+    You forgot to set the <code>qrcode</code> for Alipay. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                
+<div class="notification is-danger">
+    You forgot to set the <code>qrcode</code> for Wechat. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                <!-- Visit https://www.paypal.com/donate/buttons/ to get your donate button -->
+
+<div class="notification is-danger">
+    You forgot to set the <code>business</code> and <code>currency_code</code> for Paypal. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                
+<div class="notification is-danger">
+    You forgot to set the <code>url</code> Patreon. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2019/03/21/spring/springframework-core02/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">스프링 핵심기술02 - Resource / Validation</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2019/03/16/AWS/internet01/">
+                <span class="level-item">인터넷, IP, 도메인, DNS, 포트, 포트포워딩, 절대경로, 상대경로, 유동IP, DDNS</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+</div>
+                
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-4-widescreen  has-order-3 column-right is-sticky">
+    
+        
+
+    <div class="card widget" id="toc">
+        <div class="card-content">
+            <div class="menu">
+                <h3 class="menu-label">
+                    Catalogue
+                </h3>
+                <ul class="menu-list"><li>
+        <a class="is-flex" href="#스프링-프레임워크-핵심기술01-inflearn-백기선">
+        <span class="has-mr-6">1</span>
+        <span>스프링 프레임워크 핵심기술01(inflearn) - 백기선</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#Springframework">
+        <span class="has-mr-6">1.1</span>
+        <span>Springframework</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#IoC-컨테이너와-빈">
+        <span class="has-mr-6">1.1.1</span>
+        <span>IoC 컨테이너와 빈</span>
+        </a></li><li>
+        <a class="is-flex" href="#Application-Context와-다양한-빈-설정방법">
+        <span class="has-mr-6">1.1.2</span>
+        <span>Application Context와 다양한 빈 설정방법</span>
+        </a></li><li>
+        <a class="is-flex" href="#Autowired">
+        <span class="has-mr-6">1.1.3</span>
+        <span>Autowired</span>
+        </a></li><li>
+        <a class="is-flex" href="#Component와-ComponentScan">
+        <span class="has-mr-6">1.1.4</span>
+        <span>@Component와 ComponentScan</span>
+        </a></li><li>
+        <a class="is-flex" href="#빈의-스코프">
+        <span class="has-mr-6">1.1.5</span>
+        <span>빈의 스코프</span>
+        </a></li><li>
+        <a class="is-flex" href="#Environment">
+        <span class="has-mr-6">1.1.6</span>
+        <span>Environment</span>
+        </a></li><li>
+        <a class="is-flex" href="#Property">
+        <span class="has-mr-6">1.1.7</span>
+        <span>Property</span>
+        </a></li><li>
+        <a class="is-flex" href="#MessageSource">
+        <span class="has-mr-6">1.1.8</span>
+        <span>MessageSource</span>
+        </a></li><li>
+        <a class="is-flex" href="#ApplicationEventPublisher">
+        <span class="has-mr-6">1.1.9</span>
+        <span>ApplicationEventPublisher</span>
+        </a></li><li>
+        <a class="is-flex" href="#ResourceLoader">
+        <span class="has-mr-6">1.1.10</span>
+        <span>ResourceLoader</span>
+        </a></li></ul></li></ul></li></ul>
+            </div>
+        </div>
+    </div>
+
+    
+        <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            Tag Cloud
+        </h3>
+        <a href="/tags/Algorithm/" style="font-size: 11.11px;">Algorithm</a> <a href="/tags/DataBase/" style="font-size: 10px;">DataBase</a> <a href="/tags/Etc/" style="font-size: 11.11px;">Etc</a> <a href="/tags/Git/" style="font-size: 13.33px;">Git</a> <a href="/tags/Interview/" style="font-size: 14.44px;">Interview</a> <a href="/tags/JPA/" style="font-size: 20px;">JPA</a> <a href="/tags/JSP/" style="font-size: 14.44px;">JSP</a> <a href="/tags/Java/" style="font-size: 18.89px;">Java</a> <a href="/tags/JavaScript/" style="font-size: 12.22px;">JavaScript</a> <a href="/tags/OracleDB/" style="font-size: 14.44px;">OracleDB</a> <a href="/tags/Process/" style="font-size: 11.11px;">Process</a> <a href="/tags/RestAPI/" style="font-size: 14.44px;">RestAPI</a> <a href="/tags/Seminar/" style="font-size: 10px;">Seminar</a> <a href="/tags/SpringBoot/" style="font-size: 20px;">SpringBoot</a> <a href="/tags/SpringSecurity/" style="font-size: 12.22px;">SpringSecurity</a> <a href="/tags/SpringWebMvc/" style="font-size: 16.67px;">SpringWebMvc</a> <a href="/tags/Springframework/" style="font-size: 17.78px;">Springframework</a> <a href="/tags/Springframework-kosta/" style="font-size: 14.44px;">Springframework_kosta</a> <a href="/tags/Web/" style="font-size: 12.22px;">Web</a> <a href="/tags/debug/" style="font-size: 11.11px;">debug</a> <a href="/tags/jQuery/" style="font-size: 12.22px;">jQuery</a> <a href="/tags/%EC%A0%95%EB%B3%B4%EC%B2%98%EB%A6%AC%EA%B8%B0%EC%82%AC-%ED%95%84%EA%B8%B0/" style="font-size: 13.33px;">정보처리기사_필기</a> <a href="/tags/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%ED%9A%8C%EA%B3%A0/" style="font-size: 15.56px;">프로젝트_회고</a>
+    </div>
+</div>
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/blog_logo.png" alt="스프링 핵심기술01 - IoC 컨테이너와 빈" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2020 Bong&#39;s blog&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/cyr9210">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("en");</script>
+
+
+<script>
+var IcarusThemeSettings = {
+    site: {
+        url: 'http://yoursite.com',
+        external_link: {"enable":true,"exclude":[]}
+    },
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+<script src="/js/animation.js"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+<script src="/js/gallery.js" defer></script>
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+<a id="back-to-top" title="Back to Top" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: 'Posts',
+                PAGES: 'Pages',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
+                UNTITLED: '(Untitled)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

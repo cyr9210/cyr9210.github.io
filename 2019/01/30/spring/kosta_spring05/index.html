@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html >
+<head>
+    <meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 4.2.0" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>Spring MVC TEST (KOSTA) - Bong&#39;s blog</title>
+
+
+    <meta name="description" content="KOSTA DAY59Springframework">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring MVC TEST (KOSTA)">
+<meta property="og:url" content="http://yoursite.com/2019/01/30/spring/kosta_spring05/index.html">
+<meta property="og:site_name" content="Bong&#39;s blog">
+<meta property="og:description" content="KOSTA DAY59Springframework">
+<meta property="og:image" content="http://yoursite.com/images/og_image.png">
+<meta property="article:published_time" content="2019-01-29T21:45:43.000Z">
+<meta property="article:modified_time" content="2020-03-20T07:57:35.767Z">
+<meta property="article:author" content="Bong&#39;s blog">
+<meta property="article:tag" content="Springframework_kosta">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/images/og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+<style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+    
+    
+    
+    
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+    
+    
+    
+    
+    
+    
+    
+    <link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-2-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/blog_logo.png" alt="Spring MVC TEST (KOSTA)" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                href="/">Home</a>
+                
+                <a class="navbar-item"
+                href="/archives">Archives</a>
+                
+                <a class="navbar-item"
+                href="/tags">Tags</a>
+                
+                <a class="navbar-item"
+                href="/about">About</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    <a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/cyr9210">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="Search" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-8-widescreen has-order-2 column-main">
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-01-29T21:45:43.000Z">2019-01-30</time>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    5 minutes read (About 713 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                Spring MVC TEST (KOSTA)
+            
+        </h1>
+        <div class="content">
+            <p><img src="/images/springframwork-logo.png" alt="springf"></p>
+<h1 id="KOSTA-DAY59"><a href="#KOSTA-DAY59" class="headerlink" title="KOSTA DAY59"></a>KOSTA DAY59</h1><h2 id="Springframework"><a href="#Springframework" class="headerlink" title="Springframework"></a>Springframework</h2><a id="more"></a>
+<h3 id="Mapper-Test"><a href="#Mapper-Test" class="headerlink" title="Mapper Test"></a>Mapper Test</h3><p>CRUD를 위한 Mapping이 잘되었는지 확인하기위한 Test방법에 대해 알아보자.</p>
+<ul>
+<li>테스트를 위한 DB의 테이블과 data를 생성한다.<br>(table명 = tbl_board, seq_board)</li>
+</ul>
+<p><img src="/images/springk/springk05-01.png" alt="springk"></p>
+<p><img src="/images/springk/springk05-02.png" alt="springk"></p>
+<p><img src="/images/springk/springk05-03.png" alt="springk"></p>
+<p><img src="/images/springk/springk05-04.png" alt="springk"></p>
+<p><img src="/images/springk/springk05-05.png" alt="springk"></p>
+<ul>
+<li>BoardVO클래스 생성</li>
+<li>BoardMapper 인터페이스 생성 및 메소드 생성</li>
+<li>BoardMapper.xml 생성 및 select 쿼리문 작성</li>
+<li>BoardMapperTests 테스트 클래스 생성 후 Junit Test처리<br>전체 data 로그로 출력</li>
+</ul>
+<h4 id="Create-Test"><a href="#Create-Test" class="headerlink" title="Create Test"></a>Create Test</h4><ul>
+<li>인서트문의 경우 두가지 처리방법이 있다.<ul>
+<li>인서트 후에, pk정보가 필요없는 경우 </li>
+<li>처리방법/pk정보가 필요한 경우</li>
+</ul>
+</li>
+</ul>
+<h5 id="먼저-pk정보가-필요없는-insert"><a href="#먼저-pk정보가-필요없는-insert" class="headerlink" title="먼저 pk정보가 필요없는 insert"></a>먼저 pk정보가 필요없는 insert</h5><p><img src="/images/springk/springk05-06.png" alt="springk"></p>
+<p><img src="/images/springk/springk05-07.png" alt="springk"></p>
+<p><img src="/images/springk/springk05-08.png" alt="springk"></p>
+<ul>
+<li>Query문 작성</li>
+<li>Test 실행</li>
+<li>bno값이 null로 결과가 나온다.</li>
+</ul>
+<h5 id="pk정보가-필요한-경우-insert"><a href="#pk정보가-필요한-경우-insert" class="headerlink" title="pk정보가 필요한 경우 insert"></a>pk정보가 필요한 경우 insert</h5><p><img src="/images/springk/springk05-09.png" alt="springk"></p>
+<p><img src="/images/springk/springk05-10.png" alt="springk"></p>
+<ul>
+<li>insert문 안 selectKey태그를 작성하여, pk값을 구한다.(bno)</li>
+<li>위와 같은 방식으로 test를 실행했을때, 결과값에 bno값이 출력된다.</li>
+</ul>
+<h4 id="Read-Test"><a href="#Read-Test" class="headerlink" title="Read Test"></a>Read Test</h4><p>pk정보를 이용하여 테이터 출력을 해보자.</p>
+<p><img src="/images/springk/springk05-11.png" alt="springk"></p>
+<p><img src="/images/springk/springk05-12.png" alt="springk"></p>
+<ul>
+<li>Long값을 파라미터값으로 쓸 경우, L을 뒤에 붙여준다.<br><br><br></li>
+</ul>
+<h3 id="Service-Test"><a href="#Service-Test" class="headerlink" title="Service Test"></a>Service Test</h3><p>service 객체를 만들어서 Test를 실행해보자.</p>
+<p><img src="/images/springk/springk05-13.png" alt="springk"></p>
+<p><img src="/images/springk/springk05-14.png" alt="springk"></p>
+<p><img src="/images/springk/springk05-15.png" alt="springk"></p>
+<p><img src="/images/springk/springk05-16.png" alt="springk"></p>
+<ul>
+<li>service 패키지를 생성<br>root-context.xml에 service 패키지를 scan할 수 있도록 설정한다.</li>
+<li>service 인터페이스 생성</li>
+<li>servie 인터페이스를 implements 하는 InsertBoardService 생성</li>
+<li>InsertBoardService에 오버라이딩 메소드를 작성한다.<br>내용 → Insert(selectKey사용)</li>
+<li>테스트 실행<br><br><br></li>
+</ul>
+<h3 id="Controller-Test"><a href="#Controller-Test" class="headerlink" title="Controller Test"></a>Controller Test</h3><p>Controller 객체를 만들어서 Test 해보자.</p>
+<p>Controller는 기본적으로 서버로 부터 받는 주소값을 가지고 결과를 요청하는 공간이기 때문에 서버를 실행하지 않고 Test하기 위해서는 Test 클래스 안에서 설정이 필요하다.</p>
+<p><img src="/images/springk/springk05-17.png" alt="springk"></p>
+<p><img src="/images/springk/springk05-18.png" alt="springk"></p>
+<p><img src="/images/springk/springk05-19.png" alt="springk"></p>
+<ul>
+<li>BoardController를 생성한다.</li>
+<li>ControllerTest 생성 및 설정<ul>
+<li>WebAppConfiguration을 사용하여 WebAppicationContext를 이용할 수 있도록 한다.</li>
+<li>ContextConfiguration으로 설정 파일을 로드한다.</li>
+<li>WebAppicationContext를 Setter로 DI한다.</li>
+<li>MockMvc를 선언한다. 이유는 WAS 구동을 하지 않고도 테스트를 할 수 있기 때문에</li>
+<li>Before 어노테이션은 테스트 메소드 실행 전 실행하게 해준다.</li>
+</ul>
+</li>
+<li>테스트 코드를 상기 예제와같이 작성 후 실행하면 톰캣 서버 실행을 하지 않아도 결과가 log로 출력된다.</li>
+<li>post방식/ 파라미터값이 있는 경우 예제를 작성해보았다.<br><br><br></li>
+</ul>
+
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/Springframework-kosta/" rel="tag">Springframework_kosta</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">Like this article? Support the author with</h3>
+        <div class="buttons is-centered">
+            
+                
+<div class="notification is-danger">
+    You forgot to set the <code>qrcode</code> for Alipay. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                
+<div class="notification is-danger">
+    You forgot to set the <code>qrcode</code> for Wechat. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                <!-- Visit https://www.paypal.com/donate/buttons/ to get your donate button -->
+
+<div class="notification is-danger">
+    You forgot to set the <code>business</code> and <code>currency_code</code> for Paypal. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                
+<div class="notification is-danger">
+    You forgot to set the <code>url</code> Patreon. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2019/02/17/Etc/%EB%B8%94%EB%A1%9C%EA%B7%B8-%EB%A7%88%ED%81%AC%EB%8B%A4%EC%9A%B4-%ED%99%9C%EC%9A%A9/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">블로그 명령어 정리</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2019/01/29/spring/kosta_spring04/">
+                <span class="level-item">개발환경 세팅, Junit 테스트, OracleDB 연동, mybaits연동, log4jdbc, MVC Controller, 파일업/다운로드 (KOSTA)</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+</div>
+                
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-4-widescreen  has-order-3 column-right is-sticky">
+    
+        
+
+    <div class="card widget" id="toc">
+        <div class="card-content">
+            <div class="menu">
+                <h3 class="menu-label">
+                    Catalogue
+                </h3>
+                <ul class="menu-list"><li>
+        <a class="is-flex" href="#KOSTA-DAY59">
+        <span class="has-mr-6">1</span>
+        <span>KOSTA DAY59</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#Springframework">
+        <span class="has-mr-6">1.1</span>
+        <span>Springframework</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#Mapper-Test">
+        <span class="has-mr-6">1.1.1</span>
+        <span>Mapper Test</span>
+        </a></li><li>
+        <a class="is-flex" href="#Service-Test">
+        <span class="has-mr-6">1.1.2</span>
+        <span>Service Test</span>
+        </a></li><li>
+        <a class="is-flex" href="#Controller-Test">
+        <span class="has-mr-6">1.1.3</span>
+        <span>Controller Test</span>
+        </a></li></ul></li></ul></li></ul>
+            </div>
+        </div>
+    </div>
+
+    
+        <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            Tag Cloud
+        </h3>
+        <a href="/tags/Algorithm/" style="font-size: 11.11px;">Algorithm</a> <a href="/tags/DataBase/" style="font-size: 10px;">DataBase</a> <a href="/tags/Etc/" style="font-size: 11.11px;">Etc</a> <a href="/tags/Git/" style="font-size: 13.33px;">Git</a> <a href="/tags/Interview/" style="font-size: 14.44px;">Interview</a> <a href="/tags/JPA/" style="font-size: 20px;">JPA</a> <a href="/tags/JSP/" style="font-size: 14.44px;">JSP</a> <a href="/tags/Java/" style="font-size: 18.89px;">Java</a> <a href="/tags/JavaScript/" style="font-size: 12.22px;">JavaScript</a> <a href="/tags/OracleDB/" style="font-size: 14.44px;">OracleDB</a> <a href="/tags/Process/" style="font-size: 11.11px;">Process</a> <a href="/tags/RestAPI/" style="font-size: 14.44px;">RestAPI</a> <a href="/tags/Seminar/" style="font-size: 10px;">Seminar</a> <a href="/tags/SpringBoot/" style="font-size: 20px;">SpringBoot</a> <a href="/tags/SpringSecurity/" style="font-size: 12.22px;">SpringSecurity</a> <a href="/tags/SpringWebMvc/" style="font-size: 16.67px;">SpringWebMvc</a> <a href="/tags/Springframework/" style="font-size: 17.78px;">Springframework</a> <a href="/tags/Springframework-kosta/" style="font-size: 14.44px;">Springframework_kosta</a> <a href="/tags/Web/" style="font-size: 12.22px;">Web</a> <a href="/tags/debug/" style="font-size: 11.11px;">debug</a> <a href="/tags/jQuery/" style="font-size: 12.22px;">jQuery</a> <a href="/tags/%EC%A0%95%EB%B3%B4%EC%B2%98%EB%A6%AC%EA%B8%B0%EC%82%AC-%ED%95%84%EA%B8%B0/" style="font-size: 13.33px;">정보처리기사_필기</a> <a href="/tags/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%ED%9A%8C%EA%B3%A0/" style="font-size: 15.56px;">프로젝트_회고</a>
+    </div>
+</div>
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/blog_logo.png" alt="Spring MVC TEST (KOSTA)" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2020 Bong&#39;s blog&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/cyr9210">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("en");</script>
+
+
+<script>
+var IcarusThemeSettings = {
+    site: {
+        url: 'http://yoursite.com',
+        external_link: {"enable":true,"exclude":[]}
+    },
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+<script src="/js/animation.js"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+<script src="/js/gallery.js" defer></script>
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+<a id="back-to-top" title="Back to Top" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: 'Posts',
+                PAGES: 'Pages',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
+                UNTITLED: '(Untitled)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

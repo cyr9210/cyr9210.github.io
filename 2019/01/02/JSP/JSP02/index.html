@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html >
+<head>
+    <meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 4.2.0" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>JSP액션, useBean/setProperty, 한글처리, JDBC, DAO/DTO, mybatis - Bong&#39;s blog</title>
+
+
+    <meta name="description" content="KOSTA DAY39JSP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JSP액션, useBean&#x2F;setProperty, 한글처리, JDBC, DAO&#x2F;DTO, mybatis">
+<meta property="og:url" content="http://yoursite.com/2019/01/02/JSP/JSP02/index.html">
+<meta property="og:site_name" content="Bong&#39;s blog">
+<meta property="og:description" content="KOSTA DAY39JSP">
+<meta property="og:image" content="http://yoursite.com/images/og_image.png">
+<meta property="article:published_time" content="2019-01-02T09:25:16.000Z">
+<meta property="article:modified_time" content="2020-03-20T07:57:35.721Z">
+<meta property="article:author" content="Bong&#39;s blog">
+<meta property="article:tag" content="JSP">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/images/og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+<style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+    
+    
+    
+    
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+    
+    
+    
+    
+    
+    
+    
+    <link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-2-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/blog_logo.png" alt="JSP액션, useBean/setProperty, 한글처리, JDBC, DAO/DTO, mybatis" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                href="/">Home</a>
+                
+                <a class="navbar-item"
+                href="/archives">Archives</a>
+                
+                <a class="navbar-item"
+                href="/tags">Tags</a>
+                
+                <a class="navbar-item"
+                href="/about">About</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    <a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/cyr9210">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="Search" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-8-widescreen has-order-2 column-main">
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-01-02T09:25:16.000Z">2019-01-02</time>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    14 minutes read (About 2101 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                JSP액션, useBean/setProperty, 한글처리, JDBC, DAO/DTO, mybatis
+            
+        </h1>
+        <div class="content">
+            <h1 id="KOSTA-DAY39"><a href="#KOSTA-DAY39" class="headerlink" title="KOSTA DAY39"></a>KOSTA DAY39</h1><h2 id="JSP"><a href="#JSP" class="headerlink" title="JSP"></a>JSP</h2><p><img src="/images/JSP_logo.png" alt="JSP"></p>
+<a id="more"></a>
+<h3 id="JSP액션"><a href="#JSP액션" class="headerlink" title="JSP액션"></a>JSP액션</h3><p>자바 코드에 의해 객체를 생성하고 사용하는 것이 아니라 태그를 이용하여 객체의 생성하고 사용하는 것 → JSP 태그 or JSP 액션</p>
+<ul>
+<li>scope * 객체가 사용될 수 있는 범위(Life cycle) <ul>
+<li>page : pageContext에 저장</li>
+<li>request : HttpServletRequest에 저장</li>
+<li>session : HttpSession에 저장</li>
+<li>application : ServletContext에 저장<br><br><br></li>
+</ul>
+</li>
+</ul>
+<h3 id="useBean-setProperty"><a href="#useBean-setProperty" class="headerlink" title="useBean/setProperty"></a>useBean/setProperty</h3><p><img src="/images/jsp/JSP02-01.png" alt="JSP"></p>
+<ul>
+<li>useBean : 자바빈 객체를 생성한다.</li>
+<li>setProperty : 자바빈에 속성값을 부여한다.</li>
+<li>name 속성에 기술된 이름이 jsp:useBean을 이용해서 먼저 정의해야한다.</li>
+<li>input 태그의 name 과 객체내 필드의 name과 동일 할 경우에만 사용 가능하다.J</li>
+</ul>
+<h4 id="예제"><a href="#예제" class="headerlink" title="예제"></a>예제</h4><p><img src="/images/jsp/JSP02-02.png" alt="JSP"></p>
+<ul>
+<li>useBean 액션태그를 사용하여 register JavaBean객체를 생성</li>
+<li>setProperty 태그를 사용하여 form으로부터 받은 내용들을 담는다.<br>(form의 input_name과 객체의 name이 같아야한다.)</li>
+<li>RegisterDao클래스의 insertRegister 메소드를 호출하여 해당 객체의 내용들을 출력한다.<br><br><br></li>
+</ul>
+<h3 id="한글처리"><a href="#한글처리" class="headerlink" title="한글처리"></a>한글처리</h3><p><img src="/images/jsp/JSP02-03.png" alt="JSP"></p>
+<ul>
+<li>get방식 → server.xml 의 Connector를 찾아서 해당 내용을 추가한다.<br>&lt;Connector URIEncoding=”UTF-8”/&gt;<br>서버에 publish to the server 버튼을 실행한다.</li>
+</ul>
+<p><img src="/images/jsp/JSP02-04.png" alt="JSP"></p>
+<ul>
+<li>post방식 → servlet에 해당 내용을 추가한다.<br>request.setCharacterEncoding(“utf-8”);</li>
+</ul>
+<p><img src="/images/jsp/JSP02-05.png" alt="JSP"><br><br></p>
+<h3 id="JDBC"><a href="#JDBC" class="headerlink" title="JDBC"></a>JDBC</h3><ul>
+<li>JDBC란, Java가 DB(data base)와 통신할 수 있게 해주는 API 이다.</li>
+</ul>
+<h4 id="setting"><a href="#setting" class="headerlink" title="setting"></a>setting</h4><p><img src="/images/jsp/JSP02-06.png" alt="JSP"></p>
+<ul>
+<li>eclipse에서 Oracle의 API를 이용하기위해서 Oracle 라이브러리를 eclipse 복사한다.<br>(해당 라이브러리는 oracle 홈페이지에서 다운로드 가능)</li>
+</ul>
+<h4 id="JDBC실행-순서"><a href="#JDBC실행-순서" class="headerlink" title="JDBC실행 순서"></a>JDBC실행 순서</h4><p><img src="/images/jsp/JSP02-07.png" alt="JSP"></p>
+<ul>
+<li>driver 로딩 → connection연결 → Statement생성 → query문 작성 → query문 처리</li>
+</ul>
+<h5 id="예제-1"><a href="#예제-1" class="headerlink" title="예제"></a>예제</h5><p><img src="/images/jsp/JSP02-08.png" alt="JSP"></p>
+<ul>
+<li>driver, url주소 설정</li>
+<li>연결할 DB의 id, password 입력</li>
+<li>executeUpdate() 문 사용하여 query문 처리<br>executeUpdate → 생성,수정,삭제 / executeQuery → 읽기(select문)</li>
+<li>역순으로 close();</li>
+</ul>
+<h4 id="PreparedStatement"><a href="#PreparedStatement" class="headerlink" title="PreparedStatement"></a>PreparedStatement</h4><p><img src="/images/jsp/JSP02-09.png" alt="JSP"></p>
+<ul>
+<li>앞서 statement를 사용한 방식과 유사하나 쿼리문을 ‘?’를 활용하여 그 후 PreparedStatement를 생성한다.</li>
+</ul>
+<h5 id="예제-2"><a href="#예제-2" class="headerlink" title="예제"></a>예제</h5><p><img src="/images/jsp/JSP02-10.png" alt="JSP"></p>
+<ul>
+<li>추 후 선언할 내용들에대해 ‘?’를 활용하여 sql문을 작성한다.</li>
+<li>prepareStatement를 생성하고, 그후 setString메소드를 통해 ‘?’에 들어갈 값을 설정한다.</li>
+<li>역순으로 close();</li>
+</ul>
+<p>내가 해당예제를 풀며 생각한 주의사항은 ?를 입력할 시 ‘ ’를 생략하고 넣어야한다는 것이다.<br>나는 pstmt를 활용하여 sql문 작성 시, ‘?’ 로 작성하여 해결하기 위해 오랜시간을 소요했다.<br>또한 connection, Statement(prepareStatement), resultset을 반드시 close()해야 한다는것을 주의하자.(역순으로)<br><br><br></p>
+<h3 id="DAO-DTO"><a href="#DAO-DTO" class="headerlink" title="DAO/DTO"></a>DAO/DTO</h3><p><img src="/images/jsp/JSP02-11.png" alt="JSP"></p>
+<ul>
+<li>DAO (Data Access Object) : DB에 접근(통신)하는 객체</li>
+<li>DTO (Data Transfer Object) : DB의 data를 Java의 Data로 변환시키기 위한 객체 (VO라고도 부른다.)</li>
+</ul>
+<h4 id="예제-3"><a href="#예제-3" class="headerlink" title="예제"></a>예제</h4><p><img src="/images/jsp/JSP02-12.png" alt="JSP"></p>
+<ul>
+<li>DTO → Board클래스 생성</li>
+<li>DAO → 객체 생성시 오라클 드라이버 로딩<br>insertBoard 메소드 해당 data를 추가하는 내용을 JDBC 활용하여 작성</li>
+<li>제목/글쓴이/내용 작성한 내용을 form_action3.jsp에 넘겨준다.</li>
+<li>form_action3는 넘겨받은 내용을 useBean 액션태그를 사용해 bean객체를 생성하여 담는다.</li>
+<li>담긴 객체를 파라미터 값으로 하여 insertBoard 메소드 호출</li>
+</ul>
+<p>상기 예제를 보면 알 수 있듯이, 추 후에 사용자는 노란색 박스부분 처럼insertBoard메소드를 호출하는것으로 게시물들을 추가 할 수 있다<br><br><br></p>
+<h3 id="mybatis"><a href="#mybatis" class="headerlink" title="mybatis"></a>mybatis</h3><p>개발자가 지정한 SQL, 저장프로시저 그리고 몇가지 고급 매핑을 지원하는 퍼시스턴스 프레임워크</p>
+<ul>
+<li>JDBC로 처리하는 상당부분의 코드와 파라미터 설정 및 결과 매핑을 대신해준다.</li>
+<li>데이터베이스 레코드에 원시타입과 Map 인터페이스 그리고 자바 POJO를 설정해서 매핑하기 위해 XML과 애노테이션을 사용할 수 있다.</li>
+</ul>
+<h4 id="XML에서-SqlSessionFactory-빌드하기"><a href="#XML에서-SqlSessionFactory-빌드하기" class="headerlink" title="XML에서 SqlSessionFactory 빌드하기"></a>XML에서 SqlSessionFactory 빌드하기</h4><ul>
+<li>모든 마이바티스 애플리케이션은 SqlSessionFactory 인스턴스를 사용한다.</li>
+<li>SqlSessionFactory인스턴스는 SqlSessionFactoryBuilder를 사용하여 만들 수 있다.</li>
+<li>SqlSessionFactoryBuilder는 XML설정 파일에서 SqlSessionFactory인스턴스를 빌드 할 수 있다.</li>
+<li>설정을 위해 클래스 패스 자원을 사용하는 것을 추천하나, 파일 경로나 file://URL 로부터 만들어진 InputStream인스턴스를 사용할 수도 있다.</li>
+<li>마이바티스는 클래스패스와 다른위치에서 자원을 로드하는 것으로 좀 더 쉽게 해주는 Resources라는 유틸성 클래스를 가지고 있다.</li>
+</ul>
+<p><img src="/images/jsp/JSP02-13.png" alt="JSP"><br>상기 내용은 POOLED 타입으로 설정 된 mybatis-config.xml 이다.<br>해당내용을 JNDI타입으로 변경하면 아래와 같이 가능하다.</p>
+<p><img src="/images/jsp/JSP02-14.png" alt="JSP"></p>
+<ul>
+<li>url, username, password등 DB연결을 위한 정보들을 server/context.xml의 <Resource/>태그 안에 추가한다.</li>
+<li>추가한 Resource의 name을 mybatis-config.xml에 맞추어 준다.</li>
+</ul>
+<p><img src="/images/jsp/JSP02-15.png" alt="JSP"><br>작성된 xml은 상기예시와 같이 사용된다.</p>
+<ul>
+<li>xml파일의 내용을 가져올 InputStream 객체 생성 후 Resource내용을 가져온다.</li>
+<li>SqlSessionFactoryBuilder()함수를 호출하여 담은내용을 build한다.</li>
+</ul>
+<p>이렇게 만들어진 SqlSessionFactory를 DB에 연결이 필요할때 마다, openSession()하여 사용하고, 사용을 마친후 close()해준다.</p>
+<blockquote>
+<p><strong>tip</strong><br>try($){내용} → $의 위치에 openSession해줄경우 자동으로 close된다.</p>
+</blockquote>
+<h4 id="Mapping"><a href="#Mapping" class="headerlink" title="Mapping"></a>Mapping</h4><ul>
+<li>mapping을 위한 interface객체가 필요하다.</li>
+<li>생성된 interface 객체의 주소를 참조하는 xml파일을 생성하고 DB에서 실행할 Query문들을 매핑한다.</li>
+</ul>
+<p><img src="/images/jsp/JSP02-16.png" alt="JSP"><br><img src="/images/jsp/JSP02-17.png" alt="JSP"></p>
+<ul>
+<li>인터페이스 객체는 리턴타입 및 파라미터값만 선언한다.</li>
+<li>xml파일에 매핑<br>&lt;mapper namespace= “인터페이스 객체 주소”&gt;</li>
+<li>#{}를 사용하여 파라미터값 or 파라미터 객체안의 값들을 사용</li>
+<li>return 타입을 int로 선언한 이유는 DB수정 시, commit을 하기 위해서 이다.</li>
+</ul>
+<p><img src="/images/jsp/JSP02-18.png" alt="JSP"><br>상기예시와 같이 선언 및 매핑한 함수를 사용한다.</p>
+<ul>
+<li>SqlSession.getMapper(인터페이스객체.class).선언함수;</li>
+<li>int re 로 결과값을 받는다.<br>if(re == 1) → 정상 구현<br>실패시, 초기화값 re = -1</li>
+<li>정상 구현 됬을 시, commit 아닐경우 rollback</li>
+</ul>
+<h4 id="typeHandler"><a href="#typeHandler" class="headerlink" title="typeHandler"></a>typeHandler</h4><p>DB의 자료형을 적절한 Java 자료형으로 변화하기 위해 사용한다.</p>
+<h4 id="CRUD타입"><a href="#CRUD타입" class="headerlink" title="CRUD타입"></a>CRUD타입</h4><p>내장메소드를 사용한다.</p>
+<ul>
+<li>selectone : 하나의 데이터를 가져온다.<ul>
+<li>selectone(String queryid) → 쿼리문을 통해 데이터를 가져온다.</li>
+<li>selectone(String queryid, Object parameter) → 쿼리문에 파라미터값을 대입하여 데이터를 가져온다.</li>
+</ul>
+</li>
+<li>selectlist : 하나이상의 데이터를 가져온다.</li>
+<li>update : 수정</li>
+<li>delete : 삭제</li>
+<li>insert : 삽입</li>
+</ul>
+<p>DML(insert, update, delete) 사용 시, 트랜잭션 처리가 반드시 필요하다.</p>
+<h4 id="SQL코드-재사용"><a href="#SQL코드-재사용" class="headerlink" title="SQL코드 재사용"></a>SQL코드 재사용</h4><p>중복되는 query문을 include해서 사용 가능하다.<br><img src="/images/jsp/JSP02-19.png" alt="JSP"></p>
+<h4 id="Result-매핑"><a href="#Result-매핑" class="headerlink" title="Result 매핑"></a>Result 매핑</h4><p>DB컬럼과 객체필드의 name이 다를 때, resultMap을 사용하여 매핑할 수 있다.(아래 예시는 DB의 컬럼과 객체필드의 name이 같으므로 올바른 예제는 아니다.)<br><img src="/images/jsp/JSP02-20.png" alt="JSP"></p>
+<h4 id="동적-Query문-동적-SQL"><a href="#동적-Query문-동적-SQL" class="headerlink" title="동적 Query문 (동적 SQL)"></a>동적 Query문 (동적 SQL)</h4><p><img src="/images/jsp/JSP02-21.png" alt="JSP"><br><img src="/images/jsp/JSP02-22.png" alt="JSP"></p>
+<ul>
+<li>DB에 전달할 파라미터값을 두개이상 넣어야할때는 객체화를 시키거나 hashmap을 만들어서 전달해야한다.</li>
+</ul>
+<p><img src="/images/jsp/JSP02-23.png" alt="JSP"></p>
+<ul>
+<li>area객체가 있다면 item에 area값을 담는다.</li>
+<li>open, close는 쿼리문의 양끝에 붙으며, item이 2개이상의 경우 separator로 구분한다.</li>
+<li>item에 담겨져있는 내용은 원래 literal(문자)형으로 나와야 하는 부분이기 때문에 #이 아닌 $을 사용하여 호출한다.<br>상기 예시에 작성된 query문은 밑줄 친 부분의 sql query문과 같은 내용이다.</li>
+</ul>
+<p><img src="/images/jsp/JSP02-24.png" alt="JSP"></p>
+<ul>
+<li>getParameterValues(name) : 같은 name의 여러값들을 가져올때 사용한다.</li>
+<li>searchKey 양 끝에 %를 담은 이유는 query문의 일부를 String 으로 저장하기 위해서 이다.<br><br><br></li>
+</ul>
+
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/JSP/" rel="tag">JSP</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">Like this article? Support the author with</h3>
+        <div class="buttons is-centered">
+            
+                
+<div class="notification is-danger">
+    You forgot to set the <code>qrcode</code> for Alipay. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                
+<div class="notification is-danger">
+    You forgot to set the <code>qrcode</code> for Wechat. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                <!-- Visit https://www.paypal.com/donate/buttons/ to get your donate button -->
+
+<div class="notification is-danger">
+    You forgot to set the <code>business</code> and <code>currency_code</code> for Paypal. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                
+<div class="notification is-danger">
+    You forgot to set the <code>url</code> Patreon. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2019/01/03/JSP/JSP03/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">Cookie, Session,익스프레션, JSTL, 필터</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2018/12/28/JSP/JSP-Interview/">
+                <span class="level-item">면접 예상질문_JSP</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+</div>
+                
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-4-widescreen  has-order-3 column-right is-sticky">
+    
+        
+
+    <div class="card widget" id="toc">
+        <div class="card-content">
+            <div class="menu">
+                <h3 class="menu-label">
+                    Catalogue
+                </h3>
+                <ul class="menu-list"><li>
+        <a class="is-flex" href="#KOSTA-DAY39">
+        <span class="has-mr-6">1</span>
+        <span>KOSTA DAY39</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#JSP">
+        <span class="has-mr-6">1.1</span>
+        <span>JSP</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#JSP액션">
+        <span class="has-mr-6">1.1.1</span>
+        <span>JSP액션</span>
+        </a></li><li>
+        <a class="is-flex" href="#useBean-setProperty">
+        <span class="has-mr-6">1.1.2</span>
+        <span>useBean/setProperty</span>
+        </a></li><li>
+        <a class="is-flex" href="#한글처리">
+        <span class="has-mr-6">1.1.3</span>
+        <span>한글처리</span>
+        </a></li><li>
+        <a class="is-flex" href="#JDBC">
+        <span class="has-mr-6">1.1.4</span>
+        <span>JDBC</span>
+        </a></li><li>
+        <a class="is-flex" href="#DAO-DTO">
+        <span class="has-mr-6">1.1.5</span>
+        <span>DAO/DTO</span>
+        </a></li><li>
+        <a class="is-flex" href="#mybatis">
+        <span class="has-mr-6">1.1.6</span>
+        <span>mybatis</span>
+        </a></li></ul></li></ul></li></ul>
+            </div>
+        </div>
+    </div>
+
+    
+        <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            Tag Cloud
+        </h3>
+        <a href="/tags/Algorithm/" style="font-size: 11.11px;">Algorithm</a> <a href="/tags/DataBase/" style="font-size: 10px;">DataBase</a> <a href="/tags/Etc/" style="font-size: 11.11px;">Etc</a> <a href="/tags/Git/" style="font-size: 13.33px;">Git</a> <a href="/tags/Interview/" style="font-size: 14.44px;">Interview</a> <a href="/tags/JPA/" style="font-size: 20px;">JPA</a> <a href="/tags/JSP/" style="font-size: 14.44px;">JSP</a> <a href="/tags/Java/" style="font-size: 18.89px;">Java</a> <a href="/tags/JavaScript/" style="font-size: 12.22px;">JavaScript</a> <a href="/tags/OracleDB/" style="font-size: 14.44px;">OracleDB</a> <a href="/tags/Process/" style="font-size: 11.11px;">Process</a> <a href="/tags/RestAPI/" style="font-size: 14.44px;">RestAPI</a> <a href="/tags/Seminar/" style="font-size: 10px;">Seminar</a> <a href="/tags/SpringBoot/" style="font-size: 20px;">SpringBoot</a> <a href="/tags/SpringSecurity/" style="font-size: 12.22px;">SpringSecurity</a> <a href="/tags/SpringWebMvc/" style="font-size: 16.67px;">SpringWebMvc</a> <a href="/tags/Springframework/" style="font-size: 17.78px;">Springframework</a> <a href="/tags/Springframework-kosta/" style="font-size: 14.44px;">Springframework_kosta</a> <a href="/tags/Web/" style="font-size: 12.22px;">Web</a> <a href="/tags/debug/" style="font-size: 11.11px;">debug</a> <a href="/tags/jQuery/" style="font-size: 12.22px;">jQuery</a> <a href="/tags/%EC%A0%95%EB%B3%B4%EC%B2%98%EB%A6%AC%EA%B8%B0%EC%82%AC-%ED%95%84%EA%B8%B0/" style="font-size: 13.33px;">정보처리기사_필기</a> <a href="/tags/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%ED%9A%8C%EA%B3%A0/" style="font-size: 15.56px;">프로젝트_회고</a>
+    </div>
+</div>
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/blog_logo.png" alt="JSP액션, useBean/setProperty, 한글처리, JDBC, DAO/DTO, mybatis" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2020 Bong&#39;s blog&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/cyr9210">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("en");</script>
+
+
+<script>
+var IcarusThemeSettings = {
+    site: {
+        url: 'http://yoursite.com',
+        external_link: {"enable":true,"exclude":[]}
+    },
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+<script src="/js/animation.js"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+<script src="/js/gallery.js" defer></script>
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+<a id="back-to-top" title="Back to Top" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: 'Posts',
+                PAGES: 'Pages',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
+                UNTITLED: '(Untitled)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html >
+<head>
+    <meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 4.2.0" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>스프링 부트 활용15 - 스프링 REST 클라이언트 - Bong&#39;s blog</title>
+
+
+    <meta name="description" content="스프릥 부트 개념과 활용15(inflearn) - 백기선Spring boot">
+<meta property="og:type" content="article">
+<meta property="og:title" content="스프링 부트 활용15 - 스프링 REST 클라이언트">
+<meta property="og:url" content="http://yoursite.com/2019/04/17/spring/springboot15/index.html">
+<meta property="og:site_name" content="Bong&#39;s blog">
+<meta property="og:description" content="스프릥 부트 개념과 활용15(inflearn) - 백기선Spring boot">
+<meta property="og:image" content="http://yoursite.com/images/og_image.png">
+<meta property="article:published_time" content="2019-04-17T07:27:48.000Z">
+<meta property="article:modified_time" content="2020-03-20T07:57:35.780Z">
+<meta property="article:author" content="Bong&#39;s blog">
+<meta property="article:tag" content="SpringBoot">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/images/og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+<style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+    
+    
+    
+    
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+    
+    
+    
+    
+    
+    
+    
+    <link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-2-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/blog_logo.png" alt="스프링 부트 활용15 - 스프링 REST 클라이언트" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                href="/">Home</a>
+                
+                <a class="navbar-item"
+                href="/archives">Archives</a>
+                
+                <a class="navbar-item"
+                href="/tags">Tags</a>
+                
+                <a class="navbar-item"
+                href="/about">About</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    <a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/cyr9210">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="Search" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-8-widescreen has-order-2 column-main">
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-04-17T07:27:48.000Z">2019-04-17</time>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    4 minutes read (About 642 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                스프링 부트 활용15 - 스프링 REST 클라이언트
+            
+        </h1>
+        <div class="content">
+            <p><img src="/images/springboot_logo.png" alt="springboot"></p>
+<h1 id="스프릥-부트-개념과-활용15-inflearn-백기선"><a href="#스프릥-부트-개념과-활용15-inflearn-백기선" class="headerlink" title="스프릥 부트 개념과 활용15(inflearn) - 백기선"></a>스프릥 부트 개념과 활용15(inflearn) - 백기선</h1><h2 id="Spring-boot"><a href="#Spring-boot" class="headerlink" title="Spring boot"></a>Spring boot</h2><a id="more"></a>
+
+<h3 id="스프링-REST-클라이언트"><a href="#스프링-REST-클라이언트" class="headerlink" title="스프링 REST 클라이언트"></a>스프링 REST 클라이언트</h3><ul>
+<li>스프링 부트가 REST 클라이언트 관련해서 직접적인 기능을 제공하는것은 아니다.</li>
+<li>REST 클라이언트는 스프링 프레임워크에서 지원한다.</li>
+<li>스프링부트는 REST 클라이언트를 쉽게 사용할 수 있도록 빈을 등록해준다.</li>
+<li>REST Client, WebClient 빈을 등록하는것이 아니고, 빌더를 등록해준다.</li>
+</ul>
+<h4 id="RestTemplate-와-WebClient"><a href="#RestTemplate-와-WebClient" class="headerlink" title="RestTemplate 와 WebClient"></a>RestTemplate 와 WebClient</h4><ul>
+<li><p>RestTemplate</p>
+<ul>
+<li>Blocking I/O 기반의 <strong>Synchronous API</strong></li>
+<li>RestTemplateAutoConfiguration</li>
+<li>프로젝트에 spring-web 모듈이 있다면 RestTemplateBuilder를 빈으로 등록해준다.</li>
+<li><a href="https://docs.spring.io/spring/docs/current/spring-framework-reference/integration.html#rest-client-access">reference 문서</a></li>
+</ul>
+</li>
+<li><p>WebClient</p>
+<ul>
+<li>Non-Blocking I/O 기반의 <strong>Asynchronous API</strong></li>
+<li>WebClientAutoConfiguration</li>
+<li>프로젝트에 spring-webflux 모듈이 있다면 WebClient.Builder를 빈으로 등록해준다.</li>
+<li><a href="https://docs.spring.io/spring/docs/current/spring-framework-reference/web-reactive.html#webflux-client">reference 문서</a></li>
+</ul>
+</li>
+<li><p>비교 테스트</p>
+<ul>
+<li>사정 동일한 작업<ul>
+<li>RestController 생성 및 매핑<br><img src="/images/springboot/springboot15-2.png" alt="springboot"><ul>
+<li>hello → 스레드 타임슬립 5초</li>
+<li>world → 스레드 타임슬립 3초</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>RestTemplate<ul>
+<li>RestTemplate builder 주입받는다.(spring-boot-web 의존성 추가 시, 빈으로 등록된다.)</li>
+<li>builder를 통해 build 한다.</li>
+<li>빌드된 RestTemplate를 통해 실행한다.</li>
+<li>결과<br><img src="/images/springboot/springboot15-1.png" alt="springboot"><ol>
+<li>5초 뒤 hello 출력</li>
+<li>3초 뒤 world 출력</li>
+<li>stopwatch가 꺼진다.</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>WebClient<ul>
+<li>Webflux를 의존성 추가한다.</li>
+<li>builder를 통해 build 한다.</li>
+<li>Mono를 세팅하고 subscribe() 한다.</li>
+<li>결과<br><img src="/images/springboot/springboot15-3.png" alt="springboot"><ol>
+<li>stopwatch 꺼진다.</li>
+<li>world 출력</li>
+<li>hello 출력</li>
+</ol>
+</li>
+<li>비동기적인(Asyncronous한) 결과가 발생한다.</li>
+<li>API들의 유연한 조합을 위해선 WebClient를 사용하는 것을 추천한다.</li>
+<li>좀 더 활용적인 예제를 보고 싶다면 .. <a href="https://www.youtube.com/watch?v=a4Hiz3pqizg&t=1918s">백선 youtube</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="커스터-마이징"><a href="#커스터-마이징" class="headerlink" title="커스터 마이징"></a>커스터 마이징</h4><ul>
+<li><p>RestTemplate</p>
+<ul>
+<li>기본으로 java.net.HttpURLConnection 사용.</li>
+<li>커스터마이징<ul>
+<li>로컬 커스터마이징<ul>
+<li>빌더 전에 baseUrl등 여러 설정이 가능하다.</li>
+</ul>
+</li>
+<li>글로벌 커스터마이징<ul>
+<li>전역적으로 사용하기 위해서..</li>
+<li>RestTemplateCustomizer</li>
+<li>빌더 자체를 빈 재정의</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>aphache httpclient 사용하기<ul>
+<li>의존성 주입<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.apache.httpcomponents&lt;&#x2F;groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;httpclient&lt;&#x2F;artifactId&gt;</span><br><span class="line">&lt;&#x2F;dependency&gt;</span><br></pre></td></tr></table></figure></li>
+<li>RestTemplate.setRequestFactory();<br><img src="/images/springboot/springboot15-6.png" alt="springboot"></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>WebClient</p>
+<ul>
+<li>기본으로 Reactor Netty의 HTTP 클라이언트 사용.</li>
+<li>커스터마이징<ul>
+<li>로컬 커스터마이징<ul>
+<li>빌더 전에 baseUrl등 여러 설정이 가능하다.<br><img src="/images/springboot/springboot15-4.png" alt="springboot"></li>
+</ul>
+</li>
+<li>글로벌 커스터마이징<ul>
+<li>전역적으로 사용하기 위해서..</li>
+<li>WebClientCustomizer<br>  <img src="/images/springboot/springboot15-5.png" alt="springboot"></li>
+<li>빌더 자체를 빈 재정의</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/SpringBoot/" rel="tag">SpringBoot</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">Like this article? Support the author with</h3>
+        <div class="buttons is-centered">
+            
+                
+<div class="notification is-danger">
+    You forgot to set the <code>qrcode</code> for Alipay. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                
+<div class="notification is-danger">
+    You forgot to set the <code>qrcode</code> for Wechat. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                <!-- Visit https://www.paypal.com/donate/buttons/ to get your donate button -->
+
+<div class="notification is-danger">
+    You forgot to set the <code>business</code> and <code>currency_code</code> for Paypal. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                
+<div class="notification is-danger">
+    You forgot to set the <code>url</code> Patreon. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2019/04/18/spring/springboot16/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">스프링 부트 운영16 - Actuator</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2019/04/16/spring/springboot14/">
+                <span class="level-item">스프링 부트 활용14 - 스프링 시큐리티</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+</div>
+                
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-4-widescreen  has-order-3 column-right is-sticky">
+    
+        
+
+    <div class="card widget" id="toc">
+        <div class="card-content">
+            <div class="menu">
+                <h3 class="menu-label">
+                    Catalogue
+                </h3>
+                <ul class="menu-list"><li>
+        <a class="is-flex" href="#스프릥-부트-개념과-활용15-inflearn-백기선">
+        <span class="has-mr-6">1</span>
+        <span>스프릥 부트 개념과 활용15(inflearn) - 백기선</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#Spring-boot">
+        <span class="has-mr-6">1.1</span>
+        <span>Spring boot</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#스프링-REST-클라이언트">
+        <span class="has-mr-6">1.1.1</span>
+        <span>스프링 REST 클라이언트</span>
+        </a></li></ul></li></ul></li></ul>
+            </div>
+        </div>
+    </div>
+
+    
+        <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            Tag Cloud
+        </h3>
+        <a href="/tags/Algorithm/" style="font-size: 11.11px;">Algorithm</a> <a href="/tags/DataBase/" style="font-size: 10px;">DataBase</a> <a href="/tags/Etc/" style="font-size: 11.11px;">Etc</a> <a href="/tags/Git/" style="font-size: 13.33px;">Git</a> <a href="/tags/Interview/" style="font-size: 14.44px;">Interview</a> <a href="/tags/JPA/" style="font-size: 20px;">JPA</a> <a href="/tags/JSP/" style="font-size: 14.44px;">JSP</a> <a href="/tags/Java/" style="font-size: 18.89px;">Java</a> <a href="/tags/JavaScript/" style="font-size: 12.22px;">JavaScript</a> <a href="/tags/OracleDB/" style="font-size: 14.44px;">OracleDB</a> <a href="/tags/Process/" style="font-size: 11.11px;">Process</a> <a href="/tags/RestAPI/" style="font-size: 14.44px;">RestAPI</a> <a href="/tags/Seminar/" style="font-size: 10px;">Seminar</a> <a href="/tags/SpringBoot/" style="font-size: 20px;">SpringBoot</a> <a href="/tags/SpringSecurity/" style="font-size: 12.22px;">SpringSecurity</a> <a href="/tags/SpringWebMvc/" style="font-size: 16.67px;">SpringWebMvc</a> <a href="/tags/Springframework/" style="font-size: 17.78px;">Springframework</a> <a href="/tags/Springframework-kosta/" style="font-size: 14.44px;">Springframework_kosta</a> <a href="/tags/Web/" style="font-size: 12.22px;">Web</a> <a href="/tags/debug/" style="font-size: 11.11px;">debug</a> <a href="/tags/jQuery/" style="font-size: 12.22px;">jQuery</a> <a href="/tags/%EC%A0%95%EB%B3%B4%EC%B2%98%EB%A6%AC%EA%B8%B0%EC%82%AC-%ED%95%84%EA%B8%B0/" style="font-size: 13.33px;">정보처리기사_필기</a> <a href="/tags/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%ED%9A%8C%EA%B3%A0/" style="font-size: 15.56px;">프로젝트_회고</a>
+    </div>
+</div>
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/blog_logo.png" alt="스프링 부트 활용15 - 스프링 REST 클라이언트" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2020 Bong&#39;s blog&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/cyr9210">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("en");</script>
+
+
+<script>
+var IcarusThemeSettings = {
+    site: {
+        url: 'http://yoursite.com',
+        external_link: {"enable":true,"exclude":[]}
+    },
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+<script src="/js/animation.js"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+<script src="/js/gallery.js" defer></script>
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+<a id="back-to-top" title="Back to Top" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: 'Posts',
+                PAGES: 'Pages',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
+                UNTITLED: '(Untitled)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html >
+<head>
+    <meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 4.2.0" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>ORM09 - 값 타입(값 타입, 임베디드 타입, 값 타입 컬렉션) - Bong&#39;s blog</title>
+
+
+    <meta name="description" content="자바 ORM 표준 JPA 프로그래밍 - 기본편값 타입기본값 타입">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ORM09 - 값 타입(값 타입, 임베디드 타입, 값 타입 컬렉션)">
+<meta property="og:url" content="http://yoursite.com/2019/12/22/JPA/ORM-JPA09/index.html">
+<meta property="og:site_name" content="Bong&#39;s blog">
+<meta property="og:description" content="자바 ORM 표준 JPA 프로그래밍 - 기본편값 타입기본값 타입">
+<meta property="og:image" content="http://yoursite.com/images/og_image.png">
+<meta property="article:published_time" content="2019-12-22T04:09:10.000Z">
+<meta property="article:modified_time" content="2020-03-20T07:57:35.719Z">
+<meta property="article:author" content="Bong&#39;s blog">
+<meta property="article:tag" content="JPA">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/images/og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+<style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+    
+    
+    
+    
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+    
+    
+    
+    
+    
+    
+    
+    <link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-2-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/blog_logo.png" alt="ORM09 - 값 타입(값 타입, 임베디드 타입, 값 타입 컬렉션)" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                href="/">Home</a>
+                
+                <a class="navbar-item"
+                href="/archives">Archives</a>
+                
+                <a class="navbar-item"
+                href="/tags">Tags</a>
+                
+                <a class="navbar-item"
+                href="/about">About</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    <a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/cyr9210">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="Search" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-8-widescreen has-order-2 column-main">
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-12-22T04:09:10.000Z">2019-12-22</time>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    20 minutes read (About 3012 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                ORM09 - 값 타입(값 타입, 임베디드 타입, 값 타입 컬렉션)
+            
+        </h1>
+        <div class="content">
+            <h1 id="자바-ORM-표준-JPA-프로그래밍-기본편"><a href="#자바-ORM-표준-JPA-프로그래밍-기본편" class="headerlink" title="자바 ORM 표준 JPA 프로그래밍 - 기본편"></a>자바 ORM 표준 JPA 프로그래밍 - 기본편</h1><h2 id="값-타입"><a href="#값-타입" class="headerlink" title="값 타입"></a>값 타입</h2><h3 id="기본값-타입"><a href="#기본값-타입" class="headerlink" title="기본값 타입"></a>기본값 타입</h3><a id="more"></a>
+<h4 id="JPA의-데이터-타입분류"><a href="#JPA의-데이터-타입분류" class="headerlink" title="JPA의 데이터 타입분류"></a>JPA의 데이터 타입분류</h4><ul>
+<li><p>엔티티 타입</p>
+<ul>
+<li>@Entity로 정의하는 객체</li>
+<li>데이터가 변해도 식별자로 지속해서 추적가능</li>
+</ul>
+</li>
+<li><p>값 타입</p>
+<ul>
+<li>int, Integer, String처럼 단순히 값으로 사용하는 자바 기본 타입이나 객체</li>
+<li>식별자가 없고 값만 있으므로 추적 불가<h4 id="값-타입-분류"><a href="#값-타입-분류" class="headerlink" title="값 타입 분류"></a>값 타입 분류</h4></li>
+</ul>
+</li>
+<li><p>기본값 타입</p>
+<ul>
+<li>자바 기본 타입(int, double)</li>
+<li>래퍼 클래스(Integer, Long)</li>
+<li>String</li>
+</ul>
+</li>
+<li><p>임베디드 타입</p>
+<ul>
+<li>복합 값 타입 (ex&gt; x, y 좌표등의 값)</li>
+</ul>
+</li>
+<li><p>컬렉션 값 타입</p>
+<ul>
+<li>자바 컬렉션객체에 기본값이나 임베디드 타입을 넣는것.</li>
+</ul>
+</li>
+</ul>
+<h4 id="기본값-타입-1"><a href="#기본값-타입-1" class="headerlink" title="기본값 타입"></a>기본값 타입</h4><ul>
+<li>예) String name, int age 등</li>
+<li>생명주기를 엔티티에 의존<ul>
+<li>회원이 삭제되면 이름, 나이 필드도 함께 삭제</li>
+</ul>
+</li>
+<li><strong>값 타입은 공유하면 안된다.</strong><ul>
+<li>회원 이름 변경 시, 다른 회원의 이름도 함께 변경되면 안된다.</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><strong>자바의 기본 타입은 절대 공유가 안된다.</strong><br>자바의 기본타입(primitive type)은 공유되지 않는다.<br>기본타입은 항상 값을 복사한다.<br>Integer같은 래퍼 클래스나 String같은 특수한 클래스는 공유 가능한 객체이지만 변경이 되지 않는다.</p>
+</blockquote>
+<p><br><br></p>
+<h3 id="임베디드-타입"><a href="#임베디드-타입" class="headerlink" title="임베디드 타입"></a>임베디드 타입</h3><ul>
+<li>새로운 값 타입을 직접 정의할 수 있다.</li>
+<li>JPA는 임베디드 타입 이라고 한다.</li>
+<li>주로 기본값 타입을 모아서 만들어서 복합 값 타입이라고도 한다.</li>
+</ul>
+<h4 id="임베디드-타입을-어떤경우에-사용할까"><a href="#임베디드-타입을-어떤경우에-사용할까" class="headerlink" title="임베디드 타입을 어떤경우에 사용할까?"></a>임베디드 타입을 어떤경우에 사용할까?</h4><h5 id="example"><a href="#example" class="headerlink" title="example"></a>example</h5><ul>
+<li><p>회원 엔티티는 이름, 근무 시작일, 근무 종료일, 주소도시, 주소번지, 주소 우편번호를 가진다.</p>
+<p><img src="/images/jpa/ORM-JPA/ORM09-1.png" alt="ORM09-1"></p>
+</li>
+<li><p>이러한 경우 근무기간(근무 시작일, 근무 종료일), 집주소(도시, 번지, 우편번호)로 그룹지어 관리할 수 있다.</p>
+<p><img src="/images/jpa/ORM-JPA/ORM09-2.png" alt="ORM09-2"></p>
+</li>
+<li><p>최종적으로 JPA는 아래와 같은 모습으로 관리하게 된다.</p>
+<p><img src="/images/jpa/ORM-JPA/ORM09-3.png" alt="ORM09-3"></p>
+</li>
+</ul>
+<h4 id="임베디드-타입-장점"><a href="#임베디드-타입-장점" class="headerlink" title="임베디드 타입 장점"></a>임베디드 타입 장점</h4><ul>
+<li>재사용</li>
+<li>높은 응집도</li>
+<li><strong>해당 값 타입만 사용하는 의미 있는 메소드를 만들 수 있다.</strong><ul>
+<li>예) <code>WorkPeriod.isWork()</code> (현재 근무 상태를 체크)와 같이 의미 있는 메소드를 만들어 사용할 수 있다.</li>
+</ul>
+</li>
+<li>임베디드 타입을 포함한 모든 값 타입은, 값을 소유한 엔티티의 생명주기에 의존한다.</li>
+</ul>
+<h4 id="임베디드-타입과-테이블-매핑"><a href="#임베디드-타입과-테이블-매핑" class="headerlink" title="임베디드 타입과 테이블 매핑"></a>임베디드 타입과 테이블 매핑</h4><p><img src="/images/jpa/ORM-JPA/ORM09-4.png" alt="ORM09-4"></p>
+<ul>
+<li><p>임베디드 타입은 엔티티의 값일 뿐이다.</p>
+</li>
+<li><p><strong>임베디드 타입을 사용하기 전과 후에 매핑하는 테이블은 같다.</strong></p>
+<ul>
+<li><p>테이블 입장에서는 차이가 없다.</p>
+<ul>
+<li><p>임베디드 타입 미사용</p>
+<p><img src="/images/jpa/ORM-JPA/ORM09-5.png" alt="ORM09-5"></p>
+</li>
+<li><p>임베디드 타입 사용</p>
+<p><img src="/images/jpa/ORM-JPA/ORM09-6.png" alt="ORM09-6"></p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>객체와 테이블을 아주 세밀하게 매핑하는 것이 가능</p>
+</li>
+<li><p>잘 설계한 ORM 애플리케이션은 매핑한 테이블의 수보다 클래스의 수가 더 많다.</p>
+</li>
+</ul>
+<h4 id="임베디드-타입-사용법"><a href="#임베디드-타입-사용법" class="headerlink" title="임베디드 타입 사용법"></a>임베디드 타입 사용법</h4><ul>
+<li><p><code>@Embeddable</code> : 값 타입을 정의하는곳에 표시</p>
+<ul>
+<li>기본생성자 필수</li>
+</ul>
+</li>
+<li><p><code>@Embedded</code> : 값 타입을 사용하는 곳에 표시 </p>
+</li>
+<li><p>데이터입력 예시</p>
+<p><img src="/images/jpa/ORM-JPA/ORM09-8.png" alt="ORM09-8"></p>
+</li>
+</ul>
+<h4 id="임베디드-타입과-연관관계"><a href="#임베디드-타입과-연관관계" class="headerlink" title="임베디드 타입과 연관관계"></a>임베디드 타입과 연관관계</h4><ul>
+<li>임베디드 타입의 값으로 엔티티를 참조 할 수 있다.</li>
+</ul>
+<h4 id="AttributeOverride-속성-재정의"><a href="#AttributeOverride-속성-재정의" class="headerlink" title="@AttributeOverride 속성 재정의"></a>@AttributeOverride 속성 재정의</h4><ul>
+<li><p>한 엔티티에서 같은 값 타입을 사용</p>
+<ul>
+<li>컬러몀이 중복됨</li>
+</ul>
+</li>
+<li><p><code>@AttributeOverrides</code>, <code>@AttributeOverride</code> 를 사용해서 컬럼명 속성을 재정의</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Embedded</span></span><br><span class="line">  <span class="meta">@AttributeOverrides</span>(&#123;</span><br><span class="line">      <span class="meta">@AttributeOverride</span>(</span><br><span class="line">          name = <span class="string">"city"</span>, column = <span class="meta">@Column</span>(name = <span class="string">"work_city"</span>)</span><br><span class="line">      ),</span><br><span class="line">      <span class="meta">@AttributeOverride</span>(</span><br><span class="line">          name = <span class="string">"street"</span>, column = <span class="meta">@Column</span>(name = <span class="string">"work_street"</span>)</span><br><span class="line">      ),</span><br><span class="line">      <span class="meta">@AttributeOverride</span>(</span><br><span class="line">          name = <span class="string">"zip_code"</span>, column = <span class="meta">@Column</span>(name = <span class="string">"work_zip_code"</span>)</span><br><span class="line">      )</span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="keyword">private</span> Address workAddress;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/jpa/ORM-JPA/ORM09-7.png" alt="ORM09-7"></p>
+</li>
+</ul>
+<h4 id="임베디드-타입과-null"><a href="#임베디드-타입과-null" class="headerlink" title="임베디드 타입과 null"></a>임베디드 타입과 null</h4><ul>
+<li>임베디드 타입의 값이 null 이면 매핑한 컬럼 모두 null</li>
+</ul>
+<p><br><br></p>
+<h3 id="값-타입과-불변-객체"><a href="#값-타입과-불변-객체" class="headerlink" title="값 타입과 불변 객체"></a>값 타입과 불변 객체</h3><ul>
+<li>값 타입은 복잡한 객체 세상을 조금이라도 단순화하려고 만든 개념</li>
+<li>값 타입은 단순하고 안전하게 다룰 수 있어야 한다.</li>
+</ul>
+<h4 id="값-타입-공유-참조"><a href="#값-타입-공유-참조" class="headerlink" title="값 타입 공유 참조"></a>값 타입 공유 참조</h4><ul>
+<li><p>임베디드 타입 같은 값 타입을 여러 엔티티에서 공유하면 위험함</p>
+<ul>
+<li><p>부작용 발생 (값이 같이 변화하게됨)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">Address address = <span class="keyword">new</span> Address(<span class="string">"city"</span>, <span class="string">"street"</span>, <span class="string">"zip_code"</span>);</span><br><span class="line"></span><br><span class="line">MemberForEmbeded member = <span class="keyword">new</span> MemberForEmbeded();</span><br><span class="line">member.setUsername(<span class="string">"bong"</span>);</span><br><span class="line">member.setHomeAddress(address);</span><br><span class="line">em.persist(member);</span><br><span class="line"></span><br><span class="line">MemberForEmbeded member2 = <span class="keyword">new</span> MemberForEmbeded();</span><br><span class="line">member2.setUsername(<span class="string">"rack"</span>);</span><br><span class="line">member2.setHomeAddress(address);</span><br><span class="line">em.persist(member2);</span><br><span class="line"></span><br><span class="line">member.getHomeAddress().setCity(<span class="string">"anyang"</span>);</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/jpa/ORM-JPA/ORM09-9.png" alt="ORM09-9"></p>
+<ul>
+<li>update문이 2개 나가는것을 확인할 수 있다.</li>
+</ul>
+</li>
+<li><p>공유하고 싶다면 엔티티로 사용해야한다.</p>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="값-타입-복사"><a href="#값-타입-복사" class="headerlink" title="값 타입 복사"></a>값 타입 복사</h4><ul>
+<li><p>값 타입의 실제 인스턴스인 값을 공유하는 것은 위험</p>
+</li>
+<li><p>대신 값(인스턴스)을 복사해서 사용</p>
+<p><img src="/images/jpa/ORM-JPA/ORM09-10.png" alt="ORM09-10"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">Address address = <span class="keyword">new</span> Address(<span class="string">"city"</span>, <span class="string">"street"</span>, <span class="string">"zip_code"</span>);</span><br><span class="line"></span><br><span class="line">MemberForEmbeded member = <span class="keyword">new</span> MemberForEmbeded();</span><br><span class="line">member.setUsername(<span class="string">"bong"</span>);</span><br><span class="line">member.setHomeAddress(address);</span><br><span class="line">em.persist(member);</span><br><span class="line"></span><br><span class="line">Address address2 = <span class="keyword">new</span> Address(address.getCity(), address.getStreet(), address.getZipcode());</span><br><span class="line">MemberForEmbeded member2 = <span class="keyword">new</span> MemberForEmbeded();</span><br><span class="line">member2.setUsername(<span class="string">"rack"</span>);</span><br><span class="line">member2.setHomeAddress(address2);</span><br><span class="line">em.persist(member2);</span><br><span class="line"></span><br><span class="line">member.getHomeAddress().setCity(<span class="string">"anyang"</span>);</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h4 id="객체-타입의-한계"><a href="#객체-타입의-한계" class="headerlink" title="객체 타입의 한계"></a>객체 타입의 한계</h4><ul>
+<li><p>항상 값을 복사해서 사용하면 공유 참조로 인해 발생하는 부작용을 피할 수 있다.</p>
+</li>
+<li><p>문제는 <strong>임베디드 타입처럼 직접 정의한 값 타입은 자바의 기본타입이 아니라 객체 타입</strong></p>
+<ul>
+<li>기본(primitive) 타입은 =으로 값을 할당하면, 복사된다.</li>
+<li><strong>객체 타입은 참조 값을 직접 대입한다.</strong></li>
+</ul>
+</li>
+<li><p>객체의 공유참조는 피할 수 없다.</p>
+</li>
+<li><p>예시</p>
+<ul>
+<li><p>기본 (primitive) 타입</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a = <span class="number">10</span>;</span><br><span class="line"><span class="keyword">int</span> b = a; </span><br><span class="line">b = <span class="number">4</span>;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>a = 10, b =4</li>
+</ul>
+</li>
+<li><p>객체</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Address a = <span class="keyword">new</span> Address(<span class="string">"Old"</span>);</span><br><span class="line">Address b = a;</span><br><span class="line">b.setCity(<span class="string">"New"</span>);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>a.city = “New”, b.city = “New”</li>
+<li>참조값을 전달하기 때문에 함께 변경된다.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="불변객체"><a href="#불변객체" class="headerlink" title="불변객체"></a>불변객체</h4><ul>
+<li><p>객체타입을 수정할수 없게 만들면 부작용을 원천 차단</p>
+</li>
+<li><p>값 타입은 <strong>불변객체(immutable object)로 설계</strong>해야한다.</p>
+</li>
+<li><p><strong>생성시점 이후 절대 값을 변경 할 수 없는 객체</strong></p>
+<ul>
+<li>생성자로만 값을 설정, 수정자(Setter)를 만들지 않으면 됨(가장 쉬운 방법)</li>
+<li>Integer, String 은 자바가 제공하는 대표적인 불변객체이다.</li>
+</ul>
+</li>
+<li><p>값을 바꾸고 싶다면, 전체 객체를 바꿔야한다.</p>
+<ul>
+<li><p>값타입을 복사하여 객체를 새로 생성하는 메소드를 활용하는것이 좋아보임.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> Address <span class="title">copyAddressExceptCity</span><span class="params">(String city, Address address)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">new</span> Address(city, address.getStreet(), adress.getZipcode());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+</li>
+</ul>
+<p><br><br></p>
+<h3 id="값-타입의-비교"><a href="#값-타입의-비교" class="headerlink" title="값 타입의 비교"></a>값 타입의 비교</h3><ul>
+<li><p>값 타입 : 인스턴스가 달라도 그안에 값이 같으면 같은것으로 봐야한다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a = <span class="number">10</span>;</span><br><span class="line"><span class="keyword">int</span> b = <span class="number">10</span>;</span><br><span class="line"><span class="keyword">boolean</span> result = (a==b);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>result = true</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Address address1 = <span class="keyword">new</span> Adderess(<span class="string">"city"</span>, <span class="string">"street"</span>, <span class="string">"1000"</span>);</span><br><span class="line">Address address2 = <span class="keyword">new</span> Adderess(<span class="string">"city"</span>, <span class="string">"street"</span>, <span class="string">"1000"</span>);</span><br><span class="line"><span class="keyword">boolean</span> result = (address1 == address2);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>result = false</li>
+<li>인스턴스 참조값을 비교한다.</li>
+</ul>
+</li>
+<li><p>동일성 (identity) 비교 : 인스턴스의 참조값을 비교, == 사용</p>
+</li>
+<li><p>동등성(equivalence) 비교 : 인스턴스의 값을 비교, equals() 사용</p>
+</li>
+<li><p>값 타입은 <code>a.equals(b);</code> 사용하여 동등성을 비교해야한다.</p>
+</li>
+<li><p>값 타입의 <code>equals()</code> 메소드를 적절하게 재정의 해야한다.</p>
+<ul>
+<li><p>프록시를 사용하는등 복잡해지면 getter로 값을 가져와야 하는 경우도 있다,(인텔리제이 equals 생성 시, 옵션에서 선택가능)</p>
+<p><img src="/images/jpa/ORM-JPA/ORM09-11.png" alt="ORM09-11"></p>
+</li>
+</ul>
+</li>
+</ul>
+<p><br><br></p>
+<h3 id="값-타입-컬렉션"><a href="#값-타입-컬렉션" class="headerlink" title="값 타입 컬렉션"></a>값 타입 컬렉션</h3><p><img src="/images/jpa/ORM-JPA/ORM09-12.png" alt="ORM09-12"></p>
+<ul>
+<li>값타입을 하나이상 저장할 때 사용</li>
+<li>DB는 컬렉션을 같은 테이블에 저장할 수 없다.</li>
+<li><strong>컬렉션을 저장하기 위한 별도의 테이블이 필요하다.</strong></li>
+<li><code>@ElementCollection</code>, <code>@CollectionTable</code> 사용</li>
+<li><strong>식별자를 따로두지 않고 값들을 묶어서 PK로 둔다.</strong></li>
+</ul>
+<h4 id="사용-예제-설정"><a href="#사용-예제-설정" class="headerlink" title="사용 예제 - 설정"></a>사용 예제 - 설정</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Entity</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MemberForEmbeded</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Id</span> <span class="meta">@GeneratedValue</span></span><br><span class="line">  <span class="keyword">private</span> Long id;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Column</span>(name = <span class="string">"name"</span>)</span><br><span class="line">  <span class="keyword">private</span> String username;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Embedded</span></span><br><span class="line">  <span class="keyword">private</span> Address homeAddress;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@ElementCollection</span></span><br><span class="line">  <span class="meta">@CollectionTable</span>(name = <span class="string">"favoirite_foods"</span>, joinColumns = <span class="meta">@JoinColumn</span>(name = <span class="string">"member_id"</span>))</span><br><span class="line">  <span class="meta">@Column</span>(name = <span class="string">"food_name"</span>)</span><br><span class="line">  <span class="keyword">private</span> Set&lt;String&gt; favoriteFoods = <span class="keyword">new</span> HashSet&lt;&gt;();</span><br><span class="line"></span><br><span class="line">  <span class="meta">@ElementCollection</span></span><br><span class="line">  <span class="meta">@CollectionTable</span>(name = <span class="string">"address"</span>, joinColumns = <span class="meta">@JoinColumn</span>(name = <span class="string">"member_id"</span>))</span><br><span class="line">  <span class="keyword">private</span> List&lt;Address&gt; addressHistory = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>favoriteFoods의 경우 String 단일 컬렉션으로 <code>@Column(name = &quot;&quot;)</code> 저장될 컬럼이름을 설정할 수 있다.</li>
+<li><code>@ElementCollection</code> 로 컬렉션임을 설정</li>
+<li><code>CollectionTable</code> 로 생성될 테이블의 이름 및 join colum을 설정한다.</li>
+</ul>
+<h4 id="저장"><a href="#저장" class="headerlink" title="저장"></a>저장</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">MemberForEmbeded member = <span class="keyword">new</span> MemberForEmbeded();</span><br><span class="line">member.setUsername(<span class="string">"bong"</span>);</span><br><span class="line">member.setHomeAddress(<span class="keyword">new</span> Address(<span class="string">"city"</span>, <span class="string">"street"</span>, <span class="string">"1000"</span>));</span><br><span class="line"></span><br><span class="line">member.getFavoriteFoods().add(<span class="string">"치킨"</span>);</span><br><span class="line">member.getFavoriteFoods().add(<span class="string">"족발"</span>);</span><br><span class="line">member.getFavoriteFoods().add(<span class="string">"피자"</span>);</span><br><span class="line"></span><br><span class="line">member.getAddressHistory().add(<span class="keyword">new</span> Address(<span class="string">"old1"</span> ,<span class="string">"street"</span>, <span class="string">"1000"</span>));</span><br><span class="line">member.getAddressHistory().add(<span class="keyword">new</span> Address(<span class="string">"old2"</span> ,<span class="string">"street"</span>, <span class="string">"1000"</span>));</span><br><span class="line"></span><br><span class="line">em.persist(member);</span><br><span class="line">tx.commit();</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>값 타입 컬렉션은 사용하고 있는 엔티티의 라이프사이클에 의존한다<ul>
+<li>별도로 persist 및 update, remove 할 필요 없다.</li>
+<li><strong>영속성 전이(Cascade) + 고아객체제거 기능을 필수로 가진다고 볼 수 있다.</strong></li>
+</ul>
+</li>
+</ul>
+<h4 id="조회"><a href="#조회" class="headerlink" title="조회"></a>조회</h4><p><img src="/images/jpa/ORM-JPA/ORM09-13.png" alt="ORM09-13"></p>
+<p><img src="/images/jpa/ORM-JPA/ORM09-14.png" alt="ORM09-14"></p>
+<ul>
+<li>값 타입 컬렉션도 지연로딩 전략 사용</li>
+</ul>
+<h4 id="수정"><a href="#수정" class="headerlink" title="수정"></a>수정</h4><ul>
+<li><p>치킨 -&gt; 한식</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">MemberForEmbeded findMember = em.find(MemberForEmbeded<span class="class">.<span class="keyword">class</span>, <span class="title">member</span>.<span class="title">getId</span>())</span>;</span><br><span class="line"></span><br><span class="line">findMember.getFavoriteFoods().remove(<span class="string">"치킨"</span>);</span><br><span class="line">findMember.getFavoriteFoods().add(<span class="string">"한식"</span>);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>immutable해야한다.</li>
+<li>치킨을 지우고 한식을 새로 넣어줘야한다.</li>
+<li>컬렉션의 값만 변경해도 JPA가 알아서 날려준다.</li>
+</ul>
+</li>
+<li><p>Address 변경</p>
+<ul>
+<li><p>equals메소드를 값 비교로 잘 구현 해놓으면, 같은 값을 가지는 값 객체를 remove메소드에 넣었을 때, 삭제된다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">findMember.getAddressHistory().remove(<span class="keyword">new</span> Address(<span class="string">"old1"</span>, <span class="string">"street"</span>, <span class="string">"1000"</span>));</span><br><span class="line">findMember.getAddressHistory().add(<span class="keyword">new</span> Address(<span class="string">"new1"</span>, <span class="string">"street"</span>, <span class="string">"1000"</span>));</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>그러나 실행된 query를 살펴보면…<br>old1에 대한 데이터만삭제하고 new1을 추가해주는 쿼리가 아니고<br><strong>모든 데이터를 삭제하고 새로 추가를 해준다.</strong></p>
+<p><img src="/images/jpa/ORM-JPA/ORM09-15.png" alt="ORM09-15"></p>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="값-타입-컬렉션의-제약사항"><a href="#값-타입-컬렉션의-제약사항" class="headerlink" title="값 타입 컬렉션의 제약사항"></a>값 타입 컬렉션의 제약사항</h4><ul>
+<li>값 타입은 엔티티와 다르게 식별자 개념이 없다.<ul>
+<li>값을 변경하면 추적이 어렵다.</li>
+</ul>
+</li>
+<li>값 타입 컬렉션에 변경 사항이 발생하면, 주인 엔티티와 연관된 모든 데이터를 삭제하고, 값 타입 컬렉션에 있는 현재 값을 모두 다시 저장한다.<ul>
+<li>값 타입 컬렉션을 매핑하는 테이블은 모든 컬럼을 묶어서 기본 키를 구성해야한다. (null 입력 X, 중복저장 X)</li>
+<li><code>@OrderColumm(name = &quot;address_history_order&quot;)</code> 등을 사용하면 순서값이 컬럼에 같이 저장되며, 모두 지우고 새로 입력해주는 동작이 아닌 update문을 사용하여 동작하지만, 이로인해 발생하는 사이드 이펙트가 많음으로 사용하지 않는것을 추천한다.</li>
+</ul>
+</li>
+</ul>
+<h4 id="값-타입-컬렉션-대안"><a href="#값-타입-컬렉션-대안" class="headerlink" title="값 타입 컬렉션 대안"></a>값 타입 컬렉션 대안</h4><ul>
+<li><p><strong>실무에서는 상황에 따라 값 타입 컬렉션 대신에 일대다 관계를 고려</strong></p>
+</li>
+<li><p>일대다 관계를 위한 엔티티를 만들고, 여기에서 값 타입을 사용</p>
+</li>
+<li><p>영속성 전이(Cascade) + 고아 객체 제거를 사용해서 값 타입 컬렉션 처럼 사용</p>
+</li>
+<li><p><strong>정말 단순한 내용일 때만, 값 타입 컬렉션을 사용한다. 나머지는 엔티티로 만들어서 사용하자.</strong></p>
+</li>
+<li><p>엔티티타입르로 승급</p>
+</li>
+<li><p>사용예시</p>
+<ul>
+<li><p>AddressEntity</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Entity</span></span><br><span class="line"><span class="meta">@Table</span>(name = <span class="string">"address"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AddressEntity</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Id</span> <span class="meta">@GeneratedValue</span></span><br><span class="line">  <span class="keyword">private</span> Long id;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> Address address;</span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">AddressEntity</span><span class="params">(String city, String street, String zipCode)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.address = <span class="keyword">new</span> Address(city, street, zipCode);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Member</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Entity</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MemberForEmbeded</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Id</span> <span class="meta">@GeneratedValue</span></span><br><span class="line">  <span class="keyword">private</span> Long id;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Column</span>(name = <span class="string">"name"</span>)</span><br><span class="line">  <span class="keyword">private</span> String username;</span><br><span class="line">  </span><br><span class="line">  <span class="meta">@OneToMany</span>(cascade = CascadeType.ALL, orphanRemoval = <span class="keyword">true</span>)</span><br><span class="line">  <span class="meta">@JoinColumn</span>(name = <span class="string">"member_id"</span>)</span><br><span class="line">  <span class="keyword">private</span> List&lt;AddressEntity&gt; addressHistory = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>insert</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">member.getAddressHistory().add(<span class="keyword">new</span> AddressEntity(<span class="string">"old1"</span>, <span class="string">"street"</span>, <span class="string">"1000"</span>));</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>영속성 전이 및 고아 객체 제거 옵션을 사용하여 라이프 사이클 관리를 엔티티에 맡긴다.</li>
+<li>그러나 일대다 맵핑이기 때문에 인서트 시에 업데이트 쿼리가 나간다.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="엔티티-타입-vs-값-타입"><a href="#엔티티-타입-vs-값-타입" class="headerlink" title="엔티티 타입 vs 값 타입"></a>엔티티 타입 vs 값 타입</h3><ul>
+<li>엔티티<ul>
+<li>식별자</li>
+<li>생명 주기 관리</li>
+<li>공유</li>
+</ul>
+</li>
+<li>값 타입<ul>
+<li>식별자 X</li>
+<li>생명주기를 엔티티에 의존</li>
+<li>공유하지 않는것이 안전 (복사해서 사용하자.)</li>
+<li>불변 객체로 만들어야한다.</li>
+</ul>
+</li>
+</ul>
+<h3 id="주의사항"><a href="#주의사항" class="headerlink" title="주의사항"></a>주의사항</h3><ul>
+<li>값 타입은 정말 값 타입이라 판단될 때만 사용</li>
+<li>엔티티와 값 타입을 혼동해서 엔티티를 값 타입으로 만들면 안됨</li>
+<li>식별자가 필요하고, 지속해서 값을 추적, 변경해야 한다면 그것 은 값 타입이 아닌 엔티티</li>
+</ul>
+<p><br><br></p>
+
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/JPA/" rel="tag">JPA</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">Like this article? Support the author with</h3>
+        <div class="buttons is-centered">
+            
+                
+<div class="notification is-danger">
+    You forgot to set the <code>qrcode</code> for Alipay. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                
+<div class="notification is-danger">
+    You forgot to set the <code>qrcode</code> for Wechat. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                <!-- Visit https://www.paypal.com/donate/buttons/ to get your donate button -->
+
+<div class="notification is-danger">
+    You forgot to set the <code>business</code> and <code>currency_code</code> for Paypal. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                
+<div class="notification is-danger">
+    You forgot to set the <code>url</code> Patreon. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2019/12/23/spring/CommonsRequestLoggingFilter/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">Request 로그 찍기 - CommonsRequestLoggingFilter</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2019/12/08/JPA/ORM-JPA08/">
+                <span class="level-item">ORM08 - 프록시와 연관관계 관리(프록시, fetchType, cascade, orphanRemoval, 고아객체)</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+</div>
+                
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-4-widescreen  has-order-3 column-right is-sticky">
+    
+        
+
+    <div class="card widget" id="toc">
+        <div class="card-content">
+            <div class="menu">
+                <h3 class="menu-label">
+                    Catalogue
+                </h3>
+                <ul class="menu-list"><li>
+        <a class="is-flex" href="#자바-ORM-표준-JPA-프로그래밍-기본편">
+        <span class="has-mr-6">1</span>
+        <span>자바 ORM 표준 JPA 프로그래밍 - 기본편</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#값-타입">
+        <span class="has-mr-6">1.1</span>
+        <span>값 타입</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#기본값-타입">
+        <span class="has-mr-6">1.1.1</span>
+        <span>기본값 타입</span>
+        </a></li><li>
+        <a class="is-flex" href="#임베디드-타입">
+        <span class="has-mr-6">1.1.2</span>
+        <span>임베디드 타입</span>
+        </a></li><li>
+        <a class="is-flex" href="#값-타입과-불변-객체">
+        <span class="has-mr-6">1.1.3</span>
+        <span>값 타입과 불변 객체</span>
+        </a></li><li>
+        <a class="is-flex" href="#값-타입의-비교">
+        <span class="has-mr-6">1.1.4</span>
+        <span>값 타입의 비교</span>
+        </a></li><li>
+        <a class="is-flex" href="#값-타입-컬렉션">
+        <span class="has-mr-6">1.1.5</span>
+        <span>값 타입 컬렉션</span>
+        </a></li><li>
+        <a class="is-flex" href="#엔티티-타입-vs-값-타입">
+        <span class="has-mr-6">1.1.6</span>
+        <span>엔티티 타입 vs 값 타입</span>
+        </a></li><li>
+        <a class="is-flex" href="#주의사항">
+        <span class="has-mr-6">1.1.7</span>
+        <span>주의사항</span>
+        </a></li></ul></li></ul></li></ul>
+            </div>
+        </div>
+    </div>
+
+    
+        <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            Tag Cloud
+        </h3>
+        <a href="/tags/Algorithm/" style="font-size: 11.11px;">Algorithm</a> <a href="/tags/DataBase/" style="font-size: 10px;">DataBase</a> <a href="/tags/Etc/" style="font-size: 11.11px;">Etc</a> <a href="/tags/Git/" style="font-size: 13.33px;">Git</a> <a href="/tags/Interview/" style="font-size: 14.44px;">Interview</a> <a href="/tags/JPA/" style="font-size: 20px;">JPA</a> <a href="/tags/JSP/" style="font-size: 14.44px;">JSP</a> <a href="/tags/Java/" style="font-size: 18.89px;">Java</a> <a href="/tags/JavaScript/" style="font-size: 12.22px;">JavaScript</a> <a href="/tags/OracleDB/" style="font-size: 14.44px;">OracleDB</a> <a href="/tags/Process/" style="font-size: 11.11px;">Process</a> <a href="/tags/RestAPI/" style="font-size: 14.44px;">RestAPI</a> <a href="/tags/Seminar/" style="font-size: 10px;">Seminar</a> <a href="/tags/SpringBoot/" style="font-size: 20px;">SpringBoot</a> <a href="/tags/SpringSecurity/" style="font-size: 12.22px;">SpringSecurity</a> <a href="/tags/SpringWebMvc/" style="font-size: 16.67px;">SpringWebMvc</a> <a href="/tags/Springframework/" style="font-size: 17.78px;">Springframework</a> <a href="/tags/Springframework-kosta/" style="font-size: 14.44px;">Springframework_kosta</a> <a href="/tags/Web/" style="font-size: 12.22px;">Web</a> <a href="/tags/debug/" style="font-size: 11.11px;">debug</a> <a href="/tags/jQuery/" style="font-size: 12.22px;">jQuery</a> <a href="/tags/%EC%A0%95%EB%B3%B4%EC%B2%98%EB%A6%AC%EA%B8%B0%EC%82%AC-%ED%95%84%EA%B8%B0/" style="font-size: 13.33px;">정보처리기사_필기</a> <a href="/tags/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%ED%9A%8C%EA%B3%A0/" style="font-size: 15.56px;">프로젝트_회고</a>
+    </div>
+</div>
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/blog_logo.png" alt="ORM09 - 값 타입(값 타입, 임베디드 타입, 값 타입 컬렉션)" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2020 Bong&#39;s blog&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/cyr9210">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("en");</script>
+
+
+<script>
+var IcarusThemeSettings = {
+    site: {
+        url: 'http://yoursite.com',
+        external_link: {"enable":true,"exclude":[]}
+    },
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+<script src="/js/animation.js"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+<script src="/js/gallery.js" defer></script>
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+<a id="back-to-top" title="Back to Top" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: 'Posts',
+                PAGES: 'Pages',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
+                UNTITLED: '(Untitled)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

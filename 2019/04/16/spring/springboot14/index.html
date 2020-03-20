@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html >
+<head>
+    <meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 4.2.0" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>스프링 부트 활용14 - 스프링 시큐리티 - Bong&#39;s blog</title>
+
+
+    <meta name="description" content="스프릥 부트 개념과 활용14(inflearn) - 백기선Spring boot스프링 시큐리티">
+<meta property="og:type" content="article">
+<meta property="og:title" content="스프링 부트 활용14 - 스프링 시큐리티">
+<meta property="og:url" content="http://yoursite.com/2019/04/16/spring/springboot14/index.html">
+<meta property="og:site_name" content="Bong&#39;s blog">
+<meta property="og:description" content="스프릥 부트 개념과 활용14(inflearn) - 백기선Spring boot스프링 시큐리티">
+<meta property="og:image" content="http://yoursite.com/images/og_image.png">
+<meta property="article:published_time" content="2019-04-16T13:18:31.000Z">
+<meta property="article:modified_time" content="2020-03-20T07:57:35.780Z">
+<meta property="article:author" content="Bong&#39;s blog">
+<meta property="article:tag" content="SpringBoot">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/images/og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+<style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+    
+    
+    
+    
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+    
+    
+    
+    
+    
+    
+    
+    <link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-2-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/blog_logo.png" alt="스프링 부트 활용14 - 스프링 시큐리티" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                href="/">Home</a>
+                
+                <a class="navbar-item"
+                href="/archives">Archives</a>
+                
+                <a class="navbar-item"
+                href="/tags">Tags</a>
+                
+                <a class="navbar-item"
+                href="/about">About</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    <a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/cyr9210">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="Search" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-8-widescreen has-order-2 column-main">
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-04-16T13:18:31.000Z">2019-04-16</time>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    9 minutes read (About 1278 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                스프링 부트 활용14 - 스프링 시큐리티
+            
+        </h1>
+        <div class="content">
+            <p><img src="/images/springboot_logo.png" alt="springboot"></p>
+<h1 id="스프릥-부트-개념과-활용14-inflearn-백기선"><a href="#스프릥-부트-개념과-활용14-inflearn-백기선" class="headerlink" title="스프릥 부트 개념과 활용14(inflearn) - 백기선"></a>스프릥 부트 개념과 활용14(inflearn) - 백기선</h1><h2 id="Spring-boot"><a href="#Spring-boot" class="headerlink" title="Spring boot"></a>Spring boot</h2><h3 id="스프링-시큐리티"><a href="#스프링-시큐리티" class="headerlink" title="스프링 시큐리티"></a>스프링 시큐리티</h3><a id="more"></a>
+
+<hr>
+<h5 id="참고-뷰-컨트롤러-사용"><a href="#참고-뷰-컨트롤러-사용" class="headerlink" title="참고 - 뷰 컨트롤러 사용"></a>참고 - 뷰 컨트롤러 사용</h5><p><img src="/images/springboot/springboot14-1.png" alt="springboot"></p>
+<ul>
+<li>Webconfigure 생성<ul>
+<li>@Configuration</li>
+<li>implements</li>
+</ul>
+</li>
+<li>@Overide - addViewControllers<ul>
+<li>registry.addViewController(“<path>“).setViewName(“<View_name>“);</li>
+</ul>
+</li>
+<li>추가적인 일이 있다면 @Controller를 쓰는것이 유리하다.</li>
+</ul>
+<hr>
+<h4 id="spring-boot-starter-security"><a href="#spring-boot-starter-security" class="headerlink" title="spring-boot-starter-security"></a>spring-boot-starter-security</h4><ul>
+<li><p>스프링 시큐리티</p>
+<ul>
+<li>웹 시큐리티</li>
+<li>메소드 시큐리티</li>
+<li>다양한 인증 방법 지원</li>
+<li>LDAP, 폼 인증, Basic 인증, OAuth, …</li>
+</ul>
+</li>
+<li><p>spring-boot-starter-security 의존성 추가</p>
+</li>
+<li><p>의존성을 추가하게 되면 정상작동하던 컨트롤러테스트가 실패하게 된다.<br>  <img src="/images/springboot/springboot14-2.png" alt="springboot"></p>
+<ul>
+<li>401 Unauthorized</li>
+<li>스프링 부트가 제공하하는 스프링 시큐리티 자동설중 하나이다.<ul>
+<li>모든요청에 스프링 시큐리티로 인해 인증이 필요하다.</li>
+<li>Basic Authenticate, form 인증이 둘다 적용된다.<br>(상기 이미지는 Basic Authenticate 오류)<ul>
+<li>Basic 인증은 Accept 헤더에 따라 달라진다. </li>
+<li>accept 헤더에 text/html을 보내게 되면 form 인증으로 넘어간다.<br>  <img src="/images/springboot/springboot14-3.png" alt="springboot"><ul>
+<li>보통 브라우저에서 accpet 헤더를 text/html을 쓴다. </li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>브라우저에서 루트를 요청해도 로그인으로 이동된다.</p>
+<ul>
+<li>인증정보가 없기 때문에 스프링 시큐리티에서 만들어준 로그인 form페이지로 이동된다.(스프링 부트 자동설정)<br>  <img src="/images/springboot/springboot14-5.png" alt="springboot"></li>
+</ul>
+</li>
+<li><p>스프링 부트 시큐리티 자동 설정</p>
+<ul>
+<li><p>SecurityAutoConfiguration</p>
+<ul>
+<li>DefaultAuthenticationEventPublisher 빈 등록<ul>
+<li>여러상황에 대해 이벤트를 발생시킨다.<br>ex) 비빌번호 오류, 아이도 오류, ….</li>
+<li>다양한 인증 에러 핸들러 등록 가능</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>SpringBootWebSecurityConfiguration</p>
+<ul>
+<li>WebSecurityConfigurerAdapter가 빈으로 등록되어 있지 않을때</li>
+<li>WebSecurityConfigurerAdapter의 내용을 그대로 쓰고있다.<br>(상속만하고 아무것도 정의되어 있지않음)<br><img src="/images/springboot/springboot14-6.png" alt="springboot"><ul>
+<li>WebSecurityConfigurerAdapter 핵심내용<br><img src="/images/springboot/springboot14-7.png" alt="springboot"></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>WebSecurityConfigurerAdapter를 상속하는 Configuration클래스(@Configuration 빈등록)를 만들면 거의 동일하게 동작하는 나만의 시큐리티 설정을 가질 수 있다.<br><img src="/images/springboot/springboot14-9.png" alt="springboot"></p>
+</li>
+<li><p>UserDetailsServiceAutoConfiguration<br>  <img src="/images/springboot/springboot14-8.png" alt="springboot"></p>
+<ul>
+<li><strong>UserDetailsService</strong>, AuthenticationManager,<br>AuthenticationProvider가 없을 때</li>
+<li>inMemoryDetailsManager 객체를 만든다.<ul>
+<li>기본 유저 객체만드는 역할</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>spring-boot-starter-security</p>
+<ul>
+<li>스프링 시큐리티 5.* 의존성 추가 </li>
+</ul>
+</li>
+<li><p>모든 요청에 인증이 필요함.</p>
+</li>
+<li><p>사용자 설정</p>
+<ul>
+<li>기본 Username: user</li>
+<li>기본 Password: 애플리케이션을 실행할 때 마다 랜덤 값 생성 (콘솔에 출력 됨.)<br><img src="/images/springboot/springboot14-4.png" alt="springboot"></li>
+<li>spring.security.user.name</li>
+<li>spring.security.user.password</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>test 방법</p>
+<ul>
+<li><p>의존성 추가</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.security&lt;&#x2F;groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-security-test&lt;&#x2F;artifactId&gt;</span><br><span class="line">    &lt;scope&gt;test&lt;&#x2F;scope&gt;</span><br><span class="line">&lt;&#x2F;dependency&gt;</span><br></pre></td></tr></table></figure></li>
+<li><p>@WithMockUser 사용<br><img src="/images/springboot/springboot14-10.png" alt="springboot"></p>
+</li>
+<li><p>설정한 유저로 테스트<br><img src="/images/springboot/springboot14-11.png" alt="springboot"></p>
+</li>
+</ul>
+</li>
+<li><p><strong>대부분의 서비스들은 UserDetailsService를 등록하고 사용하며, WebSecurityConfigurerAdapter를 이용하여 보다 쉽게 설정을 하기 때문에 스프링 부트에서 지원하는 시큐리티는 사실상 사용 할 일이 없다.</strong> </p>
+</li>
+</ul>
+<h4 id="커스터-마이징"><a href="#커스터-마이징" class="headerlink" title="커스터 마이징"></a>커스터 마이징</h4><ul>
+<li><p>웹 시큐리티 설정</p>
+<ul>
+<li>WebSecurityConfigurerAdapter를 상속하는 Configuration을 빈으로 등록한다.<br>  이미지<ul>
+<li>이 순간 스프링부트에서 자동 설정해주는 SecurityAutoConfiguration은 동작하지 않는다.</li>
+</ul>
+</li>
+<li>http configure을 오버라이딩 한다.<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">protected void configure(HttpSecurity http) throws Exception &#123;</span><br><span class="line">    http.authorizeRequests()</span><br><span class="line">        .antMatchers(&quot;&#x2F;&quot;, &quot;&#x2F;hello&quot;).permitAll()</span><br><span class="line">        .anyRequest().authenticated()</span><br><span class="line">        .and().formLogin()</span><br><span class="line">        .and().httpBasic();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>루트 및 “/hello” 요청에 대하여 접근을 허락한다.</li>
+<li>그 외 모든 요청에 대하여 인증을 한다.<ul>
+<li>formLogin 인증</li>
+<li>httpBasic 인증</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>결과<ul>
+<li>루트<br>  <img src="/images/springboot/springboot14-13.png" alt="springboot"></li>
+<li>hello<br>  <img src="/images/springboot/springboot14-14.png" alt="springboot"></li>
+<li>my<br>  <img src="/images/springboot/springboot14-15.png" alt="springboot"></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><a href="https://docs.spring.io/spring-security/site/docs/current/reference/htmlsingle/#jc-authentication-userdetailsservice">UserDetailsServie 구현</a></p>
+<ul>
+<li><p>User Entity 및 Repository를 생성한다.</p>
+</li>
+<li><p>User관련 서비스를 생성한다.<br><img src="/images/springboot/springboot14-17.png" alt="springboot"></p>
+</li>
+<li><p>implements UserDetailsService</p>
+<ul>
+<li>@Override loadByUsername<br><img src="/images/springboot/springboot14-18.png" alt="springboot"><ul>
+<li>username을 가지고 user객체를 불러와서 인증</li>
+<li>return 될 UserDetails라는 인터페이스 구현체는 제 각각 구현되어있는 유저정보이다.<br>스프링 시큐리티는 User라는 이름으로 UserDetails의 구현체를 제공한다.</li>
+<li>User의 파라미터로 name, password를 넣고 세번째 인자로 authorities()메서드를 생성해서 넣어준다.<br>  <img src="/images/springboot/springboot14-16.png" alt="springboot"></li>
+</ul>
+</li>
+<li>더이상 임의의 User를 만들어주지 않는다.</li>
+<li>PasswordEncoder를 설정하지 않아서 에러가 발생할 것으로 예상되어진다.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>PasswordEncoder 설정 및 사용</p>
+<ul>
+<li>인코딩을 안하고 로그인을 하면.. 오류 발생<br><img src="/images/springboot/springboot14-19.png" alt="springboot"></li>
+<li>패스워드를 직접 DB에 넣으면 안된다. <strong>인코딩 필수</strong></li>
+<li>Security 설정했던 클래스에서<br>패스워드 인코더를 아무것도 인코딩하지 않는 NoOpPasswordEncoder를 리턴하는 PasswordEncoder를 빈으로 등록하면 로그인이 가능하다.</li>
+</ul>
+<p>  <strong>그러나, 절대로 이런 방법을 사용하면 안된다. 패스워드 인코더를 사용해야한다.</strong><br>  <img src="/images/springboot/springboot14-20.png" alt="springboot"></p>
+<ul>
+<li><p>스프링 시큐리티 권장 패스워드 인코더 사용</p>
+<ul>
+<li><p>패스워드 인코더 빈 등록</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">PasswordEncoder passwordEncoder &#x3D; </span><br><span class="line">    PasswordEncoderFactories.createDelegatingPasswordEncoder()</span><br></pre></td></tr></table></figure>
+<p><img src="/images/springboot/springboot14-21.png" alt="springboot"></p>
+</li>
+<li><p>패스워드 인코딩<br><img src="/images/springboot/springboot14-22.png" alt="springboot"></p>
+</li>
+<li><p>인코딩 결과<br><img src="/images/springboot/springboot14-23.png" alt="springboot"></p>
+<ul>
+<li>bcrypt로 인코딩된 것이 보여진다.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/SpringBoot/" rel="tag">SpringBoot</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">Like this article? Support the author with</h3>
+        <div class="buttons is-centered">
+            
+                
+<div class="notification is-danger">
+    You forgot to set the <code>qrcode</code> for Alipay. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                
+<div class="notification is-danger">
+    You forgot to set the <code>qrcode</code> for Wechat. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                <!-- Visit https://www.paypal.com/donate/buttons/ to get your donate button -->
+
+<div class="notification is-danger">
+    You forgot to set the <code>business</code> and <code>currency_code</code> for Paypal. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                
+<div class="notification is-danger">
+    You forgot to set the <code>url</code> Patreon. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2019/04/17/spring/springboot15/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">스프링 부트 활용15 - 스프링 REST 클라이언트</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2019/04/15/spring/springboot13/">
+                <span class="level-item">스프링 부트 활용13 - 스프링 데이터</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+</div>
+                
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-4-widescreen  has-order-3 column-right is-sticky">
+    
+        
+
+    <div class="card widget" id="toc">
+        <div class="card-content">
+            <div class="menu">
+                <h3 class="menu-label">
+                    Catalogue
+                </h3>
+                <ul class="menu-list"><li>
+        <a class="is-flex" href="#스프릥-부트-개념과-활용14-inflearn-백기선">
+        <span class="has-mr-6">1</span>
+        <span>스프릥 부트 개념과 활용14(inflearn) - 백기선</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#Spring-boot">
+        <span class="has-mr-6">1.1</span>
+        <span>Spring boot</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#스프링-시큐리티">
+        <span class="has-mr-6">1.1.1</span>
+        <span>스프링 시큐리티</span>
+        </a></li></ul></li></ul></li></ul>
+            </div>
+        </div>
+    </div>
+
+    
+        <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            Tag Cloud
+        </h3>
+        <a href="/tags/Algorithm/" style="font-size: 11.11px;">Algorithm</a> <a href="/tags/DataBase/" style="font-size: 10px;">DataBase</a> <a href="/tags/Etc/" style="font-size: 11.11px;">Etc</a> <a href="/tags/Git/" style="font-size: 13.33px;">Git</a> <a href="/tags/Interview/" style="font-size: 14.44px;">Interview</a> <a href="/tags/JPA/" style="font-size: 20px;">JPA</a> <a href="/tags/JSP/" style="font-size: 14.44px;">JSP</a> <a href="/tags/Java/" style="font-size: 18.89px;">Java</a> <a href="/tags/JavaScript/" style="font-size: 12.22px;">JavaScript</a> <a href="/tags/OracleDB/" style="font-size: 14.44px;">OracleDB</a> <a href="/tags/Process/" style="font-size: 11.11px;">Process</a> <a href="/tags/RestAPI/" style="font-size: 14.44px;">RestAPI</a> <a href="/tags/Seminar/" style="font-size: 10px;">Seminar</a> <a href="/tags/SpringBoot/" style="font-size: 20px;">SpringBoot</a> <a href="/tags/SpringSecurity/" style="font-size: 12.22px;">SpringSecurity</a> <a href="/tags/SpringWebMvc/" style="font-size: 16.67px;">SpringWebMvc</a> <a href="/tags/Springframework/" style="font-size: 17.78px;">Springframework</a> <a href="/tags/Springframework-kosta/" style="font-size: 14.44px;">Springframework_kosta</a> <a href="/tags/Web/" style="font-size: 12.22px;">Web</a> <a href="/tags/debug/" style="font-size: 11.11px;">debug</a> <a href="/tags/jQuery/" style="font-size: 12.22px;">jQuery</a> <a href="/tags/%EC%A0%95%EB%B3%B4%EC%B2%98%EB%A6%AC%EA%B8%B0%EC%82%AC-%ED%95%84%EA%B8%B0/" style="font-size: 13.33px;">정보처리기사_필기</a> <a href="/tags/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%ED%9A%8C%EA%B3%A0/" style="font-size: 15.56px;">프로젝트_회고</a>
+    </div>
+</div>
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/blog_logo.png" alt="스프링 부트 활용14 - 스프링 시큐리티" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2020 Bong&#39;s blog&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/cyr9210">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("en");</script>
+
+
+<script>
+var IcarusThemeSettings = {
+    site: {
+        url: 'http://yoursite.com',
+        external_link: {"enable":true,"exclude":[]}
+    },
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+<script src="/js/animation.js"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+<script src="/js/gallery.js" defer></script>
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+<a id="back-to-top" title="Back to Top" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: 'Posts',
+                PAGES: 'Pages',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
+                UNTITLED: '(Untitled)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

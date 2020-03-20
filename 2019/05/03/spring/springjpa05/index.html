@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html >
+<head>
+    <meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 4.2.0" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>스프링 데이터 JPA05 - 스프링 데이터 Common - Bong&#39;s blog</title>
+
+
+    <meta name="description" content="스프링 데이터 JPA(inflearn) - 백기선스프링 데이터 Common">
+<meta property="og:type" content="article">
+<meta property="og:title" content="스프링 데이터 JPA05 - 스프링 데이터 Common">
+<meta property="og:url" content="http://yoursite.com/2019/05/03/spring/springjpa05/index.html">
+<meta property="og:site_name" content="Bong&#39;s blog">
+<meta property="og:description" content="스프링 데이터 JPA(inflearn) - 백기선스프링 데이터 Common">
+<meta property="og:image" content="http://yoursite.com/images/og_image.png">
+<meta property="article:published_time" content="2019-05-03T09:05:54.000Z">
+<meta property="article:modified_time" content="2020-03-20T07:57:35.786Z">
+<meta property="article:author" content="Bong&#39;s blog">
+<meta property="article:tag" content="JPA">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/images/og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+<style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+    
+    
+    
+    
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+    
+    
+    
+    
+    
+    
+    
+    <link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-2-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/blog_logo.png" alt="스프링 데이터 JPA05 - 스프링 데이터 Common" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                href="/">Home</a>
+                
+                <a class="navbar-item"
+                href="/archives">Archives</a>
+                
+                <a class="navbar-item"
+                href="/tags">Tags</a>
+                
+                <a class="navbar-item"
+                href="/about">About</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    <a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/cyr9210">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="Search" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-8-widescreen has-order-2 column-main">
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-05-03T09:05:54.000Z">2019-05-03</time>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    20 minutes read (About 3020 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                스프링 데이터 JPA05 - 스프링 데이터 Common
+            
+        </h1>
+        <div class="content">
+            <p><img src="/images/jpa_logo.png" alt="springf"></p>
+<h1 id="스프링-데이터-JPA-inflearn-백기선"><a href="#스프링-데이터-JPA-inflearn-백기선" class="headerlink" title="스프링 데이터 JPA(inflearn) - 백기선"></a>스프링 데이터 JPA(inflearn) - 백기선</h1><h2 id="스프링-데이터-Common"><a href="#스프링-데이터-Common" class="headerlink" title="스프링 데이터 Common"></a>스프링 데이터 Common</h2><a id="more"></a>
+<h3 id="스프링-데이터-JPA-활용-파트-소개"><a href="#스프링-데이터-JPA-활용-파트-소개" class="headerlink" title="스프링 데이터 JPA 활용 파트 소개"></a>스프링 데이터 JPA 활용 파트 소개</h3><p><img src="/images/jpa/jpa05-1.png" alt="springjpa"></p>
+<ul>
+<li>스프링 데이터 : 하나의 프로젝트를 말하는것이 아니고, 여러개의 프로젝트들의 묶음을 말하는것.<br>(SQL &amp; NoSQL 저장소 지원 프로젝트의 묶음.)</li>
+<li>스프링 데이터 Common : 여러 저장소 지원 프로젝트의 공통 기능 제공.</li>
+<li>스프링 데이터 REST : 저장소의 데이터를 하이퍼미디어 기반 HTTP 리소스로(REST API로) 제공하는 프로젝트.</li>
+<li>스프링 데이터 JPA : 스프링 데이터 Common이 제공하는 기능에 JPA 관련 기능 추가</li>
+<li><a href="https://spring.io/projects/spring-data">참고문서</a></li>
+</ul>
+<h3 id="Repository"><a href="#Repository" class="headerlink" title="Repository"></a>Repository</h3><ul>
+<li>앞서 JpaRepository를 상속하는 클래스를 만들어 사용한적이 있었는데.. 사실 해당 부분은 JpaRepository가 스프링데이터 Common의 PagingAndSortingRepostiory를 상속받고 있다.<br>  이미지<ul>
+<li>PagingAndSortingRepostiory : paging, sorting 메소드를 지원</li>
+<li>CrudRepository : CRUD 메소드를 지원<ul>
+<li>@NoRepositoryBean가 붙어있는데.. 실제 빈을 만들어 등록하지 않도록한다.<br>(중간단계의 Repository에는 붙어있다. 실제 Repository가 아님을 표현한다.)</li>
+</ul>
+</li>
+<li>Repository : marker 인터페이스, 실질적인 기능을 하진 않는다.</li>
+</ul>
+</li>
+</ul>
+<h4 id="CrudRepository-메소드"><a href="#CrudRepository-메소드" class="headerlink" title="CrudRepository 메소드"></a>CrudRepository 메소드</h4><ul>
+<li>save(entity); <ul>
+<li>하나의 엔티티를 저장하고 그 엔티티를 리턴해준다.</li>
+</ul>
+</li>
+<li>saveall(Iterable&lt;&gt; entities);<ul>
+<li>여러개의 엔티티를 저장하고 리턴(Iterable타입으로..)</li>
+</ul>
+</li>
+<li>findById(id);<ul>
+<li>id로 엔티티를 찾아서 리턴한다.</li>
+<li>Optional&lt;&gt;로 리턴된다.(null방지..)</li>
+</ul>
+</li>
+<li>existById(id);<ul>
+<li>해당 id에 해당하는 엔티티의 유무를 확인한다.</li>
+</ul>
+</li>
+<li>findAll();<ul>
+<li>어떤 한 엔티티의 모든 정보를 불러온다.</li>
+<li>거의 테스트용으로 사용된다.</li>
+<li>Iterable로 리턴한다. (List&lt;&gt;로 리턴하는경우는 스프링 데이터 JPA를 사용하는것)</li>
+</ul>
+</li>
+<li>findAllById(Iterable&lt;&gt; ids);<ul>
+<li>여러id에 해당하는 목록을 가져온다.</li>
+</ul>
+</li>
+<li>count();<ul>
+<li>갯수</li>
+</ul>
+</li>
+<li>delete(id);<ul>
+<li>삭제</li>
+<li>deleteAll() 도 있다.</li>
+</ul>
+</li>
+</ul>
+<h5 id="test"><a href="#test" class="headerlink" title="test"></a>test</h5><ul>
+<li><p>기본적으로 데이터 테스트들은 @Transactional을 가지고 있는데.. 기본적으로 롤백을 한다.</p>
+<ul>
+<li>어자피 롤백할 쿼리이기 때문에 test클래스 실행 시, insert쿼리문은 날라가지 않는다.</li>
+<li>보고 싶다면 @Rollback(false)를 추가하자.</li>
+</ul>
+</li>
+<li><p>CRUD<br>  <img src="/images/jpa/jpa05-2.png" alt="springjpa"></p>
+</li>
+<li><p>PagingAndSorting<br>  <img src="/images/jpa/jpa05-3.png" alt="springjpa"></p>
+<br>
+
+</li>
+</ul>
+<h3 id="Repository-인터페이스-정의하기"><a href="#Repository-인터페이스-정의하기" class="headerlink" title="Repository 인터페이스 정의하기"></a>Repository 인터페이스 정의하기</h3><h4 id="Repository-인터페이스로-공개할-메소드를-직접-일일히-정의하고-싶을-때"><a href="#Repository-인터페이스로-공개할-메소드를-직접-일일히-정의하고-싶을-때" class="headerlink" title="Repository 인터페이스로 공개할 메소드를 직접 일일히 정의하고 싶을 때"></a>Repository 인터페이스로 공개할 메소드를 직접 일일히 정의하고 싶을 때</h4><ul>
+<li>특정 레퍼지토리 정의<ul>
+<li>@RepositoryDefinition<br><img src="/images/jpa/jpa05-4.png" alt="springjpa"></li>
+<li>test(정의한 Repository인터페이스는 모두 테스트를 해주어야한다.)<br><img src="/images/jpa/jpa05-5.png" alt="springjpa"></li>
+</ul>
+</li>
+<li>공통 인터페이스 정의<ul>
+<li>@NoRepositoryBean<br><img src="/images/jpa/jpa05-6.png" alt="springjpa"></li>
+<li>사용할 인터페이스에서 상속<br><img src="/images/jpa/jpa05-7.png" alt="springjpa"><br>
+
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="Null-처리하기"><a href="#Null-처리하기" class="headerlink" title="Null 처리하기"></a>Null 처리하기</h3><h4 id="Optional"><a href="#Optional" class="headerlink" title="Optional"></a>Optional</h4><ul>
+<li>자바8 부터 지원</li>
+<li>Null을 리턴하지 않고, 비어있는 콜렉션을 리턴한다.</li>
+<li>예시<br>  <img src="/images/jpa/jpa05-8.png" alt="springjpa"></li>
+<li>Optional 메소드 예시<br>  <img src="/images/jpa/jpa05-9.png" alt="springjpa"></li>
+</ul>
+<h4 id="Null-어노테이션"><a href="#Null-어노테이션" class="headerlink" title="Null 어노테이션"></a>Null 어노테이션</h4><ul>
+<li>스프링 프레임워크 5.0부터 지원하는 Null 애노테이션 지원.<ul>
+<li>@NonNullApi<br>  <img src="/images/jpa/jpa05-10.png" alt="springjpa"><ul>
+<li>package-info.java파일 생성 후, 어노테이션 사용</li>
+<li>패키지안의 모든 파라미터 및 리턴타입 및 모두 Null이 아니어야한다.</li>
+<li>Null이 필요한곳에 @Nullable을 사용 해야한다.</li>
+</ul>
+</li>
+<li>@NonNull<br>  <img src="/images/jpa/jpa05-11.png" alt="springjpa"><ul>
+<li>Null이 아니길 바랄때 사용한다.</li>
+</ul>
+</li>
+<li>@Nullable.</li>
+</ul>
+</li>
+<li>툴의 도움을 받을 수 있다.<br>  <img src="/images/jpa/jpa05-12.png" alt="springjpa">)<img src="/images/jpa/jpa05-13.png" alt="springjpa"><ul>
+<li>NonNullApi는 불가능<br>
+
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="쿼리-만들기-개요"><a href="#쿼리-만들기-개요" class="headerlink" title="쿼리 만들기 개요"></a>쿼리 만들기 개요</h3><h4 id="스프링-데이터-저장소의-메소드-이름으로-쿼리-만드는-방법"><a href="#스프링-데이터-저장소의-메소드-이름으로-쿼리-만드는-방법" class="headerlink" title="스프링 데이터 저장소의 메소드 이름으로 쿼리 만드는 방법"></a>스프링 데이터 저장소의 메소드 이름으로 쿼리 만드는 방법</h4><ul>
+<li>메소드 이름을 분석해서 쿼리 만들기 (CREATE)<br>  <img src="/images/jpa/jpa05-14.png" alt="springjpa"></li>
+<li>미리 정의해 둔 쿼리 찾아 사용하기 (USE_DECLARED_QUERY)<ul>
+<li>우선순위 Query &gt; Procedure &gt; NamedQuery</li>
+<li>기본적으로 JPQL을 써야하나, SQL을 쓰고 싶다면 nativequery를 true로 변경한다.<br><img src="/images/jpa/jpa05-16.png" alt="springjpa"></li>
+</ul>
+</li>
+<li><strong>미리 정의한 쿼리 찾아보고 없으면 만들기 (CREATE_IF_NOT_FOUND) (기본전략)</strong><ul>
+<li>@EnableJpaRepositories(queryLookupStrategy = )로 변경 가능하다.<br>  <img src="/images/jpa/jpa05-15.png" alt="springjpa"></li>
+</ul>
+</li>
+</ul>
+<h4 id="쿼리-만드는-방법"><a href="#쿼리-만드는-방법" class="headerlink" title="쿼리 만드는 방법"></a>쿼리 만드는 방법</h4><ul>
+<li>리턴타입 {접두어}{도입부}By{프로퍼티 표현식}(조건식)[(And|Or){프로퍼티표현식}(조건식)]{정렬 조건} (매개변수)<ul>
+<li>접두어 : Find, Get, Query, Count, …</li>
+<li>도입부 : Distinct, First(N), Top(N)</li>
+<li>프로퍼티 표현식 : Person.Address.ZipCode =&gt; find(Person)ByAddress_ZipCode(…)</li>
+<li>조건식 : IgnoreCase, Between, LessThan, GreaterThan, Like, Contains, …</li>
+<li>정렬 조건 : OrderBy{프로퍼티}Asc|Desc</li>
+<li>리턴 타입 : E, Optional<E>, List<E>, Page<E>, Slice<E>, Stream<E></li>
+<li>매개변수 : Pageable, Sort<br>
+
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="쿼리-만들기-실습"><a href="#쿼리-만들기-실습" class="headerlink" title="쿼리 만들기 실습"></a>쿼리 만들기 실습</h3><h4 id="기본예제"><a href="#기본예제" class="headerlink" title="기본예제"></a>기본예제</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Person&gt; findByEmailAddressAndLastname(EmailAddress emailAddress, String lastname);</span><br></pre></td></tr></table></figure>
+
+<h5 id="distinct"><a href="#distinct" class="headerlink" title="distinct"></a>distinct</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Person&gt; findDistinctPeopleByLastnameOrFirstname(String lastname, String firstname);</span><br><span class="line">List&lt;Person&gt; findPeopleDistinctByLastnameOrFirstname(String lastname, String firstname);</span><br></pre></td></tr></table></figure>
+
+<h5 id="ignoring-case"><a href="#ignoring-case" class="headerlink" title="ignoring case"></a>ignoring case</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Person&gt; findByLastnameIgnoreCase(String lastname);</span><br><span class="line">List&lt;Person&gt; findByLastnameAndFirstnameAllIgnoreCase(String lastname, String firstname);</span><br></pre></td></tr></table></figure>
+
+<h4 id="정렬"><a href="#정렬" class="headerlink" title="정렬"></a>정렬</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Person&gt; findByLastnameOrderByFirstnameAsc(String lastname);</span><br><span class="line">List&lt;Person&gt; findByLastnameOrderByFirstnameDesc(String lastname);</span><br></pre></td></tr></table></figure>
+
+<h4 id="페이징"><a href="#페이징" class="headerlink" title="페이징"></a>페이징</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Page&lt;User&gt; findByLastname(String lastname, Pageable pageable);</span><br><span class="line">Slice&lt;User&gt; findByLastname(String lastname, Pageable pageable);</span><br><span class="line">List&lt;User&gt; findByLastname(String lastname, Sort sort);</span><br><span class="line">List&lt;User&gt; findByLastname(String lastname, Pageable pageable);</span><br></pre></td></tr></table></figure>
+
+<h4 id="스트리밍"><a href="#스트리밍" class="headerlink" title="스트리밍"></a>스트리밍</h4><ul>
+<li>try-with-resource 사용할 것. (Stream을 다 쓴다음에 close() 해야 함)<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Stream&lt;User&gt; readAllByFirstnameNotNull();</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h4 id="그-외-실습내용"><a href="#그-외-실습내용" class="headerlink" title="그 외 실습내용"></a>그 외 실습내용</h4><p><a href="https://github.com/cyr9210/springJPA-study/blob/master/03/src/main/java/me/bong/springjpa03/post/CommentRepository.java">Repository class</a><br><a href="https://github.com/cyr9210/springJPA-study/blob/master/03/src/test/java/me/bong/springjpa03/post/CommnetRepositoryTest.java">test class</a><br><br><br></p>
+<h3 id="비동기-쿼리"><a href="#비동기-쿼리" class="headerlink" title="비동기 쿼리"></a>비동기 쿼리</h3><h4 id="Future"><a href="#Future" class="headerlink" title="Future"></a>Future</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">@Async</span><br><span class="line">Future&lt;User&gt; findByFirstname(String firstname);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Java5에서 생김</li>
+<li>@EnableAsync 해주어야한다.</li>
+</ul>
+<h4 id="CompletableFuture"><a href="#CompletableFuture" class="headerlink" title="CompletableFuture"></a>CompletableFuture</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">@Async </span><br><span class="line">CompletableFuture&lt;User&gt; findOneByFirstname(String firstname);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Java8에서 들어옴 </li>
+<li>@EnableAsync 해주어야한다.</li>
+</ul>
+<h4 id="ListenableFuture"><a href="#ListenableFuture" class="headerlink" title="ListenableFuture"></a>ListenableFuture</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">@Async </span><br><span class="line">ListenableFuture&lt;User&gt; findOneByLastname(String lastname);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>스프링에서 만들었다.</li>
+<li>가장 깔끔함.</li>
+<li>해당 메소드를 스프링 TaskExecutor에 전달해서 별도의 쓰레드에서 실행함.</li>
+<li>Reactive랑은 다른 것임</li>
+</ul>
+<h4 id="권장하지-않는-이유"><a href="#권장하지-않는-이유" class="headerlink" title="권장하지 않는 이유"></a>권장하지 않는 이유</h4><ul>
+<li>테스트 코드 작성이 어려움.</li>
+<li>코드 복잡도 증가.</li>
+<li>성능상 이득이 없음.<ul>
+<li>DB 부하는 결국 같고.</li>
+<li>메인 쓰레드 대신 백드라운드 쓰레드가 일하는 정도의 차이.</li>
+<li>단, 백그라운드로 실행하고 결과를 받을 필요가 없는 작업이라면 @Async를 사용해서 응답 속도를 향상 시킬 수는 있다.<br><br><br></li>
+</ul>
+</li>
+</ul>
+<h3 id="커스텀-리포지토리"><a href="#커스텀-리포지토리" class="headerlink" title="커스텀 리포지토리"></a>커스텀 리포지토리</h3><ul>
+<li>쿼리 메소드(쿼리 생성과 쿼리 찾아쓰기)로 해결이 되지 않는 경우 직접 코딩으로 구현 가능.<ul>
+<li>스프링 데이터 리포지토리 인터페이스에 기능 추가.</li>
+<li>스프링 데이터 리포지토리 기본 기능 덮어쓰기 가능.</li>
+</ul>
+</li>
+</ul>
+<h4 id="구현방법"><a href="#구현방법" class="headerlink" title="구현방법"></a>구현방법</h4><ol>
+<li>커스텀 리포지토리 인터페이스 정의<br><img src="/images/jpa/jpa05-17.png" alt="springjpa"></li>
+<li>인터페이스 구현 클래스 만들기 (기본 접미어는 Impl)<br><img src="/images/jpa/jpa05-18.png" alt="springjpa"><ul>
+<li>EntityManager, JdbcTemplate 등을 주입받아 사용할 수 있다.</li>
+</ul>
+</li>
+<li>엔티티 리포지토리에 커스텀 리포지토리 인터페이스 추가<br><img src="/images/jpa/jpa05-19.png" alt="springjpa"></li>
+</ol>
+<ul>
+<li>기본 기능을 덮어쓰고 싶다면 기본기능 메소드를 그대로 정의하고 위와 같은 방법으로 구현한다.<br><img src="/images/jpa/jpa05-20.png" alt="springjpa"></li>
+</ul>
+<h4 id="접미어-설정하기"><a href="#접미어-설정하기" class="headerlink" title="접미어 설정하기"></a>접미어 설정하기</h4><ul>
+<li>@EnableJpaRepositories(repositoryImplementationPostfix = “변경값”)<br>  <img src="/images/jpa/jpa05-21.png" alt="springjpa">    <ul>
+<li>기본값은 “Impl” 이다.<br><br><br></li>
+</ul>
+</li>
+</ul>
+<h3 id="기본-리포지토리-커스터마이징"><a href="#기본-리포지토리-커스터마이징" class="headerlink" title="기본 리포지토리 커스터마이징"></a>기본 리포지토리 커스터마이징</h3><ul>
+<li>모든 리포지토리에 공통적으로 추가하고 싶은 기능이 있거나 덮어쓰고 싶은 기본 기능이 있을때</li>
+</ul>
+<h4 id="구현방법-1"><a href="#구현방법-1" class="headerlink" title="구현방법"></a>구현방법</h4><ol>
+<li>JpaRepository를 상속 받는 인터페이스 정의<br> <img src="/images/jpa/jpa05-22.png" alt="springjpa"><ul>
+<li>@NoRepositoryBean</li>
+</ul>
+</li>
+<li>기본 구현체를 상속 받는 커스텀 구현체 만들기<br> <img src="/images/jpa/jpa05-23.png" alt="springjpa"></li>
+<li>@EnableJpaRepositories에 설정<ul>
+<li>repositoryBaseClass<br><img src="/images/jpa/jpa05-25.png" alt="springjpa"></li>
+</ul>
+</li>
+<li>엔티티 레포지토리에 설정<br> <img src="/images/jpa/jpa05-24.png" alt="springjpa"><br>
+
+</li>
+</ol>
+<h3 id="도메인-이벤트"><a href="#도메인-이벤트" class="headerlink" title="도메인 이벤트"></a>도메인 이벤트</h3><p>도메인 관련 이벤트를 발생시키기에 대하여 스프링 프레임워크 사용방법 및 스프링 데이터 사용방법에 대해 알아보자.</p>
+<h4 id="스프링-프레임워크의-이벤트-관련-기능"><a href="#스프링-프레임워크의-이벤트-관련-기능" class="headerlink" title="스프링 프레임워크의 이벤트 관련 기능"></a>스프링 프레임워크의 이벤트 관련 기능</h4><ul>
+<li><a href="https://docs.spring.io/spring/docs/current/spring-framework-reference/core.html#context-functionality-events">참고문서</a></li>
+<li>이벤트를 만들때는 ApplicationEvent를 상속받도록한다. (extends ApplicationEvent)<br>  <img src="/images/jpa/jpa05-26.png" alt="springjpa"></li>
+<li>ApplicationContext는 BeanFactory와 더불어 ApplicationEventPublisher도 상속받고 있다. (이벤트 등록 기능 지원)<br>  <img src="/images/jpa/jpa05-27.png" alt="springjpa"></li>
+<li>리스너 (하기 두가지 방법중 선택하여 사용한다.)<ul>
+<li>implements ApplicationListener<E extends ApplicationEvent><br>  <img src="/images/jpa/jpa05-28.png" alt="springjpa"></li>
+<li>@EventListener<br>  <img src="/images/jpa/jpa05-29.png" alt="springjpa"></li>
+</ul>
+</li>
+</ul>
+<h4 id="스프링-데이터의-도메인-이벤트-Publisher"><a href="#스프링-데이터의-도메인-이벤트-Publisher" class="headerlink" title="스프링 데이터의 도메인 이벤트 Publisher"></a>스프링 데이터의 도메인 이벤트 Publisher</h4><ul>
+<li>extends AbstractAggregateRoot<E><br>  <img src="/images/jpa/jpa05-30.png" alt="springjpa"><ul>
+<li>AbstractAggregateRoot안에 두 어노테이션이 있다.<ul>
+<li>@DomainEvents</li>
+<li>@AfterDomainEventPublication</li>
+</ul>
+</li>
+<li>registerEvent() 메소드를 사용할 수 있게된다. (이벤트 등록)        </li>
+</ul>
+</li>
+<li>현재는 save() 할 때만 발생 합니다.<br>  <img src="/images/jpa/jpa05-31.png" alt="springjpa"></li>
+</ul>
+<h3 id="QueryDSL-Domain-Specific-Language"><a href="#QueryDSL-Domain-Specific-Language" class="headerlink" title="QueryDSL(Domain Specific Language)"></a>QueryDSL(Domain Specific Language)</h3><h4 id="QueryDSL을-사용하는-이유"><a href="#QueryDSL을-사용하는-이유" class="headerlink" title="QueryDSL을 사용하는 이유"></a>QueryDSL을 사용하는 이유</h4><ul>
+<li>조건문을 표현하는 방법이 타입세이프하다.</li>
+<li>조건문을 Predicate 인터페이스로 조건문을 표현하는데, 조합 및 별도 관리가 가능하다.</li>
+</ul>
+<h4 id="여러-쿼리-메소드는-대부분-두-가지-중-하나"><a href="#여러-쿼리-메소드는-대부분-두-가지-중-하나" class="headerlink" title="여러 쿼리 메소드는 대부분 두 가지 중 하나"></a>여러 쿼리 메소드는 대부분 두 가지 중 하나</h4><ul>
+<li>Optional<T> findOne(Predicate): 이런 저런 조건으로 무언가 하나를 찾는다.</li>
+<li>List<T>|Page<T>|.. findAll(Predicate): 이런 저런 조건으로 무언가 여러개를 찾는다.</li>
+<li>QuerydslPredicateExecutor 인터페이스</li>
+</ul>
+<h4 id="QueryDSL"><a href="#QueryDSL" class="headerlink" title="QueryDSL"></a>QueryDSL</h4><ul>
+<li><a href="http://www.querydsl.com">참고문서</a></li>
+<li>타입 세이프한 쿼리 만들 수 있게 도와주는 라이브러리</li>
+<li>JPA, SQL, MongoDB, JDO, Lucene, Collection 지원</li>
+<li><a href="http://www.querydsl.com/static/querydsl/4.1.3/reference/html_single/#jpa_integration">QueryDSL JPA 연동 가이드</a></li>
+</ul>
+<h4 id="연동-방법"><a href="#연동-방법" class="headerlink" title="연동 방법"></a>연동 방법</h4><ul>
+<li><p>기본 리포지토리 커스터마이징 안 했을 때.</p>
+<ul>
+<li><p>의존성추가(스프링 부트가 버전관리 해줌)</p>
+<ul>
+<li>querydsl-apt : 쿼리용 Domain Specific Laguage를 생성해준다. 플러그인 설정이 필요하다.</li>
+<li>queydsl-jpa<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;com.querydsl&lt;&#x2F;groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;querydsl-apt&lt;&#x2F;artifactId&gt;</span><br><span class="line">&lt;&#x2F;dependency&gt;</span><br><span class="line"></span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;com.querydsl&lt;&#x2F;groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;querydsl-jpa&lt;&#x2F;artifactId&gt;</span><br><span class="line">&lt;&#x2F;dependency&gt;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>플러그인 추가</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;plugin&gt;</span><br><span class="line">    &lt;groupId&gt;com.mysema.maven&lt;&#x2F;groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;apt-maven-plugin&lt;&#x2F;artifactId&gt;</span><br><span class="line">    &lt;version&gt;1.1.3&lt;&#x2F;version&gt;</span><br><span class="line">    &lt;executions&gt;</span><br><span class="line">        &lt;execution&gt;</span><br><span class="line">            &lt;goals&gt;</span><br><span class="line">                &lt;goal&gt;process&lt;&#x2F;goal&gt;</span><br><span class="line">            &lt;&#x2F;goals&gt;</span><br><span class="line">            &lt;configuration&gt;</span><br><span class="line">                &lt;outputDirectory&gt;target&#x2F;generated-sources&#x2F;java&lt;&#x2F;outputDirectory&gt;</span><br><span class="line">                &lt;processor&gt;com.querydsl.apt.jpa.JPAAnnotationProcessor&lt;&#x2F;processor&gt;</span><br><span class="line">            &lt;&#x2F;configuration&gt;</span><br><span class="line">        &lt;&#x2F;execution&gt;</span><br><span class="line">    &lt;&#x2F;executions&gt;</span><br><span class="line">&lt;&#x2F;plugin&gt;</span><br></pre></td></tr></table></figure></li>
+<li><p>compile 시, 해당 파일이 생성된다.(QAccount)<br>  <img src="/images/jpa/jpa05-32.png" alt="springjpa"></p>
+</li>
+<li><p>Repostiory 인터페이스에 QuerydslPredicateExecutor&lt;도메인타입&gt; 상속을 추가한다.<br>  <img src="/images/jpa/jpa05-33.png" alt="springjpa"></p>
+</li>
+<li><p>predicate를 사용하여 조건문을 만들고 사용한다.<br>  <img src="/images/jpa/jpa05-34.png" alt="springjpa"></p>
+</li>
+</ul>
+</li>
+<li><p>기본 리포지토리 커스타마이징 했을 때.</p>
+<ul>
+<li>기존에는 만든 커스터마이징 구현체에 SimpleJpaRepository를 상속하지 않도록하고 QuerydslJpaRepository를 상속하도록 함으로 해결 할 수 있었다.</li>
+<li>현재는 상기 방법가 동일하게 해도 구현되는것을 확인하였다.<br><br><br></li>
+</ul>
+</li>
+</ul>
+<h3 id="DomainClassConverter"><a href="#DomainClassConverter" class="headerlink" title="DomainClassConverter"></a>DomainClassConverter</h3><h4 id="스프링-Converter"><a href="#스프링-Converter" class="headerlink" title="스프링 Converter"></a>스프링 Converter</h4><ul>
+<li><a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/core/convert/converter/Converter.html">참고문서</a></li>
+</ul>
+<h4 id="DomainClassConverter-1"><a href="#DomainClassConverter-1" class="headerlink" title="DomainClassConverter"></a>DomainClassConverter</h4><ul>
+<li><p>사용 전</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">@GetMapping(&quot;&#x2F;posts&#x2F;&#123;id&#125;&quot;)</span><br><span class="line">    public String getAPost(@PathVariable Long id) &#123;</span><br><span class="line">        Optional&lt;Post&gt; byId &#x3D; postRepository.findById(id);</span><br><span class="line">        Post post &#x3D; byId.get();</span><br><span class="line">        return post.getTitle();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>사용</p>
+<ul>
+<li>해당아이디 값으 찾아서 Domain객체로 변환해준다.  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@GetMapping(&quot;&#x2F;posts&#x2F;&#123;id&#125;&quot;)</span><br><span class="line">    public String getAPost(@PathVariable(“id”) Post post) &#123;</span><br><span class="line">        return post.getTitle();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>Formatter</p>
+<ul>
+<li>문자열 기반</li>
+<li>문자열 -&gt; 다른타입</li>
+<li>어떤타입 -&gt; 문자열 프린팅<br><br><br></li>
+</ul>
+</li>
+</ul>
+<h3 id="Pageable과-Sort-매개변수"><a href="#Pageable과-Sort-매개변수" class="headerlink" title="Pageable과 Sort 매개변수"></a>Pageable과 Sort 매개변수</h3><h4 id="스프링-MVC-HandlerMethodArgumentResolver"><a href="#스프링-MVC-HandlerMethodArgumentResolver" class="headerlink" title="스프링 MVC HandlerMethodArgumentResolver"></a>스프링 MVC HandlerMethodArgumentResolver</h4><ul>
+<li>스프링 MVC 핸들러 메소드의 매개변수로 받을 수 있는 객체를 확장하고 싶을 때 사용하는 인터페이스</li>
+<li><a href="https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/web/method/support/HandlerMethodArgumentResolver.html">참고문서</a></li>
+</ul>
+<h4 id="페이징과-정렬-관련-매개변수"><a href="#페이징과-정렬-관련-매개변수" class="headerlink" title="페이징과 정렬 관련 매개변수"></a>페이징과 정렬 관련 매개변수</h4><ul>
+<li>page: 0부터 시작.</li>
+<li>size: 기본값 20.</li>
+<li>sort: property,property(,ASC|DESC)</li>
+<li>예) sort=created,desc&amp;sort=title (asc가 기본값)</li>
+</ul>
+<h4 id="예제"><a href="#예제" class="headerlink" title="예제"></a>예제</h4><ul>
+<li>컨트롤러  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@GetMapping(&quot;&#x2F;posts&quot;)</span><br><span class="line">    public Page&lt;Post&gt; getPost(Pageable pageable)&#123;</span><br><span class="line">        return postRepository.findAll(pageable);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>test  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">@Test</span><br><span class="line">public void getPosts() throws Exception &#123;</span><br><span class="line">    Post post &#x3D; new Post();</span><br><span class="line">    post.setTitle(&quot;jpa&quot;);</span><br><span class="line">    postRepository.save(post);</span><br><span class="line"> </span><br><span class="line">    mockMvc.perform(get(&quot;&#x2F;posts&#x2F;&quot;)</span><br><span class="line">            .param(&quot;page&quot;, &quot;0&quot;)</span><br><span class="line">            .param(&quot;size&quot;, &quot;10&quot;)</span><br><span class="line">            .param(&quot;sort&quot;, &quot;created,desc&quot;)</span><br><span class="line">            .param(&quot;sort&quot;, &quot;title&quot;))</span><br><span class="line">            .andDo(print())</span><br><span class="line">            .andExpect(status().isOk())</span><br><span class="line">    .andExpect(jsonPath(&quot;$.content[0].title&quot;, is(&quot;jpa&quot;)));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<br><br></li>
+</ul>
+<h3 id="HATEOAS"><a href="#HATEOAS" class="headerlink" title="HATEOAS"></a>HATEOAS</h3><h4 id="Page를-PagedResource로-변환하기"><a href="#Page를-PagedResource로-변환하기" class="headerlink" title="Page를 PagedResource로 변환하기"></a>Page를 PagedResource로 변환하기</h4><ul>
+<li>일단 HATEOAS 의존성 추가 (starter-hateoas)</li>
+<li>핸들러 매개변수로 PagedResourcesAssembler</li>
+</ul>
+<h4 id="예제-1"><a href="#예제-1" class="headerlink" title="예제"></a>예제</h4><ul>
+<li><p>컨트롤러</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@GetMapping(&quot;&#x2F;posts&quot;)</span><br><span class="line">public PagedResources&lt;Resource&lt;Post&gt;&gt; getPosts (Pageable pageable, PagedResourcesAssembler&lt;Post&gt; assembler)&#123;</span><br><span class="line">    return assembler.toResource(postRepository.findAll(pageable));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>test</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">@Test</span><br><span class="line">public void getPosts() throws Exception &#123;</span><br><span class="line">    createPost(&quot;jpa&quot;);</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">    mockMvc.perform(get(&quot;&#x2F;posts&#x2F;&quot;)</span><br><span class="line">            .param(&quot;page&quot;, &quot;0&quot;)</span><br><span class="line">            .param(&quot;size&quot;, &quot;10&quot;)</span><br><span class="line">            .param(&quot;sort&quot;, &quot;created,desc&quot;)</span><br><span class="line">            .param(&quot;sort&quot;, &quot;title&quot;))</span><br><span class="line">            .andDo(print())</span><br><span class="line">            .andExpect(status().isOk())</span><br><span class="line">    .andExpect(jsonPath(&quot;$.content[0].title&quot;, is(&quot;jpa&quot;)));</span><br><span class="line">&#125;</span><br><span class="line">    </span><br><span class="line">private void createPost(String title) &#123;</span><br><span class="line">    int postcount &#x3D; 0;</span><br><span class="line"> </span><br><span class="line">    while(postcount &lt;&#x3D; 100)&#123;</span><br><span class="line">        Post post &#x3D; new Post();</span><br><span class="line">        post.setTitle(title);</span><br><span class="line">        postRepository.save(post);</span><br><span class="line">        postcount++;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>결과</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">   &quot;_embedded&quot;:&#123;  </span><br><span class="line">      &quot;postList&quot;:[  </span><br><span class="line">         &#123;  </span><br><span class="line">            &quot;id&quot;:140,</span><br><span class="line">            &quot;title&quot;:&quot;jpa&quot;,</span><br><span class="line">            &quot;created&quot;:null</span><br><span class="line">         &#125;,</span><br><span class="line">...</span><br><span class="line">         &#123;  </span><br><span class="line">            &quot;id&quot;:109,</span><br><span class="line">            &quot;title&quot;:&quot;jpa&quot;,</span><br><span class="line">            &quot;created&quot;:null</span><br><span class="line">         &#125;</span><br><span class="line">      ]</span><br><span class="line">   &#125;,</span><br><span class="line">   &quot;_links&quot;:&#123;  </span><br><span class="line">      &quot;first&quot;:&#123;  </span><br><span class="line">         &quot;href&quot;:&quot;http:&#x2F;&#x2F;localhost&#x2F;posts?page&#x3D;0&amp;size&#x3D;10&amp;sort&#x3D;created,desc&amp;sort&#x3D;title,asc&quot;</span><br><span class="line">      &#125;,</span><br><span class="line">      &quot;prev&quot;:&#123;  </span><br><span class="line">         &quot;href&quot;:&quot;http:&#x2F;&#x2F;localhost&#x2F;posts?page&#x3D;1&amp;size&#x3D;10&amp;sort&#x3D;created,desc&amp;sort&#x3D;title,asc&quot;</span><br><span class="line">      &#125;,</span><br><span class="line">      &quot;self&quot;:&#123;  </span><br><span class="line">         &quot;href&quot;:&quot;http:&#x2F;&#x2F;localhost&#x2F;posts?page&#x3D;2&amp;size&#x3D;10&amp;sort&#x3D;created,desc&amp;sort&#x3D;title,asc&quot;</span><br><span class="line">      &#125;,</span><br><span class="line">      &quot;next&quot;:&#123;  </span><br><span class="line">         &quot;href&quot;:&quot;http:&#x2F;&#x2F;localhost&#x2F;posts?page&#x3D;3&amp;size&#x3D;10&amp;sort&#x3D;created,desc&amp;sort&#x3D;title,asc&quot;</span><br><span class="line">      &#125;,</span><br><span class="line">      &quot;last&quot;:&#123;  </span><br><span class="line">         &quot;href&quot;:&quot;http:&#x2F;&#x2F;localhost&#x2F;posts?page&#x3D;19&amp;size&#x3D;10&amp;sort&#x3D;created,desc&amp;sort&#x3D;title,asc&quot;</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;,</span><br><span class="line">   &quot;page&quot;:&#123;  </span><br><span class="line">      &quot;size&quot;:10,</span><br><span class="line">      &quot;totalElements&quot;:100,</span><br><span class="line">      &quot;totalPages&quot;:20,</span><br><span class="line">      &quot;number&quot;:2</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<br>
+
+
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/JPA/" rel="tag">JPA</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">Like this article? Support the author with</h3>
+        <div class="buttons is-centered">
+            
+                
+<div class="notification is-danger">
+    You forgot to set the <code>qrcode</code> for Alipay. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                
+<div class="notification is-danger">
+    You forgot to set the <code>qrcode</code> for Wechat. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                <!-- Visit https://www.paypal.com/donate/buttons/ to get your donate button -->
+
+<div class="notification is-danger">
+    You forgot to set the <code>business</code> and <code>currency_code</code> for Paypal. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                
+<div class="notification is-danger">
+    You forgot to set the <code>url</code> Patreon. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2019/05/24/Project/Notice-Project/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">Notice-Project</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2019/05/03/spring/springjpa06/">
+                <span class="level-item">스프링 데이터 JPA06 - 스프링 데이터 JPA</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+</div>
+                
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-4-widescreen  has-order-3 column-right is-sticky">
+    
+        
+
+    <div class="card widget" id="toc">
+        <div class="card-content">
+            <div class="menu">
+                <h3 class="menu-label">
+                    Catalogue
+                </h3>
+                <ul class="menu-list"><li>
+        <a class="is-flex" href="#스프링-데이터-JPA-inflearn-백기선">
+        <span class="has-mr-6">1</span>
+        <span>스프링 데이터 JPA(inflearn) - 백기선</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#스프링-데이터-Common">
+        <span class="has-mr-6">1.1</span>
+        <span>스프링 데이터 Common</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#스프링-데이터-JPA-활용-파트-소개">
+        <span class="has-mr-6">1.1.1</span>
+        <span>스프링 데이터 JPA 활용 파트 소개</span>
+        </a></li><li>
+        <a class="is-flex" href="#Repository">
+        <span class="has-mr-6">1.1.2</span>
+        <span>Repository</span>
+        </a></li><li>
+        <a class="is-flex" href="#Repository-인터페이스-정의하기">
+        <span class="has-mr-6">1.1.3</span>
+        <span>Repository 인터페이스 정의하기</span>
+        </a></li><li>
+        <a class="is-flex" href="#Null-처리하기">
+        <span class="has-mr-6">1.1.4</span>
+        <span>Null 처리하기</span>
+        </a></li><li>
+        <a class="is-flex" href="#쿼리-만들기-개요">
+        <span class="has-mr-6">1.1.5</span>
+        <span>쿼리 만들기 개요</span>
+        </a></li><li>
+        <a class="is-flex" href="#쿼리-만들기-실습">
+        <span class="has-mr-6">1.1.6</span>
+        <span>쿼리 만들기 실습</span>
+        </a></li><li>
+        <a class="is-flex" href="#비동기-쿼리">
+        <span class="has-mr-6">1.1.7</span>
+        <span>비동기 쿼리</span>
+        </a></li><li>
+        <a class="is-flex" href="#커스텀-리포지토리">
+        <span class="has-mr-6">1.1.8</span>
+        <span>커스텀 리포지토리</span>
+        </a></li><li>
+        <a class="is-flex" href="#기본-리포지토리-커스터마이징">
+        <span class="has-mr-6">1.1.9</span>
+        <span>기본 리포지토리 커스터마이징</span>
+        </a></li><li>
+        <a class="is-flex" href="#도메인-이벤트">
+        <span class="has-mr-6">1.1.10</span>
+        <span>도메인 이벤트</span>
+        </a></li><li>
+        <a class="is-flex" href="#QueryDSL-Domain-Specific-Language">
+        <span class="has-mr-6">1.1.11</span>
+        <span>QueryDSL(Domain Specific Language)</span>
+        </a></li><li>
+        <a class="is-flex" href="#DomainClassConverter">
+        <span class="has-mr-6">1.1.12</span>
+        <span>DomainClassConverter</span>
+        </a></li><li>
+        <a class="is-flex" href="#Pageable과-Sort-매개변수">
+        <span class="has-mr-6">1.1.13</span>
+        <span>Pageable과 Sort 매개변수</span>
+        </a></li><li>
+        <a class="is-flex" href="#HATEOAS">
+        <span class="has-mr-6">1.1.14</span>
+        <span>HATEOAS</span>
+        </a></li></ul></li></ul></li></ul>
+            </div>
+        </div>
+    </div>
+
+    
+        <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            Tag Cloud
+        </h3>
+        <a href="/tags/Algorithm/" style="font-size: 11.11px;">Algorithm</a> <a href="/tags/DataBase/" style="font-size: 10px;">DataBase</a> <a href="/tags/Etc/" style="font-size: 11.11px;">Etc</a> <a href="/tags/Git/" style="font-size: 13.33px;">Git</a> <a href="/tags/Interview/" style="font-size: 14.44px;">Interview</a> <a href="/tags/JPA/" style="font-size: 20px;">JPA</a> <a href="/tags/JSP/" style="font-size: 14.44px;">JSP</a> <a href="/tags/Java/" style="font-size: 18.89px;">Java</a> <a href="/tags/JavaScript/" style="font-size: 12.22px;">JavaScript</a> <a href="/tags/OracleDB/" style="font-size: 14.44px;">OracleDB</a> <a href="/tags/Process/" style="font-size: 11.11px;">Process</a> <a href="/tags/RestAPI/" style="font-size: 14.44px;">RestAPI</a> <a href="/tags/Seminar/" style="font-size: 10px;">Seminar</a> <a href="/tags/SpringBoot/" style="font-size: 20px;">SpringBoot</a> <a href="/tags/SpringSecurity/" style="font-size: 12.22px;">SpringSecurity</a> <a href="/tags/SpringWebMvc/" style="font-size: 16.67px;">SpringWebMvc</a> <a href="/tags/Springframework/" style="font-size: 17.78px;">Springframework</a> <a href="/tags/Springframework-kosta/" style="font-size: 14.44px;">Springframework_kosta</a> <a href="/tags/Web/" style="font-size: 12.22px;">Web</a> <a href="/tags/debug/" style="font-size: 11.11px;">debug</a> <a href="/tags/jQuery/" style="font-size: 12.22px;">jQuery</a> <a href="/tags/%EC%A0%95%EB%B3%B4%EC%B2%98%EB%A6%AC%EA%B8%B0%EC%82%AC-%ED%95%84%EA%B8%B0/" style="font-size: 13.33px;">정보처리기사_필기</a> <a href="/tags/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%ED%9A%8C%EA%B3%A0/" style="font-size: 15.56px;">프로젝트_회고</a>
+    </div>
+</div>
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/blog_logo.png" alt="스프링 데이터 JPA05 - 스프링 데이터 Common" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2020 Bong&#39;s blog&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/cyr9210">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("en");</script>
+
+
+<script>
+var IcarusThemeSettings = {
+    site: {
+        url: 'http://yoursite.com',
+        external_link: {"enable":true,"exclude":[]}
+    },
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+<script src="/js/animation.js"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+<script src="/js/gallery.js" defer></script>
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+<a id="back-to-top" title="Back to Top" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: 'Posts',
+                PAGES: 'Pages',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
+                UNTITLED: '(Untitled)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

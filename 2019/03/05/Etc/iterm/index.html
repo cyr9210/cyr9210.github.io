@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html >
+<head>
+    <meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 4.2.0" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>iTerm2 설치 및 커스터마이징 - Bong&#39;s blog</title>
+
+
+    <meta name="description" content="생활코딩의 지옥에서 온 git 강의를 듣다 보면 이고잉님의 터미널이 뭔가 특별한것을 보실 수 있습니다.현재 path 및 branch 등도 표현되며 무엇보다 뭔가 있어 보였습니다.😁구글링을 통해 알아보니, macOS에서 사용하며 mac용 터미널인 iterm2를 설치한 후 여러 설치과정들을 통해 멋진 터미널을 만들 수 있다는 정보를 알게되었고..  참고블로">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iTerm2 설치 및 커스터마이징">
+<meta property="og:url" content="http://yoursite.com/2019/03/05/Etc/iterm/index.html">
+<meta property="og:site_name" content="Bong&#39;s blog">
+<meta property="og:description" content="생활코딩의 지옥에서 온 git 강의를 듣다 보면 이고잉님의 터미널이 뭔가 특별한것을 보실 수 있습니다.현재 path 및 branch 등도 표현되며 무엇보다 뭔가 있어 보였습니다.😁구글링을 통해 알아보니, macOS에서 사용하며 mac용 터미널인 iterm2를 설치한 후 여러 설치과정들을 통해 멋진 터미널을 만들 수 있다는 정보를 알게되었고..  참고블로">
+<meta property="og:image" content="http://yoursite.com/images/og_image.png">
+<meta property="article:published_time" content="2019-03-05T06:02:58.000Z">
+<meta property="article:modified_time" content="2020-03-20T07:57:35.714Z">
+<meta property="article:author" content="Bong&#39;s blog">
+<meta property="article:tag" content="Etc">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/images/og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+<style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+    
+    
+    
+    
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+    
+    
+    
+    
+    
+    
+    
+    <link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-2-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/blog_logo.png" alt="iTerm2 설치 및 커스터마이징" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                href="/">Home</a>
+                
+                <a class="navbar-item"
+                href="/archives">Archives</a>
+                
+                <a class="navbar-item"
+                href="/tags">Tags</a>
+                
+                <a class="navbar-item"
+                href="/about">About</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    <a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/cyr9210">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="Search" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-8-widescreen has-order-2 column-main">
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-03-05T06:02:58.000Z">2019-03-05</time>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    6 minutes read (About 892 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                iTerm2 설치 및 커스터마이징
+            
+        </h1>
+        <div class="content">
+            <p><img src="/images/etc/iTerm2.jpg" alt="item2"></p>
+<p>생활코딩의 지옥에서 온 git 강의를 듣다 보면 이고잉님의 터미널이 뭔가 특별한것을 보실 수 있습니다.<br>현재 path 및 branch 등도 표현되며 무엇보다 뭔가 있어 보였습니다.😁<br><br>구글링을 통해 알아보니, macOS에서 사용하며 mac용 터미널인 iterm2를 설치한 후 여러 설치과정들을 통해 멋진 터미널을 만들 수 있다는 정보를 알게되었고..  <a href="https://beomi.github.io/2017/07/07/Beautify-ZSH/">참고블로그 : Beomi’s Tech Blog</a><br>mac을 사용하고 있고, 앞으로 터미널 이용이 더 많아질 예정이기 때문에.. 제 mac 터미널에 적용하기로 결정하였습니다.<br><br>편리하고 다양하게 터미널을 사용하기위해 기본 Shell인 bash 대신에 zsh를 사용하고, 보다 깔끔하고 멋진 테마를 적용하는 방법에 대해 알아봅시다.</p>
+<a id="more"></a>
+<h1 id="iterm-설치-및-꾸미기"><a href="#iterm-설치-및-꾸미기" class="headerlink" title="iterm 설치 및 꾸미기"></a>iterm 설치 및 꾸미기</h1><h3 id="iterm2-설치"><a href="#iterm2-설치" class="headerlink" title="iterm2 설치"></a>iterm2 설치</h3><p><img src="/images/etc/iTerm01.png" alt="iTerm"></p>
+<ul>
+<li><a href="https://www.iterm2.com/downloads.html">iTerm2 홈페이지</a>에서 iTerm2를 설치한다.</li>
+</ul>
+<p><img src="/images/etc/iTerm02.png" alt="iTerm"></p>
+<ul>
+<li>접근권한 설정이 필요한 경우 설정을 해준다.<br><br><br></li>
+</ul>
+<h3 id="HomeBrew-설치하기"><a href="#HomeBrew-설치하기" class="headerlink" title="HomeBrew 설치하기"></a>HomeBrew 설치하기</h3><blockquote>
+<p>HomeBrew란 우분투의 APT와 비슷하게 프로그램 패키지를 관리해 주는 프로그램.<br>brew라는 명령어로 패키지를 관리할 수 있다.</p>
+</blockquote>
+<p><img src="/images/etc/iTerm03.png" alt="iTerm"><br><img src="/images/etc/iTerm04.png" alt="iTerm"></p>
+<ul>
+<li><a href="https://brew.sh/">HomeBrew 홈페이지</a> 이동 </li>
+<li>해당 명령어 업력<br><br><br></li>
+</ul>
+<h3 id="Zsh-설치하기"><a href="#Zsh-설치하기" class="headerlink" title="Zsh 설치하기"></a>Zsh 설치하기</h3><p>zsh은 bash에 추가적인 명령어를 추가하고 편의성을 개선한 새로운 쉘이다.<br>한가지 예로 git 폴더 상태를 관리하고 터미널에 상태를 나타내준다.<br>zsh는 위에서 설치한 HomeBrew를 통해 설치할 수 있다.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install zsh</span><br></pre></td></tr></table></figure>
+<ul>
+<li>상기 명령어 입력</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh -c &quot;$(curl -fsSL https:&#x2F;&#x2F;raw.github.com&#x2F;robbyrussell&#x2F;oh-my-zsh&#x2F;master&#x2F;tools&#x2F;install.sh)&quot;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>oh-my-zsh 설치하기 위해 상기 명령어를 입력</li>
+</ul>
+<blockquote>
+<p>oh-my-zsh는 zsh를 편리하게 사용하도록 도와주는 zsh플러그인이라고 보면된다.</p>
+</blockquote>
+<h3 id="Oceanic-Next-iTerm-색-테마-입히기"><a href="#Oceanic-Next-iTerm-색-테마-입히기" class="headerlink" title="Oceanic Next iTerm 색 테마 입히기"></a>Oceanic Next iTerm 색 테마 입히기</h3><p><img src="/images/etc/iTerm05.png" alt="iTerm"></p>
+<ul>
+<li><a href="https://github.com/mhartington/oceanic-next-iterm">Oceanic Next iTerm</a> github 레퍼지토리 이동 후 zip파일 다운</li>
+</ul>
+<p><img src="/images/etc/iTerm06.png" alt="iTerm"></p>
+<ul>
+<li>master.zip 파일의 압축을 푼다.(상기 파일목록을 확인한다.)</li>
+</ul>
+<p><img src="/images/etc/iTerm07.png" alt="iTerm"></p>
+<ul>
+<li>iterm → preference</li>
+</ul>
+<p><img src="/images/etc/iTerm08.png" alt="iTerm"></p>
+<ul>
+<li>profiles → Default → Color presets… → import 상기파일 추가 후 적용</li>
+<li>iTerm2 재시작 시, 칼라적용<br><br><br></li>
+</ul>
+<h3 id="Agnoster-테마-설치하기"><a href="#Agnoster-테마-설치하기" class="headerlink" title="Agnoster 테마 설치하기"></a>Agnoster 테마 설치하기</h3><p><img src="/images/etc/iTerm09.png" alt="iTerm"></p>
+<ul>
+<li>.zshrc 파일 찾는다. (숨김파일 상태이다.)</li>
+</ul>
+<p><img src="/images/etc/iTerm10.png" alt="iTerm"></p>
+<ul>
+<li>해당 피일을 열어 위와 같이 수정한다.</li>
+<li>터미널 재시작 시, 제대로 실행은 되지만, 일부 폰트 깨짐<br><br><br></li>
+</ul>
+<h3 id="Ubuntu-Mono-derivative-Powerline-폰트-설치-amp-설정하기"><a href="#Ubuntu-Mono-derivative-Powerline-폰트-설치-amp-설정하기" class="headerlink" title="Ubuntu Mono derivative Powerline 폰트 설치 &amp; 설정하기"></a>Ubuntu Mono derivative Powerline 폰트 설치 &amp; 설정하기</h3><ul>
+<li><a href="https://beomi.github.io/others/Ubuntu_Mono_derivative_Powerline.ttf">Ubuntu Mono derivative Powerline 폰트</a> 다운로드</li>
+</ul>
+<p><img src="/images/etc/iTerm12.png" alt="iTerm"></p>
+<ul>
+<li>다운받은 폰트를 설치한다.</li>
+</ul>
+<p><img src="/images/etc/iTerm11.png" alt="iTerm"></p>
+<ul>
+<li>칼라테마 적용고 같은방법으로 Color가 아닌 Text로 들어간다.</li>
+</ul>
+<p><img src="/images/etc/iTerm13.png" alt="iTerm"></p>
+<ul>
+<li>Change Font를 선택하고 위와같이 변경한다.<br><br><br></li>
+</ul>
+<h3 id="zsh-syntax-highlighting-설치하기"><a href="#zsh-syntax-highlighting-설치하기" class="headerlink" title="zsh-syntax-highlighting 설치하기"></a>zsh-syntax-highlighting 설치하기</h3><blockquote>
+<p>zsh-syntax-highlighting 시스템의 PATH에 등록된 명령어들을 자동으로 Syntax HighLighting 해준다.</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git clone https:&#x2F;&#x2F;github.com&#x2F;zsh-users&#x2F;zsh-syntax-highlighting.git</span><br><span class="line">echo &quot;source $&#123;(q-)PWD&#125;&#x2F;zsh-syntax-highlighting&#x2F;zsh-syntax-highlighting.zsh&quot; &gt;&gt; $&#123;ZDOTDIR:-$HOME&#125;&#x2F;.zshrc</span><br></pre></td></tr></table></figure>
+<ul>
+<li>위 두줄의 명령어를 터미널에 입력한다.</li>
+<li>터미널 재시작<br><br><br></li>
+</ul>
+<h3 id="완성"><a href="#완성" class="headerlink" title="완성"></a>완성</h3><p><img src="/images/etc/iTerm14.png" alt="iTerm"><br><br><br></p>
+
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/Etc/" rel="tag">Etc</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">Like this article? Support the author with</h3>
+        <div class="buttons is-centered">
+            
+                
+<div class="notification is-danger">
+    You forgot to set the <code>qrcode</code> for Alipay. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                
+<div class="notification is-danger">
+    You forgot to set the <code>qrcode</code> for Wechat. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                <!-- Visit https://www.paypal.com/donate/buttons/ to get your donate button -->
+
+<div class="notification is-danger">
+    You forgot to set the <code>business</code> and <code>currency_code</code> for Paypal. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                
+<div class="notification is-danger">
+    You forgot to set the <code>url</code> Patreon. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2019/03/08/spring/springframework-introduction02/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">스프링 프레임워크 입문02 - AOP</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2019/03/05/spring/springframework-introduction01/">
+                <span class="level-item">스프링 프레임워크 입문01 - IOC, IOC컨테이너</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+</div>
+                
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-4-widescreen  has-order-3 column-right is-sticky">
+    
+        
+
+    <div class="card widget" id="toc">
+        <div class="card-content">
+            <div class="menu">
+                <h3 class="menu-label">
+                    Catalogue
+                </h3>
+                <ul class="menu-list"><li>
+        <a class="is-flex" href="#iterm-설치-및-꾸미기">
+        <span class="has-mr-6">1</span>
+        <span>iterm 설치 및 꾸미기</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#iterm2-설치">
+        <span class="has-mr-6">1.1</span>
+        <span>iterm2 설치</span>
+        </a></li><li>
+        <a class="is-flex" href="#HomeBrew-설치하기">
+        <span class="has-mr-6">1.2</span>
+        <span>HomeBrew 설치하기</span>
+        </a></li><li>
+        <a class="is-flex" href="#Zsh-설치하기">
+        <span class="has-mr-6">1.3</span>
+        <span>Zsh 설치하기</span>
+        </a></li><li>
+        <a class="is-flex" href="#Oceanic-Next-iTerm-색-테마-입히기">
+        <span class="has-mr-6">1.4</span>
+        <span>Oceanic Next iTerm 색 테마 입히기</span>
+        </a></li><li>
+        <a class="is-flex" href="#Agnoster-테마-설치하기">
+        <span class="has-mr-6">1.5</span>
+        <span>Agnoster 테마 설치하기</span>
+        </a></li><li>
+        <a class="is-flex" href="#Ubuntu-Mono-derivative-Powerline-폰트-설치-amp-설정하기">
+        <span class="has-mr-6">1.6</span>
+        <span>Ubuntu Mono derivative Powerline 폰트 설치 & 설정하기</span>
+        </a></li><li>
+        <a class="is-flex" href="#zsh-syntax-highlighting-설치하기">
+        <span class="has-mr-6">1.7</span>
+        <span>zsh-syntax-highlighting 설치하기</span>
+        </a></li><li>
+        <a class="is-flex" href="#완성">
+        <span class="has-mr-6">1.8</span>
+        <span>완성</span>
+        </a></li></ul></li></ul>
+            </div>
+        </div>
+    </div>
+
+    
+        <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            Tag Cloud
+        </h3>
+        <a href="/tags/Algorithm/" style="font-size: 11.11px;">Algorithm</a> <a href="/tags/DataBase/" style="font-size: 10px;">DataBase</a> <a href="/tags/Etc/" style="font-size: 11.11px;">Etc</a> <a href="/tags/Git/" style="font-size: 13.33px;">Git</a> <a href="/tags/Interview/" style="font-size: 14.44px;">Interview</a> <a href="/tags/JPA/" style="font-size: 20px;">JPA</a> <a href="/tags/JSP/" style="font-size: 14.44px;">JSP</a> <a href="/tags/Java/" style="font-size: 18.89px;">Java</a> <a href="/tags/JavaScript/" style="font-size: 12.22px;">JavaScript</a> <a href="/tags/OracleDB/" style="font-size: 14.44px;">OracleDB</a> <a href="/tags/Process/" style="font-size: 11.11px;">Process</a> <a href="/tags/RestAPI/" style="font-size: 14.44px;">RestAPI</a> <a href="/tags/Seminar/" style="font-size: 10px;">Seminar</a> <a href="/tags/SpringBoot/" style="font-size: 20px;">SpringBoot</a> <a href="/tags/SpringSecurity/" style="font-size: 12.22px;">SpringSecurity</a> <a href="/tags/SpringWebMvc/" style="font-size: 16.67px;">SpringWebMvc</a> <a href="/tags/Springframework/" style="font-size: 17.78px;">Springframework</a> <a href="/tags/Springframework-kosta/" style="font-size: 14.44px;">Springframework_kosta</a> <a href="/tags/Web/" style="font-size: 12.22px;">Web</a> <a href="/tags/debug/" style="font-size: 11.11px;">debug</a> <a href="/tags/jQuery/" style="font-size: 12.22px;">jQuery</a> <a href="/tags/%EC%A0%95%EB%B3%B4%EC%B2%98%EB%A6%AC%EA%B8%B0%EC%82%AC-%ED%95%84%EA%B8%B0/" style="font-size: 13.33px;">정보처리기사_필기</a> <a href="/tags/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%ED%9A%8C%EA%B3%A0/" style="font-size: 15.56px;">프로젝트_회고</a>
+    </div>
+</div>
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/blog_logo.png" alt="iTerm2 설치 및 커스터마이징" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2020 Bong&#39;s blog&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/cyr9210">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("en");</script>
+
+
+<script>
+var IcarusThemeSettings = {
+    site: {
+        url: 'http://yoursite.com',
+        external_link: {"enable":true,"exclude":[]}
+    },
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+<script src="/js/animation.js"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+<script src="/js/gallery.js" defer></script>
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+<a id="back-to-top" title="Back to Top" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: 'Posts',
+                PAGES: 'Pages',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
+                UNTITLED: '(Untitled)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

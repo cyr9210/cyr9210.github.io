@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html >
+<head>
+    <meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 4.2.0" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>jQuery, 선택자, 이벤트, 스타일, 효과, DOM구현 - Bong&#39;s blog</title>
+
+
+    <meta name="description" content="KOSTA DAY33JavaScript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="jQuery, 선택자, 이벤트, 스타일, 효과, DOM구현">
+<meta property="og:url" content="http://yoursite.com/2018/12/14/JavaScript/JS04/index.html">
+<meta property="og:site_name" content="Bong&#39;s blog">
+<meta property="og:description" content="KOSTA DAY33JavaScript">
+<meta property="og:image" content="http://yoursite.com/images/og_image.png">
+<meta property="article:published_time" content="2018-12-14T06:48:27.000Z">
+<meta property="article:modified_time" content="2020-03-20T07:57:35.728Z">
+<meta property="article:author" content="Bong&#39;s blog">
+<meta property="article:tag" content="jQuery">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/images/og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+<style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+    
+    
+    
+    
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+    
+    
+    
+    
+    
+    
+    
+    <link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-2-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/blog_logo.png" alt="jQuery, 선택자, 이벤트, 스타일, 효과, DOM구현" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                href="/">Home</a>
+                
+                <a class="navbar-item"
+                href="/archives">Archives</a>
+                
+                <a class="navbar-item"
+                href="/tags">Tags</a>
+                
+                <a class="navbar-item"
+                href="/about">About</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    <a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/cyr9210">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="Search" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-8-widescreen has-order-2 column-main">
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2018-12-14T06:48:27.000Z">2018-12-14</time>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    13 minutes read (About 1880 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                jQuery, 선택자, 이벤트, 스타일, 효과, DOM구현
+            
+        </h1>
+        <div class="content">
+            <h1 id="KOSTA-DAY33"><a href="#KOSTA-DAY33" class="headerlink" title="KOSTA DAY33"></a>KOSTA DAY33</h1><h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><p><img src="/images/JS_logo.png" alt="JS"></p>
+<a id="more"></a>
+<h3 id="JQuery"><a href="#JQuery" class="headerlink" title="JQuery"></a>JQuery</h3><p>jQuery는 자바스크립트의 생산성을 향상시켜주는 자바스크립트 라이브러리 입니다.</p>
+<blockquote>
+<p>라이브러리 : 자주 사용되는 로직들을 재활용,유통 가능하도록 만든 로직들의 묶음을 의미한다.</p>
+</blockquote>
+<ul>
+<li>JS로 코딩하는것보다 10배 이상의 생산성을 높일 수 있다.</li>
+<li>RIA 기반 웹</li>
+<li>웹표준</li>
+<li>HTML5</li>
+</ul>
+<blockquote>
+<p><strong>RIA</strong><br>웹 애플리케이션의 장점은 유지하면서 기존 웹 브라우저 기반 인터페이스의 단점인 늦은 응답 속도, 데스크톱 애플리케이션에 비해 떨어지는 조작성 등을 개선하기 위한 기술의 통칭</p>
+</blockquote>
+<h4 id="예제"><a href="#예제" class="headerlink" title="예제"></a>예제</h4><p><img src="/images/javascript/JS03-09.png" alt="JS"><br><img src="/images/javascript/JS03-10.png" alt="JS"><br><br></p>
+<h3 id="선택자-selector"><a href="#선택자-selector" class="headerlink" title="선택자(selector)"></a>선택자(selector)</h3><p><img src="/images/javascript/JS03-08.png" alt="JS"></p>
+<ul>
+<li>$(‘’) 팩토리함수 : JQuery 객체를 생성한다.</li>
+<li>JQuery 함수를 사용하려면 JQuery 객체가 필요하다.</li>
+<li>선택자는 항상 집합으로 표현된다.</li>
+<li>size() : 선택자 집합의 갯수 호출</li>
+<li>get(index) : JQuery객체 → JS객체 변환<br>index값을 안넣으면 배열로 변환된다.</li>
+<li>$() : 팩토리함수, JS → JQuery객체 변환</li>
+<li>확장집합에서 엘리먼트 획득<br><img src="/images/javascript/JS04-01.png" alt="JS"></li>
+</ul>
+<p><strong>toArray() 도 JQuery객체를 JS배열 객체로 변환</strong></p>
+<ul>
+<li><p>add()함수를 사용하여 많은 선택자를 체인으로 연결가능<br><img src="/images/javascript/JS04-02.png" alt="JS"></p>
+</li>
+<li><p>확장집합 다듬기<br>not() 함수를 사용하여 체인으로 연결해 논리부정 관계 구성<br><img src="/images/javascript/JS04-03.png" alt="JS"></p>
+</li>
+<li><p>filter() : 표현식 매개변수의 값에 따라서 일치하지 않는 엘리먼트를 새로운 집합에서 제거한다.</p>
+</li>
+<li><p>has() : test 표현식과 일치하는 자손을 가진 엘리먼트를 포함한 새로운 확장 집합을 생성</p>
+</li>
+<li><p>JQuery 체인 관리하기</p>
+<ul>
+<li>end() : 이전 확장집합으로 돌아간다.</li>
+<li>find() : 어떤 요소의 하위 요소(자식) 중 특정 요소를 찾는다.</li>
+<li>andself() : 두집합의 합집을 생성한다.</li>
+<li>each() : 선택한 요소가 여러 개일 때 각각에 대하여 반복하여 함수를 실행.<br><img src="/images/javascript/JS04-04.png" alt="JS"></li>
+</ul>
+</li>
+<li><p>다른 HTML DOM 엘리먼트의 관계를 통해 새로운 확장집단을 얻는 메소드<br><img src="/images/javascript/JS04-05.png" alt="JS"></p>
+</li>
+<li><p>속성선택자<br>val(매개변수) : value속성을 매개변수로 지정.<br>매개변수값이 없으면, value값을 불러온다.</p>
+</li>
+<li><p>배열관리<br><img src="/images/javascript/JS04-06.png" alt="JS"><br><img src="/images/javascript/JS04-07.png" alt="JS"></p>
+</li>
+<li><p>JQuery 함수를 사용하기 위해 $.을 붙였다.</p>
+</li>
+<li><p>item은 해당 array[index]값<br><br><br></p>
+</li>
+</ul>
+<h3 id="이벤트"><a href="#이벤트" class="headerlink" title="이벤트"></a>이벤트</h3><ul>
+<li>이벤트 핸들러를 할당할 수있는 통합 메소드 제공</li>
+<li>표준 이벤트 타입명 사용</li>
+<li>엘리먼트의 이벤트 타입 마다 여러 핸들러 할당</li>
+<li>핸들러의 매개변수로 사용할 수 잇는 event 인스턴스 제공</li>
+<li>이벤트의 해제와 기본동작을 막는 통합메소드 제공</li>
+<li>캡쳐 지원하지않음 , 크로스브라우징 지원</li>
+</ul>
+<h4 id="예제-1"><a href="#예제-1" class="headerlink" title="예제"></a>예제</h4><p><img src="/images/javascript/JS04-08.png" alt="JS"></p>
+<ul>
+<li>이벤트 핸들러의 this는 이벤트 객체이다.(event.target)</li>
+<li>remove(‘class_name’) : 클래스제거, 매개변수값이 없으면 전체 제거</li>
+<li>addClass함수를 통해서 css스타일을 변경 또는 추가한다.</li>
+</ul>
+<p><img src="/images/javascript/JS04-09.png" alt="JS"></p>
+<ul>
+<li>on함수에 이벤트이름을 넣어서 적용할 수 있다.</li>
+</ul>
+<p><img src="/images/javascript/JS04-10.png" alt="JS"></p>
+<ul>
+<li>toggleClass() : 설정된 클래스명을 해당하는 요소가 가지고 있는지 판단하여 해당 요소가 있으면 이를 제거합니다. 반대로 해당 요소가 없다면 이를 부여하는 메소드</li>
+<li>trigger() : 시작시 해당 메소드 실행</li>
+<li>event.stopPropagation() : 버블링방지</li>
+</ul>
+<p><img src="/images/javascript/JS04-11.png" alt="JS"></p>
+<ul>
+<li>hover(func1(), func2()) : 마우스 올려놨을때, func1 실행<br>마우스 떨어졌을때, func2 실행<br><br><br></li>
+</ul>
+<h3 id="효과"><a href="#효과" class="headerlink" title="효과"></a>효과</h3><h4 id="스타일"><a href="#스타일" class="headerlink" title="스타일"></a>스타일</h4><p>css(name) : 첫번째 엘리먼트에서 name으로 명시한 css 프로퍼티값<br>css(name, value) : css스타일 name 프로퍼티를 value값으로 설정<br><strong>파라미터값에 따라서 다른 메소드</strong></p>
+<h4 id="기본시각효과"><a href="#기본시각효과" class="headerlink" title="기본시각효과"></a>기본시각효과</h4><p>JQuery는 기본적으로 세가지 효과를 제공한다. 아래표를 살펴보자.<br><img src="/images/javascript/JS04-12.png" alt="JS"><br>6개의 함수 외에도 위의 표의 같은 효과메소드를 묶은 toggle 메소드가 있다. 아래 표를 살펴보자.<br><img src="/images/javascript/JS04-13.png" alt="JS"></p>
+<h4 id="애니메이션-사용자-정의-효과"><a href="#애니메이션-사용자-정의-효과" class="headerlink" title="애니메이션(사용자 정의 효과)"></a>애니메이션(사용자 정의 효과)</h4><p>모든 집합의 엘리먼트에 properties와 easing 매개변수에 명시된 대로 애니메이션을 수행한다. 애니메이션 수행이 완료된 뒤 호출될 콜백함수를 선택적으로 명시 할 수 있다.</p>
+<ul>
+<li>animate(properties, duration, easing, callback)<ul>
+<li>properties : 마지막에 도달해야 하는 값을 명시하는 객체</li>
+<li>duration : 선택 사항으로 효과가 지속되는 시간을 1/1000초 단위로 설정</li>
+<li>easing : 선택사항으로 애니메이션을 미묘하게 바꿀 때 사용</li>
+<li>callback : 선택사항으로 애니메이션이 완료된 뒤 호출</li>
+</ul>
+</li>
+</ul>
+<h4 id="예제-2"><a href="#예제-2" class="headerlink" title="예제"></a>예제</h4><p><img src="/images/javascript/JS04-14.png" alt="JS"></p>
+<ul>
+<li>more클래스의 a태그 하위의 모든 p태그의 스타일중 display : none;으로 설정하여 사라지게 만들었다.</li>
+<li>more클래스의 a태그를 클릭시, slideDown되며 해당 p태그들이 보여지며, a태그의 text를 read less로 바꾸었다.</li>
+<li>read less를 클릭시, slideUp되며 p태그들이 감춰진다.</li>
+</ul>
+<p><img src="/images/javascript/JS04-15.png" alt="JS"></p>
+<ul>
+<li>기본시각효과 및 애니메이션 이벤트 모든 내용들을 종합적으로 활용한예이다.<br><br><br></li>
+</ul>
+<h3 id="DOM-JQuery-활용"><a href="#DOM-JQuery-활용" class="headerlink" title="DOM(JQuery 활용)"></a>DOM(JQuery 활용)</h3><p>JQuery를 활용하여 DOM)(문서 객체 모델)을 다루는법에 대해 알아보자.</p>
+<h4 id="속성-엘리먼트"><a href="#속성-엘리먼트" class="headerlink" title="속성, 엘리먼트"></a>속성, 엘리먼트</h4><p><img src="/images/javascript/JS04-16.png" alt="JS"></p>
+<ul>
+<li>attr(name) : 일치하는 집합에서 첫번째 엘리먼트(선택자의 여러 대상들이 있을때)속성값을 얻는다.<br>일치하는 집합이 없거나 속성이 없으면 undifiend</li>
+<li>attr(name, value) or attr ( attributes) : 속성의 값을 부여</li>
+</ul>
+<h4 id="엘리먼트-조작"><a href="#엘리먼트-조작" class="headerlink" title="엘리먼트 조작"></a>엘리먼트 조작</h4><ul>
+<li><p>엘리먼트 복사, 이동(부모,자식관계)<br><img src="/images/javascript/JS04-17.png" alt="JS"></p>
+</li>
+<li><p>엘리먼트 복사, 이동(형제 관계)<br>뒤에 오는것이 이동되는것으로 보여진다.<br><img src="/images/javascript/JS04-18.png" alt="JS"></p>
+</li>
+<li><p>엘리먼트 감싸기<br><img src="/images/javascript/JS04-19.png" alt="JS"></p>
+</li>
+</ul>
+<h4 id="예제-3"><a href="#예제-3" class="headerlink" title="예제"></a>예제</h4><p><img src="/images/javascript/JS04-20.png" alt="JS"></p>
+<ul>
+<li>innsertBefore()을 통해 생성한 ol문을 footer(id)의 앞에 삽입</li>
+<li>footnote의 span태그를 선택(3개) 각각의 객체를 다음과 같이 실행한다.<ul>
+<li>먼저 this(해당 index span태그)의 뒤에 a태그를 작성하여 삽입</li>
+<li>this는 notes(id)의 자식으로 맨뒤에 입력된다.</li>
+<li>this안에 아까작성한 a태그와 같은 a태그를 맨뒤에 삽입한다.</li>
+<li>this전체를 <li>태그로 감싼다.</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><strong>&nspb; : 공백(스페이스 한 칸)을 의미.</strong><br>띄어쓰기를 할 때는 키보드의 스페이스키(가장 길쭉한 키)를 한 번 눌러 “공백 문자” 즉 빈 칸을 한 개 삽입합니다.<br>그런데 HTML 문법에서는, 일반 텍스트 편집에서와 달리, 공백 2개를 연속으로 사용해도 2칸을 띄어쓸 수 없습니다.<br>공백을 아무리 많이 삽입해도 공백 1개로 간주됩니다. 그래서 공백을 여러 개 사용해야 할 때는, 빈 칸을 &nbsp; 이렇게 표현해 줍니다.<br>그러면 브라우저가 &amp;nbsp; 기호를 빈 칸으로 표시해 줍니다.</p>
+</blockquote>
+<p><br><br></p>
+
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/jQuery/" rel="tag">jQuery</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">Like this article? Support the author with</h3>
+        <div class="buttons is-centered">
+            
+                
+<div class="notification is-danger">
+    You forgot to set the <code>qrcode</code> for Alipay. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                
+<div class="notification is-danger">
+    You forgot to set the <code>qrcode</code> for Wechat. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                <!-- Visit https://www.paypal.com/donate/buttons/ to get your donate button -->
+
+<div class="notification is-danger">
+    You forgot to set the <code>business</code> and <code>currency_code</code> for Paypal. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                
+<div class="notification is-danger">
+    You forgot to set the <code>url</code> Patreon. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2018/12/17/JavaScript/JS05/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">JQuery 활용 Ajax, 슬라이드쇼</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2018/12/13/JavaScript/JS03/">
+                <span class="level-item">this., 브라우저 내장객체(BOM), 문서 내장객체(DOM), Ajax</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+</div>
+                
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-4-widescreen  has-order-3 column-right is-sticky">
+    
+        
+
+    <div class="card widget" id="toc">
+        <div class="card-content">
+            <div class="menu">
+                <h3 class="menu-label">
+                    Catalogue
+                </h3>
+                <ul class="menu-list"><li>
+        <a class="is-flex" href="#KOSTA-DAY33">
+        <span class="has-mr-6">1</span>
+        <span>KOSTA DAY33</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#JavaScript">
+        <span class="has-mr-6">1.1</span>
+        <span>JavaScript</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#JQuery">
+        <span class="has-mr-6">1.1.1</span>
+        <span>JQuery</span>
+        </a></li><li>
+        <a class="is-flex" href="#선택자-selector">
+        <span class="has-mr-6">1.1.2</span>
+        <span>선택자(selector)</span>
+        </a></li><li>
+        <a class="is-flex" href="#이벤트">
+        <span class="has-mr-6">1.1.3</span>
+        <span>이벤트</span>
+        </a></li><li>
+        <a class="is-flex" href="#효과">
+        <span class="has-mr-6">1.1.4</span>
+        <span>효과</span>
+        </a></li><li>
+        <a class="is-flex" href="#DOM-JQuery-활용">
+        <span class="has-mr-6">1.1.5</span>
+        <span>DOM(JQuery 활용)</span>
+        </a></li></ul></li></ul></li></ul>
+            </div>
+        </div>
+    </div>
+
+    
+        <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            Tag Cloud
+        </h3>
+        <a href="/tags/Algorithm/" style="font-size: 11.11px;">Algorithm</a> <a href="/tags/DataBase/" style="font-size: 10px;">DataBase</a> <a href="/tags/Etc/" style="font-size: 11.11px;">Etc</a> <a href="/tags/Git/" style="font-size: 13.33px;">Git</a> <a href="/tags/Interview/" style="font-size: 14.44px;">Interview</a> <a href="/tags/JPA/" style="font-size: 20px;">JPA</a> <a href="/tags/JSP/" style="font-size: 14.44px;">JSP</a> <a href="/tags/Java/" style="font-size: 18.89px;">Java</a> <a href="/tags/JavaScript/" style="font-size: 12.22px;">JavaScript</a> <a href="/tags/OracleDB/" style="font-size: 14.44px;">OracleDB</a> <a href="/tags/Process/" style="font-size: 11.11px;">Process</a> <a href="/tags/RestAPI/" style="font-size: 14.44px;">RestAPI</a> <a href="/tags/Seminar/" style="font-size: 10px;">Seminar</a> <a href="/tags/SpringBoot/" style="font-size: 20px;">SpringBoot</a> <a href="/tags/SpringSecurity/" style="font-size: 12.22px;">SpringSecurity</a> <a href="/tags/SpringWebMvc/" style="font-size: 16.67px;">SpringWebMvc</a> <a href="/tags/Springframework/" style="font-size: 17.78px;">Springframework</a> <a href="/tags/Springframework-kosta/" style="font-size: 14.44px;">Springframework_kosta</a> <a href="/tags/Web/" style="font-size: 12.22px;">Web</a> <a href="/tags/debug/" style="font-size: 11.11px;">debug</a> <a href="/tags/jQuery/" style="font-size: 12.22px;">jQuery</a> <a href="/tags/%EC%A0%95%EB%B3%B4%EC%B2%98%EB%A6%AC%EA%B8%B0%EC%82%AC-%ED%95%84%EA%B8%B0/" style="font-size: 13.33px;">정보처리기사_필기</a> <a href="/tags/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%ED%9A%8C%EA%B3%A0/" style="font-size: 15.56px;">프로젝트_회고</a>
+    </div>
+</div>
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/blog_logo.png" alt="jQuery, 선택자, 이벤트, 스타일, 효과, DOM구현" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2020 Bong&#39;s blog&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/cyr9210">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("en");</script>
+
+
+<script>
+var IcarusThemeSettings = {
+    site: {
+        url: 'http://yoursite.com',
+        external_link: {"enable":true,"exclude":[]}
+    },
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+<script src="/js/animation.js"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+<script src="/js/gallery.js" defer></script>
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+<a id="back-to-top" title="Back to Top" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: 'Posts',
+                PAGES: 'Pages',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
+                UNTITLED: '(Untitled)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

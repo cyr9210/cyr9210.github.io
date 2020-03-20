@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html >
+<head>
+    <meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 4.2.0" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>스프링 부트 활용13 - 스프링 데이터 - Bong&#39;s blog</title>
+
+
+    <meta name="description" content="스프릥 부트 개념과 활용13(inflearn) - 백기선Spring boot">
+<meta property="og:type" content="article">
+<meta property="og:title" content="스프링 부트 활용13 - 스프링 데이터">
+<meta property="og:url" content="http://yoursite.com/2019/04/15/spring/springboot13/index.html">
+<meta property="og:site_name" content="Bong&#39;s blog">
+<meta property="og:description" content="스프릥 부트 개념과 활용13(inflearn) - 백기선Spring boot">
+<meta property="og:image" content="http://yoursite.com/images/og_image.png">
+<meta property="article:published_time" content="2019-04-15T05:34:06.000Z">
+<meta property="article:modified_time" content="2020-03-20T07:57:35.780Z">
+<meta property="article:author" content="Bong&#39;s blog">
+<meta property="article:tag" content="SpringBoot">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/images/og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+<style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+    
+    
+    
+    
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+    
+    
+    
+    
+    
+    
+    
+    <link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-2-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/blog_logo.png" alt="스프링 부트 활용13 - 스프링 데이터" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                href="/">Home</a>
+                
+                <a class="navbar-item"
+                href="/archives">Archives</a>
+                
+                <a class="navbar-item"
+                href="/tags">Tags</a>
+                
+                <a class="navbar-item"
+                href="/about">About</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    <a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/cyr9210">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="Search" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-8-widescreen has-order-2 column-main">
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-04-15T05:34:06.000Z">2019-04-15</time>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    21 minutes read (About 3164 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                스프링 부트 활용13 - 스프링 데이터
+            
+        </h1>
+        <div class="content">
+            <p><img src="/images/springboot_logo.png" alt="springboot"></p>
+<h1 id="스프릥-부트-개념과-활용13-inflearn-백기선"><a href="#스프릥-부트-개념과-활용13-inflearn-백기선" class="headerlink" title="스프릥 부트 개념과 활용13(inflearn) - 백기선"></a>스프릥 부트 개념과 활용13(inflearn) - 백기선</h1><h2 id="Spring-boot"><a href="#Spring-boot" class="headerlink" title="Spring boot"></a>Spring boot</h2><a id="more"></a>
+
+<h3 id="스프링-데이터"><a href="#스프링-데이터" class="headerlink" title="스프링 데이터"></a>스프링 데이터</h3><p><img src="/images/springboot/springboot13-1.png" alt="springboot"></p>
+<h4 id="인메모리-데이터베이스"><a href="#인메모리-데이터베이스" class="headerlink" title="인메모리 데이터베이스"></a>인메모리 데이터베이스</h4><ul>
+<li><p>스프링 부트가 지원하는 인-메모리 데이터베이스</p>
+<ul>
+<li>H2 (추천, 콘솔 때문에…)</li>
+<li>HSQL</li>
+<li>Derby</li>
+</ul>
+</li>
+<li><p>Spring-JDBC가 클래스패스에 있으면 자동 설정이 필요한 빈을 설정 해줍니다.</p>
+<ul>
+<li>DataSource</li>
+<li>JdbcTemplate</li>
+</ul>
+</li>
+<li><p>스프링부트는 인메모리 데이터베이스 의존성이 설정이 되있고, Data Source를 설정하지 않으면 스프링 부트는 자동으로 인메로리 데이터베이스를 설정해준다.</p>
+</li>
+<li><p>인-메모리 데이터베이스 기본 연결 정보 확인하는 방법<br><img src="/images/springboot/springboot13-2.png" alt="springboot"></p>
+<ul>
+<li>URL: “testdb”</li>
+<li>username: “sa”</li>
+<li>password: “”</li>
+</ul>
+</li>
+<li><p>table 생성 예시<br><img src="/images/springboot/springboot13-4.png" alt="springboot"></p>
+<blockquote>
+<p><strong>createStatement()</strong><br>  데이터베이스로 SQL 문을 보내기 위한 SQLServerStatement 개체를 만듭니다.</p>
+</blockquote>
+<ul>
+<li>위와 같이 connection객체에서 getMetaData를 통해서도 연결정보를 확인할 수 있다.</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>H2 콘솔 사용하는 방법</p>
+<ul>
+<li>spring-boot-devtools를 추가하거나…</li>
+<li>spring.h2.console.enabled=true 만 추가.</li>
+<li>/h2-console로 접속 (이 path도 바꿀 수 있음)<br><img src="/images/springboot/springboot13-3.png" alt="springboot"></li>
+</ul>
+</li>
+<li><p>Data Source뿐만 아니라 JdbcTemplate도 빈으로 등록됨으로 사용할 수 있다.<br><img src="/images/springboot/springboot13-5.png" alt="springboot"><br><img src="/images/springboot/springboot13-6.png" alt="springboot"></p>
+<ul>
+<li>Jdbc api(connection등)를 사용하는것보다 JdbcTemplate를 사용하는것을 추천한다.<ul>
+<li>보다 간결한 코드를 사용한다.</li>
+<li>보다 안전한다. (리소스 반납처리가 잘 되어있다.(try catch finally등))</li>
+<li>보다 가독성 좋은 에러메세지도 확인할 수 있다.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="MySQL"><a href="#MySQL" class="headerlink" title="MySQL"></a>MySQL</h4><ul>
+<li>지원하는 DBCP(DataBaseConnectionPool)<ul>
+<li>HikariCP (기본)<ul>
+<li><a href="https://github.com/brettwooldridge/HikariCP#frequently-used">기본적인 설정</a></li>
+</ul>
+</li>
+<li>Tomcat CP</li>
+<li>Commons DBCP2</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><strong>JDBC와 DBCP</strong><br>Java에서 Database와 연결하기 위해선 JDBC를 필요로 하며, JDBC를 이용해 생성한 Connection을 효율적으로 활용하기 위해 Connection 객체를 관리하는 것을 DBCP</p>
+</blockquote>
+<ul>
+<li>스프링 부트 DBCP 설정<ul>
+<li>spring.datasource.hikari.*<br><img src="/images/springboot/springboot13-7.png" alt="springboot"></li>
+<li>spring.datasource.tomcat.*</li>
+<li>spring.datasource.dbcp2.*</li>
+<li>DBCP 확인<br><img src="/images/springboot/springboot13-8.png" alt="springboot"></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>MySQL 커넥터 의존성 추가</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;mysql&lt;&#x2F;groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;mysql-connector-java&lt;&#x2F;artifactId&gt;</span><br><span class="line">&lt;&#x2F;dependency&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>MySQL 실치 및 서버 실행 (도커사용)</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker run -p 3306:3306 --name mysql_boot -e MYSQL_ROOT_PASSWORD&#x3D;1 </span><br><span class="line">-e MYSQL_DATABASE&#x3D;springboot -e MYSQL_USER&#x3D;keesun -e MYSQL_PASSWORD&#x3D;pass -d mysql</span><br></pre></td></tr></table></figure>
+<ul>
+<li>docker를 실행한다. (mysql 이미지가 없으면 다운받는다.)<ul>
+<li>컨테이너 3306포트를 로컬호스트 3306포트에 연결</li>
+<li>컨테이너이름 = mysql_boot</li>
+<li>MYSQL_ROOT 비밀번호 : 1</li>
+<li>사용자 : bong</li>
+<li>비밀번호 : pass</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>MySQL bash로 실행</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker exec -i -t mysql_boot bash</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>MySQL 접속</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mysql -u root -p</span><br><span class="line">&#x2F;*or*&#x2F;</span><br><span class="line">mysql -u &lt;username&gt; -p</span><br></pre></td></tr></table></figure>
+<ul>
+<li>root로 접속 시 root 비밀번호(1), user로 접속 시 user비밀번호(pass)</li>
+</ul>
+</li>
+<li><p><a href="https://doorbw.tistory.com/21">MySQL 명령어 참고 블로그</a></p>
+</li>
+<li><p>MySQL용 Datasource 설정</p>
+<ul>
+<li>spring.datasource.url=jdbc:mysql://localhost:3306/springboot?useSSL=false</li>
+<li>spring.datasource.username=keesun</li>
+<li>spring.datasource.password=pass</li>
+</ul>
+</li>
+<li><p>MySQL 라이센스 (GPL) 주의</p>
+<ul>
+<li>소스 코드 공개 의무 여부 확인</li>
+<li>유료</li>
+<li>대안<ul>
+<li>MySQL 대신 MariaDB 사용 검토<ul>
+<li>무료지만 MariaDB 또한 GPL로 소스 코드 공개가 필요하다.</li>
+</ul>
+</li>
+<li><strong>PostgreSQL 사용이 가장 안전하다.</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><strong>오픈소스 라이센스</strong><br>GPL : 소스코드 공개 의무 O<br>MIT : 소스코드 공개 의무 X</p>
+</blockquote>
+<h4 id="PostgreSQL-포스트그레스"><a href="#PostgreSQL-포스트그레스" class="headerlink" title="PostgreSQL(포스트그레스)"></a>PostgreSQL(포스트그레스)</h4><ul>
+<li><p>의존성 추가</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.postgresql&lt;&#x2F;groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;postgresql&lt;&#x2F;artifactId&gt;</span><br><span class="line">&lt;&#x2F;dependency&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>PostgreSQL 설치 및 서버 실행 (docker)</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker run -p 5432:5432 -e POSTGRES_PASSWORD&#x3D;pass -e POSTGRES_USER&#x3D;bong </span><br><span class="line">-e POSTGRES_DB&#x3D;springboot --name postgres_boot -d postgres</span><br></pre></td></tr></table></figure>
+<ul>
+<li>mysql과 같은 방식으로 진행한다.</li>
+</ul>
+</li>
+<li><p>PostgreSQL bash로 실행</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker exec -i -t postgres_boot bash</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>PostgreSQL 접속</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;*유저를 postgres로 변경*&#x2F;</span><br><span class="line">su - postgres</span><br><span class="line"></span><br><span class="line">&#x2F;*DB접속*&#x2F;</span><br><span class="line">psql -d &lt;DBname&gt; -U &lt;username&gt;</span><br><span class="line"></span><br><span class="line">&#x2F;*password 를 쓰고 싶다면*&#x2F;</span><br><span class="line">psql -d &lt;DBname&gt; -U &lt;username&gt; -W</span><br><span class="line"></span><br><span class="line">&#x2F;*전체 데이터베이스 조회*&#x2F;</span><br><span class="line">\l or \list</span><br><span class="line"></span><br><span class="line">&#x2F;*전체 테이블 조회*&#x2F;</span><br><span class="line">\dt</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>DB접속이 안될 때 (role에러)<br><img src="/images/springboot/springboot13-9.png" alt="springboot"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">psql -U &lt;username&gt; &lt;DBname&gt;</span><br></pre></td></tr></table></figure>
+<p>ex) psql -U bong springboot</p>
+<ul>
+<li>맥북도 발생한다.. os문제는 아닌것 같음.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>PostgreSQL용 Datasource 설정</p>
+<ul>
+<li>spring.datasource.url=jdbc:postgresql://localhost:5432/springboot</li>
+<li>spring.datasource.username=bong</li>
+<li>spring.datasource.password=pass</li>
+</ul>
+</li>
+<li><p>Postgres 주의사항</p>
+<ul>
+<li>user명칭을 사용할 수 없다.</li>
+<li>user가 키워드로 사용된다.</li>
+<li>org.postgresql.jdbc.PgConnection.createClob() is not yet implemented 경고<ul>
+<li>spring.jpa.properties.hibernate.jdbc.lob.non_contextual_creation=true<br>프로퍼티에 추</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>인텔리제이 DataBase기능 활용</p>
+<ul>
+<li>docker가 실행되고 있는 상태에서 진행</li>
+<li>우측의 DataBase 탭에서 progreSQL을 추가한다.<br><img src="/images/springboot/springboot13-10.png" alt="springboot"></li>
+<li>DB이름 , user, password 설정<br><img src="/images/springboot/springboot13-11.png" alt="springboot"></li>
+<li>테이블 더블클릭으로 내용 확인 가능하며 쿼리문도 작성하여 확인할 수 있다.<br><img src="/images/springboot/springboot13-12.png" alt="springboot"></li>
+</ul>
+</li>
+</ul>
+<h4 id="스프링-데이터-JPA"><a href="#스프링-데이터-JPA" class="headerlink" title="스프링 데이터 JPA"></a>스프링 데이터 JPA</h4><ul>
+<li><p>ORM(Object-Relational Mapping)과 JPA (Java Persistence API)</p>
+<ul>
+<li>객체와 릴레이션을 맵핑할 때 발생하는 개념적 불일치를 해결하는 프레임워크</li>
+<li><a href="http://hibernate.org/orm/what-is-an-orm/">http://hibernate.org/orm/what-is-an-orm/</a></li>
+<li>JPA: ORM을 위한 자바 (EE) 표준</li>
+</ul>
+</li>
+<li><p>스프링 데이터 JPA</p>
+<ul>
+<li>JPA 표준스펙을 아주 쉽게 사용할 수 있게 추상화 시켜놓은것.</li>
+<li>구현체는 hibernate를 사용</li>
+<li>Repository 빈 자동 생성</li>
+<li>쿼리 메소드 자동 구현</li>
+<li>@EnableJpaRepositories (스프링 부트가 자동으로 설정 해줌.)</li>
+<li>SDJ -&gt; JPA -&gt; Hibernate -&gt; Datasource</li>
+<li>기존 jdbc를 모두 활용할 수 있다. (의존성을 보면 확인이 가능하다.)<br><img src="/images/springboot/springboot13-13.png" alt="springboot"></li>
+</ul>
+</li>
+</ul>
+<h4 id="JPA-연동"><a href="#JPA-연동" class="headerlink" title="JPA 연동"></a>JPA 연동</h4><ul>
+<li><p>스프링 데이터 JPA 의존성 추가</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.boot&lt;&#x2F;groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-boot-starter-data-jpa&lt;&#x2F;artifactId&gt;</span><br><span class="line">&lt;&#x2F;dependency&gt;</span><br></pre></td></tr></table></figure></li>
+<li><p>스프링 데이터 JPA 사용하기</p>
+<ul>
+<li><p>@Entity 클래스 만들기<br><img src="/images/springboot/springboot13-14.png" alt="springboot"></p>
+<ul>
+<li>@GernerateValue 자동으로 값을 생성</li>
+<li>lombok을 사용하면 보다 쉽게 만들 수 있다.<br><img src="/images/springboot/springboot13-15.png" alt="springboot"><blockquote>
+<p><strong>Lombok</strong><br>자바에서 Model Object를 만들 때, getter/setter, Tostring등 반본적으로 사용되는 코드를 어노테이션을 통해 줄여주는 라이브러리<br>참고 블로그 : <a href="https://goddaehee.tistory.com/95">갓대희의 작은공간</a></p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>Repository 만들기<br><img src="/images/springboot/springboot13-15.png" alt="springboot"></p>
+<ul>
+<li>Interface</li>
+<li>extends JpaRepository&lt;entity type , id type&gt;</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>스프링 데이터 리파지토리 테스트 만들기</p>
+<ul>
+<li>슬라이스 테스트를 할때는 인메모리 데이터베이가 반드시 필요하다.<ul>
+<li>H2 DB를 테스트 의존성에 추가하기<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;com.h2database&lt;&#x2F;groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;h2&lt;&#x2F;artifactId&gt;</span><br><span class="line">    &lt;scope&gt;test&lt;&#x2F;scope&gt;</span><br><span class="line">&lt;&#x2F;dependency&gt;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li>@DataJpaTest (슬라이스 테스트) 작성<ul>
+<li>레퍼지토리를 포함한 레퍼지토리와 관련된 빈들만 등록을 하여 테스트<br><img src="/images/springboot/springboot13-17.png" alt="springboot">    <ul>
+<li>DataSource</li>
+<li>JdbcTemplate</li>
+<li>해당 Repository</li>
+<li>…</li>
+</ul>
+</li>
+<li>테스트 결과<br><img src="/images/springboot/springboot13-18.png" alt="springboot"></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>어플리케이션 정상 작동을 위해서는 DataBase설정이 필요하다.</p>
+<ul>
+<li>DB 드라이버 의존성 추가(PostgreSQL)</li>
+<li>DataSource 설정</li>
+<li>SpringBootTest 적용 시, 모든 빈들이 등록됨으로 프로퍼티값들도 등록된다.<br>(즉, postgreSQL이 적용된다.)<br><img src="/images/springboot/springboot13-19.png" alt="springboot"><ul>
+<li>테스트 DB가 하나 필요하게 됨으로 추천하지 않는다.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>JPA 활용</p>
+<ul>
+<li>기본 JPA api<br><img src="/images/springboot/springboot13-20.png" alt="springboot"></li>
+<li>Repostiry에 원하는 메소드 추가 후 활용<br><img src="/images/springboot/springboot13-22.png" alt="springboot"></li>
+<li>직접 SQL쿼리문을 사용하고 싶을 때<br><img src="/images/springboot/springboot13-23.png" alt="springboot"></li>
+<li>Optional 사용<br><img src="/images/springboot/springboot13-24.png" alt="springboot"></li>
+</ul>
+</li>
+</ul>
+<h4 id="데이터베이스-초기화"><a href="#데이터베이스-초기화" class="headerlink" title="데이터베이스 초기화"></a>데이터베이스 초기화</h4><ul>
+<li><p>스키마 자동생성</p>
+<ul>
+<li>테스트 코드에선 스키마가 자동 생성된다.(embeded DB사용)<br><img src="/images/springboot/springboot13-26.png" alt="springboot"></li>
+<li>실제로 구동했을 때, 스키마에 생성되지 않는다.<br><img src="/images/springboot/springboot13-27.png" alt="springboot"></li>
+</ul>
+</li>
+<li><p>JPA를 사용한 데이터베이스 초기화</p>
+<ul>
+<li><p>spring.jpa.hibernate.ddl-auto<br>  <img src="/images/springboot/springboot13-28.png" alt="springboot"></p>
+<ul>
+<li>update : 수정 및 추가된것만 수정된다.<ul>
+<li>데이터가 남기때문에 자주 사용</li>
+<li><strong>컬럼명이 변경되는것은 알지못함으로 필드명은 변경하면 안된다.</strong></li>
+</ul>
+</li>
+<li>create : 있는것을 지우고 만든다.</li>
+<li>create-drop : 생성하고 애플리케이션 종료시 지워준다.</li>
+</ul>
+</li>
+<li><p>spring.jpa.generate-ddl=true</p>
+<ul>
+<li>기본값이 false이기 때문에 설정해주지 않으면 상기사항이 적용되지 않는다.</li>
+</ul>
+</li>
+<li><p>운영 DB의 경우 validate 설정이 보다 안정적이다.</p>
+<ul>
+<li>spring.jpa.hibernate.ddl-auto=validate<br>spring.jpa.generate-ddl=false</li>
+<li>릴레이션이 잘 설정되어있는지 확인해준다.<ul>
+<li>클래스와 잘 매핑되있으면 오류없이 실행된다.</li>
+<li>매핑이 되지않으면 오류발생<br><img src="/images/springboot/springboot13-29.png" alt="springboot"></li>
+<li>따라서 DB수정이 필요 시, 업데이트 환경으로 진행<br><img src="/images/springboot/springboot13-30.png" alt="springboot"></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>SQL 스크립트를 사용한 데이터베이스 초기화</p>
+<ul>
+<li><p>테스트 코드를 돌려 쿼리문을 사용하면 간편하다.<br>  <img src="/images/springboot/springboot13-25.png" alt="springboot"></p>
+<ul>
+<li>jpa관 설정들은 테스트 코드에도 적용됨으로 주의할 것.</li>
+</ul>
+</li>
+<li><p>schema.sql 또는 schema-${platform}.sql</p>
+<ul>
+<li>empty값이 아니어야 한다.</li>
+</ul>
+</li>
+<li><p>data.sql 또는 data-${platform}.sql</p>
+<ul>
+<li>schema.sql 먼저 호출된다.</li>
+</ul>
+</li>
+<li><p>${platform} 값은 spring.datasource.platform 으로 설정 가능.</p>
+<ul>
+<li>schema.sql과 공존하면 우선순위는 schema.sql</li>
+<li>schema.sql과 공존할 때, 둘 다 empty값이 아니어야한다.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="데이터베이스-마이그레이션"><a href="#데이터베이스-마이그레이션" class="headerlink" title="데이터베이스 마이그레이션"></a>데이터베이스 마이그레이션</h4><ul>
+<li><p><a href="https://docs.spring.io/spring-boot/docs/2.0.3.RELEASE/reference/htmlsingle/#howto-execute-flyway-database-migrations-on-startup">Flyway</a>와 Liquibase가 대표적인데, Flyway를 사용하겠습니다</p>
+</li>
+<li><p>의존성 추가</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.flywaydb&lt;&#x2F;groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;flyway-core&lt;&#x2F;artifactId&gt;</span><br><span class="line">&lt;&#x2F;dependency&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>마이그레이션 디렉토리</p>
+<ul>
+<li><p>db/migration 또는 db/migration/{vendor}</p>
+<ul>
+<li>파일들의 쿼리문 문법을 잘 지켜야한다. (;까지)<br><img src="/images/springboot/springboot13-32.png" alt="springboot"></li>
+</ul>
+</li>
+<li><p>spring.flyway.locations로 변경 가능</p>
+</li>
+</ul>
+</li>
+<li><p>마이그레이션 파일 이름<br>  <img src="/images/springboot/springboot13-33.png" alt="springboot"></p>
+<ul>
+<li>V숫자__이름.sql</li>
+<li><strong>V는 꼭 대문자로.</strong></li>
+<li>숫자는 순차적으로 (타임스탬프 권장)</li>
+<li><strong>숫자와 이름 사이에 언더바 두 개.</strong></li>
+<li>이름은 가능한 서술적으로.</li>
+</ul>
+</li>
+<li><p><strong>적용된 스크립트 파일(sql)은 절대로 건들면 안된다.</strong></p>
+<ul>
+<li>수정사항 발생 시, 새로운 파일을 작성한다.<ul>
+<li>변경사항<br><img src="/images/springboot/springboot13-34.png" alt="springboot"></li>
+<li>새로운 스크립트 작성<br><img src="/images/springboot/springboot13-35.png" alt="springboot"></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h4><ul>
+<li><p>캐시, 메시지 브로커, 키/밸류 스토어 등으로 사용 가능.</p>
+</li>
+<li><p>spring-boot-data-redis 의존성 추가</p>
+</li>
+<li><p>Redis 설치 및 실행 (도커)</p>
+<ul>
+<li>docker run -p 6379:6379 –name redis_boot -d redis</li>
+<li>docker exec -i -t redis_boot redis-cli</li>
+</ul>
+</li>
+<li><p>스프링 데이터 Redis</p>
+<ul>
+<li><a href="https://projects.spring.io/spring-data-redis/">https://projects.spring.io/spring-data-redis/</a></li>
+<li>StringRedisTemplate 또는 RedisTemplate<br><img src="/images/springboot/springboot13-36.png" alt="springboot"></li>
+<li>extends CrudRepository<br><img src="/images/springboot/springboot13-37.png" alt="springboot"></li>
+</ul>
+<ul>
+<li>Redis 주요 커맨드<br><img src="/images/springboot/springboot13-38.png" alt="springboot"><ul>
+<li><a href="https://redis.io/commands">https://redis.io/commands</a></li>
+<li>keys *</li>
+<li>get {key}</li>
+<li>hgetall {key}</li>
+<li>hget {key} {column}   </li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>커스터마이징</p>
+<ul>
+<li>spring.redis.*<ul>
+<li>url : localhost가아니면 설정이 필요하다.</li>
+<li>port : 기본포트번호(6379) 사용안하면 설정이 필요하다.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="MongoDB"><a href="#MongoDB" class="headerlink" title="MongoDB"></a>MongoDB</h4><ul>
+<li><p>MongoDB는 JSON 기반의 도큐먼트 데이터베이스</p>
+<ul>
+<li>스키마가 없다</li>
+</ul>
+</li>
+<li><p>Webflux를 사용하는 경우, MongoDB reactive를 사용하여 reactive한 repository를 만들 수 있다.</p>
+</li>
+<li><p>참고 : ApplicationRunner를 만드는 새로운 방법</p>
+<ul>
+<li>ApplicationRunner를 리턴하는 메소드를 빈으로 등록한다.<br><img src="/images/springboot/springboot13-39.png" alt="springboot"></li>
+<li>람다를 사용하면 보다 간결하게 사용가능<br><img src="/images/springboot/springboot13-40.png" alt="springboot"></li>
+</ul>
+</li>
+<li><p>collections 생성<br>  <img src="/images/springboot/springboot13-41.png" alt="springboot"></p>
+<ul>
+<li>RDB(Relation Data Base)의 테이블로 보면 된다.</li>
+</ul>
+</li>
+<li><p>MongoDB 설치 및 실행 (도커)<br>  <img src="/images/springboot/springboot13-42.png" alt="springboot"></p>
+<ul>
+<li>docker run -p 27017:27017 –name mongo_boot -d mongo</li>
+<li>docker exec -i -t mongo_boot bash</li>
+<li>mongo</li>
+</ul>
+</li>
+<li><p>스프링 데이터 몽고DB</p>
+<ul>
+<li>MongoTemplate<br>  <img src="/images/springboot/springboot13-43.png" alt="springboot"></li>
+<li>MongoRepository<br>  <img src="/images/springboot/springboot13-44.png" alt="springboot"></li>
+<li>내장형 MongoDB (테스트용)<ul>
+<li>의존성 추가<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;de.flapdoodle.embed&lt;&#x2F;groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;de.flapdoodle.embed.mongo&lt;&#x2F;artifactId&gt;</span><br><span class="line">    &lt;scope&gt;test&lt;&#x2F;scope&gt;</span><br><span class="line">&lt;&#x2F;dependency&gt;</span><br></pre></td></tr></table></figure></li>
+<li>@DataMongoTest<br>  <img src="/images/springboot/springboot13-46.png" alt="springboot"></li>
+<li>운영용 MongoDB에 영향을 주지 않는다.<ul>
+<li>운영용 DB를 포함하지만, test에서 만든 데이터는 운영 DB에 추가 되지않는다.<br><img src="/images/springboot/springboot13-45.png" alt="springboot"></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="Neo4j"><a href="#Neo4j" class="headerlink" title="Neo4j"></a>Neo4j</h4><ul>
+<li><p>Neo4j는 노드간의 연관 관계를 표현하는데 빠르고 다양한 기능을 제공하는 그래프 데이터베이스<br>ex) 친구의친구의친구를 찾는다거나.. 친구의 세번째링크에 관련된 모든 친구를 불러온다거나..</p>
+</li>
+<li><p>의존성 추가</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.boot&lt;&#x2F;groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-boot-starter-data-neo4j&lt;&#x2F;artifactId&gt;</span><br><span class="line">&lt;&#x2F;dependency&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Neo4j 설치 및 실행 (도커)</p>
+<ul>
+<li>docker run -p 7474:7474 -p 7687:7687 -d –name noe4j_boot neo4j<ul>
+<li>포트를 두개 설정해주어야 한다.<ul>
+<li>HTTP(앞) → 서버에서 사용한다.</li>
+<li>볼트 프로토 (뒤)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="http://localhost:7474/browser">http://localhost:7474/browser</a><ul>
+<li>바로 접속할 수 있다.</li>
+<li>기본 패스워드 Neo4j 비밀번호를 바꿔야한다.<ul>
+<li>기본 패스워드가 변경되었기 때문에 설정해줘야한다.<br><img src="/images/springboot/springboot13-48.png" alt="springboot"></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>NodeEntity 생성<br>  <img src="/images/springboot/springboot13-49.png" alt="springboot"></p>
+<ul>
+<li>id 는 숫자값만 줄수 있다.</li>
+</ul>
+</li>
+<li><p>스프링 데이터 Neo4J</p>
+<ul>
+<li>최신버전으로 오면서 등록되던 빈들이 사라졌다.<ul>
+<li>Neo4jTemplate</li>
+<li>Neo4jOpertion</li>
+</ul>
+</li>
+<li><strong>SessionFactory</strong><br>  <img src="/images/springboot/springboot13-50.png" alt="springboot"></li>
+<li>Neo4jRepository<br>  <img src="/images/springboot/springboot13-55.png" alt="springboot"></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>관계보기<ul>
+<li>NodeEntity 생성 및 데이터입력 (이전과정에서 진행하였다.)</li>
+<li>브라우저에서 확인 가능하다.<br><img src="/images/springboot/springboot13-51.png" alt="springboot"></li>
+<li>Relationship을 가질 NodeEntity를 하나 더 만든다.<br><img src="/images/springboot/springboot13-47.png" alt="springboot"></li>
+<li>Relationship 설정 (Account가 Role을 가지도록 설정하였다.)<br><img src="/images/springboot/springboot13-53.png" alt="springboot"></li>
+<li>롤 부여 및 실행<br><img src="/images/springboot/springboot13-52.png" alt="springboot"></li>
+<li>브라우저에서 확인<br><img src="/images/springboot/springboot13-54.png" alt="springboot"></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/SpringBoot/" rel="tag">SpringBoot</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">Like this article? Support the author with</h3>
+        <div class="buttons is-centered">
+            
+                
+<div class="notification is-danger">
+    You forgot to set the <code>qrcode</code> for Alipay. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                
+<div class="notification is-danger">
+    You forgot to set the <code>qrcode</code> for Wechat. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                <!-- Visit https://www.paypal.com/donate/buttons/ to get your donate button -->
+
+<div class="notification is-danger">
+    You forgot to set the <code>business</code> and <code>currency_code</code> for Paypal. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                
+<div class="notification is-danger">
+    You forgot to set the <code>url</code> Patreon. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2019/04/16/spring/springboot14/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">스프링 부트 활용14 - 스프링 시큐리티</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2019/04/11/spring/springboot12/">
+                <span class="level-item">스프링 부트 활용12 - 스프링 웹 MVC</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+</div>
+                
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-4-widescreen  has-order-3 column-right is-sticky">
+    
+        
+
+    <div class="card widget" id="toc">
+        <div class="card-content">
+            <div class="menu">
+                <h3 class="menu-label">
+                    Catalogue
+                </h3>
+                <ul class="menu-list"><li>
+        <a class="is-flex" href="#스프릥-부트-개념과-활용13-inflearn-백기선">
+        <span class="has-mr-6">1</span>
+        <span>스프릥 부트 개념과 활용13(inflearn) - 백기선</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#Spring-boot">
+        <span class="has-mr-6">1.1</span>
+        <span>Spring boot</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#스프링-데이터">
+        <span class="has-mr-6">1.1.1</span>
+        <span>스프링 데이터</span>
+        </a></li></ul></li></ul></li></ul>
+            </div>
+        </div>
+    </div>
+
+    
+        <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            Tag Cloud
+        </h3>
+        <a href="/tags/Algorithm/" style="font-size: 11.11px;">Algorithm</a> <a href="/tags/DataBase/" style="font-size: 10px;">DataBase</a> <a href="/tags/Etc/" style="font-size: 11.11px;">Etc</a> <a href="/tags/Git/" style="font-size: 13.33px;">Git</a> <a href="/tags/Interview/" style="font-size: 14.44px;">Interview</a> <a href="/tags/JPA/" style="font-size: 20px;">JPA</a> <a href="/tags/JSP/" style="font-size: 14.44px;">JSP</a> <a href="/tags/Java/" style="font-size: 18.89px;">Java</a> <a href="/tags/JavaScript/" style="font-size: 12.22px;">JavaScript</a> <a href="/tags/OracleDB/" style="font-size: 14.44px;">OracleDB</a> <a href="/tags/Process/" style="font-size: 11.11px;">Process</a> <a href="/tags/RestAPI/" style="font-size: 14.44px;">RestAPI</a> <a href="/tags/Seminar/" style="font-size: 10px;">Seminar</a> <a href="/tags/SpringBoot/" style="font-size: 20px;">SpringBoot</a> <a href="/tags/SpringSecurity/" style="font-size: 12.22px;">SpringSecurity</a> <a href="/tags/SpringWebMvc/" style="font-size: 16.67px;">SpringWebMvc</a> <a href="/tags/Springframework/" style="font-size: 17.78px;">Springframework</a> <a href="/tags/Springframework-kosta/" style="font-size: 14.44px;">Springframework_kosta</a> <a href="/tags/Web/" style="font-size: 12.22px;">Web</a> <a href="/tags/debug/" style="font-size: 11.11px;">debug</a> <a href="/tags/jQuery/" style="font-size: 12.22px;">jQuery</a> <a href="/tags/%EC%A0%95%EB%B3%B4%EC%B2%98%EB%A6%AC%EA%B8%B0%EC%82%AC-%ED%95%84%EA%B8%B0/" style="font-size: 13.33px;">정보처리기사_필기</a> <a href="/tags/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%ED%9A%8C%EA%B3%A0/" style="font-size: 15.56px;">프로젝트_회고</a>
+    </div>
+</div>
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/blog_logo.png" alt="스프링 부트 활용13 - 스프링 데이터" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2020 Bong&#39;s blog&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/cyr9210">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("en");</script>
+
+
+<script>
+var IcarusThemeSettings = {
+    site: {
+        url: 'http://yoursite.com',
+        external_link: {"enable":true,"exclude":[]}
+    },
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+<script src="/js/animation.js"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+<script src="/js/gallery.js" defer></script>
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+<a id="back-to-top" title="Back to Top" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: 'Posts',
+                PAGES: 'Pages',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
+                UNTITLED: '(Untitled)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

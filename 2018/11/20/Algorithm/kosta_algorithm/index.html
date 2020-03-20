@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html >
+<head>
+    <meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 4.2.0" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>KOSTA 예제, DFS - Bong&#39;s blog</title>
+
+
+    <meta name="description" content="KOSTA DAY16Algorism">
+<meta property="og:type" content="article">
+<meta property="og:title" content="KOSTA 예제, DFS">
+<meta property="og:url" content="http://yoursite.com/2018/11/20/Algorithm/kosta_algorithm/index.html">
+<meta property="og:site_name" content="Bong&#39;s blog">
+<meta property="og:description" content="KOSTA DAY16Algorism">
+<meta property="og:image" content="http://yoursite.com/images/og_image.png">
+<meta property="article:published_time" content="2018-11-20T05:27:17.000Z">
+<meta property="article:modified_time" content="2020-03-20T07:57:35.713Z">
+<meta property="article:author" content="Bong&#39;s blog">
+<meta property="article:tag" content="Algorithm">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/images/og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+<style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+    
+    
+    
+    
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+    
+    
+    
+    
+    
+    
+    
+    <link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-2-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/blog_logo.png" alt="KOSTA 예제, DFS" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                href="/">Home</a>
+                
+                <a class="navbar-item"
+                href="/archives">Archives</a>
+                
+                <a class="navbar-item"
+                href="/tags">Tags</a>
+                
+                <a class="navbar-item"
+                href="/about">About</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    <a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/cyr9210">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="Search" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-8-widescreen has-order-2 column-main">
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2018-11-20T05:27:17.000Z">2018-11-20</time>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    7 minutes read (About 1033 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                KOSTA 예제, DFS
+            
+        </h1>
+        <div class="content">
+            <p><img src="/images/algorism_logo.png" alt="Java"></p>
+<h1 id="KOSTA-DAY16"><a href="#KOSTA-DAY16" class="headerlink" title="KOSTA DAY16"></a>KOSTA DAY16</h1><h2 id="Algorism"><a href="#Algorism" class="headerlink" title="Algorism"></a>Algorism</h2><a id="more"></a>
+<h3 id="kosta-예제"><a href="#kosta-예제" class="headerlink" title="kosta 예제"></a>kosta 예제</h3><h4 id="문제"><a href="#문제" class="headerlink" title="문제"></a>문제</h4><p>고전게임을 잘하기로 소문난 두 형제 종현이와 종원이는 요새 갤러그라는 게임에푹 빠져 있다.<br>현재 종현이와 종원이의 점수는 각각 A점과 B점이고, 종현이의 점수는 A는 종원이의 점수 B보다 높거나 같다.<br>조현이는 매주 점수가 2배씩 상승하지만, 노력파인 종원이는 종현이를 이기기 위해 쉬지 않고 연습한 결과 매일 점수가 3배씩 상승하는 능력을 갖추었다.<br>이때 며칠이 지나야 종원이가 종현이의 점수보다 높아질 수 있을까?</p>
+<h5 id="입력"><a href="#입력" class="headerlink" title="[입력]"></a>[입력]</h5><p>첫 번째 줄에 테스트케이스의 수 T(1&lt;= T&lt;=50)가 주어진다.<br>각 테스트케이스마다 최초 종현이의 점수 A와 종원이의 점수 B가 각각 공백을 두고<br>주어진다. 단 최초 종현이의 점수 A는 종원잉의 점수 B보다 크거나 같으면 1점<br>이상 5천점 이하의 점수이다. (A&gt;=B, 1&lt;=B&lt;=5000)</p>
+<h5 id="출력"><a href="#출력" class="headerlink" title="[출력]"></a>[출력]</h5><p>각 줄마다 “#T”(T는 테스트케이스 번호)를 출력한 뒤, 종원이의 점수가 종현이의 점수를<br>추월하게 되는데 필요한 일수를 출력한다.</p>
+<h5 id="sample-input"><a href="#sample-input" class="headerlink" title="[sample input]"></a>[sample input]</h5><ul>
+<li>4</li>
+<li>7 / 1</li>
+<li>8 / 3</li>
+<li>4 / 4</li>
+<li>4500 / 2</li>
+</ul>
+<h5 id="sample-output"><a href="#sample-output" class="headerlink" title="[sample output]"></a>[sample output]</h5><ul>
+<li>1 / 5</li>
+<li>2 / 3</li>
+<li>3 / 1</li>
+<li>4 / 20</li>
+</ul>
+<h5 id="작성답안"><a href="#작성답안" class="headerlink" title="작성답안"></a>작성답안</h5><p><img src="/images/algorism/algorism01-01.png" alt="Java"><br><br><br></p>
+<h3 id="DFS-깊이우선탐색-알고리즘"><a href="#DFS-깊이우선탐색-알고리즘" class="headerlink" title="DFS(깊이우선탐색) 알고리즘"></a>DFS(깊이우선탐색) 알고리즘</h3><p>루트 노드(혹은 다른 임의의 노드)에서 시작해서 다음 분기(branch)로 넘어가기 전에 해당 분기를 완벽하게 탐색하는 방법</p>
+<ul>
+<li>구현방법<ol>
+<li>순환 호출(재귀함수)</li>
+<li>명시적인 스택 사용</li>
+</ol>
+</li>
+<li>BFS(너비우선탐색)보다 좀 더 간단하다.</li>
+<li>단순검색 속도 자체는 BFS에 비해서 느리다.</li>
+<li>모든 노드를 방문하고자 하는경우에 이방법을 선택<h4 id="예제"><a href="#예제" class="headerlink" title="예제"></a>예제</h4><img src="/images/algorism/algorism01-02.png" alt="Java"></li>
+</ul>
+<h4 id="문제-1"><a href="#문제-1" class="headerlink" title="문제"></a>문제</h4><p>1번부터 N번까지 번호가 매겨져 있는 도시가 있고, 도시를 사이에 길이 있는 경우에만 이동할 수 있다.<br>여행을 좋아하는 종민이는 M번 도시에서 출발하여 출발지를 제외한 모든 도시를 정확히 한 번씩만 방문한 후 처음 출발지인 M번 도시로 돌아오려 한다.<br>이때 도시들 사이의 길을 지날갈 때 지불해야 하는 통행료가 있어,종민이는 최소한의 비용으로 모든 도시를 여행하고 싶다.<br>종민이가 모든 도시를여행할 때 필요한 최소비용을 출력하는 프로그램을 작성하시오.</p>
+<h5 id="입력-1"><a href="#입력-1" class="headerlink" title="[입력]"></a>[입력]</h5><p>첫 번째 줄에 테스트케이스의 수 T(1&lt;= T &lt;= 10)가 주어진다.<br>각 테스트케이스 마다 첫 번째 줄에는 도시의 수 N과 출발지 M이 공백을 두고 주어진다.<br>(3&lt;=N&lt;=10, 1&lt;=M&lt;=N) 다음 N개의 줄에는 각 줄에 N개의 숫자들이 공백을 두고 주어지는데 i번째 줄의 j번째 숫자는 i번째 도시에서 j번째 도시로 가는 드는<br>통행료 MAT[i][j]를 의미한다.<br>만약 통행료가 0인 경우는 i도시에서 j도시로 가는 길이없음을 의미하다. (0&lt;=MAT[i][j]&lt;=50)</p>
+<h5 id="제한조건"><a href="#제한조건" class="headerlink" title="[제한조건]"></a>[제한조건]</h5><ul>
+<li>도시를 잇는 도로는 일방통해이다. 심지어 i번째 도시에서 j번째 도시로 가는 길은 있어도, j번째 도시에서 i번째 도시로 가는 길은 없을 수도 있다.</li>
+<li>모든 도시를 정확히 한 번씩만 지나야 함에 유의하라.</li>
+</ul>
+<h5 id="출력-1"><a href="#출력-1" class="headerlink" title="[출력]"></a>[출력]</h5><p>각 줄마다 “#T(T는 테스트케이스 번호)를 출력한 뒤, 종민이가 M번 도시부터 시작하여 모든 도시를 정확히 한 번씩 순회하고 오는데 드는 통행료 최소값을 출력하시오.<br>(단 불가능할 경우 -1을 출력한다.)</p>
+<h5 id="sample"><a href="#sample" class="headerlink" title="[sample]"></a>[sample]</h5><p>3<br>3 1<br>0 1 1<br>1 0 10<br>2 20 0<br>4 3<br>0 8 13 30<br>5 0 6 20<br>6 11 0 21<br>7 7 6 0<br>5 5<br>0 17 0 3 0<br>1 0 3 4 5<br>0 5 0 2 5<br>44 10 0 0 0<br>9 3 9 7 0</p>
+<h5 id="sampe-output"><a href="#sampe-output" class="headerlink" title="[sampe output]"></a>[sampe output]</h5><p>1 13<br>2 40<br>3 30</p>
+<h4 id="강사님-해답"><a href="#강사님-해답" class="headerlink" title="강사님 해답"></a>강사님 해답</h4><p>못풀었다.. 강사님 작성 답안은 아래와 같다.<br><img src="/images/algorism/algorism01-03.png" alt="Java"><br><br><br></p>
+
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/Algorithm/" rel="tag">Algorithm</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">Like this article? Support the author with</h3>
+        <div class="buttons is-centered">
+            
+                
+<div class="notification is-danger">
+    You forgot to set the <code>qrcode</code> for Alipay. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                
+<div class="notification is-danger">
+    You forgot to set the <code>qrcode</code> for Wechat. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                <!-- Visit https://www.paypal.com/donate/buttons/ to get your donate button -->
+
+<div class="notification is-danger">
+    You forgot to set the <code>business</code> and <code>currency_code</code> for Paypal. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                
+<div class="notification is-danger">
+    You forgot to set the <code>url</code> Patreon. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2018/11/21/Java/java16/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">Java 면접질문1, KOSTA 필기시험</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2018/11/19/Java/java15/">
+                <span class="level-item">JSON, JunitTest</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+</div>
+                
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-4-widescreen  has-order-3 column-right is-sticky">
+    
+        
+
+    <div class="card widget" id="toc">
+        <div class="card-content">
+            <div class="menu">
+                <h3 class="menu-label">
+                    Catalogue
+                </h3>
+                <ul class="menu-list"><li>
+        <a class="is-flex" href="#KOSTA-DAY16">
+        <span class="has-mr-6">1</span>
+        <span>KOSTA DAY16</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#Algorism">
+        <span class="has-mr-6">1.1</span>
+        <span>Algorism</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#kosta-예제">
+        <span class="has-mr-6">1.1.1</span>
+        <span>kosta 예제</span>
+        </a></li><li>
+        <a class="is-flex" href="#DFS-깊이우선탐색-알고리즘">
+        <span class="has-mr-6">1.1.2</span>
+        <span>DFS(깊이우선탐색) 알고리즘</span>
+        </a></li></ul></li></ul></li></ul>
+            </div>
+        </div>
+    </div>
+
+    
+        <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            Tag Cloud
+        </h3>
+        <a href="/tags/Algorithm/" style="font-size: 11.11px;">Algorithm</a> <a href="/tags/DataBase/" style="font-size: 10px;">DataBase</a> <a href="/tags/Etc/" style="font-size: 11.11px;">Etc</a> <a href="/tags/Git/" style="font-size: 13.33px;">Git</a> <a href="/tags/Interview/" style="font-size: 14.44px;">Interview</a> <a href="/tags/JPA/" style="font-size: 20px;">JPA</a> <a href="/tags/JSP/" style="font-size: 14.44px;">JSP</a> <a href="/tags/Java/" style="font-size: 18.89px;">Java</a> <a href="/tags/JavaScript/" style="font-size: 12.22px;">JavaScript</a> <a href="/tags/OracleDB/" style="font-size: 14.44px;">OracleDB</a> <a href="/tags/Process/" style="font-size: 11.11px;">Process</a> <a href="/tags/RestAPI/" style="font-size: 14.44px;">RestAPI</a> <a href="/tags/Seminar/" style="font-size: 10px;">Seminar</a> <a href="/tags/SpringBoot/" style="font-size: 20px;">SpringBoot</a> <a href="/tags/SpringSecurity/" style="font-size: 12.22px;">SpringSecurity</a> <a href="/tags/SpringWebMvc/" style="font-size: 16.67px;">SpringWebMvc</a> <a href="/tags/Springframework/" style="font-size: 17.78px;">Springframework</a> <a href="/tags/Springframework-kosta/" style="font-size: 14.44px;">Springframework_kosta</a> <a href="/tags/Web/" style="font-size: 12.22px;">Web</a> <a href="/tags/debug/" style="font-size: 11.11px;">debug</a> <a href="/tags/jQuery/" style="font-size: 12.22px;">jQuery</a> <a href="/tags/%EC%A0%95%EB%B3%B4%EC%B2%98%EB%A6%AC%EA%B8%B0%EC%82%AC-%ED%95%84%EA%B8%B0/" style="font-size: 13.33px;">정보처리기사_필기</a> <a href="/tags/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%ED%9A%8C%EA%B3%A0/" style="font-size: 15.56px;">프로젝트_회고</a>
+    </div>
+</div>
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/blog_logo.png" alt="KOSTA 예제, DFS" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2020 Bong&#39;s blog&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/cyr9210">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("en");</script>
+
+
+<script>
+var IcarusThemeSettings = {
+    site: {
+        url: 'http://yoursite.com',
+        external_link: {"enable":true,"exclude":[]}
+    },
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+<script src="/js/animation.js"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+<script src="/js/gallery.js" defer></script>
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+<a id="back-to-top" title="Back to Top" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: 'Posts',
+                PAGES: 'Pages',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
+                UNTITLED: '(Untitled)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

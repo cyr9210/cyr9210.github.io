@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html >
+<head>
+    <meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 4.2.0" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>스프링 부트 원리04 - 내장 웹 서버 - Bong&#39;s blog</title>
+
+
+    <meta name="description" content="스프릥 부트 개념과 활용04(inflearn) - 백기선Spring boot">
+<meta property="og:type" content="article">
+<meta property="og:title" content="스프링 부트 원리04 - 내장 웹 서버">
+<meta property="og:url" content="http://yoursite.com/2019/04/02/spring/springboot04/index.html">
+<meta property="og:site_name" content="Bong&#39;s blog">
+<meta property="og:description" content="스프릥 부트 개념과 활용04(inflearn) - 백기선Spring boot">
+<meta property="og:image" content="http://yoursite.com/images/og_image.png">
+<meta property="article:published_time" content="2019-04-02T07:59:51.000Z">
+<meta property="article:modified_time" content="2020-03-20T07:57:35.774Z">
+<meta property="article:author" content="Bong&#39;s blog">
+<meta property="article:tag" content="SpringBoot">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/images/og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+<style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+    
+    
+    
+    
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+    
+    
+    
+    
+    
+    
+    
+    <link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-2-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/blog_logo.png" alt="스프링 부트 원리04 - 내장 웹 서버" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                href="/">Home</a>
+                
+                <a class="navbar-item"
+                href="/archives">Archives</a>
+                
+                <a class="navbar-item"
+                href="/tags">Tags</a>
+                
+                <a class="navbar-item"
+                href="/about">About</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    <a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/cyr9210">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="Search" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-8-widescreen has-order-2 column-main">
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-04-02T07:59:51.000Z">2019-04-02</time>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    6 minutes read (About 935 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                스프링 부트 원리04 - 내장 웹 서버
+            
+        </h1>
+        <div class="content">
+            <p><img src="/images/springboot_logo.png" alt="springboot"></p>
+<h1 id="스프릥-부트-개념과-활용04-inflearn-백기선"><a href="#스프릥-부트-개념과-활용04-inflearn-백기선" class="headerlink" title="스프릥 부트 개념과 활용04(inflearn) - 백기선"></a>스프릥 부트 개념과 활용04(inflearn) - 백기선</h1><h2 id="Spring-boot"><a href="#Spring-boot" class="headerlink" title="Spring boot"></a>Spring boot</h2><a id="more"></a>
+
+<h3 id="내장-웹-서버"><a href="#내장-웹-서버" class="headerlink" title="내장 웹 서버"></a>내장 웹 서버</h3><ul>
+<li><p>@SpringBootApplication 쓰지 않고 톰캣 띄우기<br>  <img src="/images/springboot/springboot04-1.png" alt="springboot"></p>
+<ul>
+<li><strong>부트는 서버가 아니다.</strong></li>
+<li>톰캣객체생성</li>
+<li>포트설정</li>
+<li>톰캣에 컨텍스트 추가</li>
+<li>서블릿 만들기</li>
+<li>톰캣에 서블릿 추가</li>
+<li>컨텍스트에 서블릿 맵핑</li>
+<li>톰캣실행및대기</li>
+</ul>
+</li>
+<li><p>이 모든 과정을 보다 상세히 또 유연하게 설정하고 실행해주는게 바로 스프링 부트의 자동 설정.</p>
+<ul>
+<li>ServletWebServerFactoryAutoConfiguration (서블릿 웹 서버 생성)<ul>
+<li>TomcatServletWebServerFactoryCustomizer (서버 커스터마이징)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>DispatcherServletAutoConfiguration</p>
+<ul>
+<li>서블릿 만들고 등록한다.</li>
+<li>DispatcherServlet이 따로 있는 이유<ul>
+<li>서블릿 컨테이너는 변경될 수 있느나, 서블릿은 변경되지 않기때문에 </li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="컨테이너와-서버-포트"><a href="#컨테이너와-서버-포트" class="headerlink" title="컨테이너와 서버 포트"></a><a href="https://docs.spring.io/spring-boot/docs/current/reference/html/howto-embedded-web-servers.html">컨테이너와 서버 포트</a></h4><ul>
+<li><p>톰캣이 기본 컨테이너로 설정되어있다.</p>
+</li>
+<li><p>다른 서블릿 컨테이너로 변경<br>  <img src="/images/springboot/springboot04-2.png" alt="springboot"></p>
+<ul>
+<li>톰캣 의존성을 제외한다.</li>
+<li>원하는 서블릿 컨네이너 설정</li>
+</ul>
+</li>
+<li><p>웹 서버 사용하지 않기</p>
+<ul>
+<li><p>코드로 타입변경<br><img src="/images/springboot/springboot04-3.png" alt="springboot"></p>
+</li>
+<li><p>application.properties로 타입변경<br><img src="/images/springboot/springboot04-4.png" alt="springboot"></p>
+</li>
+</ul>
+</li>
+<li><p>포트</p>
+<ul>
+<li>변경<ul>
+<li>application.properties에 포트번호 정의<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">server.port&#x3D;7070</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li>랜덤포트<ul>
+<li>사용가능한 포트를 랜덤으로 사용한다.<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">server.port&#x3D;0</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li>ApplicationListner&lt;ServletWebServerInitializedEvent&gt;<ul>
+<li>웹서버가 초기화가되면(생성되면) 이벤트 리스터가 콜백된다.</li>
+<li>해당 방법으로 포트 확인이 가능하다.<br><img src="/images/springboot/springboot04-5.png" alt="springboot"></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="응답-압축해서-보내기"><a href="#응답-압축해서-보내기" class="headerlink" title="응답 압축해서 보내기"></a>응답 압축해서 보내기</h4><ul>
+<li><p>application.properties에 아래왕 같이 입력 시, 응답을 압축해서 보낸다.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">server.compression.enabled&#x3D;true</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>기본적으로 압축해도 좋은 타입만 압축해서 보내준다.</p>
+<ul>
+<li>text/html</li>
+<li>text/xml</li>
+<li>text/plain</li>
+<li>text/css</li>
+<li>text/javascript</li>
+<li>application/javascript</li>
+<li>application/json</li>
+<li>application/xml</li>
+</ul>
+</li>
+</ul>
+<h4 id="HTTPS와-HTTP2"><a href="#HTTPS와-HTTP2" class="headerlink" title="HTTPS와 HTTP2"></a>HTTPS와 HTTP2</h4><ul>
+<li><p>HTTPS 설정하기</p>
+<ul>
+<li><p>키스토어 만들기</p>
+<ul>
+<li>줄바꿈없이 아래내용 입력한다.(터미널)<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">keytool -genkey </span><br><span class="line">    -alias spring </span><br><span class="line">    -storetype PKCS12 </span><br><span class="line">    -keyalg RSA </span><br><span class="line">    -keysize 2048 </span><br><span class="line">    -keystore keystore.p12 </span><br><span class="line">    -validity 4000</span><br></pre></td></tr></table></figure></li>
+<li>genkey : key를 생성한다.</li>
+<li>alias : 별칭</li>
+<li>storetype : 서블릿 컨테이너마다 지원 티압이 다르다.<ul>
+<li>주요키타입<ul>
+<li>PKCS12</li>
+<li>JKS (JavaKeyStore)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>application.properties 설정</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">server.ssl.key-store: keystore.p12</span><br><span class="line">&#x2F;* keysotre의 경로를 classpath에 넣은경우, classpath:를 앞에 붙여준다.*&#x2F;</span><br><span class="line">server.ssl.key-store-password: 비밀번호</span><br><span class="line">server.ssl.keyStoreType: PKCS12</span><br><span class="line">server.ssl.keyAlias: spring</span><br></pre></td></tr></table></figure></li>
+<li><p>HTTP로 요청 시, 실패<br><img src="/images/springboot/springboot04-7.png" alt="springboot"></p>
+</li>
+<li><p>HTTPS로 요청 시,<br><img src="/images/springboot/springboot04-8.png" alt="springboot"></p>
+<ul>
+<li>브라우저가 해당 인증서의 펍키를 모르는 상태일때, 위와같은 화면이 나타난다.</li>
+<li>공인된 인증서를 사용 시, 대부분의 브라우저가 펍키를 알기때문에 정상적인 화면이 나타난다.</li>
+</ul>
+</li>
+<li><p>커넥터가 하나이기때문에 HTTP를 받을 커넥터가 없다.</p>
+</li>
+</ul>
+</li>
+<li><p>HTTP 커넥터는 코딩으로 설정하기<br> <img src="/images/springboot/springboot04-10.png" alt="springboot"></p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">@Bean</span><br><span class="line">    public ServletWebServerFactory servletContainer()&#123;</span><br><span class="line">        TomcatServletWebServerFactory tomcat &#x3D; new TomcatServletWebServerFactory();</span><br><span class="line">        tomcat.addAdditionalTomcatConnectors(createStandardConnector());</span><br><span class="line">        return tomcat;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private Connector createStandardConnector() &#123;</span><br><span class="line">        Connector connector &#x3D; new Connector(&quot;org.apache.coyote.http11.Http11NioProtocol&quot;);</span><br><span class="line">        connector.setPort(8080);</span><br><span class="line">        return connector;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>https, http 포트번호를 달리 설정한 후 테스트 결과, 둘다 정상으로 나온다.<br>이미지</li>
+</ul>
+</li>
+<li><p>HTTP2 활성화</p>
+<ul>
+<li><p>application.properties에 다음설정을 추가한다.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">server.http2.enabled&#x3D;true</span><br></pre></td></tr></table></figure></li>
+<li><p>그러나 컨테이너 마다, 전부 다르다.</p>
+<ul>
+<li><p>undertow</p>
+<ul>
+<li>HTTPS만 설정되어있으면 추가 설정이 필요없다.<br><img src="/images/springboot/springboot04-11.png" alt="springboot">)<img src="/images/springboot/springboot04-6.png" alt="springboot"></li>
+</ul>
+</li>
+<li><p>Tomcat</p>
+<ul>
+<li>8.5버전 이하는 복잡한 설정이 필요 (비추천)</li>
+<li>톰캐9 이상 과 JDK9 이상 시, 설정 필요없다.</li>
+<li>차리리 버전을 업그레이드 하는것을 추천한다.<br><img src="/images/springboot/springboot04-12.png" alt="springboot">)<img src="/images/springboot/springboot04-13.png" alt="springboot">)<img src="/images/springboot/springboot04-14.png" alt="springboot"></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<p>참고 강의 : <a href="https://opentutorials.org/course/228/4894">생활코딩 - HTTPS와 SSL 인증서</a><br><br><br></p>
+
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/SpringBoot/" rel="tag">SpringBoot</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">Like this article? Support the author with</h3>
+        <div class="buttons is-centered">
+            
+                
+<div class="notification is-danger">
+    You forgot to set the <code>qrcode</code> for Alipay. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                
+<div class="notification is-danger">
+    You forgot to set the <code>qrcode</code> for Wechat. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                <!-- Visit https://www.paypal.com/donate/buttons/ to get your donate button -->
+
+<div class="notification is-danger">
+    You forgot to set the <code>business</code> and <code>currency_code</code> for Paypal. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                
+<div class="notification is-danger">
+    You forgot to set the <code>url</code> Patreon. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2019/04/03/spring/springboot05/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">스프링 부트 원리05 - JAR</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2019/04/01/spring/springboot03/">
+                <span class="level-item">스프링 부트 원리03 - 자동 설정</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+</div>
+                
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-4-widescreen  has-order-3 column-right is-sticky">
+    
+        
+
+    <div class="card widget" id="toc">
+        <div class="card-content">
+            <div class="menu">
+                <h3 class="menu-label">
+                    Catalogue
+                </h3>
+                <ul class="menu-list"><li>
+        <a class="is-flex" href="#스프릥-부트-개념과-활용04-inflearn-백기선">
+        <span class="has-mr-6">1</span>
+        <span>스프릥 부트 개념과 활용04(inflearn) - 백기선</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#Spring-boot">
+        <span class="has-mr-6">1.1</span>
+        <span>Spring boot</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#내장-웹-서버">
+        <span class="has-mr-6">1.1.1</span>
+        <span>내장 웹 서버</span>
+        </a></li></ul></li></ul></li></ul>
+            </div>
+        </div>
+    </div>
+
+    
+        <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            Tag Cloud
+        </h3>
+        <a href="/tags/Algorithm/" style="font-size: 11.11px;">Algorithm</a> <a href="/tags/DataBase/" style="font-size: 10px;">DataBase</a> <a href="/tags/Etc/" style="font-size: 11.11px;">Etc</a> <a href="/tags/Git/" style="font-size: 13.33px;">Git</a> <a href="/tags/Interview/" style="font-size: 14.44px;">Interview</a> <a href="/tags/JPA/" style="font-size: 20px;">JPA</a> <a href="/tags/JSP/" style="font-size: 14.44px;">JSP</a> <a href="/tags/Java/" style="font-size: 18.89px;">Java</a> <a href="/tags/JavaScript/" style="font-size: 12.22px;">JavaScript</a> <a href="/tags/OracleDB/" style="font-size: 14.44px;">OracleDB</a> <a href="/tags/Process/" style="font-size: 11.11px;">Process</a> <a href="/tags/RestAPI/" style="font-size: 14.44px;">RestAPI</a> <a href="/tags/Seminar/" style="font-size: 10px;">Seminar</a> <a href="/tags/SpringBoot/" style="font-size: 20px;">SpringBoot</a> <a href="/tags/SpringSecurity/" style="font-size: 12.22px;">SpringSecurity</a> <a href="/tags/SpringWebMvc/" style="font-size: 16.67px;">SpringWebMvc</a> <a href="/tags/Springframework/" style="font-size: 17.78px;">Springframework</a> <a href="/tags/Springframework-kosta/" style="font-size: 14.44px;">Springframework_kosta</a> <a href="/tags/Web/" style="font-size: 12.22px;">Web</a> <a href="/tags/debug/" style="font-size: 11.11px;">debug</a> <a href="/tags/jQuery/" style="font-size: 12.22px;">jQuery</a> <a href="/tags/%EC%A0%95%EB%B3%B4%EC%B2%98%EB%A6%AC%EA%B8%B0%EC%82%AC-%ED%95%84%EA%B8%B0/" style="font-size: 13.33px;">정보처리기사_필기</a> <a href="/tags/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%ED%9A%8C%EA%B3%A0/" style="font-size: 15.56px;">프로젝트_회고</a>
+    </div>
+</div>
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/blog_logo.png" alt="스프링 부트 원리04 - 내장 웹 서버" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2020 Bong&#39;s blog&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/cyr9210">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("en");</script>
+
+
+<script>
+var IcarusThemeSettings = {
+    site: {
+        url: 'http://yoursite.com',
+        external_link: {"enable":true,"exclude":[]}
+    },
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+<script src="/js/animation.js"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+<script src="/js/gallery.js" defer></script>
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+<a id="back-to-top" title="Back to Top" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: 'Posts',
+                PAGES: 'Pages',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
+                UNTITLED: '(Untitled)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

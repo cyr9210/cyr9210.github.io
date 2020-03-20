@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html >
+<head>
+    <meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 4.2.0" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>스프링 기반 REST API 개발05 - RestAPI 보안 적용(@Enumerated, @ElementCollection, 스프링 시큐리티 설정, auth서버, 리소스서버, @ConfigurationProperties, form-data  request body, 현재 사용자 조회, @JsonSerialize) - Bong&#39;s blog</title>
+
+
+    <meta name="description" content="스프링 기반 REST API 개발(inflearn)5 - 백기선RestAPI 보안 적용">
+<meta property="og:type" content="article">
+<meta property="og:title" content="스프링 기반 REST API 개발05 - RestAPI 보안 적용(@Enumerated, @ElementCollection, 스프링 시큐리티 설정, auth서버, 리소스서버, @ConfigurationProperties, form-data  request body, 현재 사용자 조회, @JsonSerialize)">
+<meta property="og:url" content="http://yoursite.com/2019/09/23/RestAPI/restapi05/index.html">
+<meta property="og:site_name" content="Bong&#39;s blog">
+<meta property="og:description" content="스프링 기반 REST API 개발(inflearn)5 - 백기선RestAPI 보안 적용">
+<meta property="og:image" content="http://yoursite.com/images/og_image.png">
+<meta property="article:published_time" content="2019-09-23T06:38:41.000Z">
+<meta property="article:modified_time" content="2020-03-20T07:57:35.736Z">
+<meta property="article:author" content="Bong&#39;s blog">
+<meta property="article:tag" content="RestAPI">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/images/og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+<style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+    
+    
+    
+    
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+    
+    
+    
+    
+    
+    
+    
+    <link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-2-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/blog_logo.png" alt="스프링 기반 REST API 개발05 - RestAPI 보안 적용(@Enumerated, @ElementCollection, 스프링 시큐리티 설정, auth서버, 리소스서버, @ConfigurationProperties, form-data  request body, 현재 사용자 조회, @JsonSerialize)" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                href="/">Home</a>
+                
+                <a class="navbar-item"
+                href="/archives">Archives</a>
+                
+                <a class="navbar-item"
+                href="/tags">Tags</a>
+                
+                <a class="navbar-item"
+                href="/about">About</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    <a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/cyr9210">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="Search" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-8-widescreen has-order-2 column-main">
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-09-23T06:38:41.000Z">2019-09-23</time>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    19 minutes read (About 2894 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                스프링 기반 REST API 개발05 - RestAPI 보안 적용(@Enumerated, @ElementCollection, 스프링 시큐리티 설정, auth서버, 리소스서버, @ConfigurationProperties, form-data  request body, 현재 사용자 조회, @JsonSerialize)
+            
+        </h1>
+        <div class="content">
+            <h1 id="스프링-기반-REST-API-개발-inflearn-5-백기선"><a href="#스프링-기반-REST-API-개발-inflearn-5-백기선" class="headerlink" title="스프링 기반 REST API 개발(inflearn)5 - 백기선"></a>스프링 기반 REST API 개발(inflearn)5 - 백기선</h1><h2 id="RestAPI-보안-적용"><a href="#RestAPI-보안-적용" class="headerlink" title="RestAPI 보안 적용"></a>RestAPI 보안 적용</h2><a id="more"></a>
+<h3 id="Account-도메인-추가"><a href="#Account-도메인-추가" class="headerlink" title="Account 도메인 추가"></a>Account 도메인 추가</h3><ul>
+<li>SpirngSecurity Auth2 사용<ul>
+<li>Grant Type : password</li>
+</ul>
+</li>
+</ul>
+<h4 id="Account-도메인-생성"><a href="#Account-도메인-생성" class="headerlink" title="Account 도메인 생성"></a>Account 도메인 생성</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Entity</span></span><br><span class="line"><span class="meta">@Getter</span> <span class="meta">@Setter</span> <span class="meta">@Builder</span></span><br><span class="line"><span class="meta">@NoArgsConstructor</span> <span class="meta">@AllArgsConstructor</span></span><br><span class="line"><span class="meta">@EqualsAndHashCode</span>(of = <span class="string">"id"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Account</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Id</span> <span class="meta">@GeneratedValue</span></span><br><span class="line">    <span class="keyword">private</span> Integer id;</span><br><span class="line">  </span><br><span class="line">    <span class="keyword">private</span> String email;</span><br><span class="line">  </span><br><span class="line">  	<span class="keyword">private</span> String password;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@ElementCollection</span>(fetch = FetchType.EAGER)</span><br><span class="line">    <span class="meta">@Enumerated</span>(EnumType.STRING)</span><br><span class="line">    <span class="keyword">private</span> Set&lt;AccountRole&gt; roles;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>id</li>
+<li>email</li>
+<li>password</li>
+<li>Account Roles<ul>
+<li>ADMIN</li>
+<li>USER</li>
+</ul>
+</li>
+</ul>
+<h4 id="JPA-맵핑"><a href="#JPA-맵핑" class="headerlink" title="JPA 맵핑"></a>JPA 맵핑</h4><ul>
+<li>User라는 이름은 PostgreSQL에서 예약어이다.</li>
+<li>예약어를 피해서 도메인 클래스이 이름을 Account로 결정하였다.\<ul>
+<li>@Tables(“Users”)  이런식으로 테이블에 저장 될 테이블 명을 변경하는 방법도 있다.</li>
+</ul>
+</li>
+</ul>
+<h4 id="JPA-enumeration-collection-mapping"><a href="#JPA-enumeration-collection-mapping" class="headerlink" title="JPA enumeration collection mapping"></a>JPA enumeration collection mapping</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@ElementCollection</span>(fetch = FetchType.EAGER)</span><br><span class="line"><span class="meta">@Enumerated</span>(EnumType.STRING)</span><br><span class="line"><span class="keyword">private</span> Set&lt;AccountRole&gt; roles;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>@ElementCollection : collection 속성 (여러개의 enum이 들어갈 수 있다.)</li>
+<li>@Enumerated(EnumType.STRING)를 선언하면 Enum 필드가 테이블에 저장시 숫자형인 1,2,3이 아닌, <strong>Enum의 name</strong>이 저장된다.</li>
+</ul>
+<p><br><br></p>
+<h3 id="스프링-시큐리티-적용"><a href="#스프링-시큐리티-적용" class="headerlink" title="스프링 시큐리티 적용"></a>스프링 시큐리티 적용</h3><h4 id="스프링-시큐리티"><a href="#스프링-시큐리티" class="headerlink" title="스프링 시큐리티"></a>스프링 시큐리티</h4><p><img src="/images/restapi/restapi05-1.png" alt="restapi05-1"></p>
+<ul>
+<li>웹 시큐리티 (Filter 기반 시큐리티)<ul>
+<li>웹요청에 보안인증</li>
+</ul>
+</li>
+<li>메소드 시큐리티<ul>
+<li>웹과 상관없이 메소드가 호출됬을 때 보안인증</li>
+</ul>
+</li>
+<li>둘 다 Security Interceptor를 사용한다.<ul>
+<li>리소스에 접근을 허용할 것이냐, 말것이냐를 결정하는 로직이 들어있다.</li>
+</ul>
+</li>
+<li>인증, 인가의 로직을 처리한다.</li>
+</ul>
+<h4 id="의존성-추가"><a href="#의존성-추가" class="headerlink" title="의존성 추가"></a>의존성 추가</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.security.oauth.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-security-oauth2-autoconfigure<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.1.0.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="UserDetailsService-구현"><a href="#UserDetailsService-구현" class="headerlink" title="UserDetailsService 구현"></a>UserDetailsService 구현</h4><ul>
+<li><p>AccountService</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="meta">@RequiredArgsConstructor</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AccountService</span> <span class="keyword">implements</span> <span class="title">UserDetailsService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">final</span> AccountRepository accountRepository;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> UserDetails <span class="title">loadUserByUsername</span><span class="params">(String username)</span> <span class="keyword">throws</span> UsernameNotFoundException </span>&#123;</span><br><span class="line">    Optional&lt;Account&gt; optionalAccount = accountRepository.findByEmail(username);</span><br><span class="line">    Account account = optionalAccount.orElseThrow(() -&gt; <span class="keyword">new</span> UsernameNotFoundException(username));</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> User(account.getEmail(), account.getPassword(), authorities(account.getRoles()));</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> Collection&lt;? extends GrantedAuthority&gt; authorities(Set&lt;AccountRole&gt; roles) &#123;</span><br><span class="line">    <span class="keyword">return</span> roles.stream().map(r -&gt; <span class="keyword">new</span> SimpleGrantedAuthority(<span class="string">"ROLE_"</span> + r.name())).collect(Collectors.toSet());</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>해당 username에 해당하는 Account를 찾아서 스프링 시큐리티에서 제공하는 User(<strong>UserDetails를 구현하는</strong>)로 만들어서 return한다.</li>
+</ul>
+</li>
+<li><p>Test</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">loadUserByUsername</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="comment">// given</span></span><br><span class="line">  Set&lt;AccountRole&gt; accountRoleSet = <span class="keyword">new</span> HashSet&lt;&gt;();</span><br><span class="line">  accountRoleSet.add(ADMIN);</span><br><span class="line">  accountRoleSet.add(USER);</span><br><span class="line"></span><br><span class="line">  String username = <span class="string">"bong@email.com"</span>;</span><br><span class="line">  String password = <span class="string">"bong"</span>;</span><br><span class="line">  Account account = Account.builder()</span><br><span class="line">  .email(username)</span><br><span class="line">  .password(password)</span><br><span class="line">  .roles(accountRoleSet)</span><br><span class="line">  .build();</span><br><span class="line"></span><br><span class="line">  accountRepository.save(account);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// when</span></span><br><span class="line">  UserDetailsService userDetailsService = accountService;</span><br><span class="line">  UserDetails userDetails = userDetailsService.loadUserByUsername(username);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// then</span></span><br><span class="line">  assertThat(userDetails.getPassword()).isEqualTo(password);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>원래는 유저 저장 시, PasswordEncoder를 사용하여 인코딩해야하지만 이후에 하기로하고 생략하겠다.</p>
+</li>
+</ul>
+<p><br><br></p>
+<h3 id="예외-테스트"><a href="#예외-테스트" class="headerlink" title="예외 테스트"></a>예외 테스트</h3><ol>
+<li><p>@Test(expected)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span>(expected = UsernameNotFoundException<span class="class">.<span class="keyword">class</span>)</span></span><br><span class="line"><span class="class"><span class="title">public</span> <span class="title">void</span> <span class="title">findByUserNameFail</span>() </span>&#123;</span><br><span class="line">  String username = <span class="string">"random@email.com"</span>;</span><br><span class="line">  accountService.loadUserByUsername(username);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>@Test에 예상되는 Exception을 기재한다.</li>
+</ul>
+</li>
+<li><p>try-catch</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">findByUserNameFail</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  String username = <span class="string">"random@email.com"</span>;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    accountService.loadUserByUsername(username);</span><br><span class="line">    fail(<span class="string">"fail"</span>);</span><br><span class="line">  &#125; <span class="keyword">catch</span> (UsernameNotFoundException e) &#123;</span><br><span class="line">	  assertThat(e.getMessage()).containsSequence(username);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>@Rule ExpectedException</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Rule</span></span><br><span class="line"><span class="keyword">public</span> ExpectedException expectedException = ExpectedException.none();</span><br><span class="line"></span><br><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">findByUserNameFail</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="comment">//expected</span></span><br><span class="line">  String username = <span class="string">"random@email.com"</span>;</span><br><span class="line">  expectedException.expect(UsernameNotFoundException<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">  expectedException.expectMessage(Matchers.containsString(username));</span><br><span class="line"></span><br><span class="line">  <span class="comment">//when</span></span><br><span class="line">  accountRepository.findByEmail(username);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>ExpectedException을 <strong>public</strong>으로 주입 받는다.</li>
+<li>먼저 발생될 Exception에 대해서 예상한다. (<strong>후에 넣으면 안됨 반드시 먼저</strong>)</li>
+</ul>
+</li>
+</ol>
+<p><br><br></p>
+<h3 id="스프링-시큐리티-기본-설정"><a href="#스프링-시큐리티-기본-설정" class="headerlink" title="스프링 시큐리티 기본 설정"></a>스프링 시큐리티 기본 설정</h3><ul>
+<li>스프링 시큐리티가 의존성에 들어있다면, 스프링 부트는 모든요청에 스프링 시큐리티용 자동설정을 적용한다.<ul>
+<li>사용자를 임의로 인메모리로 만들어준다.</li>
+</ul>
+</li>
+</ul>
+<h4 id="계획"><a href="#계획" class="headerlink" title="계획"></a>계획</h4><ul>
+<li>시큐리티 필터를 적용하지 않음<ul>
+<li>/docs/index.html</li>
+</ul>
+</li>
+<li>로그인 없이 접근 가능<ul>
+<li>GET /api.events</li>
+<li>GET /api/events/{id}</li>
+</ul>
+</li>
+<li>로그인 접근<ul>
+<li>나머지 다..</li>
+</ul>
+</li>
+<li>스프링 시큐리티 OAuth2.0 사용</li>
+</ul>
+<h4 id="스프링-시큐리티-설정"><a href="#스프링-시큐리티-설정" class="headerlink" title="스프링 시큐리티 설정"></a>스프링 시큐리티 설정</h4><ul>
+<li><p>@EnableWebSecurity + extends WebSecurityCOnfigurerAdapter</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@EnableWebSecurity</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SecurityConfig</span> <span class="keyword">extends</span> <span class="title">WebSecurityConfigurerAdapter</span> </span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>스프링 부트에서 설정하는 시큐리티 설정을 적용하지 않고 직접 설정한다.</li>
+<li>스프링 시큐리티의 기본설정을 상속받는다.</li>
+</ul>
+</li>
+<li><p>PasswordEncoder</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> PasswordEncoder <span class="title">passwordEncoder</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> PasswordEncoderFactories.createDelegatingPasswordEncoder();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>패스워드 인코더 빈등록</li>
+<li>PasswordEncoderFactories.createDelegatingPasswordEncoder();<ul>
+<li>prefix로 인코딩 방식 기입 및 prefix에 따라 매칭확인</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>TokenStore</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> TokenStore <span class="title">tokenStore</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> InMemoryTokenStore();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>토큰을 저장하는 곳. (OAuth 토큰을 저장)</li>
+<li>InMemoryTokenStore</li>
+</ul>
+</li>
+<li><p>AuthenticationManagerBean</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> AuthenticationManager <span class="title">authenticationManagerBean</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">super</span>.authenticationManagerBean();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>AuthenticationManager를 빈으로 노출시켜준다.<ul>
+<li>AuthorizationServer나 ResourceServer에서 참조할 수 있도록</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>configure(AuthenticationManagerBuidler auth)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">configure</span><span class="params">(AuthenticationManagerBuilder auth)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">	auth.userDetailsService(accountService).passwordEncoder(passwordEncoder);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>AuthenticationManager를 어떻게 만들지 설정<ul>
+<li>UserDetailsService</li>
+<li>PasswordEncoder </li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>configure(WebSecurty web)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">configure</span><span class="params">(WebSecurity web)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">	web.ignoring().mvcMatchers(<span class="string">"/docs/index.html"</span>);</span><br><span class="line">	web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>SecurityFilter를 적용할지 말지를 설정 (http로 가기전…)</li>
+<li>PathRequest.toStaticResources().atCommonLocations()<ul>
+<li>스프링 부트에서 지원(<strong>Servlet</strong>, Reactive)</li>
+<li>정적 리소스들에 대한 기본위치(favicon, image등..)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>configure(HttpSecurity http)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">configure</span><span class="params">(HttpSecurity http)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">  http.authorizeRequests()</span><br><span class="line">    .mvcMatchers(<span class="string">"/docs/index.html"</span>).permitAll()</span><br><span class="line">    .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()</span><br><span class="line">    ;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>SpirngSecurity로 들어와서 Filter는 탄다.</li>
+<li>그외 권한에 대한 설정을 준다.</li>
+<li>“/docs/index.html”, 정적 리소스 요청에 대해 모든접근을 허락하겠다.</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><strong>configure(HttpSecurity http) vs configure(WebSecurty web)</strong></p>
+<ul>
+<li><p>web에서 거를 경우, SecurityFilter자체를 타지 않고, http에서 거를 경우 SecurityFIlter는 적용되나 모든권한을 허용하는것이다.</p>
+</li>
+<li><p>확인하기 위해 logging.level.org.springframework.security=DEBUG 설정 후 확인해 보자.</p>
+<ul>
+<li>web</li>
+</ul>
+<p><img src="/images/restapi/restapi05-3.png" alt="restapi05-3"></p>
+</li>
+<li><p>http</p>
+<p><img src="/images/restapi/restapi05-2.png" alt="restapi05-2"></p>
+</li>
+<li><p>같은 요청에 대하여 http가 더 많은 시큐리티 관련 filterchain 로그가 찍히는 것을 확인 할 수 있었다.</p>
+</li>
+</ul>
+</blockquote>
+<p><br><br></p>
+<h3 id="스프링-시큐리티-폼-인증-설정"><a href="#스프링-시큐리티-폼-인증-설정" class="headerlink" title="스프링 시큐리티 폼 인증 설정"></a>스프링 시큐리티 폼 인증 설정</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">configure</span><span class="params">(HttpSecurity http)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">  http</span><br><span class="line">    .anonymous()</span><br><span class="line">    .and()</span><br><span class="line">    .formLogin()</span><br><span class="line">    .and()</span><br><span class="line">    .authorizeRequests()</span><br><span class="line">    .mvcMatchers(HttpMethod.GET, <span class="string">"/api/**"</span>).permitAll()</span><br><span class="line">    .anyRequest().authenticated()</span><br><span class="line">    ;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>익명 사용자를 허용</li>
+<li>폼 로그인 사용<ul>
+<li>loginpage() 등을 설정 가능하다.</li>
+</ul>
+</li>
+<li>get 방식 api에 대해서 익명사용자를 허용한다.<ul>
+<li>permitAll()을 사용하도 인증 필요없이 접근 가능하게 할 수 있다.</li>
+</ul>
+</li>
+<li>나머지 요청(anyRequest)에 관하여는 인증을 요청한다.</li>
+</ul>
+<p><br><br></p>
+<h3 id="스프링-시큐리티-OAuth-2-설정-인증-서버-설정"><a href="#스프링-시큐리티-OAuth-2-설정-인증-서버-설정" class="headerlink" title="스프링 시큐리티 OAuth 2 설정: 인증 서버 설정"></a>스프링 시큐리티 OAuth 2 설정: 인증 서버 설정</h3><h4 id="GrantType"><a href="#GrantType" class="headerlink" title="GrantType"></a>GrantType</h4><ul>
+<li>Spring OAuth2.0이 인증하는 6가지 인증 방법중 하기 2가지 인증방식을 사용할 것이다.<ul>
+<li>password<ul>
+<li>최초 oauth 토큰 발급</li>
+<li>다른 GrantType과 다르게 홉이 한번(요청과 응답이 한쌍)<ul>
+<li>인증을 제공하는 <strong>서비스 오너가 만든 클라이언트에서만 사용</strong><ul>
+<li>인증정보를 보유하고 있는… 우리서비스에 가입한 유저에 대한 인증토큰</li>
+</ul>
+</li>
+<li><a href="https://developer.okta.com/blog/2018/06/29/what-is-the-oauth2-password-grant">https://developer.okta.com/blog/2018/06/29/what-is-the-oauth2-password-grant</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>refreshToken</li>
+</ul>
+</li>
+</ul>
+<h4 id="AuthorizationServer-설정"><a href="#AuthorizationServer-설정" class="headerlink" title="AuthorizationServer 설정"></a>AuthorizationServer 설정</h4><ul>
+<li><p>@EnableAuthorizationServer</p>
+<ul>
+<li>AuthorizationServer 설정</li>
+<li>extends AuthorizationServerConfigurerAdapter와 함께 사용</li>
+<li>configure 메소드들을 오버라이드 한다.</li>
+</ul>
+</li>
+<li><p>configurer</p>
+<ul>
+<li><p>security</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">configure</span><span class="params">(AuthorizationServerSecurityConfigurer security)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    security.passwordEncoder(passwordEncoder);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>password encoder 설정</li>
+</ul>
+</li>
+<li><p>clients</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">configure</span><span class="params">(ClientDetailsServiceConfigurer clients)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    clients.inMemory()</span><br><span class="line">            .withClient(<span class="string">"myApp"</span>)</span><br><span class="line">            .authorizedGrantTypes(<span class="string">"password"</span>, <span class="string">"refresh_token"</span>)</span><br><span class="line">            .scopes(<span class="string">"read"</span>, <span class="string">"write"</span>)</span><br><span class="line">            .secret(passwordEncoder.encode(<span class="string">"pass"</span>))</span><br><span class="line">            .accessTokenValiditySeconds(<span class="number">10</span> * <span class="number">60</span>)</span><br><span class="line">            .refreshTokenValiditySeconds(<span class="number">6</span> * <span class="number">10</span> * <span class="number">60</span>)</span><br><span class="line">    ;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>clients 관련 내용 설정</li>
+<li>id</li>
+<li>password</li>
+<li>grant_type</li>
+<li>scope</li>
+<li>accessTokenValiditySeconds(액세스 토큰 유지 시간)</li>
+<li>refreshTokenValiditySeconds(리프레시 토큰 유지 시간)</li>
+</ul>
+</li>
+<li><p>endpoints</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">configure</span><span class="params">(AuthorizationServerEndpointsConfigurer endpoints)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    endpoints.authenticationManager(authenticationManager)</span><br><span class="line">            .userDetailsService(accountService)</span><br><span class="line">            .tokenStore(tokenStore);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>AuthentiacationManager 설정</li>
+<li>UserDetailsService설정</li>
+<li>TokenStored설정</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="응답결과"><a href="#응답결과" class="headerlink" title="응답결과"></a>응답결과</h4><p><img src="/images/restapi/restapi05-4.png" alt="restapi05-4"></p>
+<p><br><br></p>
+<h3 id="리소스-서버-설정"><a href="#리소스-서버-설정" class="headerlink" title="리소스 서버 설정"></a>리소스 서버 설정</h3><ul>
+<li>리소스 서버는 이벤트 리소스를 제공하는 서버와 같이 있는게 맞다.</li>
+<li>인증서버는 분리하는게 맞으나, 작은서비스는 같이 있어도 무방하다.</li>
+</ul>
+<h4 id="설정"><a href="#설정" class="headerlink" title="설정"></a>설정</h4><ul>
+<li><p>@EnableResourceServer + extends ResourceServerConfigurerAdapter</p>
+</li>
+<li><p>configure(ResourceServerSecurityConfigurer resources)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">configure</span><span class="params">(ResourceServerSecurityConfigurer resources)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">	resources.resourceId(<span class="string">"event"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>configure(HttpSecurity http)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">configure</span><span class="params">(HttpSecurity http)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">  http</span><br><span class="line">    .anonymous()</span><br><span class="line"> 	   .and()</span><br><span class="line">    .authorizeRequests()</span><br><span class="line">  	  .mvcMatchers(HttpMethod.GET, <span class="string">"/api/**"</span>)</span><br><span class="line">    		.permitAll()</span><br><span class="line">	    .anyRequest()</span><br><span class="line">  		  .authenticated()</span><br><span class="line">    	.and()</span><br><span class="line">    .exceptionHandling()</span><br><span class="line">    	.accessDeniedHandler(<span class="keyword">new</span> OAuth2AccessDeniedHandler());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>anonymous</li>
+<li>GET /ap/** : permit all</li>
+<li>POST : authenticated</li>
+<li>PUT : authenticated</li>
+<li>에러처리<ul>
+<li>accessDeninedHandler(OAuth2AccessDeninedHandler())</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>기존엑 작성한 EventControllerTest 테스트 결과 GET을 제외한 나머지 테스트 실패<br><img src="/images/restapi/restapi05-5.png" alt="restapi05-5"></p>
+<ul>
+<li><p>-&gt; 실패 테스트에 대해서 액세스 토큰을 가지고 요청하도록 테스트 수정</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> String <span class="title">getBaererToken</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">  <span class="comment">//given</span></span><br><span class="line">  Set&lt;AccountRole&gt; accountRoleSet = <span class="keyword">new</span> HashSet&lt;&gt;();</span><br><span class="line">  accountRoleSet.add(ADMIN);</span><br><span class="line">  accountRoleSet.add(USER);</span><br><span class="line"></span><br><span class="line">	Account account = Account.builder()</span><br><span class="line">		.email(<span class="string">"bong@email.com"</span>)</span><br><span class="line">		.password(<span class="string">"bong"</span>)</span><br><span class="line">		.roles(accountRoleSet)</span><br><span class="line">		.build();</span><br><span class="line">	accountService.saveAccount(account);</span><br><span class="line"></span><br><span class="line">	String clientId = <span class="string">"myApp"</span>;</span><br><span class="line">	String clientSecret = <span class="string">"pass"</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">//when &amp;&amp; then</span></span><br><span class="line">  ResultActions perform = <span class="keyword">this</span>.mockMvc.perform(post(<span class="string">"/oauth/token"</span>)</span><br><span class="line">    .with(httpBasic(clientId, clientSecret))</span><br><span class="line">    .param(<span class="string">"username"</span>, <span class="string">"bong@email.com"</span>)</span><br><span class="line">    .param(<span class="string">"password"</span>, <span class="string">"bong"</span>)</span><br><span class="line">    .param(<span class="string">"grant_type"</span>, <span class="string">"password"</span>));</span><br><span class="line">  String responseBody = perform.andReturn().getResponse().getContentAsString();</span><br><span class="line">  Jackson2JsonParser parser = <span class="keyword">new</span> Jackson2JsonParser();</span><br><span class="line">  String access_token = parser.parseMap(responseBody).get(<span class="string">"access_token"</span>).toString();</span><br><span class="line">  <span class="keyword">return</span> <span class="string">"Bearer "</span> + access_token;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">createEvent</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	mockMvc.perform(post(<span class="string">"/api/events"</span>)</span><br><span class="line">                  .header(HttpHeaders.AUTHORIZATION, getBaererToken())</span><br><span class="line">                  .contentType(MediaType.APPLICATION_JSON_UTF8)</span><br><span class="line">                  .accept(MediaTypes.HAL_JSON)</span><br><span class="line">                  .content(objectMapper.writeValueAsString(event)))</span><br><span class="line">    							.andDo(print());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>단일 테스트는 성공하나 EventControllerTest 전체를 테스트할 때는 실패한다.</p>
+<ul>
+<li><p>같은 유저가 생성되면서 오류 발생</p>
+<ul>
+<li><p>어플리케이션 컨텍스트를 공유하고 인메모리 DB도 공유하고 있다.</p>
+</li>
+<li><p>매 테스트 마다 DB를 비워준다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Before</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setUp</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.eventRepository.deleteAll();</span><br><span class="line">  <span class="keyword">this</span>.accountRepository.deleteAll();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><br><br></p>
+<h3 id="문자열을-외부-설정으로-빼내기"><a href="#문자열을-외부-설정으로-빼내기" class="headerlink" title="문자열을 외부 설정으로 빼내기"></a>문자열을 외부 설정으로 빼내기</h3><h4 id="ConfiguationProperties"><a href="#ConfiguationProperties" class="headerlink" title="@ConfiguationProperties"></a>@ConfiguationProperties</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="meta">@ConfigurationProperties</span>(prefix = <span class="string">"my-app"</span>)</span><br><span class="line"><span class="meta">@Getter</span> <span class="meta">@Setter</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AppProperties</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@NotEmpty</span></span><br><span class="line">    <span class="keyword">private</span> String adminUsername;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@NotEmpty</span></span><br><span class="line">    <span class="keyword">private</span> String adminPassword;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@NotEmpty</span></span><br><span class="line">    <span class="keyword">private</span> String userUsername;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@NotEmpty</span></span><br><span class="line">    <span class="keyword">private</span> String userPassword;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@NotEmpty</span></span><br><span class="line">    <span class="keyword">private</span> String clientId;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@NotEmpty</span></span><br><span class="line">    <span class="keyword">private</span> String clientSecret;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>문자열을 외부설정에서 적용가능하도록 해준다.</p>
+</li>
+<li><p>spring-boot-configuration-processor 의존성 추가 필요 (인텔리제이의 경우 레퍼런스 문서를 참조하는 알림이 발생한다.)</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-configuration-processor<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">optional</span>&gt;</span>true<span class="tag">&lt;/<span class="name">optional</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>필드값 적용 시, properties파일에서 자동완성이 가능하다.</p>
+<p><img src="/images/restapi/restapi05-6.png" alt="restapi05-6"></p>
+</li>
+</ul>
+<p><br><br></p>
+<h3 id="이벤트-API-점검"><a href="#이벤트-API-점검" class="headerlink" title="이벤트 API 점검"></a>이벤트 API 점검</h3><h4 id="이벤트-목록-조회"><a href="#이벤트-목록-조회" class="headerlink" title="이벤트 목록 조회"></a>이벤트 목록 조회</h4><ul>
+<li><p>/api/events</p>
+</li>
+<li><p>인증없이 GET요청</p>
+<p><img src="/images/restapi/restapi05-9.png" alt="restapi05-9"></p>
+</li>
+<li><p>인증 -&gt; access token</p>
+<p><img src="/images/restapi/restapi05-7.png" alt="restapi05-7"></p>
+</li>
+<li><p>인증 후, GET요청</p>
+<p><img src="/images/restapi/restapi05-8.png" alt="restapi05-8"></p>
+</li>
+<li><p>모두 정상 작동</p>
+</li>
+</ul>
+<h4 id="이벤트-생성"><a href="#이벤트-생성" class="headerlink" title="이벤트 생성"></a>이벤트 생성</h4><ul>
+<li><p>/api/events</p>
+<p><img src="/images/restapi/restapi05-11.png" alt="restapi05-11"></p>
+</li>
+</ul>
+<h4 id="이벤트-조회"><a href="#이벤트-조회" class="headerlink" title="이벤트 조회"></a>이벤트 조회</h4><ul>
+<li><p>/api/events/{id}</p>
+<p><img src="/images/restapi/restapi05-10.png" alt="restapi05-10"></p>
+<ul>
+<li>로그인 했을 때 링크 부족<ul>
+<li>이벤트 Manager인 경우 수정 링크를 제공하고 싶다.. 뒤에서 알아보자.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><br><br></p>
+<h3 id="현재-사용자-조회"><a href="#현재-사용자-조회" class="headerlink" title="현재 사용자 조회"></a>현재 사용자 조회</h3><h4 id="SecurityContext"><a href="#SecurityContext" class="headerlink" title="SecurityContext"></a>SecurityContext</h4><ul>
+<li><p>자바 ThreadLocal 기반 구현으로 인증 정보를 담고 있다.</p>
+</li>
+<li><p>인증정보 꺼내기</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Authentication authentication = SecurityContextHolder.getContext().getAuthentication();</span><br><span class="line">Object principal = authentication.getPrincipal();</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>여기서 pricipal 객체는 UserDetailsService에서 리턴한 SpringSecurity.User이다.</li>
+</ul>
+</li>
+</ul>
+<h4 id="AuthenticationPricinpal"><a href="#AuthenticationPricinpal" class="headerlink" title="@AuthenticationPricinpal"></a>@AuthenticationPricinpal</h4><ul>
+<li><p>인증안한 경우에는 null</p>
+</li>
+<li><p>인증 한 경우에는 username, authorities 참조가능</p>
+</li>
+<li><p>spring.security.User를 파라미터로 받을 수 있다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@GetMapping</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> ResponseEntity <span class="title">queryEvents</span><span class="params">(Pageable pageable, PagedResourcesAssembler&lt;Event&gt; assembler, @AuthenticationPrincipal User currentUser)</span> </span>&#123;</span><br><span class="line">  Page&lt;Event&gt; page = eventRepository.findAll(pageable);</span><br><span class="line">  PagedResources&lt;Resource&lt;Event&gt;&gt; pagedResources = assembler.toResource(page, e -&gt; <span class="keyword">new</span> EventResource(e));</span><br><span class="line">  pagedResources.add(<span class="keyword">new</span> Link(<span class="string">"/docs/index.html#resources-events-list"</span>).withRel(<span class="string">"profile"</span>));</span><br><span class="line">  <span class="keyword">if</span> (currentUser != <span class="keyword">null</span>) &#123;</span><br><span class="line">    pagedResources.add(linkTo(EventController.class).withRel("create-events"));</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> ResponseEntity.ok(pagedResources);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/restapi/restapi05-15.png" alt="restapi05-15"></p>
+<ul>
+<li><p>spring.security.User를 상속받는 클래스를 구현하면 도메인 User를 얻을 수 있다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Getter</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AccountAdapter</span> <span class="keyword">extends</span> <span class="title">User</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Account account;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">AccountAdapter</span><span class="params">(Account account)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(account.getEmail(), account.getPassword(), authorities(account.getRoles()));</span><br><span class="line">        <span class="keyword">this</span>.account = account;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Collection&lt;? extends GrantedAuthority&gt; authorities(Set&lt;AccountRole&gt; roles) &#123;</span><br><span class="line">        <span class="keyword">return</span> roles.stream().map(r -&gt; <span class="keyword">new</span> SimpleGrantedAuthority(<span class="string">"ROLE_"</span> + r.name())).collect(Collectors.toSet());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/restapi/restapi05-14.png" alt="restapi05-14"></p>
+<p><img src="/images/restapi/restapi05-13.png" alt="restapi05-13"></p>
+</li>
+<li><p>SpEL을 사용하면 도메인 User를 파라미터로 받을 수 있다.</p>
+<p><img src="/images/restapi/restapi05-12.png" alt="restapi05-12"></p>
+</li>
+<li><p>위와 같은 작업을 annotation을 생성하여 코드를 줄일 수 있다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target</span>(ElementType.PARAMETER)</span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@AuthenticationPrincipal</span>(expression = <span class="string">"account"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> CurrentUser &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>@Target : 파라미터에 사용하겠다.</li>
+<li>@Retention : 런타임까지 유지 시키겠다.</li>
+</ul>
+<p><img src="/images/restapi/restapi05-16.png" alt="restapi05-16"></p>
+</li>
+<li><p>인증을 안하고 접근하면….</p>
+<ul>
+<li><p>‘anonymousUser’라는 문자열로 principal을 리턴한다. expression이 제대로 동작할 수 없다.</p>
+</li>
+<li><p>SpEL을 잘 활용하면 이러한 문제를 피할 수 있다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target</span>(ElementType.PARAMETER)</span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@AuthenticationPrincipal</span>(expression = <span class="string">"#this == 'anonymousUser' ? null : account"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> CurrentUser &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>현재 인증 정보가 ‘anonymousUser’라는 문자열이면 null을 리턴하고 아니면 account를 리턴하라.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><br><br></p>
+<h3 id="Event-API-개선-출력값-제한하기"><a href="#Event-API-개선-출력값-제한하기" class="headerlink" title="Event API 개선 : 출력값 제한하기"></a>Event API 개선 : 출력값 제한하기</h3><h4 id="문제점"><a href="#문제점" class="headerlink" title="문제점"></a>문제점</h4><ul>
+<li><p>Event create 응답결과</p>
+<p><img src="/images/restapi/restapi05-17.png" alt="restapi05-17"></p>
+<ul>
+<li>매니저에 대한 과도한 정보를 가지고 있음 -&gt; id값만을 응답하고 싶다.</li>
+</ul>
+</li>
+</ul>
+<h3 id="해결"><a href="#해결" class="headerlink" title="해결"></a>해결</h3><ol>
+<li><p>JsonSerializer 사용</p>
+<ul>
+<li><p>ErrorSerializer에서 사용했던 JsonSerializer 사용(com.fasterxml.jackson.databind.JsonSerializer)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AccountSerializer</span> <span class="keyword">extends</span> <span class="title">JsonSerializer</span>&lt;<span class="title">Account</span>&gt; </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">serialize</span><span class="params">(Account account, JsonGenerator jsonGenerator, SerializerProvider serializerProvider)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        jsonGenerator.writeStartObject();</span><br><span class="line">        jsonGenerator.writeNumberField(<span class="string">"id"</span>, account.getId());</span><br><span class="line">        jsonGenerator.writeEndObject();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>그러나, @JsonComponent로 등록 시, 모든 Account에 대한 응답이 id값만 응답한다.<br>-&gt; @JsonComponent를 사용하여 등록하지 않는다.</li>
+</ul>
+</li>
+<li><p>사용을 원하는곳에서만 @JsonSerialize를 사용하여 해결한다.</p>
+<p><img src="/images/restapi/restapi05-18.png" alt="restapi05-18"></p>
+</li>
+<li><p>응답결과</p>
+</li>
+</ul>
+</li>
+</ol>
+<ol start="2">
+<li>VO or DTO등을 사용하여 Response를 만든다.</li>
+</ol>
+<p><br><br></p>
+
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/RestAPI/" rel="tag">RestAPI</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">Like this article? Support the author with</h3>
+        <div class="buttons is-centered">
+            
+                
+<div class="notification is-danger">
+    You forgot to set the <code>qrcode</code> for Alipay. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                
+<div class="notification is-danger">
+    You forgot to set the <code>qrcode</code> for Wechat. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                <!-- Visit https://www.paypal.com/donate/buttons/ to get your donate button -->
+
+<div class="notification is-danger">
+    You forgot to set the <code>business</code> and <code>currency_code</code> for Paypal. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                
+<div class="notification is-danger">
+    You forgot to set the <code>url</code> Patreon. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2019/09/30/Security/usernamenotfound/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">인증 시, UsernameNotfoundException 발생 안함 문제(BadCredentials Exception만 발생)</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2019/08/09/RestAPI/restapi04/">
+                <span class="level-item">스프링 기반 REST API 개발04 - 이벤트 조회 및 수정 REST API 개발(PagedResouce)</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+</div>
+                
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-4-widescreen  has-order-3 column-right is-sticky">
+    
+        
+
+    <div class="card widget" id="toc">
+        <div class="card-content">
+            <div class="menu">
+                <h3 class="menu-label">
+                    Catalogue
+                </h3>
+                <ul class="menu-list"><li>
+        <a class="is-flex" href="#스프링-기반-REST-API-개발-inflearn-5-백기선">
+        <span class="has-mr-6">1</span>
+        <span>스프링 기반 REST API 개발(inflearn)5 - 백기선</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#RestAPI-보안-적용">
+        <span class="has-mr-6">1.1</span>
+        <span>RestAPI 보안 적용</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#Account-도메인-추가">
+        <span class="has-mr-6">1.1.1</span>
+        <span>Account 도메인 추가</span>
+        </a></li><li>
+        <a class="is-flex" href="#스프링-시큐리티-적용">
+        <span class="has-mr-6">1.1.2</span>
+        <span>스프링 시큐리티 적용</span>
+        </a></li><li>
+        <a class="is-flex" href="#예외-테스트">
+        <span class="has-mr-6">1.1.3</span>
+        <span>예외 테스트</span>
+        </a></li><li>
+        <a class="is-flex" href="#스프링-시큐리티-기본-설정">
+        <span class="has-mr-6">1.1.4</span>
+        <span>스프링 시큐리티 기본 설정</span>
+        </a></li><li>
+        <a class="is-flex" href="#스프링-시큐리티-폼-인증-설정">
+        <span class="has-mr-6">1.1.5</span>
+        <span>스프링 시큐리티 폼 인증 설정</span>
+        </a></li><li>
+        <a class="is-flex" href="#스프링-시큐리티-OAuth-2-설정-인증-서버-설정">
+        <span class="has-mr-6">1.1.6</span>
+        <span>스프링 시큐리티 OAuth 2 설정: 인증 서버 설정</span>
+        </a></li><li>
+        <a class="is-flex" href="#리소스-서버-설정">
+        <span class="has-mr-6">1.1.7</span>
+        <span>리소스 서버 설정</span>
+        </a></li><li>
+        <a class="is-flex" href="#문자열을-외부-설정으로-빼내기">
+        <span class="has-mr-6">1.1.8</span>
+        <span>문자열을 외부 설정으로 빼내기</span>
+        </a></li><li>
+        <a class="is-flex" href="#이벤트-API-점검">
+        <span class="has-mr-6">1.1.9</span>
+        <span>이벤트 API 점검</span>
+        </a></li><li>
+        <a class="is-flex" href="#현재-사용자-조회">
+        <span class="has-mr-6">1.1.10</span>
+        <span>현재 사용자 조회</span>
+        </a></li><li>
+        <a class="is-flex" href="#Event-API-개선-출력값-제한하기">
+        <span class="has-mr-6">1.1.11</span>
+        <span>Event API 개선 : 출력값 제한하기</span>
+        </a></li><li>
+        <a class="is-flex" href="#해결">
+        <span class="has-mr-6">1.1.12</span>
+        <span>해결</span>
+        </a></li></ul></li></ul></li></ul>
+            </div>
+        </div>
+    </div>
+
+    
+        <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            Tag Cloud
+        </h3>
+        <a href="/tags/Algorithm/" style="font-size: 11.11px;">Algorithm</a> <a href="/tags/DataBase/" style="font-size: 10px;">DataBase</a> <a href="/tags/Etc/" style="font-size: 11.11px;">Etc</a> <a href="/tags/Git/" style="font-size: 13.33px;">Git</a> <a href="/tags/Interview/" style="font-size: 14.44px;">Interview</a> <a href="/tags/JPA/" style="font-size: 20px;">JPA</a> <a href="/tags/JSP/" style="font-size: 14.44px;">JSP</a> <a href="/tags/Java/" style="font-size: 18.89px;">Java</a> <a href="/tags/JavaScript/" style="font-size: 12.22px;">JavaScript</a> <a href="/tags/OracleDB/" style="font-size: 14.44px;">OracleDB</a> <a href="/tags/Process/" style="font-size: 11.11px;">Process</a> <a href="/tags/RestAPI/" style="font-size: 14.44px;">RestAPI</a> <a href="/tags/Seminar/" style="font-size: 10px;">Seminar</a> <a href="/tags/SpringBoot/" style="font-size: 20px;">SpringBoot</a> <a href="/tags/SpringSecurity/" style="font-size: 12.22px;">SpringSecurity</a> <a href="/tags/SpringWebMvc/" style="font-size: 16.67px;">SpringWebMvc</a> <a href="/tags/Springframework/" style="font-size: 17.78px;">Springframework</a> <a href="/tags/Springframework-kosta/" style="font-size: 14.44px;">Springframework_kosta</a> <a href="/tags/Web/" style="font-size: 12.22px;">Web</a> <a href="/tags/debug/" style="font-size: 11.11px;">debug</a> <a href="/tags/jQuery/" style="font-size: 12.22px;">jQuery</a> <a href="/tags/%EC%A0%95%EB%B3%B4%EC%B2%98%EB%A6%AC%EA%B8%B0%EC%82%AC-%ED%95%84%EA%B8%B0/" style="font-size: 13.33px;">정보처리기사_필기</a> <a href="/tags/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%ED%9A%8C%EA%B3%A0/" style="font-size: 15.56px;">프로젝트_회고</a>
+    </div>
+</div>
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/blog_logo.png" alt="스프링 기반 REST API 개발05 - RestAPI 보안 적용(@Enumerated, @ElementCollection, 스프링 시큐리티 설정, auth서버, 리소스서버, @ConfigurationProperties, form-data  request body, 현재 사용자 조회, @JsonSerialize)" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2020 Bong&#39;s blog&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/cyr9210">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("en");</script>
+
+
+<script>
+var IcarusThemeSettings = {
+    site: {
+        url: 'http://yoursite.com',
+        external_link: {"enable":true,"exclude":[]}
+    },
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+<script src="/js/animation.js"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+<script src="/js/gallery.js" defer></script>
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+<a id="back-to-top" title="Back to Top" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: 'Posts',
+                PAGES: 'Pages',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
+                UNTITLED: '(Untitled)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

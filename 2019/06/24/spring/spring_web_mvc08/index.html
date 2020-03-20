@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html >
+<head>
+    <meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 4.2.0" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>스프링 MVC 활용08 - HTTP 요청 맵핑하기 - Bong&#39;s blog</title>
+
+
+    <meta name="description" content="스프링 웹 MVC(inflearn) - 백기선SpringMVC 활용">
+<meta property="og:type" content="article">
+<meta property="og:title" content="스프링 MVC 활용08 - HTTP 요청 맵핑하기">
+<meta property="og:url" content="http://yoursite.com/2019/06/24/spring/spring_web_mvc08/index.html">
+<meta property="og:site_name" content="Bong&#39;s blog">
+<meta property="og:description" content="스프링 웹 MVC(inflearn) - 백기선SpringMVC 활용">
+<meta property="og:image" content="http://yoursite.com/images/og_image.png">
+<meta property="article:published_time" content="2019-06-24T12:02:45.000Z">
+<meta property="article:modified_time" content="2020-03-20T07:57:35.772Z">
+<meta property="article:author" content="Bong&#39;s blog">
+<meta property="article:tag" content="SpringWebMvc">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/images/og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+<style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+    
+    
+    
+    
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+    
+    
+    
+    
+    
+    
+    
+    <link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-2-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/blog_logo.png" alt="스프링 MVC 활용08 - HTTP 요청 맵핑하기" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                href="/">Home</a>
+                
+                <a class="navbar-item"
+                href="/archives">Archives</a>
+                
+                <a class="navbar-item"
+                href="/tags">Tags</a>
+                
+                <a class="navbar-item"
+                href="/about">About</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    <a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/cyr9210">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="Search" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-8-widescreen has-order-2 column-main">
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-06-24T12:02:45.000Z">2019-06-24</time>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    14 minutes read (About 2056 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                스프링 MVC 활용08 - HTTP 요청 맵핑하기
+            
+        </h1>
+        <div class="content">
+            <h1 id="스프링-웹-MVC-inflearn-백기선"><a href="#스프링-웹-MVC-inflearn-백기선" class="headerlink" title="스프링 웹 MVC(inflearn) - 백기선"></a>스프링 웹 MVC(inflearn) - 백기선</h1><h2 id="SpringMVC-활용"><a href="#SpringMVC-활용" class="headerlink" title="SpringMVC 활용"></a>SpringMVC 활용</h2><a id="more"></a>
+
+<h3 id="스프링-MVC-핵심-기술-소개"><a href="#스프링-MVC-핵심-기술-소개" class="headerlink" title="스프링 MVC 핵심 기술 소개"></a>스프링 MVC 핵심 기술 소개</h3><ul>
+<li><a href="https://docs.spring.io/spring/docs/current/spring-framework-reference/web.html#mvc-controller">reference 문서</a></li>
+</ul>
+<h4 id="애노테이션-기반의-스프링-MVC"><a href="#애노테이션-기반의-스프링-MVC" class="headerlink" title="애노테이션 기반의 스프링 MVC"></a>애노테이션 기반의 스프링 MVC</h4><ul>
+<li>요청 맵핑하기</li>
+<li>핸들러 메소드</li>
+<li>모델과 뷰</li>
+<li>데이터 바인더</li>
+<li>예외 처리</li>
+<li>글로벌 컨트롤러</li>
+</ul>
+<h4 id="사용할-기술"><a href="#사용할-기술" class="headerlink" title="사용할 기술"></a>사용할 기술</h4><ul>
+<li>스프링 부트</li>
+<li>스프링 프레임워크 웹 MVC</li>
+<li>타임리프</li>
+</ul>
+<h4 id="학습-할-애노테이션"><a href="#학습-할-애노테이션" class="headerlink" title="학습 할 애노테이션"></a>학습 할 애노테이션</h4><ul>
+<li>@RequestMapping<ul>
+<li>@GetMapping, @PostMapping, @PutMapping, …</li>
+</ul>
+</li>
+<li>@ModelAttribute</li>
+<li>@RequestParam, @RequestHeader</li>
+<li>@PathVariable, @MatrixVariable</li>
+<li>@SessionAttribute, @RequestAttribute, @CookieValue</li>
+<li>@Valid</li>
+<li>@RequestBody, @ResponseBody</li>
+<li>@ExceptionHandler</li>
+<li>@ControllerAdvice<br><br><br></li>
+</ul>
+<h3 id="HTTP요청-맵핑하기-요청-메소드"><a href="#HTTP요청-맵핑하기-요청-메소드" class="headerlink" title="HTTP요청 맵핑하기 - 요청 메소드"></a>HTTP요청 맵핑하기 - 요청 메소드</h3><ul>
+<li><p>Handler : 요청을 처리할 수 있는 메소드를 보통 핸들러라고 부른다.</p>
+</li>
+<li><p>HTTP Method</p>
+<ul>
+<li>GET, POST, PUT, PATCH, DELETE, …</li>
+</ul>
+</li>
+</ul>
+<h4 id="GET-요청"><a href="#GET-요청" class="headerlink" title="GET 요청"></a>GET 요청</h4><ul>
+<li>클라이언트가 서버의 리소스를 요청할 때 사용한다.</li>
+<li>캐싱 할 수 있다. <ul>
+<li>캐시와 관련된 헤더를 응답에 실어 보낼 수 있다.</li>
+<li>동일한 요청을 보낼 때 조건적인 GET으로 바뀔 수 있다.<ul>
+<li>304 not modified 라고 응답하면, body를 보내지 않아도 클라이언트 쪽에서 캐싱하고 있던 그정보 드대로 보여준다.   </li>
+</ul>
+</li>
+</ul>
+</li>
+<li>브라우저 기록에 남는다.</li>
+<li>북마크 할 수 있다.</li>
+<li>민감한 데이터를 보낼 때 사용하지 말 것. (URL에 다 보이니까)</li>
+<li>idempotent (동일한 요청 시, 동일한 응답)</li>
+</ul>
+<h4 id="POST-요청"><a href="#POST-요청" class="headerlink" title="POST 요청"></a>POST 요청</h4><ul>
+<li>클라이언트가 서버의 리소스를 수정하거나 새로 만들 때 사용한다. (idempotent X)</li>
+<li>서버에 보내는 데이터를 POST 요청 본문에 담는다.</li>
+<li>캐시할 수 없다.</li>
+<li>브라우저 기록에 남지 않는다.</li>
+<li>북마크 할 수 없다.</li>
+<li>데이터 길이 제한이 없다.</li>
+</ul>
+<h4 id="PUT-요청"><a href="#PUT-요청" class="headerlink" title="PUT 요청"></a>PUT 요청</h4><ul>
+<li>URI에 해당하는 데이터를 새로 만들거나 수정할 때 사용한다.</li>
+<li>POST와 다른 점은 “URI”에 대한 의미가 다르다.<ul>
+<li>POST의 URI는 보내는 데이터를 처리할 리소스를 지칭하며</li>
+<li>PUT의 URI는 보내는 데이터에 해당하는 리소스를 지칭한다.</li>
+</ul>
+</li>
+<li>Idempotent</li>
+</ul>
+<h4 id="PATCH-요청"><a href="#PATCH-요청" class="headerlink" title="PATCH 요청"></a>PATCH 요청</h4><ul>
+<li>PUT과 비슷하지만, 기존 엔티티와 새 데이터의 차이점만 보낸다는 차이가 있다.<ul>
+<li>일부의 데이터만 수정하고 싶을 때, 사용   </li>
+</ul>
+</li>
+<li>Idempotent</li>
+</ul>
+<h4 id="DELETE-요청"><a href="#DELETE-요청" class="headerlink" title="DELETE 요청"></a>DELETE 요청</h4><ul>
+<li>URI에 해당하는 리소스를 삭제할 때 사용한다.</li>
+<li>Idempotent</li>
+</ul>
+<h4 id="스프링-웹-MVC에서-HTTP-method-맵핑하기"><a href="#스프링-웹-MVC에서-HTTP-method-맵핑하기" class="headerlink" title="스프링 웹 MVC에서 HTTP method 맵핑하기"></a>스프링 웹 MVC에서 HTTP method 맵핑하기</h4><p>● @RequestMapping(method=RequestMethod.GET)<br>● @RequestMapping(method={RequestMethod.GET, RequestMethod.POST})<br>● @GetMapping, @PostMapping, …</p>
+<h4 id="참고"><a href="#참고" class="headerlink" title="참고"></a>참고</h4><ul>
+<li><a href="https://www.w3schools.com/tags/ref_httpmethods.asp">https://www.w3schools.com/tags/ref_httpmethods.asp</a></li>
+<li><a href="https://tools.ietf.org/html/rfc2616#section-9.3">https://tools.ietf.org/html/rfc2616#section-9.3</a></li>
+<li><a href="https://tools.ietf.org/html/rfc2068">https://tools.ietf.org/html/rfc2068</a><br><br><br></li>
+</ul>
+<h3 id="HTTP-요청-맵핑하기-URI패턴-맵핑"><a href="#HTTP-요청-맵핑하기-URI패턴-맵핑" class="headerlink" title="HTTP 요청 맵핑하기 - URI패턴 맵핑"></a>HTTP 요청 맵핑하기 - URI패턴 맵핑</h3><h4 id="URI-URL-URN"><a href="#URI-URL-URN" class="headerlink" title="URI, URL, URN"></a>URI, URL, URN</h4><p><img src="/images/springwebmvc/springwebmvc08-1.png" alt="springwebmvc"></p>
+<ul>
+<li><a href="https://stackoverflow.com/questions/176264/what-is-the-difference-between-a-uri-a-url-and-a-urn">참고</a></li>
+</ul>
+<h4 id="요청-맵팽하기"><a href="#요청-맵팽하기" class="headerlink" title="요청 맵팽하기"></a>요청 맵팽하기</h4><ul>
+<li><p>@RequestMapping은 다음의 패턴을 지원합니다.</p>
+<ul>
+<li>? : 한 글자 (“/author/???” =&gt; “/author/123”)</li>
+<li>* : 여러 글자 (“/author/*” =&gt; “/author/keesun”)</li>
+<li>** : 여러 패스 (“/author/** =&gt; “/author/keesun/book”)</li>
+</ul>
+</li>
+<li><p>@RequestMapping은 클래스에도 선언이 가능하며, 조합도 가능하다.<br>  <img src="/images/springwebmvc/springwebmvc08-2.png" alt="springwebmvc"></p>
+</li>
+<li><p>정규표현식 맵핑도 가능하다. (띄어쓰기 주의)<br>  <img src="/images/springwebmvc/springwebmvc08-3.png" alt="springwebmvc"></p>
+</li>
+<li><p>패턴이 중복되는 경우</p>
+<ul>
+<li>가장 구체적으로 맵핑되는 핸들러를 선택한다.<br><img src="/images/springwebmvc/springwebmvc08-4.png" alt="springwebmvc"></li>
+</ul>
+</li>
+<li><p>URI 확장자 맵핑 지원</p>
+<ul>
+<li>스프링 mvc는 기본적으로 지원한다.<ul>
+<li>예를 들어 “/bong”으로 매핑 시, “/bong.*”을 함께 맵핑<ul>
+<li>“/bong.json”, “/bong.html”, “/bong.xml”등을 암묵적으로 맵핑해준다.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>이 기능은 권장하지 않음 (<strong>스프링부트에서는 기본적으로 이 기능을 사용하지 않도록 설정해준다.</strong>)<ul>
+<li>보안 이슈(RFD Attack)<ul>
+<li>Reflected File Download</li>
+<li><a href="https://www.trustwave.com/en-us/resources/blogs/spiderlabs-blog/reflected-file-download-a-new-web-attack-vector/">https://www.trustwave.com/en-us/resources/blogs/spiderlabs-blog/reflected-file-download-a-new-web-attack-vector/</a></li>
+<li><a href="https://www.owasp.org/index.php/Reflected_File_Download">https://www.owasp.org/index.php/Reflected_File_Download</a></li>
+<li><a href="https://pivotal.io/security/cve-2015-5211">https://pivotal.io/security/cve-2015-5211</a></li>
+</ul>
+</li>
+<li>URI변수, Path 매개변수, URI 인코딩을 사용할 때 불명확함.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>최근에는 accept header에 요청할 파일의 확장자를 설정해준다.</p>
+<ul>
+<li>header를 통해 응답의 유형을 판단할 수 있다.(권장)</li>
+<li>request parameter를 통해 설정할수도 있다.(차선책)<ul>
+<li>ex).. “/bong?type=xml”<br><br><br></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="HTTP-요청-맵핑하기-미디어-타입-맵핑"><a href="#HTTP-요청-맵핑하기-미디어-타입-맵핑" class="headerlink" title="HTTP 요청 맵핑하기 - 미디어 타입 맵핑"></a>HTTP 요청 맵핑하기 - 미디어 타입 맵핑</h3><ul>
+<li><p>특정한 타입의 데이터를 담고 있는 요청만 처리하는 핸들러<br>  <img src="/images/springwebmvc/springwebmvc08-5.png" alt="springwebmvc"></p>
+<ul>
+<li>@RequestMapping(consumes=MediaType.APPLICATION_JSON_UTF8_VALUE)<ul>
+<li>문자열을 입력하는 대신 MediaType을 사용하면 상수를 (IDE에서) 자동 완성으로 사용할 수있다.</li>
+<li>MediaType.APPLICATION_JSON_UTF8_VALUE은 문자열로 직접 넣어줄 수 있으나 type safe하지 않다.</li>
+</ul>
+</li>
+<li>Content-Type 헤더로 필터링</li>
+<li>매치 되는 않는 경우에 415 Unsupported Media Type 응답</li>
+</ul>
+</li>
+<li><p>특정한 타입의 응답을 만드는 핸들러<br>  <img src="/images/springwebmvc/springwebmvc08-6.png" alt="springwebmvc"></p>
+<ul>
+<li>@RequestMapping(produces=”application/json”)</li>
+<li>Accept 헤더로 필터링 (하지만 살짝… 오묘함)</li>
+<li>매치 되지 않는 경우에 406 Not Acceptable 응답</li>
+</ul>
+</li>
+<li><p>클래스에 선언한 @RequestMapping에 사용한 것과 조합이 되지 않고 메소드에 사용한 @RequestMapping의 설정으로 덮어쓴다.</p>
+</li>
+<li><p>Not (!)을 사용해서 특정 미디어 타입이 아닌 경우로 맵핑 할 수도 있다.<br><br><br></p>
+</li>
+</ul>
+<h3 id="HTTP-요청-맵핑하기-헤더와-매개변수"><a href="#HTTP-요청-맵핑하기-헤더와-매개변수" class="headerlink" title="HTTP 요청 맵핑하기 - 헤더와 매개변수"></a>HTTP 요청 맵핑하기 - 헤더와 매개변수</h3><ul>
+<li>특정한 헤더가 있는 요청을 처리하고 싶은 경우<ul>
+<li>@RequestMapping(headers = “key”)</li>
+</ul>
+</li>
+<li>특정한 헤더가 없는 요청을 처리하고 싶은 경우<ul>
+<li>@RequestMapping(headers = “!key”)</li>
+</ul>
+</li>
+<li>특정한 헤더 키/값이 있는 요청을 처리하고 싶은 경우<ul>
+<li>@RequestMapping(headers = “key=value”)</li>
+</ul>
+</li>
+<li>특정한 요청 매개변수 키를 가지고 있는 요청을 처리하고 싶은 경우<ul>
+<li>@RequestMapping(params = “a”)</li>
+</ul>
+</li>
+<li>특정한 요청 매개변수가 없는 요청을 처리하고 싶은 경우<ul>
+<li>@RequestMapping(params = “!a”)</li>
+</ul>
+</li>
+<li>특정한 요청 매개변수 키/값을 가지고 있는 요청을 처리하고 싶은 경우<ul>
+<li>@RequestMapping(params = “a=b”)<br><br><br></li>
+</ul>
+</li>
+</ul>
+<h3 id="HTTP-요청-맵핑하기-HEAD와-OPTIONS-요청-처리"><a href="#HTTP-요청-맵핑하기-HEAD와-OPTIONS-요청-처리" class="headerlink" title="HTTP 요청 맵핑하기 - HEAD와 OPTIONS 요청 처리"></a>HTTP 요청 맵핑하기 - HEAD와 OPTIONS 요청 처리</h3><h4 id="우리가-구현하지-않아도-스프링-웹-MVC에서-자동으로-처리하는-HTTP-Method"><a href="#우리가-구현하지-않아도-스프링-웹-MVC에서-자동으로-처리하는-HTTP-Method" class="headerlink" title="우리가 구현하지 않아도 스프링 웹 MVC에서 자동으로 처리하는 HTTP Method"></a>우리가 구현하지 않아도 스프링 웹 MVC에서 자동으로 처리하는 HTTP Method</h4><ul>
+<li>HEAD</li>
+<li>OPTIONS</li>
+</ul>
+<h4 id="HEAD"><a href="#HEAD" class="headerlink" title="HEAD"></a>HEAD</h4><p><img src="/images/springwebmvc/springwebmvc08-7.png" alt="springwebmvc"></p>
+<ul>
+<li>GET 요청과 동일하지만 <strong>응답 본문을 받아오지 않고 응답 헤더</strong>만 받아온다.</li>
+</ul>
+<h4 id="OPTIONS"><a href="#OPTIONS" class="headerlink" title="OPTIONS"></a>OPTIONS</h4><p><img src="/images/springwebmvc/springwebmvc08-8.png" alt="springwebmvc"></p>
+<ul>
+<li>사용할 수 있는 HTTP Method 제공</li>
+<li>서버 또는 특정 리소스가 제공하는 기능을 확인할 수 있다.</li>
+<li>서버는 Allow 응답 헤더에 사용할 수 있는 HTTP Method 목록을 제공해야 한다.</li>
+</ul>
+<h4 id="참고-1"><a href="#참고-1" class="headerlink" title="참고"></a>참고</h4><ul>
+<li><a href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html">https://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html</a></li>
+<li><a href="https://github.com/spring-projects/spring-framework/blob/master/spring-test/src/test/java/org/springframework/test/web/servlet/samples/standalone/resultmatchers/HeaderAssertionTests.java">https://github.com/spring-projects/spring-framework/blob/master/spring-test/src/test/java/org/springframework/test/web/servlet/samples/standalone/resultmatchers/HeaderAssertionTests.java</a><br><br><br></li>
+</ul>
+<h3 id="HTTP-요청-맵핑하기-커스텀-애노테이션"><a href="#HTTP-요청-맵핑하기-커스텀-애노테이션" class="headerlink" title="HTTP 요청 맵핑하기 - 커스텀 애노테이션"></a>HTTP 요청 맵핑하기 - 커스텀 애노테이션</h3><h4 id="RequestMapping-애노테이션을-메타-애노테이션으로-사용하기"><a href="#RequestMapping-애노테이션을-메타-애노테이션으로-사용하기" class="headerlink" title="@RequestMapping 애노테이션을 메타 애노테이션으로 사용하기"></a>@RequestMapping 애노테이션을 메타 애노테이션으로 사용하기</h4><ul>
+<li>@GetMapping 같은 커스텀한 애노테이션을 만들 수 있다.</li>
+</ul>
+<h4 id="메타-Meta-애노테이션"><a href="#메타-Meta-애노테이션" class="headerlink" title="메타(Meta) 애노테이션"></a>메타(Meta) 애노테이션</h4><ul>
+<li>애노테이션에 사용할 수 있는 애노테이션</li>
+<li>스프링이 제공하는 대부분의 애노테이션은 메타 애노테이션으로 사용할 수 있다.</li>
+</ul>
+<h4 id="조합-Composed-애노테이션"><a href="#조합-Composed-애노테이션" class="headerlink" title="조합(Composed) 애노테이션"></a>조합(Composed) 애노테이션</h4><ul>
+<li>한개 혹은 여러 메타 애노테이션을 조합해서 만든 애노테이션</li>
+<li>코드를 간결하게 줄일 수 있다.</li>
+<li>보다 구체적인 의미를 부여할 수 있다.</li>
+</ul>
+<h4 id="Retention"><a href="#Retention" class="headerlink" title="@Retention"></a>@Retention</h4><ul>
+<li>해당 애노테이션 정보를 언제까지 유지할 것인가.</li>
+<li>Source: 소스 코드까지만 유지. 즉, 컴파일 하면 해당 애노테이션 정보는 사라진다는 이야기.</li>
+<li>Class: 컴파인 한 .class 파일에도 유지. 즉 런타임 시, 클래스를 메모리로 읽어오면 해당 정보는 사라진다.</li>
+<li>Runtime: 클래스를 메모리에 읽어왔을 때까지 유지! 코드에서 이 정보를 바탕으로 특정 로직을 실행할 수 있다.</li>
+</ul>
+<h4 id="Target"><a href="#Target" class="headerlink" title="@Target"></a>@Target</h4><ul>
+<li>해당 애노테이션을 어디에 사용할 수 있는지 결정한다.</li>
+<li>배열로 여러 엘리먼트도 지정 가능하다.</li>
+</ul>
+<h4 id="Documented"><a href="#Documented" class="headerlink" title="@Documented"></a>@Documented</h4><ul>
+<li>해당 애노테이션을 사용한 코드의 문서에 그 애노테이션에 대한 정보를 표기할지 결정한다.</li>
+</ul>
+<h4 id="메타-애노테이션"><a href="#메타-애노테이션" class="headerlink" title="메타 애노테이션"></a>메타 애노테이션</h4><ul>
+<li><a href="https://docs.spring.io/spring/docs/current/spring-framework-reference/core.html#beansmeta-annotations">https://docs.spring.io/spring/docs/current/spring-framework-reference/core.html#beansmeta-annotations</a></li>
+<li><a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/core/annotation/AliasFor.html">https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/core/annotation/AliasFor.html</a><br><br><br></li>
+</ul>
+
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/SpringWebMvc/" rel="tag">SpringWebMvc</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">Like this article? Support the author with</h3>
+        <div class="buttons is-centered">
+            
+                
+<div class="notification is-danger">
+    You forgot to set the <code>qrcode</code> for Alipay. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                
+<div class="notification is-danger">
+    You forgot to set the <code>qrcode</code> for Wechat. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                <!-- Visit https://www.paypal.com/donate/buttons/ to get your donate button -->
+
+<div class="notification is-danger">
+    You forgot to set the <code>business</code> and <code>currency_code</code> for Paypal. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                
+<div class="notification is-danger">
+    You forgot to set the <code>url</code> Patreon. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2019/06/25/RestAPI/restapi01/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">스프링 기반 REST API 개발01 - REST API 및 프로젝트 소개</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2019/06/24/spring/spring_web_mvc07/">
+                <span class="level-item">스프링 MVC 설정07 - 핸들러 인터셉터, 리소스 핸들러, HTTP 메세지 컨버터, 기타 설정</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+</div>
+                
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-4-widescreen  has-order-3 column-right is-sticky">
+    
+        
+
+    <div class="card widget" id="toc">
+        <div class="card-content">
+            <div class="menu">
+                <h3 class="menu-label">
+                    Catalogue
+                </h3>
+                <ul class="menu-list"><li>
+        <a class="is-flex" href="#스프링-웹-MVC-inflearn-백기선">
+        <span class="has-mr-6">1</span>
+        <span>스프링 웹 MVC(inflearn) - 백기선</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#SpringMVC-활용">
+        <span class="has-mr-6">1.1</span>
+        <span>SpringMVC 활용</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#스프링-MVC-핵심-기술-소개">
+        <span class="has-mr-6">1.1.1</span>
+        <span>스프링 MVC 핵심 기술 소개</span>
+        </a></li><li>
+        <a class="is-flex" href="#HTTP요청-맵핑하기-요청-메소드">
+        <span class="has-mr-6">1.1.2</span>
+        <span>HTTP요청 맵핑하기 - 요청 메소드</span>
+        </a></li><li>
+        <a class="is-flex" href="#HTTP-요청-맵핑하기-URI패턴-맵핑">
+        <span class="has-mr-6">1.1.3</span>
+        <span>HTTP 요청 맵핑하기 - URI패턴 맵핑</span>
+        </a></li><li>
+        <a class="is-flex" href="#HTTP-요청-맵핑하기-미디어-타입-맵핑">
+        <span class="has-mr-6">1.1.4</span>
+        <span>HTTP 요청 맵핑하기 - 미디어 타입 맵핑</span>
+        </a></li><li>
+        <a class="is-flex" href="#HTTP-요청-맵핑하기-헤더와-매개변수">
+        <span class="has-mr-6">1.1.5</span>
+        <span>HTTP 요청 맵핑하기 - 헤더와 매개변수</span>
+        </a></li><li>
+        <a class="is-flex" href="#HTTP-요청-맵핑하기-HEAD와-OPTIONS-요청-처리">
+        <span class="has-mr-6">1.1.6</span>
+        <span>HTTP 요청 맵핑하기 - HEAD와 OPTIONS 요청 처리</span>
+        </a></li><li>
+        <a class="is-flex" href="#HTTP-요청-맵핑하기-커스텀-애노테이션">
+        <span class="has-mr-6">1.1.7</span>
+        <span>HTTP 요청 맵핑하기 - 커스텀 애노테이션</span>
+        </a></li></ul></li></ul></li></ul>
+            </div>
+        </div>
+    </div>
+
+    
+        <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            Tag Cloud
+        </h3>
+        <a href="/tags/Algorithm/" style="font-size: 11.11px;">Algorithm</a> <a href="/tags/DataBase/" style="font-size: 10px;">DataBase</a> <a href="/tags/Etc/" style="font-size: 11.11px;">Etc</a> <a href="/tags/Git/" style="font-size: 13.33px;">Git</a> <a href="/tags/Interview/" style="font-size: 14.44px;">Interview</a> <a href="/tags/JPA/" style="font-size: 20px;">JPA</a> <a href="/tags/JSP/" style="font-size: 14.44px;">JSP</a> <a href="/tags/Java/" style="font-size: 18.89px;">Java</a> <a href="/tags/JavaScript/" style="font-size: 12.22px;">JavaScript</a> <a href="/tags/OracleDB/" style="font-size: 14.44px;">OracleDB</a> <a href="/tags/Process/" style="font-size: 11.11px;">Process</a> <a href="/tags/RestAPI/" style="font-size: 14.44px;">RestAPI</a> <a href="/tags/Seminar/" style="font-size: 10px;">Seminar</a> <a href="/tags/SpringBoot/" style="font-size: 20px;">SpringBoot</a> <a href="/tags/SpringSecurity/" style="font-size: 12.22px;">SpringSecurity</a> <a href="/tags/SpringWebMvc/" style="font-size: 16.67px;">SpringWebMvc</a> <a href="/tags/Springframework/" style="font-size: 17.78px;">Springframework</a> <a href="/tags/Springframework-kosta/" style="font-size: 14.44px;">Springframework_kosta</a> <a href="/tags/Web/" style="font-size: 12.22px;">Web</a> <a href="/tags/debug/" style="font-size: 11.11px;">debug</a> <a href="/tags/jQuery/" style="font-size: 12.22px;">jQuery</a> <a href="/tags/%EC%A0%95%EB%B3%B4%EC%B2%98%EB%A6%AC%EA%B8%B0%EC%82%AC-%ED%95%84%EA%B8%B0/" style="font-size: 13.33px;">정보처리기사_필기</a> <a href="/tags/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%ED%9A%8C%EA%B3%A0/" style="font-size: 15.56px;">프로젝트_회고</a>
+    </div>
+</div>
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/blog_logo.png" alt="스프링 MVC 활용08 - HTTP 요청 맵핑하기" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2020 Bong&#39;s blog&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/cyr9210">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("en");</script>
+
+
+<script>
+var IcarusThemeSettings = {
+    site: {
+        url: 'http://yoursite.com',
+        external_link: {"enable":true,"exclude":[]}
+    },
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+<script src="/js/animation.js"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+<script src="/js/gallery.js" defer></script>
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+<a id="back-to-top" title="Back to Top" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: 'Posts',
+                PAGES: 'Pages',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
+                UNTITLED: '(Untitled)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

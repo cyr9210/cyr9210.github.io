@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html >
+<head>
+    <meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 4.2.0" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>Git/GitHub 입문 (oss개발자포럼 세미나) - Bong&#39;s blog</title>
+
+
+    <meta name="description" content="Git&#x2F;GitHub 입문 (oss개발자포럼 세미나)Git">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Git&#x2F;GitHub 입문 (oss개발자포럼 세미나)">
+<meta property="og:url" content="http://yoursite.com/2019/03/23/Git/oss-git-github/index.html">
+<meta property="og:site_name" content="Bong&#39;s blog">
+<meta property="og:description" content="Git&#x2F;GitHub 입문 (oss개발자포럼 세미나)Git">
+<meta property="og:image" content="http://yoursite.com/images/og_image.png">
+<meta property="article:published_time" content="2019-03-23T04:42:40.000Z">
+<meta property="article:modified_time" content="2020-03-20T07:57:35.716Z">
+<meta property="article:author" content="Bong&#39;s blog">
+<meta property="article:tag" content="Seminar">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/images/og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+<style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+    
+    
+    
+    
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+    
+    
+    
+    
+    
+    
+    
+    <link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-2-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/blog_logo.png" alt="Git/GitHub 입문 (oss개발자포럼 세미나)" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                href="/">Home</a>
+                
+                <a class="navbar-item"
+                href="/archives">Archives</a>
+                
+                <a class="navbar-item"
+                href="/tags">Tags</a>
+                
+                <a class="navbar-item"
+                href="/about">About</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    <a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/cyr9210">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="Search" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-8-widescreen has-order-2 column-main">
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-03-23T04:42:40.000Z">2019-03-23</time>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    9 minutes read (About 1278 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                Git/GitHub 입문 (oss개발자포럼 세미나)
+            
+        </h1>
+        <div class="content">
+            <h1 id="Git-GitHub-입문-oss개발자포럼-세미나"><a href="#Git-GitHub-입문-oss개발자포럼-세미나" class="headerlink" title="Git/GitHub 입문 (oss개발자포럼 세미나)"></a>Git/GitHub 입문 (oss개발자포럼 세미나)</h1><h2 id="Git"><a href="#Git" class="headerlink" title="Git"></a>Git</h2><a id="more"></a>
+<p><img src="/images/git/ossgit02.png" alt="ossgit"><br>버젼관리 시스템인 Git에 대하여 생활코딩 ‘지옥에서 온 git’을 수강하며, 공부를 하던중…<br>oss개발자 포럼 커뮤니티와 국민대학교가 주관하는 ‘Git과 Github을 이용한 버전관리 입문’이라는 주제로 강연을 진행하단다는 정보를 알게되었습니다.<br>해당 커뮤니티에 대한 궁금함과 동시에 오프라인으로 강의를 들어보는게 나쁘지 않을것 같아서 신청하게 되었습니다.🙂</p>
+<hr>
+<h3 id="형상-관리와-버전-관리"><a href="#형상-관리와-버전-관리" class="headerlink" title="형상 관리와 버전 관리"></a>형상 관리와 버전 관리</h3><h4 id="형상-관리"><a href="#형상-관리" class="headerlink" title="형상 관리"></a>형상 관리</h4><p><strong>소프트웨어의 변경사항을 체계적으로 추적하고 관리, 통제하는 것</strong></p>
+<ul>
+<li>관리대상<ul>
+<li>요구사항 명세서</li>
+<li>설계서</li>
+<li>소스코드</li>
+<li>이미지</li>
+<li>라이브러리 파일</li>
+<li>프로젝트 회의록</li>
+<li>그외많은관리대상들</li>
+</ul>
+</li>
+</ul>
+<h4 id="형상관리를-왜-해야할까"><a href="#형상관리를-왜-해야할까" class="headerlink" title="형상관리를 왜 해야할까?"></a>형상관리를 왜 해야할까?</h4><ul>
+<li>소프트웨어 개발 생산성을 향상시켜 준다</li>
+<li>(요구사항을 바탕으로 개발을 진행하므로) 소프트웨어의 품질을 향상시켜 준다</li>
+<li>(문제가 있는 경우를 쉽게 발견할 수 있으므로) 유지보수 비용을 절감시켜 준다<br><br><br></li>
+</ul>
+<h3 id="버전-관리-시스템"><a href="#버전-관리-시스템" class="headerlink" title="버전 관리 시스템"></a>버전 관리 시스템</h3><p><img src="/images/git/ossgit03.png" alt="gitoss"><br>소스코드의 변경사항을 체계적으로 추적하고 관리, 통제하는 시스템</p>
+<h4 id="버전-관리-시스템-VCS-Version-Control-System"><a href="#버전-관리-시스템-VCS-Version-Control-System" class="headerlink" title="버전 관리 시스템 - VCS(Version Control System)"></a>버전 관리 시스템 - VCS(Version Control System)</h4><p><img src="/images/git/ossgit04.png" alt="gitoss"></p>
+<ul>
+<li>로컬에서 직접 모든 자원을 관리</li>
+<li>USB, 메일 첨부파일</li>
+</ul>
+<h4 id="집중형-버전-관리-시스템-CVCS-Centralized-VCS"><a href="#집중형-버전-관리-시스템-CVCS-Centralized-VCS" class="headerlink" title="집중형 버전 관리 시스템 - CVCS(Centralized VCS)"></a>집중형 버전 관리 시스템 - CVCS(Centralized VCS)</h4><p><img src="/images/git/ossgit05.png" alt="gitoss"></p>
+<ul>
+<li>하나의서버를두고서버를중심으로모든자원을관리 </li>
+<li>SVN - <a href="https://subversion.apache.org/">https://subversion.apache.org/</a></li>
+</ul>
+<h4 id="분산형-버전-관리-시스템-DVCS-Distributed-VCS"><a href="#분산형-버전-관리-시스템-DVCS-Distributed-VCS" class="headerlink" title="분산형 버전 관리 시스템 - DVCS(Distributed VCS)"></a>분산형 버전 관리 시스템 - DVCS(Distributed VCS)</h4><p><img src="/images/git/ossgit06.png" alt="gitoss"></p>
+<ul>
+<li>CVCS처럼 서버를 두고 서버에서 자원 관리를 하지만 로컬에서도 자원 관리를 함</li>
+<li>Git - <a href="https://github.com/git/git">https://github.com/git/git</a><br><br><br></li>
+</ul>
+<h3 id="Git-Github"><a href="#Git-Github" class="headerlink" title="Git / Github"></a>Git / Github</h3><p><img src="/images/git/ossgit07.png" alt="gitoss"></p>
+<ul>
+<li>Git : 버전관리 시스템</li>
+<li>Github : Git 호스팅 사이트<blockquote>
+<p>호스팅 : 웹의 공간을 빌려주거나 빌리는것</p>
+</blockquote>
+</li>
+</ul>
+<br>
+
+<h3 id="Git-Hosting"><a href="#Git-Hosting" class="headerlink" title="Git Hosting"></a>Git Hosting</h3><ul>
+<li>GitHub ( <a href="https://github.com/">https://github.com/</a> ) </li>
+<li>GitLab ( <a href="https://gitlab.com">https://gitlab.com</a> ) </li>
+<li>BitBucket ( <a href="https://bitbucket.org">https://bitbucket.org</a> )<br><br><br><h3 id="Git-Client"><a href="#Git-Client" class="headerlink" title="Git Client"></a>Git Client</h3></li>
+<li>Git bash<ul>
+<li>Git을 설치하면 기본제공되는 CLI 기반 Git Client</li>
+<li>Windows / Mac / Linux<br>SourceTree</li>
+<li><a href="https://www.sourcetreeapp.com/">https://www.sourcetreeapp.com/</a></li>
+<li>Windows / Mac<br>GitKraken</li>
+<li><a href="https://www.gitkraken.com/">https://www.gitkraken.com/</a> - Windows / Mac / Linux</li>
+</ul>
+</li>
+</ul>
+<p><br><br></p>
+<h3 id="Git을-이용한-버전-관리"><a href="#Git을-이용한-버전-관리" class="headerlink" title="Git을 이용한 버전 관리"></a>Git을 이용한 버전 관리</h3><ul>
+<li>버전관리 ⊂ 형상관리</li>
+<li>Git은 분산형 버전 관리 시스템(DVCS) Git ≠ GitHub<ul>
+<li>GitHub는 Git Hosting 웹 서비스</li>
+</ul>
+</li>
+</ul>
+<h4 id="버전관리를-어떻게할까"><a href="#버전관리를-어떻게할까" class="headerlink" title="버전관리를 어떻게할까?"></a>버전관리를 어떻게할까?</h4><ul>
+<li><p>CVCS</p>
+<ul>
+<li><img src="/images/git/ossgit08.png" alt="gitoss"></li>
+<li><img src="/images/git/ossgit09.png" alt="gitoss"></li>
+</ul>
+</li>
+<li><p>DVCS</p>
+<ul>
+<li><img src="/images/git/ossgit10.png" alt="gitoss"></li>
+<li><img src="/images/git/ossgit11.png" alt="gitoss"></li>
+</ul>
+</li>
+<li><p>Git(DVCS)</p>
+<ul>
+<li><img src="/images/git/ossgit12.png" alt="gitoss"></li>
+</ul>
+</li>
+</ul>
+<h4 id="Git의-흐름-workflow"><a href="#Git의-흐름-workflow" class="headerlink" title="Git의 흐름(workflow)"></a>Git의 흐름(workflow)</h4><p><img src="/images/git/ossgit13.png" alt="gitoss"><br><img src="/images/git/ossgit14.png" alt="gitoss"><br><br><br></p>
+<h3 id="GitHub-둘러보기"><a href="#GitHub-둘러보기" class="headerlink" title="GitHub 둘러보기"></a>GitHub 둘러보기</h3><ul>
+<li>fork : 다른사람의 프로젝트를 복제</li>
+<li>Pull Request : 자신이 변경한 코드를 상대방의 리포지토리에 넣고 싶을 때 사용하는 기능<ul>
+<li>git Lab에서는 merge request라고 부른다.</li>
+<li>Pull Request에도 순서가 있다.<br><img src="/images/git/ossgit15.png" alt="gitoss"></li>
+</ul>
+</li>
+<li>git fetch : 리포지토리에서 변경된 기록을 가져오되 merge는 하지 않음</li>
+<li>git pull : 리포지토리에서 변경된 기록을 가져오고 merge도 바로 이루어짐<br><br><br></li>
+</ul>
+<h3 id="알아두면-좋은것"><a href="#알아두면-좋은것" class="headerlink" title="알아두면 좋은것"></a>알아두면 좋은것</h3><ul>
+<li><p><a href="https://opentutorials.org/course/2708">생활코딩 지옥에서 온 Git</a></p>
+</li>
+<li><p><a href="https://www.youtube.com/watch?v=SYVUyNrQhAU">동네개발자형 교육방송 - git bisect</a></p>
+</li>
+<li><p>여러 프로젝트, 소식 살펴보기 : <a href="https://github.com/explore">gitexplore</a></p>
+<ul>
+<li>오픈소스 fork시, <a href="https://opensource.org/licenses">라이센스</a>에 주의해야한다.<br>참고자료 : <a href="https://www.slideshare.net/ssuser22e7fc/gdg-campus-korea-2-132342619">https://www.slideshare.net/ssuser22e7fc/gdg-campus-korea-2-132342619</a></li>
+</ul>
+</li>
+<li><p>[gitignore 적용하기](<a href="http://www.itpaper.co.kr/gitignore-%ED%8C%8C%EC%9D%BC%EC%9D%84-%E">http://www.itpaper.co.kr/gitignore-%ED%8C%8C%EC%9D%BC%EC%9D%84-%E</a> D%86%B5%ED%95%9C-%EB%AC%B4%EC%8B%9C%EB%AA%A9%EB%A1% 9D-%EC%84%A4%EC%A0%95%ED%95%98%EA%B8%B0/)</p>
+<ul>
+<li><a href="https://www.gitignore.io/">gitignore.io</a></li>
+</ul>
+</li>
+<li><p>참고하면 도움이 될 책</p>
+<ul>
+<li>소프트웨어 개발의 모든 것</li>
+<li>성공으로 이끄는 팀 개발 실천 기술</li>
+<li>팀을 위한 git<br><br><br></li>
+</ul>
+</li>
+</ul>
+<h3 id="명령어"><a href="#명령어" class="headerlink" title="명령어"></a>명령어</h3><ul>
+<li><p>git 사용자 정보 조회</p>
+<ul>
+<li>git config –global –list</li>
+</ul>
+</li>
+<li><p>이전에 git을 사용한 적이 있다면 사용자 정보를 지워줍니다.</p>
+<ul>
+<li>git config –global –unset-all user.name</li>
+<li>git config –global –unset-all user.email<br><br><br></li>
+</ul>
+</li>
+</ul>
+<hr>
+<p>강의는 매우 만족스럽지 못했습니다..<br>발표자는 20분이 넘는 시간을 지각하고, wifi접속은 안되고, 강의내용은 기존 공지내용과 달랐습니다.<br>bash기반의 명령어 및 구동원리 강의를 기대하고 왔는데..<br>해당 강연은 git 크라켄을 사용하는 gui방식의 툴을 기반으로 하고 있었으며, git에대해 전혀 알지못하는 사람을 대상으로 하는 수준이었기 때문에 제가원하는 강연은 아니었던것 같습니다.<br>분명 강의내용에 명령어 강의라고 되어있어서 신청했는데..😂<br>git을 처음접하시는 분들에게는 어땠을지 모르겠지만 제게는 많이 아쉬웠던 강의였습니다.<br><br><br></p>
+
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/Seminar/" rel="tag">Seminar</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">Like this article? Support the author with</h3>
+        <div class="buttons is-centered">
+            
+                
+<div class="notification is-danger">
+    You forgot to set the <code>qrcode</code> for Alipay. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                
+<div class="notification is-danger">
+    You forgot to set the <code>qrcode</code> for Wechat. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                <!-- Visit https://www.paypal.com/donate/buttons/ to get your donate button -->
+
+<div class="notification is-danger">
+    You forgot to set the <code>business</code> and <code>currency_code</code> for Paypal. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                
+<div class="notification is-danger">
+    You forgot to set the <code>url</code> Patreon. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2019/03/26/spring/springframework-core04/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">스프링 핵심기술04 - SpEL</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2019/03/22/spring/springframework-core03/">
+                <span class="level-item">스프링 핵심기술03 - 데이터 바인딩</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+</div>
+                
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-4-widescreen  has-order-3 column-right is-sticky">
+    
+        
+
+    <div class="card widget" id="toc">
+        <div class="card-content">
+            <div class="menu">
+                <h3 class="menu-label">
+                    Catalogue
+                </h3>
+                <ul class="menu-list"><li>
+        <a class="is-flex" href="#Git-GitHub-입문-oss개발자포럼-세미나">
+        <span class="has-mr-6">1</span>
+        <span>Git/GitHub 입문 (oss개발자포럼 세미나)</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#Git">
+        <span class="has-mr-6">1.1</span>
+        <span>Git</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#형상-관리와-버전-관리">
+        <span class="has-mr-6">1.1.1</span>
+        <span>형상 관리와 버전 관리</span>
+        </a></li><li>
+        <a class="is-flex" href="#버전-관리-시스템">
+        <span class="has-mr-6">1.1.2</span>
+        <span>버전 관리 시스템</span>
+        </a></li><li>
+        <a class="is-flex" href="#Git-Github">
+        <span class="has-mr-6">1.1.3</span>
+        <span>Git / Github</span>
+        </a></li><li>
+        <a class="is-flex" href="#Git-Hosting">
+        <span class="has-mr-6">1.1.4</span>
+        <span>Git Hosting</span>
+        </a></li><li>
+        <a class="is-flex" href="#Git-Client">
+        <span class="has-mr-6">1.1.5</span>
+        <span>Git Client</span>
+        </a></li><li>
+        <a class="is-flex" href="#Git을-이용한-버전-관리">
+        <span class="has-mr-6">1.1.6</span>
+        <span>Git을 이용한 버전 관리</span>
+        </a></li><li>
+        <a class="is-flex" href="#GitHub-둘러보기">
+        <span class="has-mr-6">1.1.7</span>
+        <span>GitHub 둘러보기</span>
+        </a></li><li>
+        <a class="is-flex" href="#알아두면-좋은것">
+        <span class="has-mr-6">1.1.8</span>
+        <span>알아두면 좋은것</span>
+        </a></li><li>
+        <a class="is-flex" href="#명령어">
+        <span class="has-mr-6">1.1.9</span>
+        <span>명령어</span>
+        </a></li></ul></li></ul></li></ul>
+            </div>
+        </div>
+    </div>
+
+    
+        <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            Tag Cloud
+        </h3>
+        <a href="/tags/Algorithm/" style="font-size: 11.11px;">Algorithm</a> <a href="/tags/DataBase/" style="font-size: 10px;">DataBase</a> <a href="/tags/Etc/" style="font-size: 11.11px;">Etc</a> <a href="/tags/Git/" style="font-size: 13.33px;">Git</a> <a href="/tags/Interview/" style="font-size: 14.44px;">Interview</a> <a href="/tags/JPA/" style="font-size: 20px;">JPA</a> <a href="/tags/JSP/" style="font-size: 14.44px;">JSP</a> <a href="/tags/Java/" style="font-size: 18.89px;">Java</a> <a href="/tags/JavaScript/" style="font-size: 12.22px;">JavaScript</a> <a href="/tags/OracleDB/" style="font-size: 14.44px;">OracleDB</a> <a href="/tags/Process/" style="font-size: 11.11px;">Process</a> <a href="/tags/RestAPI/" style="font-size: 14.44px;">RestAPI</a> <a href="/tags/Seminar/" style="font-size: 10px;">Seminar</a> <a href="/tags/SpringBoot/" style="font-size: 20px;">SpringBoot</a> <a href="/tags/SpringSecurity/" style="font-size: 12.22px;">SpringSecurity</a> <a href="/tags/SpringWebMvc/" style="font-size: 16.67px;">SpringWebMvc</a> <a href="/tags/Springframework/" style="font-size: 17.78px;">Springframework</a> <a href="/tags/Springframework-kosta/" style="font-size: 14.44px;">Springframework_kosta</a> <a href="/tags/Web/" style="font-size: 12.22px;">Web</a> <a href="/tags/debug/" style="font-size: 11.11px;">debug</a> <a href="/tags/jQuery/" style="font-size: 12.22px;">jQuery</a> <a href="/tags/%EC%A0%95%EB%B3%B4%EC%B2%98%EB%A6%AC%EA%B8%B0%EC%82%AC-%ED%95%84%EA%B8%B0/" style="font-size: 13.33px;">정보처리기사_필기</a> <a href="/tags/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%ED%9A%8C%EA%B3%A0/" style="font-size: 15.56px;">프로젝트_회고</a>
+    </div>
+</div>
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/blog_logo.png" alt="Git/GitHub 입문 (oss개발자포럼 세미나)" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2020 Bong&#39;s blog&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/cyr9210">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("en");</script>
+
+
+<script>
+var IcarusThemeSettings = {
+    site: {
+        url: 'http://yoursite.com',
+        external_link: {"enable":true,"exclude":[]}
+    },
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+<script src="/js/animation.js"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+<script src="/js/gallery.js" defer></script>
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+<a id="back-to-top" title="Back to Top" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: 'Posts',
+                PAGES: 'Pages',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
+                UNTITLED: '(Untitled)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

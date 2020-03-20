@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html >
+<head>
+    <meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 4.2.0" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>인터페이스, Object class, Wrapper class, Inner class, Anonymous class, String API, Boxing/Unboxing - Bong&#39;s blog</title>
+
+
+    <meta name="description" content="KOSTA DAY10Java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="인터페이스, Object class, Wrapper class, Inner class, Anonymous class, String API, Boxing&#x2F;Unboxing">
+<meta property="og:url" content="http://yoursite.com/2018/11/12/Java/java10/index.html">
+<meta property="og:site_name" content="Bong&#39;s blog">
+<meta property="og:description" content="KOSTA DAY10Java">
+<meta property="og:image" content="http://yoursite.com/images/og_image.png">
+<meta property="article:published_time" content="2018-11-12T10:24:18.000Z">
+<meta property="article:modified_time" content="2020-03-20T07:57:35.725Z">
+<meta property="article:author" content="Bong&#39;s blog">
+<meta property="article:tag" content="Java">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/images/og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+<style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+    
+    
+    
+    
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+    
+    
+    
+    
+    
+    
+    
+    <link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-2-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/blog_logo.png" alt="인터페이스, Object class, Wrapper class, Inner class, Anonymous class, String API, Boxing/Unboxing" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                href="/">Home</a>
+                
+                <a class="navbar-item"
+                href="/archives">Archives</a>
+                
+                <a class="navbar-item"
+                href="/tags">Tags</a>
+                
+                <a class="navbar-item"
+                href="/about">About</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    <a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/cyr9210">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="Search" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-8-widescreen has-order-2 column-main">
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2018-11-12T10:24:18.000Z">2018-11-12</time>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    5 minutes read (About 764 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                인터페이스, Object class, Wrapper class, Inner class, Anonymous class, String API, Boxing/Unboxing
+            
+        </h1>
+        <div class="content">
+            <p><img src="/images/javaimage.png" alt="Java"></p>
+<h1 id="KOSTA-DAY10"><a href="#KOSTA-DAY10" class="headerlink" title="KOSTA DAY10"></a>KOSTA DAY10</h1><h2 id="Java"><a href="#Java" class="headerlink" title="Java"></a>Java</h2><a id="more"></a>
+<h3 id="인터페이스"><a href="#인터페이스" class="headerlink" title="인터페이스"></a>인터페이스</h3><p>개발코드와 객체가 서로 통신하는 접점</p>
+<ul>
+<li>인터페이스 안의 모든 메소드는 추상메소드이다.(굳이 abstarct 키워드를 사용하지 않아도 된다.)</li>
+<li>인터페이스를 implements하는 클래스는 인터페이스 안의 추상메소드들을 모두 오버라이딩 해야한다.</li>
+<li>추상클래스와 유사한 기능을 하며 자식메소드를 구현하는데 사용된다.</li>
+<li>인터페이스를 implements한 클래스는 인터페이스에 선언한 메소드를 오버라이딩하여 사용가능하다.</li>
+<li>인터페이스 끼리 상속가능 → 실제로는 거의 사용하지 않으나 Java API중 이러한 형택가 있다.</li>
+</ul>
+<h4 id="인터페이스를-사용하는-이유"><a href="#인터페이스를-사용하는-이유" class="headerlink" title="인터페이스를 사용하는 이유"></a>인터페이스를 사용하는 이유</h4><ul>
+<li>자바에서는 다중 상속을 허용하지 않는다.</li>
+<li>상속할 수 없는 상황에서 공통된 기능을 사용하기위해</li>
+<li>코드의 독립성</li>
+</ul>
+<h4 id="추상클래스와-인터페이스의-공통점과-차이점"><a href="#추상클래스와-인터페이스의-공통점과-차이점" class="headerlink" title="추상클래스와 인터페이스의 공통점과 차이점"></a>추상클래스와 인터페이스의 공통점과 차이점</h4><ul>
+<li>공통점<ul>
+<li>코드의 독립성</li>
+</ul>
+</li>
+<li>차이점<ul>
+<li>추상클래스는 일반 메소드가 있을 수 있기 때문에 추상메소드에 abstract 키워드를 사용한다.<br><br><br></li>
+</ul>
+</li>
+</ul>
+<h3 id="Object-class"><a href="#Object-class" class="headerlink" title="Object class"></a>Object class</h3><ul>
+<li>최상위 클래스</li>
+<li>Object class의 toString 메소드는 주소값을 호출한다. → toString 메소드를 생성하여 오버라이딩 가능</li>
+<li>Object class의 equals 메소드는 주소값을 비교한다. → 원하느 값을 비교하기 위해서는 equals메소드를 오버라이딩하여 재정의 해야한다.<br><br><br></li>
+</ul>
+<h3 id="Wrapper-class"><a href="#Wrapper-class" class="headerlink" title="Wrapper class"></a>Wrapper class</h3><p>Wrapper class란 상호전환 시 , 사용하는 클래스</p>
+<p><img src="/images/java/java10-03.png" alt="Java"></p>
+<ul>
+<li>위의 기본형 data외에는 모두 reference 타입</li>
+<li>기본형 ← → reference 타입 상호전환이 필요할 수 있다.</li>
+</ul>
+<h4 id="Boxing"><a href="#Boxing" class="headerlink" title="Boxing"></a>Boxing</h4><p>기본 자료형을 Wrapper 클래스의 객체로 변경하는 과정</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Integer age &#x3D; new Integer(30);</span><br></pre></td></tr></table></figure>
+<h4 id="Unboxing"><a href="#Unboxing" class="headerlink" title="Unboxing"></a>Unboxing</h4><p>각각의 객체를 기본 자료형으로 변경하여 사용하는 과정 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int age2 &#x3D; age.intValue();</span><br></pre></td></tr></table></figure>
+<p><br><br></p>
+<h3 id="Nested-Class"><a href="#Nested-Class" class="headerlink" title="Nested Class"></a>Nested Class</h3><ul>
+<li>클래스안의 클래스라는 의미</li>
+<li>소스의 가독성을 높이고 유지보수를 용이하게 하기위해 사용</li>
+</ul>
+<h4 id="Inner-Class-내부-클래스"><a href="#Inner-Class-내부-클래스" class="headerlink" title="Inner Class(내부 클래스)"></a>Inner Class(내부 클래스)</h4><p><img src="/images/java/java10-01.png" alt="Java"></p>
+<ul>
+<li>클래스안에 클래스를 생성하는 것</li>
+</ul>
+<h4 id="Anonymous-Class-익명-내부-클래스"><a href="#Anonymous-Class-익명-내부-클래스" class="headerlink" title="Anonymous Class(익명 내부 클래스)"></a>Anonymous Class(익명 내부 클래스)</h4><p><img src="/images/java/java10-02.png" alt="Java"></p>
+<ul>
+<li>클래스를 한번만 사용하고 구현할 때, 추상클래스 및 상속없이 일회성으로 구현하기위해서 사용한다.<br><br><br></li>
+</ul>
+<h3 id="String-API"><a href="#String-API" class="headerlink" title="String API"></a>String API</h3><p><img src="/images/java/java10-04.png" alt="Java"></p>
+<ul>
+<li>불변성을 가진다.</li>
+<li>연산자를 통해 추가가능</li>
+<li>StringBuffer 클래스는 append로 추가가능</li>
+<li>.indexof(“*”) : *이 몇번째인지 찾는다. (시작 = 0)</li>
+<li>.substring(n1, n2) : n1 ~ n2 까지 추출</li>
+<li>trim() : 앞뒤 공백제거</li>
+<li>split(“*”) : *이 들어간 부분을 찾아서 *로 나누어 배열에 저장</li>
+<li>숫자를 String으로 변환 → n + “”;</li>
+<li>endsWith() / startWith() : ~시작 or 끝나는지 체크</li>
+<li>valueof : 형변환 시, 사용<br><br><br></li>
+</ul>
+
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/Java/" rel="tag">Java</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">Like this article? Support the author with</h3>
+        <div class="buttons is-centered">
+            
+                
+<div class="notification is-danger">
+    You forgot to set the <code>qrcode</code> for Alipay. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                
+<div class="notification is-danger">
+    You forgot to set the <code>qrcode</code> for Wechat. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                <!-- Visit https://www.paypal.com/donate/buttons/ to get your donate button -->
+
+<div class="notification is-danger">
+    You forgot to set the <code>business</code> and <code>currency_code</code> for Paypal. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                
+<div class="notification is-danger">
+    You forgot to set the <code>url</code> Patreon. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2018/11/13/Java/java11/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">Calendar, GregorianCalandar, Random</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2018/11/09/Java/java09/">
+                <span class="level-item">reference타입, instanceof, 추상클래스, 객체와 인스턴스의 차이</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+</div>
+                
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-4-widescreen  has-order-3 column-right is-sticky">
+    
+        
+
+    <div class="card widget" id="toc">
+        <div class="card-content">
+            <div class="menu">
+                <h3 class="menu-label">
+                    Catalogue
+                </h3>
+                <ul class="menu-list"><li>
+        <a class="is-flex" href="#KOSTA-DAY10">
+        <span class="has-mr-6">1</span>
+        <span>KOSTA DAY10</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#Java">
+        <span class="has-mr-6">1.1</span>
+        <span>Java</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#인터페이스">
+        <span class="has-mr-6">1.1.1</span>
+        <span>인터페이스</span>
+        </a></li><li>
+        <a class="is-flex" href="#Object-class">
+        <span class="has-mr-6">1.1.2</span>
+        <span>Object class</span>
+        </a></li><li>
+        <a class="is-flex" href="#Wrapper-class">
+        <span class="has-mr-6">1.1.3</span>
+        <span>Wrapper class</span>
+        </a></li><li>
+        <a class="is-flex" href="#Nested-Class">
+        <span class="has-mr-6">1.1.4</span>
+        <span>Nested Class</span>
+        </a></li><li>
+        <a class="is-flex" href="#String-API">
+        <span class="has-mr-6">1.1.5</span>
+        <span>String API</span>
+        </a></li></ul></li></ul></li></ul>
+            </div>
+        </div>
+    </div>
+
+    
+        <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            Tag Cloud
+        </h3>
+        <a href="/tags/Algorithm/" style="font-size: 11.11px;">Algorithm</a> <a href="/tags/DataBase/" style="font-size: 10px;">DataBase</a> <a href="/tags/Etc/" style="font-size: 11.11px;">Etc</a> <a href="/tags/Git/" style="font-size: 13.33px;">Git</a> <a href="/tags/Interview/" style="font-size: 14.44px;">Interview</a> <a href="/tags/JPA/" style="font-size: 20px;">JPA</a> <a href="/tags/JSP/" style="font-size: 14.44px;">JSP</a> <a href="/tags/Java/" style="font-size: 18.89px;">Java</a> <a href="/tags/JavaScript/" style="font-size: 12.22px;">JavaScript</a> <a href="/tags/OracleDB/" style="font-size: 14.44px;">OracleDB</a> <a href="/tags/Process/" style="font-size: 11.11px;">Process</a> <a href="/tags/RestAPI/" style="font-size: 14.44px;">RestAPI</a> <a href="/tags/Seminar/" style="font-size: 10px;">Seminar</a> <a href="/tags/SpringBoot/" style="font-size: 20px;">SpringBoot</a> <a href="/tags/SpringSecurity/" style="font-size: 12.22px;">SpringSecurity</a> <a href="/tags/SpringWebMvc/" style="font-size: 16.67px;">SpringWebMvc</a> <a href="/tags/Springframework/" style="font-size: 17.78px;">Springframework</a> <a href="/tags/Springframework-kosta/" style="font-size: 14.44px;">Springframework_kosta</a> <a href="/tags/Web/" style="font-size: 12.22px;">Web</a> <a href="/tags/debug/" style="font-size: 11.11px;">debug</a> <a href="/tags/jQuery/" style="font-size: 12.22px;">jQuery</a> <a href="/tags/%EC%A0%95%EB%B3%B4%EC%B2%98%EB%A6%AC%EA%B8%B0%EC%82%AC-%ED%95%84%EA%B8%B0/" style="font-size: 13.33px;">정보처리기사_필기</a> <a href="/tags/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%ED%9A%8C%EA%B3%A0/" style="font-size: 15.56px;">프로젝트_회고</a>
+    </div>
+</div>
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/blog_logo.png" alt="인터페이스, Object class, Wrapper class, Inner class, Anonymous class, String API, Boxing/Unboxing" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2020 Bong&#39;s blog&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/cyr9210">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("en");</script>
+
+
+<script>
+var IcarusThemeSettings = {
+    site: {
+        url: 'http://yoursite.com',
+        external_link: {"enable":true,"exclude":[]}
+    },
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+<script src="/js/animation.js"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+<script src="/js/gallery.js" defer></script>
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+<a id="back-to-top" title="Back to Top" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: 'Posts',
+                PAGES: 'Pages',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
+                UNTITLED: '(Untitled)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

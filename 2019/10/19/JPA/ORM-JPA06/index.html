@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html >
+<head>
+    <meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 4.2.0" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>ORM06 - 다양한 연관관계 매핑(다대일, 일대다, 일대일, 다대) - Bong&#39;s blog</title>
+
+
+    <meta name="description" content="자바 ORM 표준 JPA 프로그래밍 - 기본편다양한 연관관계 매핑연관관계 매핑시 고려사항">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ORM06 - 다양한 연관관계 매핑(다대일, 일대다, 일대일, 다대)">
+<meta property="og:url" content="http://yoursite.com/2019/10/19/JPA/ORM-JPA06/index.html">
+<meta property="og:site_name" content="Bong&#39;s blog">
+<meta property="og:description" content="자바 ORM 표준 JPA 프로그래밍 - 기본편다양한 연관관계 매핑연관관계 매핑시 고려사항">
+<meta property="og:image" content="http://yoursite.com/images/og_image.png">
+<meta property="article:published_time" content="2019-10-18T15:21:33.000Z">
+<meta property="article:modified_time" content="2020-03-20T07:57:35.718Z">
+<meta property="article:author" content="Bong&#39;s blog">
+<meta property="article:tag" content="JPA">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/images/og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+<style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+    
+    
+    
+    
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+    
+    
+    
+    
+    
+    
+    
+    <link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-2-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/blog_logo.png" alt="ORM06 - 다양한 연관관계 매핑(다대일, 일대다, 일대일, 다대)" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                href="/">Home</a>
+                
+                <a class="navbar-item"
+                href="/archives">Archives</a>
+                
+                <a class="navbar-item"
+                href="/tags">Tags</a>
+                
+                <a class="navbar-item"
+                href="/about">About</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    <a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/cyr9210">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="Search" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-8-widescreen has-order-2 column-main">
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-10-18T15:21:33.000Z">2019-10-19</time>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    11 minutes read (About 1594 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                ORM06 - 다양한 연관관계 매핑(다대일, 일대다, 일대일, 다대)
+            
+        </h1>
+        <div class="content">
+            <h1 id="자바-ORM-표준-JPA-프로그래밍-기본편"><a href="#자바-ORM-표준-JPA-프로그래밍-기본편" class="headerlink" title="자바 ORM 표준 JPA 프로그래밍 - 기본편"></a>자바 ORM 표준 JPA 프로그래밍 - 기본편</h1><h2 id="다양한-연관관계-매핑"><a href="#다양한-연관관계-매핑" class="headerlink" title="다양한 연관관계 매핑"></a>다양한 연관관계 매핑</h2><h3 id="연관관계-매핑시-고려사항"><a href="#연관관계-매핑시-고려사항" class="headerlink" title="연관관계 매핑시 고려사항"></a>연관관계 매핑시 고려사항</h3><a id="more"></a>
+<ul>
+<li>다중성</li>
+<li>단방향, 양방향</li>
+<li>양방향일 때, 연관관계의 주인</li>
+</ul>
+<h4 id="다중성"><a href="#다중성" class="headerlink" title="다중성"></a>다중성</h4><ul>
+<li>다대일 : @ManyToOne</li>
+<li>일대다 : @OneToMany</li>
+<li>일대일 : @OneToOne</li>
+<li>다대다 : @ManyToMany<ul>
+<li>실무에서는 쓰지 않는다.</li>
+</ul>
+</li>
+</ul>
+<h4 id="단방향-양방향"><a href="#단방향-양방향" class="headerlink" title="단방향, 양방향"></a>단방향, 양방향</h4><ul>
+<li>테이블<ul>
+<li>외래키 하나로 양쪽 조인 가능</li>
+<li>사실 방향이라는 개념이 없음</li>
+</ul>
+</li>
+<li>객체<ul>
+<li>참조용 필드가 있는 쪽으로만 참조가능</li>
+<li>한쪽만 참조하면 단방향</li>
+<li>양쪽이 서로 참조하면 양방향<ul>
+<li>사실 <strong>단방향 두개</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="연관관계의-주인"><a href="#연관관계의-주인" class="headerlink" title="연관관계의 주인"></a>연관관계의 주인</h4><ul>
+<li>테이블은 외래 키 하나로 두 테이블이 연관관계를 맺음</li>
+<li>객체 양방향 관계는 A -&gt; B, B -&gt; A 처럼 참조가 두개</li>
+<li>객체 양방향 관계는 참조가 2군데 있음. 둘중 테이블 외래키를 관리할 곳을 지정해야한다.</li>
+<li>연관관계의 주인 : 외래키를 관리하는 참조</li>
+<li>주인의 반대편 외래 키에 영향을 주지 않음, 단순 조회 가능</li>
+</ul>
+<p><br><br></p>
+<h3 id="다대일-N-1"><a href="#다대일-N-1" class="headerlink" title="다대일(N : 1)"></a>다대일(N : 1)</h3><h4 id="다대일-단방향"><a href="#다대일-단방향" class="headerlink" title="다대일 단방향"></a>다대일 단방향</h4><p><img src="/images/jpa/ORM-JPA/ORM06-2.png" alt="ORM06-2"></p>
+<ul>
+<li>가장 많이 사용하는 연관관계</li>
+<li>다대일의 반대는 일대다</li>
+</ul>
+<h4 id="다대일-양방향"><a href="#다대일-양방향" class="headerlink" title="다대일 양방향"></a>다대일 양방향</h4><p><img src="/images/jpa/ORM-JPA/ORM06-1.png" alt="ORM06-1"></p>
+<ul>
+<li>외래 키가 있는 쪽이 연관관계의 주인<ul>
+<li>다가 연관간계의 주인이 되는것이 좋다.</li>
+</ul>
+</li>
+<li>양쪽을 서로 참조하도록 개발<ul>
+<li>주인이 아닌쪽은 읽기만 가능</li>
+</ul>
+</li>
+</ul>
+<p><br><br></p>
+<h3 id="일대다-1-N"><a href="#일대다-1-N" class="headerlink" title="일대다(1 : N)"></a>일대다(1 : N)</h3><h4 id="일대다-단방향"><a href="#일대다-단방향" class="headerlink" title="일대다 단방향"></a>일대다 단방향</h4><p><img src="/images/jpa/ORM-JPA/ORM06-3.png" alt="ORM06-3"></p>
+<ul>
+<li><p>이모델은 권장하지 않음</p>
+</li>
+<li><p>일대다 단방향은 일대다(1 : N)에서 <strong>일(1)이 연관관계의 주인</strong></p>
+</li>
+<li><p>테이블 일대다 관계는 항상 <strong>다(N) 쪽에 외래 키가 있음</strong></p>
+</li>
+<li><p>객체와 테이블의 차이 때문에 반대편 테이블의 외래키를 관리하는 특이한 구조</p>
+<p><img src="/images/jpa/ORM-JPA/ORM06-4.png" alt="ORM06-4"></p>
+</li>
+<li><p>@JoinColumn을 꼭 사용해야 한다. 그렇지 않으면 조인 테이블 방식을 사용함(중간에 테이블이 추가된다.)</p>
+</li>
+<li><p>단점</p>
+<ul>
+<li>엔티티가 관리하는 외래키가 다른 테이블에 있음</li>
+<li>연간관계 관리를 위해 추가로 UPDATE SQL 실행</li>
+</ul>
+</li>
+<li><p><strong>일대다 단방향 매핑보다는 다대일 양방향 매핑을 사용하자.</strong></p>
+</li>
+</ul>
+<h4 id="일대다-양방향"><a href="#일대다-양방향" class="headerlink" title="일대다 양방향"></a>일대다 양방향</h4><p><img src="/images/jpa/ORM-JPA/ORM06-5.png" alt="ORM06-5"></p>
+<ul>
+<li><p>이런 매핑은 공식적으로 존재 X</p>
+</li>
+<li><p><code>@JoinColumn(insertable=false, updatable=false)</code> 을 추가한다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Entity</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Team</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Id</span> <span class="meta">@GeneratedValue</span></span><br><span class="line">    <span class="meta">@Column</span>(name = <span class="string">"team_id"</span>)</span><br><span class="line">    <span class="keyword">private</span> Long id;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Column</span>(name = <span class="string">"name"</span>, length = <span class="number">50</span>)</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@OneToMany</span></span><br><span class="line">    <span class="meta">@JoinColumn</span>(name = <span class="string">"team_id"</span>)</span><br><span class="line">    <span class="keyword">private</span> List&lt;Member&gt; members = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Entity</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Member</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Id</span> <span class="meta">@GeneratedValue</span></span><br><span class="line">    <span class="meta">@Column</span>(name = <span class="string">"member_id"</span>)</span><br><span class="line">    <span class="keyword">private</span> Long id;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Column</span>(name = <span class="string">"name"</span>)</span><br><span class="line">    <span class="keyword">private</span> String username;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@ManyToOne</span></span><br><span class="line">    <span class="meta">@JoinColumn</span>(name=<span class="string">"team_id"</span>, insertable = <span class="keyword">false</span>, updatable = <span class="keyword">false</span>)</span><br><span class="line">    <span class="keyword">private</span> Team team;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>읽기 전용 필드를 사용해서 양방향 처럼 사용하는 방법<ul>
+<li>insertable = false, updatable = false 를 쓰면 읽기 전용이 된다.</li>
+</ul>
+</li>
+<li><strong>다대일 양방향을 사용하자.</strong></li>
+</ul>
+</li>
+</ul>
+<p><br><br></p>
+<h3 id="일대일-1-1"><a href="#일대일-1-1" class="headerlink" title="일대일(1 : 1)"></a>일대일(1 : 1)</h3><h4 id="일대일-관계"><a href="#일대일-관계" class="headerlink" title="일대일 관계"></a>일대일 관계</h4><p><img src="/images/jpa/ORM-JPA/ORM06-6.png" alt="ORM06-6"></p>
+<ul>
+<li>일대일 관계는 그 반대도 일대일</li>
+<li>주 테이블이나 대상 테이블 중에 외래 키 선택 가능<ul>
+<li>주 테이블 외래 키</li>
+<li>대상 테이블에 외래 키</li>
+</ul>
+</li>
+<li><strong>외래 키에 데이터베이스 유니크 제약조건 추가</strong><ul>
+<li>안줘도 되지만 세심한 관리가 필요해진다.</li>
+</ul>
+</li>
+<li>@JoinColumn을 넣어주는것을 추천(default값이 지저분하다.)</li>
+</ul>
+<h4 id="일대일-주-테이블에-외래-키-양방향"><a href="#일대일-주-테이블에-외래-키-양방향" class="headerlink" title="일대일: 주 테이블에 외래 키 양방향"></a>일대일: 주 테이블에 외래 키 양방향</h4><p><img src="/images/jpa/ORM-JPA/ORM06-7.png" alt="ORM06-7"></p>
+<ul>
+<li>다대일 양방향 매핑 처럼 <strong>외래 키가 있는곳이 연관관계의 주인</strong></li>
+<li><strong>반대편은 mappedBy 적용</strong></li>
+</ul>
+<h4 id="일대일-대상-테이블에-외래-키-단방향-정리"><a href="#일대일-대상-테이블에-외래-키-단방향-정리" class="headerlink" title="일대일: 대상 테이블에 외래 키 단방향 정리"></a>일대일: 대상 테이블에 외래 키 단방향 정리</h4><ul>
+<li><strong>단방향 관계는 JPA에서 지원하지 않는다.</strong></li>
+<li>양방향 관계는 지원</li>
+</ul>
+<h4 id="일대일-대상-테이블에-외래-키-양방향-정리"><a href="#일대일-대상-테이블에-외래-키-양방향-정리" class="headerlink" title="일대일: 대상 테이블에 외래 키 양방향 정리"></a>일대일: 대상 테이블에 외래 키 양방향 정리</h4><p><img src="/images/jpa/ORM-JPA/ORM06-8.png" alt="ORM06-8"></p>
+<ul>
+<li>일대일 주 테이블에 외래 키 양방향과 매핑 방법은 같음 </li>
+</ul>
+<h4 id="정리"><a href="#정리" class="headerlink" title="정리"></a>정리</h4><ul>
+<li>주 테이블 외래 키<ul>
+<li>주 객체가 대상 객체의 참조를 가지는 것처럼 주 테이블에 외래 키를 두고 대상 테이블을 찾음</li>
+<li>객체지향 개발자가 선호</li>
+<li>JPA매핑관리</li>
+<li>장점 : 주 테이블만 조회해도 대상 테이블에 데이터가 있는지 확인가능</li>
+<li>단점 : 값이 없으면 외래 키에 null 허용</li>
+</ul>
+</li>
+<li>대상 테이블에 외래 키<ul>
+<li>대상 테이블에 외래 키가 존재</li>
+<li>전통적인 데이터베이스 개발자 선호</li>
+<li>장점 : 주 테이블과 대상 테이블을 일대일에서 일대다 관계로 변경할 때 테이블 구조 유지</li>
+<li>단점 : 프록시 기능의 한계로 <strong>지연로딩으로 설정해도 항상 즉시 로딩됨</strong></li>
+</ul>
+</li>
+</ul>
+<p><br><br></p>
+<h3 id="다대다-N-M"><a href="#다대다-N-M" class="headerlink" title="다대다(N : M)"></a>다대다(N : M)</h3><ul>
+<li><p><strong>실무에서 사용하지 않는것을 추천한다.</strong></p>
+</li>
+<li><p>관계형 데이터베이스는 정규화된 테이블 2개로 다대다 관계를 표현할 수 없음</p>
+<p><img src="/images/jpa/ORM-JPA/ORM06-9.png" alt="ORM06-9"></p>
+<ul>
+<li>연결 테이블을 추가해서 일대다, 다대일 관계로 풀어내야한다.</li>
+</ul>
+</li>
+<li><p>객체는 컬렉션을 사용해서 객체 2개로 다대다 관계 가능</p>
+<p><img src="/images/jpa/ORM-JPA/ORM06-10.png" alt="ORM06-10"></p>
+</li>
+</ul>
+<p><img src="/images/jpa/ORM-JPA/ORM06-12.png" alt="ORM06-12"></p>
+<ul>
+<li><p><code>@ManyToMany</code> 사용</p>
+</li>
+<li><p><code>@JoinTable</code> 로 연결 테이블 지정</p>
+<ul>
+<li>name = 생성될 연결 테이블의 이름</li>
+</ul>
+</li>
+<li><p>다대다 매핑 : 단방향, 양방향 가능</p>
+<ul>
+<li><p>양방향 시, <code>@ManyToMany(mappedBy =&quot;&quot;)</code>  옵션으로 대상 객체에 추가</p>
+<p><img src="/images/jpa/ORM-JPA/ORM06-13.png" alt="ORM06-13"></p>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="다대다-매핑의-한계"><a href="#다대다-매핑의-한계" class="headerlink" title="다대다 매핑의 한계"></a>다대다 매핑의 한계</h4><ul>
+<li>편리해 보이지만 실무에서 사용하지 않는것을 추천한다.</li>
+<li>실제 로직은 연결 테이블이 단순히 연결만하고 끝나지 않음</li>
+<li>주문시간, 수량같은 데이터가 들어올 수 있음.</li>
+</ul>
+<h4 id="다다대-매핑의-한계-극복"><a href="#다다대-매핑의-한계-극복" class="headerlink" title="다다대 매핑의 한계 극복"></a>다다대 매핑의 한계 극복</h4><ul>
+<li><p>연결 테이블용 엔티티 추가<strong>(연결 테이블을 엔티티로 승격</strong>)</p>
+<p><img src="/images/jpa/ORM-JPA/ORM06-11.png" alt="ORM06-11"></p>
+</li>
+<li><p>@ManyToMany -&gt; @OneToMany, @ManyToOne</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Entity</span></span><br><span class="line"><span class="meta">@NoargsConstructor</span></span><br><span class="line"><span class="meta">@Getter</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MemberProduct</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Id</span> <span class="meta">@GeneratedValue</span></span><br><span class="line">    <span class="keyword">private</span> Long id;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@ManyToOne</span></span><br><span class="line">    <span class="meta">@JoinColumn</span>(name = <span class="string">"member_id"</span>)</span><br><span class="line">    <span class="keyword">private</span> Member member;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@ManyToOne</span></span><br><span class="line">    <span class="meta">@JoinColumn</span>(name = <span class="string">"product_id"</span>)</span><br><span class="line">    <span class="keyword">private</span> Product product;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>반대쪽에는 <code>@OneToMany(mappedBy = &quot;product&quot;)</code>,  <code>@OneToMany(mappedBy = &quot;member&quot;)</code>와같이 설정해준다.</li>
+<li>원하는 필드를 추가 가능하다.</li>
+</ul>
+</li>
+<li><p>PK는 의미없는값을 쓰느것을 추천한다. </p>
+<ul>
+<li>유연성이나, 운영시에 유리하다.</li>
+</ul>
+</li>
+</ul>
+<p><br><br></p>
+
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/JPA/" rel="tag">JPA</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">Like this article? Support the author with</h3>
+        <div class="buttons is-centered">
+            
+                
+<div class="notification is-danger">
+    You forgot to set the <code>qrcode</code> for Alipay. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                
+<div class="notification is-danger">
+    You forgot to set the <code>qrcode</code> for Wechat. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                <!-- Visit https://www.paypal.com/donate/buttons/ to get your donate button -->
+
+<div class="notification is-danger">
+    You forgot to set the <code>business</code> and <code>currency_code</code> for Paypal. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                
+<div class="notification is-danger">
+    You forgot to set the <code>url</code> Patreon. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2019/10/26/spring/async/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">Async</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2019/10/13/JPA/ORM-JPA05/">
+                <span class="level-item">ORM05 - 연관관계 매핑 기초(단방향 연관관계, 양방향 연관관계, 연관관계의 주인, 연관관계 매핑 주의사항)</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+</div>
+                
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-4-widescreen  has-order-3 column-right is-sticky">
+    
+        
+
+    <div class="card widget" id="toc">
+        <div class="card-content">
+            <div class="menu">
+                <h3 class="menu-label">
+                    Catalogue
+                </h3>
+                <ul class="menu-list"><li>
+        <a class="is-flex" href="#자바-ORM-표준-JPA-프로그래밍-기본편">
+        <span class="has-mr-6">1</span>
+        <span>자바 ORM 표준 JPA 프로그래밍 - 기본편</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#다양한-연관관계-매핑">
+        <span class="has-mr-6">1.1</span>
+        <span>다양한 연관관계 매핑</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#연관관계-매핑시-고려사항">
+        <span class="has-mr-6">1.1.1</span>
+        <span>연관관계 매핑시 고려사항</span>
+        </a></li><li>
+        <a class="is-flex" href="#다대일-N-1">
+        <span class="has-mr-6">1.1.2</span>
+        <span>다대일(N : 1)</span>
+        </a></li><li>
+        <a class="is-flex" href="#일대다-1-N">
+        <span class="has-mr-6">1.1.3</span>
+        <span>일대다(1 : N)</span>
+        </a></li><li>
+        <a class="is-flex" href="#일대일-1-1">
+        <span class="has-mr-6">1.1.4</span>
+        <span>일대일(1 : 1)</span>
+        </a></li><li>
+        <a class="is-flex" href="#다대다-N-M">
+        <span class="has-mr-6">1.1.5</span>
+        <span>다대다(N : M)</span>
+        </a></li></ul></li></ul></li></ul>
+            </div>
+        </div>
+    </div>
+
+    
+        <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            Tag Cloud
+        </h3>
+        <a href="/tags/Algorithm/" style="font-size: 11.11px;">Algorithm</a> <a href="/tags/DataBase/" style="font-size: 10px;">DataBase</a> <a href="/tags/Etc/" style="font-size: 11.11px;">Etc</a> <a href="/tags/Git/" style="font-size: 13.33px;">Git</a> <a href="/tags/Interview/" style="font-size: 14.44px;">Interview</a> <a href="/tags/JPA/" style="font-size: 20px;">JPA</a> <a href="/tags/JSP/" style="font-size: 14.44px;">JSP</a> <a href="/tags/Java/" style="font-size: 18.89px;">Java</a> <a href="/tags/JavaScript/" style="font-size: 12.22px;">JavaScript</a> <a href="/tags/OracleDB/" style="font-size: 14.44px;">OracleDB</a> <a href="/tags/Process/" style="font-size: 11.11px;">Process</a> <a href="/tags/RestAPI/" style="font-size: 14.44px;">RestAPI</a> <a href="/tags/Seminar/" style="font-size: 10px;">Seminar</a> <a href="/tags/SpringBoot/" style="font-size: 20px;">SpringBoot</a> <a href="/tags/SpringSecurity/" style="font-size: 12.22px;">SpringSecurity</a> <a href="/tags/SpringWebMvc/" style="font-size: 16.67px;">SpringWebMvc</a> <a href="/tags/Springframework/" style="font-size: 17.78px;">Springframework</a> <a href="/tags/Springframework-kosta/" style="font-size: 14.44px;">Springframework_kosta</a> <a href="/tags/Web/" style="font-size: 12.22px;">Web</a> <a href="/tags/debug/" style="font-size: 11.11px;">debug</a> <a href="/tags/jQuery/" style="font-size: 12.22px;">jQuery</a> <a href="/tags/%EC%A0%95%EB%B3%B4%EC%B2%98%EB%A6%AC%EA%B8%B0%EC%82%AC-%ED%95%84%EA%B8%B0/" style="font-size: 13.33px;">정보처리기사_필기</a> <a href="/tags/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%ED%9A%8C%EA%B3%A0/" style="font-size: 15.56px;">프로젝트_회고</a>
+    </div>
+</div>
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/blog_logo.png" alt="ORM06 - 다양한 연관관계 매핑(다대일, 일대다, 일대일, 다대)" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2020 Bong&#39;s blog&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/cyr9210">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("en");</script>
+
+
+<script>
+var IcarusThemeSettings = {
+    site: {
+        url: 'http://yoursite.com',
+        external_link: {"enable":true,"exclude":[]}
+    },
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+<script src="/js/animation.js"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+<script src="/js/gallery.js" defer></script>
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+<a id="back-to-top" title="Back to Top" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: 'Posts',
+                PAGES: 'Pages',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
+                UNTITLED: '(Untitled)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

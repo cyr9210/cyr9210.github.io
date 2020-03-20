@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html >
+<head>
+    <meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 4.2.0" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>ORM01 - JPA 소개 - Bong&#39;s blog</title>
+
+
+    <meta name="description" content="자바 ORM 표준 JPA 프로그래밍 - 기본편JPA 소개">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ORM01 - JPA 소개">
+<meta property="og:url" content="http://yoursite.com/2019/10/04/JPA/ORM-JPA01/index.html">
+<meta property="og:site_name" content="Bong&#39;s blog">
+<meta property="og:description" content="자바 ORM 표준 JPA 프로그래밍 - 기본편JPA 소개">
+<meta property="og:image" content="http://yoursite.com/images/og_image.png">
+<meta property="article:published_time" content="2019-10-04T07:02:45.000Z">
+<meta property="article:modified_time" content="2020-03-20T07:57:35.716Z">
+<meta property="article:author" content="Bong&#39;s blog">
+<meta property="article:tag" content="JPA">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/images/og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+<style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+    
+    
+    
+    
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+    
+    
+    
+    
+    
+    
+    
+    <link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-2-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/blog_logo.png" alt="ORM01 - JPA 소개" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                href="/">Home</a>
+                
+                <a class="navbar-item"
+                href="/archives">Archives</a>
+                
+                <a class="navbar-item"
+                href="/tags">Tags</a>
+                
+                <a class="navbar-item"
+                href="/about">About</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    <a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/cyr9210">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="Search" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-8-widescreen has-order-2 column-main">
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-10-04T07:02:45.000Z">2019-10-04</time>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    7 minutes read (About 1062 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                ORM01 - JPA 소개
+            
+        </h1>
+        <div class="content">
+            <h1 id="자바-ORM-표준-JPA-프로그래밍-기본편"><a href="#자바-ORM-표준-JPA-프로그래밍-기본편" class="headerlink" title="자바 ORM 표준 JPA 프로그래밍 - 기본편"></a>자바 ORM 표준 JPA 프로그래밍 - 기본편</h1><h2 id="JPA-소개"><a href="#JPA-소개" class="headerlink" title="JPA 소개"></a>JPA 소개</h2><a id="more"></a>
+<h3 id="SQL-중심적인-개발의-문제점"><a href="#SQL-중심적인-개발의-문제점" class="headerlink" title="SQL 중심적인 개발의 문제점"></a>SQL 중심적인 개발의 문제점</h3><ul>
+<li>무한반복, 지루한 코드<ul>
+<li>CRUD<ul>
+<li>INSERT INTO…</li>
+<li>UPDATE…</li>
+<li>SELECT…</li>
+<li>DELETE…</li>
+</ul>
+</li>
+<li>필드 추가 시, 각 쿼리마다 수정이 필요하다.<ul>
+<li>휴먼 에러가 발생하기 쉽다.</li>
+</ul>
+</li>
+<li>관계형 DB사용함에 있어서는 SQL에 의존적인 개발을 피하기 어렵다.</li>
+</ul>
+</li>
+<li>패러다임 불일치<ul>
+<li>객체와 관계형 데이터 베이스의 차이<ol>
+<li>상속</li>
+<li>연관관계</li>
+<li>데이터 타입</li>
+<li>데이터 식별방법</li>
+</ol>
+</li>
+<li>처음 실행하는 SQL에 따라 탐색 범위가 결정</li>
+<li>엔티티 신뢰 문제<ul>
+<li>Query를 확인하기 전까지는 엔티티를 신뢰할 수 없다.</li>
+</ul>
+</li>
+<li>계층 분할이 어렵다.</li>
+<li>객체 비교의 결과가 다르다.</li>
+</ul>
+</li>
+<li><strong>객체지향적으로 설계를 하면 할수록 매핑 작업만 늘어난다.</strong></li>
+<li><strong>객체를 자바 컬렉션에 저장하듯이 DB에 저장할 수는 없을까? -&gt; JPA</strong></li>
+</ul>
+<p><br><br></p>
+<h3 id="JPA-소개-1"><a href="#JPA-소개-1" class="headerlink" title="JPA 소개"></a>JPA 소개</h3><ul>
+<li>Java Persistence API</li>
+<li>자바 진영의 ORM 기술 표준</li>
+</ul>
+<h4 id="ORM"><a href="#ORM" class="headerlink" title="ORM"></a>ORM</h4><ul>
+<li>Object Relational Mapping 객체 관계 매핑</li>
+<li>객체는 객체대로 설계</li>
+<li>관계형 데이터베이스는 관계형 데이터베이스대로 설계</li>
+<li>ORM 프레임워크가 주간에서 매핑</li>
+<li>대중적인 언어는 대부분 ORM 기술이 존재</li>
+</ul>
+<h4 id="JPA는-애플리케이션과-JDBC-사이에서-동작"><a href="#JPA는-애플리케이션과-JDBC-사이에서-동작" class="headerlink" title="JPA는 애플리케이션과 JDBC 사이에서 동작"></a>JPA는 애플리케이션과 JDBC 사이에서 동작</h4><p><img src="/images/jpa/ORM-JPA/ORM01-1.png" alt="ORM01-1"></p>
+<ul>
+<li>개발자 직접 JDBC API를 사용하는것이 아니고 JPA에 명령을 하면 JPA가 JDBC API를 사용해서 SQL을 호출하고 결과를 받아서 동작한다.</li>
+</ul>
+<h4 id="JPA-동작-저장"><a href="#JPA-동작-저장" class="headerlink" title="JPA 동작 - 저장"></a>JPA 동작 - 저장</h4><p><img src="/images/jpa/ORM-JPA/ORM01-2.png" alt="ORM01-2"></p>
+<ul>
+<li>적절한 query를 생성한다. (개발자가 만드는것이 아니고 만들어준다.)</li>
+</ul>
+<h4 id="JPA-동작-조회"><a href="#JPA-동작-조회" class="headerlink" title="JPA 동작 - 조회"></a>JPA 동작 - 조회</h4><p><img src="/images/jpa/ORM-JPA/ORM01-3.png" alt="ORM01-3"></p>
+<h4 id="JPA-역사"><a href="#JPA-역사" class="headerlink" title="JPA 역사"></a>JPA 역사</h4><p><img src="/images/jpa/ORM-JPA/ORM01-4.png" alt="ORM01-4"></p>
+<ul>
+<li>과거에는 EJB(엔티티 빈)이 있었다. 자바표준으로 사용되었다.</li>
+<li>그러나, 아마추어적인 기술… (속도 느림, 성능 떨어짐 등..)</li>
+<li>‘개빈 킹’이라는 개발자가 ORM 프레임워크 하이버네이트를 개발<br>여러 개발자들의 동참하여 오픈소스화가 되었다.</li>
+<li>자바 진영에서 ‘개빈킹’을 스카웃 하이버네이트를 기반으로 자바 표준 JPA를 만들었다.<br>(거의 유사하다. 다듬고.. 용어정리.. )</li>
+</ul>
+<h4 id="JPA는-표준-명세"><a href="#JPA는-표준-명세" class="headerlink" title="JPA는 표준 명세"></a>JPA는 표준 명세</h4><ul>
+<li>JPA는 인터페이스의 모음</li>
+<li>3가지 구현체가 있다.<br><img src="/images/jpa/ORM-JPA/ORM01-5.png" alt="ORM01-5"><ul>
+<li>하이버네이트<ul>
+<li>우리가 사용하는 JPA의 80~90퍼 구현체</li>
+</ul>
+</li>
+<li>EclipseLink</li>
+<li>DataNucleus</li>
+</ul>
+</li>
+</ul>
+<h4 id="JPA를-왜-사용해야-하는가"><a href="#JPA를-왜-사용해야-하는가" class="headerlink" title="JPA를 왜 사용해야 하는가?"></a>JPA를 왜 사용해야 하는가?</h4><ul>
+<li><p>SQL 중심적인 개발에서 객체 중심으로 개발</p>
+</li>
+<li><p>생산성</p>
+<ul>
+<li>저장 : jpa.persist(member);</li>
+<li>조회 : Member member = jpa.find(memberId);</li>
+<li>수정 : member.setName(“update_name”);</li>
+<li>삭제 : jpa.remove(member);</li>
+</ul>
+</li>
+<li><p>유지보수</p>
+<ul>
+<li>기존 : 필드 변경 시, 모든 SQL 수정</li>
+<li>JPA 사용 : 필드만 추가하면 된다.</li>
+</ul>
+</li>
+<li><p><strong>패러다임 불일치 해결</strong></p>
+<ul>
+<li><p>JPA와 상속<br><img src="/images/jpa/ORM-JPA/ORM01-6.png" alt="ORM01-6"></p>
+<p><img src="/images/jpa/ORM-JPA/ORM01-7.png" alt="ORM01-7"></p>
+</li>
+<li><p>JPA와 연관관계<br><img src="/images/jpa/ORM-JPA/ORM01-8.png" alt="ORM01-8"></p>
+</li>
+<li><p>JPA와 객체 그래프 탐색<br><img src="/images/jpa/ORM-JPA/ORM01-9.png" alt="ORM01-9"></p>
+</li>
+<li><p>JPA와 비교하기<br><img src="/images/jpa/ORM-JPA/ORM01-10.png" alt="ORM01-10"></p>
+</li>
+</ul>
+</li>
+<li><p>JPA의 성능 최적화 기능</p>
+<ul>
+<li><p>1차 캐시와 동일성(identity) 보장</p>
+<ul>
+<li>같은 트랜잭션 안에서는 같은 엔티티를 반환 - 약간의 조회 성능 향상</li>
+<li>여러번 조회해도 같은 SQL을 여러번 실행하지 않는다.</li>
+</ul>
+</li>
+<li><p>트랜잭션을 지원하는 쓰기 지연(transactional write-behind)<br><img src="/images/jpa/ORM-JPA/ORM01-11.png" alt="ORM01-11"></p>
+<ol>
+<li>트랜잭션을 커밋할 때까지 INSERT SQL을 모음</li>
+<li>JDBC BATCH SQL 기능을 사용해서 한번에 SQL 전송<ul>
+<li>JDBC BATCH : query를 모아서 한번에 날려준다.</li>
+<li>이 과정이 코드가 굉장히 지저분해진다. <strong>JPA는 옵션설정하나로 이 작업을 해준다.</strong></li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p>지연 로딩(Lazy Loading)</p>
+<ul>
+<li>지연로딩 : 객체가 실제 사용될 때 로딩</li>
+<li>즉시 로딩 : JOIN SQL로 한번에 연관된 객체까지 미리 조회</li>
+<li>두 로딩을 로직에 맞게 옵션을 설정하여 효과적으로 SQL을 호출한다.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>데이터 접근 추상화와 벤더 독립성</p>
+</li>
+<li><p>표준</p>
+</li>
+</ul>
+<p><br><br></p>
+
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/JPA/" rel="tag">JPA</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">Like this article? Support the author with</h3>
+        <div class="buttons is-centered">
+            
+                
+<div class="notification is-danger">
+    You forgot to set the <code>qrcode</code> for Alipay. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                
+<div class="notification is-danger">
+    You forgot to set the <code>qrcode</code> for Wechat. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                <!-- Visit https://www.paypal.com/donate/buttons/ to get your donate button -->
+
+<div class="notification is-danger">
+    You forgot to set the <code>business</code> and <code>currency_code</code> for Paypal. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                
+<div class="notification is-danger">
+    You forgot to set the <code>url</code> Patreon. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2019/10/08/JPA/ORM-JPA02/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">ORM02 - JPA 시작하기(프로젝트 생성, 애플리케이션 개발)</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2019/09/30/Security/usernamenotfound/">
+                <span class="level-item">인증 시, UsernameNotfoundException 발생 안함 문제(BadCredentials Exception만 발생)</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+</div>
+                
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-4-widescreen  has-order-3 column-right is-sticky">
+    
+        
+
+    <div class="card widget" id="toc">
+        <div class="card-content">
+            <div class="menu">
+                <h3 class="menu-label">
+                    Catalogue
+                </h3>
+                <ul class="menu-list"><li>
+        <a class="is-flex" href="#자바-ORM-표준-JPA-프로그래밍-기본편">
+        <span class="has-mr-6">1</span>
+        <span>자바 ORM 표준 JPA 프로그래밍 - 기본편</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#JPA-소개">
+        <span class="has-mr-6">1.1</span>
+        <span>JPA 소개</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#SQL-중심적인-개발의-문제점">
+        <span class="has-mr-6">1.1.1</span>
+        <span>SQL 중심적인 개발의 문제점</span>
+        </a></li><li>
+        <a class="is-flex" href="#JPA-소개-1">
+        <span class="has-mr-6">1.1.2</span>
+        <span>JPA 소개</span>
+        </a></li></ul></li></ul></li></ul>
+            </div>
+        </div>
+    </div>
+
+    
+        <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            Tag Cloud
+        </h3>
+        <a href="/tags/Algorithm/" style="font-size: 11.11px;">Algorithm</a> <a href="/tags/DataBase/" style="font-size: 10px;">DataBase</a> <a href="/tags/Etc/" style="font-size: 11.11px;">Etc</a> <a href="/tags/Git/" style="font-size: 13.33px;">Git</a> <a href="/tags/Interview/" style="font-size: 14.44px;">Interview</a> <a href="/tags/JPA/" style="font-size: 20px;">JPA</a> <a href="/tags/JSP/" style="font-size: 14.44px;">JSP</a> <a href="/tags/Java/" style="font-size: 18.89px;">Java</a> <a href="/tags/JavaScript/" style="font-size: 12.22px;">JavaScript</a> <a href="/tags/OracleDB/" style="font-size: 14.44px;">OracleDB</a> <a href="/tags/Process/" style="font-size: 11.11px;">Process</a> <a href="/tags/RestAPI/" style="font-size: 14.44px;">RestAPI</a> <a href="/tags/Seminar/" style="font-size: 10px;">Seminar</a> <a href="/tags/SpringBoot/" style="font-size: 20px;">SpringBoot</a> <a href="/tags/SpringSecurity/" style="font-size: 12.22px;">SpringSecurity</a> <a href="/tags/SpringWebMvc/" style="font-size: 16.67px;">SpringWebMvc</a> <a href="/tags/Springframework/" style="font-size: 17.78px;">Springframework</a> <a href="/tags/Springframework-kosta/" style="font-size: 14.44px;">Springframework_kosta</a> <a href="/tags/Web/" style="font-size: 12.22px;">Web</a> <a href="/tags/debug/" style="font-size: 11.11px;">debug</a> <a href="/tags/jQuery/" style="font-size: 12.22px;">jQuery</a> <a href="/tags/%EC%A0%95%EB%B3%B4%EC%B2%98%EB%A6%AC%EA%B8%B0%EC%82%AC-%ED%95%84%EA%B8%B0/" style="font-size: 13.33px;">정보처리기사_필기</a> <a href="/tags/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%ED%9A%8C%EA%B3%A0/" style="font-size: 15.56px;">프로젝트_회고</a>
+    </div>
+</div>
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/blog_logo.png" alt="ORM01 - JPA 소개" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2020 Bong&#39;s blog&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/cyr9210">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("en");</script>
+
+
+<script>
+var IcarusThemeSettings = {
+    site: {
+        url: 'http://yoursite.com',
+        external_link: {"enable":true,"exclude":[]}
+    },
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+<script src="/js/animation.js"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+<script src="/js/gallery.js" defer></script>
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+<a id="back-to-top" title="Back to Top" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: 'Posts',
+                PAGES: 'Pages',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
+                UNTITLED: '(Untitled)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

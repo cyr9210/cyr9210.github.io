@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html >
+<head>
+    <meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 4.2.0" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>Git - status, init, commit, config, log, reset, revert - Bong&#39;s blog</title>
+
+
+    <meta name="description" content="Git">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Git - status, init, commit, config, log, reset, revert">
+<meta property="og:url" content="http://yoursite.com/2019/04/19/Git/git01/index.html">
+<meta property="og:site_name" content="Bong&#39;s blog">
+<meta property="og:description" content="Git">
+<meta property="og:image" content="http://yoursite.com/images/og_image.png">
+<meta property="article:published_time" content="2019-04-19T07:15:26.000Z">
+<meta property="article:modified_time" content="2020-03-20T07:57:35.714Z">
+<meta property="article:author" content="Bong&#39;s blog">
+<meta property="article:tag" content="Git">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/images/og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+<style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+    
+    
+    
+    
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+    
+    
+    
+    
+    
+    
+    
+    <link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-2-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/blog_logo.png" alt="Git - status, init, commit, config, log, reset, revert" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                href="/">Home</a>
+                
+                <a class="navbar-item"
+                href="/archives">Archives</a>
+                
+                <a class="navbar-item"
+                href="/tags">Tags</a>
+                
+                <a class="navbar-item"
+                href="/about">About</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    <a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/cyr9210">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="Search" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-8-widescreen has-order-2 column-main">
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-04-19T07:15:26.000Z">2019-04-19</time>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    8 minutes read (About 1178 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                Git - status, init, commit, config, log, reset, revert
+            
+        </h1>
+        <div class="content">
+            <h1 id="Git"><a href="#Git" class="headerlink" title="Git"></a>Git</h1><p><img src="/images/git_logo.png" alt="gitlogo"></p>
+<a id="more"></a>
+<p>개발공부를 시작하면서.. git에대한 이야기를 참 많이 들었습니다.<br>커밋, 푸쉬, 풀등… 알 수 없는 이야기들을 하고 나중에 그것이 git과 관련된 명령어였다는 사실을 알게되었습니다.<br>회사에 일을 시작하기전에 알아야 할 필수적인 내용이라고 듣게되어 좀 자세히 알아보려고 합니다.<br>git을 사용하는 방법에는 gui방식의 툴(소스트리, 크라켄)을 사용하는 방법도 있지만 보다 본질적으로 이해하고 싶어 명령어에 대해 공부하게 되었습니다.</p>
+<h3 id="Git-명령어01"><a href="#Git-명령어01" class="headerlink" title="Git 명령어01"></a>Git 명령어01</h3><h4 id="Git-1"><a href="#Git-1" class="headerlink" title="Git"></a>Git</h4><ul>
+<li>컴퓨터 파일의 변경사항을 추적하고 여러 명의 사용자들 간에 해당 파일들의 작업을 조율하기 위한 분산 버전 관리 시스템(DVCS)이다.</li>
+</ul>
+<h4 id="git-version"><a href="#git-version" class="headerlink" title="git --version"></a>git --version</h4><ul>
+<li>git 버전확인</li>
+</ul>
+<h4 id="git-config"><a href="#git-config" class="headerlink" title="git config"></a>git config</h4><ul>
+<li>환경설정</li>
+<li>git config --global --list<ul>
+<li>현재 설정정보를 조회</li>
+<li>global 명령어는 전역설정에 대한 옵션</li>
+</ul>
+</li>
+<li>git config --global user.name “사용자명”<ul>
+<li>필수</li>
+<li>원격 저장소 같도록하는것이 좋다. </li>
+</ul>
+</li>
+<li>git config --global user.email “이메일주소”<ul>
+<li>필수 </li>
+<li>원격 저장소 같도록하는것이 좋다.</li>
+</ul>
+</li>
+</ul>
+<h4 id="git-init"><a href="#git-init" class="headerlink" title="git init"></a>git init</h4><p><img src="/images/git/git01-1.png" alt="git"></p>
+<ul>
+<li>현재 디렉토리에 git 저장소를 생성한다.</li>
+<li>git init 명령어를 사용하면 현재 디렉토리에 .git이라는 디렉토리가 생성되며 버전관리를 시작할 수 있습니다.<ul>
+<li>.git 폴더에는 버전에 대한 정보를 가지고 있다. (삭제하면 안됩니다.)</li>
+</ul>
+</li>
+</ul>
+<h4 id="git-status"><a href="#git-status" class="headerlink" title="git status"></a>git status</h4><ul>
+<li>git의 저장소는 3단계로 이루어져 있다.<ul>
+<li>작업 디렉토리 (unstaging)</li>
+<li>인덱스 (staging)</li>
+<li>HEAD (최종 확정본 commit)</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>HEAD는 현재 브랜치의 가장 최신커밋을 의미한다.</p>
+</blockquote>
+<ul>
+<li>git status<ul>
+<li>커밋되지 않은 변경사항을 조회합니다.<br><img src="/images/git/git01-3.png" alt="git"></li>
+</ul>
+</li>
+</ul>
+<h4 id="git-add"><a href="#git-add" class="headerlink" title="git add"></a>git add</h4><ul>
+<li><p>스테이징 영역에 올라간 파일만이 commit 즉, 버전등록이 가능하다.<br>  <img src="/images/git/git01-2.png" alt="git"></p>
+</li>
+<li><p>git add &lt;파일이름&gt;<br>  <img src="/images/git/git01-4.png" alt="git"></p>
+<ul>
+<li>untracked file(버전관리를 하지않는 파일)을 버전관리 시작해주며 스테이징 영역으로 올려준다. </li>
+<li>버전관리를 하고 있으나 스테이징영역에 올라기지 않은 파일을 스테이징 영역으로 올려준다. </li>
+</ul>
+</li>
+<li><p>git add .</p>
+<ul>
+<li>untracked 및 unstaged 파일을 모두 add 한다.<br><img src="/images/git/git01-5.png" alt="git"></li>
+</ul>
+</li>
+<li><p>git add -i</p>
+<ul>
+<li>대화식으로 추가 가능하다.<br><img src="/images/git/git01-12.png" alt="git"></li>
+</ul>
+</li>
+</ul>
+<h4 id="git-commit"><a href="#git-commit" class="headerlink" title="git commit"></a>git commit</h4><ul>
+<li><p>버전을 만드는 작업</p>
+</li>
+<li><p>git commit<br>  <img src="/images/git/git01-6.png" alt="git"></p>
+<ul>
+<li>버전이름을 정의하여 현재 staging된 파일들을 버전으로 등록한다.<br><img src="/images/git/git01-7.png" alt="git"><ul>
+<li>i 입력 후 메세지 입력</li>
+<li>메세지 입력 완료후 esc </li>
+<li>:wq 로 쓰고 나가기(write, quit)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>git commit -m “&lt;커밋메세지&gt;”</p>
+<ul>
+<li>커밋메세지와 함께 명령할 수 있다.</li>
+</ul>
+</li>
+<li><p>git commit -C HEAD -a --amend</p>
+<ul>
+<li>최근 커밋을 덮어쓴다.<ul>
+<li>HEAD를 commit 로그로 변경하면 해당 commit의 메세지로 커밋이 덮어써진다.</li>
+</ul>
+</li>
+<li>-c 사용 시, 커멧메세지를 변경 할 수 있다.</li>
+</ul>
+</li>
+</ul>
+<h4 id="git-diff"><a href="#git-diff" class="headerlink" title="git diff"></a>git diff</h4><ul>
+<li><p>사전 조건(test03.txt)<br>  <img src="/images/git/git01-8.png" alt="git"></p>
+</li>
+<li><p>git diff</p>
+<ul>
+<li>스테이징 영역과 작업 디렉토리의 차이정을 알려준다.<br><img src="/images/git/git01-9.png" alt="git"></li>
+</ul>
+</li>
+<li><p>git diff -cached</p>
+<ul>
+<li>스테이징 영역과 저장소<br><img src="/images/git/git01-10.png" alt="git"></li>
+</ul>
+</li>
+<li><p>git diff HEAD</p>
+<ul>
+<li>작업디렉토리, 스테이징영역, 저장소 모두 볼 수 있다.<br><img src="/images/git/git01-11.png" alt="git"></li>
+</ul>
+</li>
+</ul>
+<h4 id="git-log"><a href="#git-log" class="headerlink" title="git log"></a>git log</h4><ul>
+<li>git log<ul>
+<li>커밋로그 조회</li>
+<li>-1, -2 등을 붙여 조회로그 갯수를 지정할 수 있다.</li>
+<li>-p 옵션을 주면 변경사항도 같이 조회된다.</li>
+<li>--decorate --graph  옵션을 주면 브랜치 트리를 볼 수 있다.</li>
+</ul>
+</li>
+<li>git blame<ul>
+<li>갈 줄 앞에 커밋명과 커밋한 사람등의 정보를 볼 수 있습니다.</li>
+</ul>
+</li>
+</ul>
+<h3 id="reset-과-revert"><a href="#reset-과-revert" class="headerlink" title="reset 과 revert"></a>reset 과 revert</h3><ul>
+<li><p>git reset </p>
+<ul>
+<li>과거 버전으로 돌아가기</li>
+<li>--hard : 돌아가려는 이력이후의 모든 내용을 지운다.</li>
+<li>--soft : 돌아가려 했던 이력으로 되돌아 갔지만, 이후의 내용이 지워지지 않고, 해당 내용의 인덱스(또는 스테이지)도 그대로 </li>
+<li>--mixed : 역시 이력은 되돌려집니다. 이후에 변경된 내용에 대해서는 남아있지만, 인덱스는 초기화 됩니다.</li>
+</ul>
+</li>
+<li><p>git revert</p>
+<ul>
+<li>기존의 커밋에서 변경한 내용을 취소해서 새로운 커밋을 만듭니다. </li>
+</ul>
+</li>
+<li><p>차이점 : <a href="https://www.popit.kr/%EA%B0%9C%EB%B0%9C%EB%B0%94%EB%B3%B4%EB%93%A4-git-back-to-the-future/">https://www.popit.kr/%EA%B0%9C%EB%B0%9C%EB%B0%94%EB%B3%B4%EB%93%A4-git-back-to-the-future/</a></p>
+</li>
+</ul>
+<hr>
+<p>다음 블로깅에서는 branch와 관련된 내용에 관하여 정리하겠습니다.<br><br><br></p>
+
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/Git/" rel="tag">Git</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">Like this article? Support the author with</h3>
+        <div class="buttons is-centered">
+            
+                
+<div class="notification is-danger">
+    You forgot to set the <code>qrcode</code> for Alipay. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                
+<div class="notification is-danger">
+    You forgot to set the <code>qrcode</code> for Wechat. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                <!-- Visit https://www.paypal.com/donate/buttons/ to get your donate button -->
+
+<div class="notification is-danger">
+    You forgot to set the <code>business</code> and <code>currency_code</code> for Paypal. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                
+<div class="notification is-danger">
+    You forgot to set the <code>url</code> Patreon. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2019/04/19/Git/git02/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">Git - branch, stash</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2019/04/18/spring/springboot16/">
+                <span class="level-item">스프링 부트 운영16 - Actuator</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+</div>
+                
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-4-widescreen  has-order-3 column-right is-sticky">
+    
+        
+
+    <div class="card widget" id="toc">
+        <div class="card-content">
+            <div class="menu">
+                <h3 class="menu-label">
+                    Catalogue
+                </h3>
+                <ul class="menu-list"><li>
+        <a class="is-flex" href="#Git">
+        <span class="has-mr-6">1</span>
+        <span>Git</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#Git-명령어01">
+        <span class="has-mr-6">1.1</span>
+        <span>Git 명령어01</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#Git-1">
+        <span class="has-mr-6">1.1.1</span>
+        <span>Git</span>
+        </a></li><li>
+        <a class="is-flex" href="#git-version">
+        <span class="has-mr-6">1.1.2</span>
+        <span>git --version</span>
+        </a></li><li>
+        <a class="is-flex" href="#git-config">
+        <span class="has-mr-6">1.1.3</span>
+        <span>git config</span>
+        </a></li><li>
+        <a class="is-flex" href="#git-init">
+        <span class="has-mr-6">1.1.4</span>
+        <span>git init</span>
+        </a></li><li>
+        <a class="is-flex" href="#git-status">
+        <span class="has-mr-6">1.1.5</span>
+        <span>git status</span>
+        </a></li><li>
+        <a class="is-flex" href="#git-add">
+        <span class="has-mr-6">1.1.6</span>
+        <span>git add</span>
+        </a></li><li>
+        <a class="is-flex" href="#git-commit">
+        <span class="has-mr-6">1.1.7</span>
+        <span>git commit</span>
+        </a></li><li>
+        <a class="is-flex" href="#git-diff">
+        <span class="has-mr-6">1.1.8</span>
+        <span>git diff</span>
+        </a></li><li>
+        <a class="is-flex" href="#git-log">
+        <span class="has-mr-6">1.1.9</span>
+        <span>git log</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#reset-과-revert">
+        <span class="has-mr-6">1.2</span>
+        <span>reset 과 revert</span>
+        </a></li></ul></li></ul>
+            </div>
+        </div>
+    </div>
+
+    
+        <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            Tag Cloud
+        </h3>
+        <a href="/tags/Algorithm/" style="font-size: 11.11px;">Algorithm</a> <a href="/tags/DataBase/" style="font-size: 10px;">DataBase</a> <a href="/tags/Etc/" style="font-size: 11.11px;">Etc</a> <a href="/tags/Git/" style="font-size: 13.33px;">Git</a> <a href="/tags/Interview/" style="font-size: 14.44px;">Interview</a> <a href="/tags/JPA/" style="font-size: 20px;">JPA</a> <a href="/tags/JSP/" style="font-size: 14.44px;">JSP</a> <a href="/tags/Java/" style="font-size: 18.89px;">Java</a> <a href="/tags/JavaScript/" style="font-size: 12.22px;">JavaScript</a> <a href="/tags/OracleDB/" style="font-size: 14.44px;">OracleDB</a> <a href="/tags/Process/" style="font-size: 11.11px;">Process</a> <a href="/tags/RestAPI/" style="font-size: 14.44px;">RestAPI</a> <a href="/tags/Seminar/" style="font-size: 10px;">Seminar</a> <a href="/tags/SpringBoot/" style="font-size: 20px;">SpringBoot</a> <a href="/tags/SpringSecurity/" style="font-size: 12.22px;">SpringSecurity</a> <a href="/tags/SpringWebMvc/" style="font-size: 16.67px;">SpringWebMvc</a> <a href="/tags/Springframework/" style="font-size: 17.78px;">Springframework</a> <a href="/tags/Springframework-kosta/" style="font-size: 14.44px;">Springframework_kosta</a> <a href="/tags/Web/" style="font-size: 12.22px;">Web</a> <a href="/tags/debug/" style="font-size: 11.11px;">debug</a> <a href="/tags/jQuery/" style="font-size: 12.22px;">jQuery</a> <a href="/tags/%EC%A0%95%EB%B3%B4%EC%B2%98%EB%A6%AC%EA%B8%B0%EC%82%AC-%ED%95%84%EA%B8%B0/" style="font-size: 13.33px;">정보처리기사_필기</a> <a href="/tags/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%ED%9A%8C%EA%B3%A0/" style="font-size: 15.56px;">프로젝트_회고</a>
+    </div>
+</div>
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/blog_logo.png" alt="Git - status, init, commit, config, log, reset, revert" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2020 Bong&#39;s blog&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/cyr9210">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("en");</script>
+
+
+<script>
+var IcarusThemeSettings = {
+    site: {
+        url: 'http://yoursite.com',
+        external_link: {"enable":true,"exclude":[]}
+    },
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+<script src="/js/animation.js"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+<script src="/js/gallery.js" defer></script>
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+<a id="back-to-top" title="Back to Top" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: 'Posts',
+                PAGES: 'Pages',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
+                UNTITLED: '(Untitled)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html >
+<head>
+    <meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 4.2.0" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>ORM11 - 객체지향 쿼리언어2 중급문법(경로표현식, 페치조인, 다형성쿼리(상속), NamedQuery, 벌크연산, @BatchSize) - Bong&#39;s blog</title>
+
+
+    <meta name="description" content="자바 ORM 표준 JPA 프로그래밍 - 기본편객체지향 쿼리언어2 - 중급 문법JPQL - 경로 표현식">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ORM11 - 객체지향 쿼리언어2 중급문법(경로표현식, 페치조인, 다형성쿼리(상속), NamedQuery, 벌크연산, @BatchSize)">
+<meta property="og:url" content="http://yoursite.com/2020/02/20/JPA/ORM-JPA11/index.html">
+<meta property="og:site_name" content="Bong&#39;s blog">
+<meta property="og:description" content="자바 ORM 표준 JPA 프로그래밍 - 기본편객체지향 쿼리언어2 - 중급 문법JPQL - 경로 표현식">
+<meta property="og:image" content="http://yoursite.com/images/og_image.png">
+<meta property="article:published_time" content="2020-02-20T14:50:25.000Z">
+<meta property="article:modified_time" content="2020-03-20T07:57:35.720Z">
+<meta property="article:author" content="Bong&#39;s blog">
+<meta property="article:tag" content="JPA">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/images/og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+<style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+    
+    
+    
+    
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+    
+    
+    
+    
+    
+    
+    
+    <link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-2-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/blog_logo.png" alt="ORM11 - 객체지향 쿼리언어2 중급문법(경로표현식, 페치조인, 다형성쿼리(상속), NamedQuery, 벌크연산, @BatchSize)" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                href="/">Home</a>
+                
+                <a class="navbar-item"
+                href="/archives">Archives</a>
+                
+                <a class="navbar-item"
+                href="/tags">Tags</a>
+                
+                <a class="navbar-item"
+                href="/about">About</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    <a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/cyr9210">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="Search" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-8-widescreen has-order-2 column-main">
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-02-20T14:50:25.000Z">2020-02-20</time>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    16 minutes read (About 2470 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                ORM11 - 객체지향 쿼리언어2 중급문법(경로표현식, 페치조인, 다형성쿼리(상속), NamedQuery, 벌크연산, @BatchSize)
+            
+        </h1>
+        <div class="content">
+            <h1 id="자바-ORM-표준-JPA-프로그래밍-기본편"><a href="#자바-ORM-표준-JPA-프로그래밍-기본편" class="headerlink" title="자바 ORM 표준 JPA 프로그래밍 - 기본편"></a>자바 ORM 표준 JPA 프로그래밍 - 기본편</h1><h2 id="객체지향-쿼리언어2-중급-문법"><a href="#객체지향-쿼리언어2-중급-문법" class="headerlink" title="객체지향 쿼리언어2 - 중급 문법"></a>객체지향 쿼리언어2 - 중급 문법</h2><h3 id="JPQL-경로-표현식"><a href="#JPQL-경로-표현식" class="headerlink" title="JPQL - 경로 표현식"></a>JPQL - 경로 표현식</h3><a id="more"></a>
+<ul>
+<li><p>점(.)을 찍어 객체 그래프를 탐색하는 것</p>
+<p><img src="/images/jpa/ORM-JPA/ORM11-1.png" alt="ORM11-1"></p>
+<ul>
+<li>상태 필드(state field) : 단순히 값을 저장하기 위한 필드</li>
+<li>연관 필드(association field) : 연관관계를 위한 필드<ul>
+<li>단일 값 연관 필드 : 대상이 엔티티<ul>
+<li><code>@ManyToOne</code></li>
+<li><code>@OneToOne</code></li>
+</ul>
+</li>
+<li>컬렉션 값 연관 필드 : 대상이 컬렉션<ul>
+<li><code>@OneToMany</code></li>
+<li><code>@ManyToMany</code><h4 id="경로-표현식-특징"><a href="#경로-표현식-특징" class="headerlink" title="경로 표현식 특징"></a>경로 표현식 특징</h4></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>상태 필드 : 경로 탐색의 끝, 더이상 탐색이 불가능</p>
+</li>
+<li><p>단일 값 연관 경로 : 묵시적 내부 조인(inner join) 발생, 탐색이 더 가능하다.</p>
+<p><img src="/images/jpa/ORM-JPA/ORM11-2.png" alt="ORM11-2"></p>
+<ul>
+<li><strong>실무에서는 묵시적인 내부조인이 발생하지 않도록 쿼리를 짜야한다…</strong><ul>
+<li>튜닝이 어려움.</li>
+<li>SQL과 비슷하게 JPQL을 짜야한다.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>컬렉션 값 연관 경로 : 묵시적 내부 조인 발생, <strong>더이상 탐색이 불가능</strong></p>
+<ul>
+<li><p><strong>FROM 절에서 명시적인 조인을 통해 별칭을 얻으면 별칭을 통해 탐색이 가능하다.</strong></p>
+<p><img src="/images/jpa/ORM-JPA/ORM11-3.png" alt="ORM11-3"></p>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="명시적-조인-묵시적-조인"><a href="#명시적-조인-묵시적-조인" class="headerlink" title="명시적 조인, 묵시적 조인"></a>명시적 조인, 묵시적 조인</h4><ul>
+<li><p>명시적 조인 : join 키워드를 직접 사용</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> m <span class="keyword">FROM</span> <span class="keyword">Member</span> m <span class="keyword">join</span> m.team t</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>묵시적 조인 : 경로 표현식에 의해 묵시적으로 SQL 조인 발생(내부 조인만 가능)</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> m.team <span class="keyword">FROM</span> <span class="keyword">Member</span> m</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h4 id="경로-표현식-예제"><a href="#경로-표현식-예제" class="headerlink" title="경로 표현식 예제"></a>경로 표현식 예제</h4><ul>
+<li>select o.member.team  from Order o -&gt; 성공</li>
+<li>select t.members from Team -&gt; 성공</li>
+<li>select t.members.username from Team t -&gt; 실패<ul>
+<li>컬렉션 값 연관경로는 추가 탐색 불가능</li>
+</ul>
+</li>
+<li>select m.username from Team t join t.members m -&gt; 성공<ul>
+<li>FROM절에서 명시적 조인사용</li>
+</ul>
+</li>
+</ul>
+<h4 id="경로-탐색을-위한-묵시적-조인-주의사항"><a href="#경로-탐색을-위한-묵시적-조인-주의사항" class="headerlink" title="경로 탐색을 위한 묵시적 조인 주의사항"></a>경로 탐색을 위한 묵시적 조인 주의사항</h4><ul>
+<li>항상 내부 조인</li>
+<li>컬렉션은 경로 탐색의 끝, 명시적 조인을 통해 별칭을 얻어야함.</li>
+<li>경로 탐색은 주로 SELECT, WHERE 절에서 사용하지만 묵시적 조인으로 인해 SQL의 FROM(JOIN)절에 영향을 준다.</li>
+</ul>
+<p><strong>묵시적 조인은 사용하지 않고, 명시적 조인을 사용하는것을 권장한다.</strong></p>
+<p><br><br></p>
+<h3 id="JPQL-페치조인"><a href="#JPQL-페치조인" class="headerlink" title="JPQL - 페치조인"></a>JPQL - 페치조인</h3><ul>
+<li>SQL 조인 종류가 아니다.</li>
+<li>JPQL에서 성능 최적화를 위해 제공하는 기능</li>
+<li><strong>연관된 엔티티나 컬렉션을 SQL 한 번에 함께 조회하는 기능</strong></li>
+<li>join fetch 명령어 사용</li>
+<li>페치 조인 ::= [ LEFT (OUTER) | INNER ] JOIN FETCH 조인경로</li>
+</ul>
+<h4 id="엔티티-페치-조인"><a href="#엔티티-페치-조인" class="headerlink" title="엔티티 페치 조인"></a>엔티티 페치 조인</h4><ul>
+<li><p>회원을 조회하면서 연관된 팀도 함께 조회(SQL 한 번에)</p>
+</li>
+<li><p>예시</p>
+<ul>
+<li><p>JPQL</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> m <span class="keyword">FROM</span> <span class="keyword">Member</span> m <span class="keyword">join</span> <span class="keyword">fetch</span> m.team</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>SQL</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> m.*, T.* <span class="keyword">FROM</span> <span class="keyword">Member</span> m </span><br><span class="line"><span class="keyword">INNER</span> <span class="keyword">JOIN</span> TEAM t</span><br><span class="line"><span class="keyword">ON</span> m.team_id = t.id</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="예시"><a href="#예시" class="headerlink" title="예시"></a>예시</h4><p><img src="/images/jpa/ORM-JPA/ORM11-4.png" alt="ORM11-4"></p>
+<ul>
+<li><p>join</p>
+<p><img src="/images/jpa/ORM-JPA/ORM11-5.png" alt="ORM11-5"></p>
+<ul>
+<li>N+1 문제가 발생한다.</li>
+</ul>
+</li>
+<li><p><strong>join fetch</strong></p>
+<p><img src="/images/jpa/ORM-JPA/ORM11-6.png" alt="ORM11-6"></p>
+<ul>
+<li>한 번에 쿼리를 날린다.(N+1문제가 발생하지 않는다.)</li>
+</ul>
+</li>
+</ul>
+<h4 id="컬렉션-패치-조인"><a href="#컬렉션-패치-조인" class="headerlink" title="컬렉션 패치 조인"></a>컬렉션 패치 조인</h4><p><img src="/images/jpa/ORM-JPA/ORM11-8.png" alt="ORM11-8"></p>
+<ul>
+<li><p>데이터 중복 발생</p>
+<ul>
+<li><p>왜?</p>
+<p><img src="/images/jpa/ORM-JPA/ORM11-7.png" alt="ORM11-7"></p>
+<ul>
+<li>조회 ROW가 두개 나오기 때문에<br>같은 주소값을 가진 결과가 두 줄나온다.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="페치-조인과-DISTINCT"><a href="#페치-조인과-DISTINCT" class="headerlink" title="페치 조인과 DISTINCT"></a>페치 조인과 DISTINCT</h4><ul>
+<li><p>SQL의 DISTINCT는 중복된 결과를 제거하는 명령</p>
+</li>
+<li><p>JPQL의 DISTINCT</p>
+<ul>
+<li><p>SQL에 DISTINCT를 추가</p>
+</li>
+<li><p>애플리케이션에서 중복된 엔티티 제거</p>
+<ul>
+<li><p>SQL에 DISTINCT 만으로는 데이터가 다르므로 중복제거가 되지 않는다.</p>
+<p><img src="/images/jpa/ORM-JPA/ORM11-9.png" alt="ORM11-9"></p>
+</li>
+<li><p>애플리케이션에서 중복 제거 시도</p>
+<p><img src="/images/jpa/ORM-JPA/ORM11-11.png" alt="ORM11-11"></p>
+</li>
+<li><p>결과</p>
+<p><img src="/images/jpa/ORM-JPA/ORM11-10.png" alt="ORM11-10"></p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="페치-조인과-일반-조인의-차이"><a href="#페치-조인과-일반-조인의-차이" class="headerlink" title="페치 조인과 일반 조인의 차이"></a>페치 조인과 일반 조인의 차이</h4><ul>
+<li><p>일반 조인 실행 시, 연관된 엔티티를 함께 조회하지 않는다.</p>
+<ul>
+<li><p>join은 나가되 select 절에서 포함하지 않음</p>
+<p><img src="/images/jpa/ORM-JPA/ORM11-12.png" alt="ORM11-12"></p>
+</li>
+</ul>
+</li>
+<li><p>JPQL은 결과를 반환할 때, 연관관계를 고려하지 않는다.</p>
+</li>
+<li><p>단지 SELECT 절에 지정한 엔티티만 조회한다.</p>
+</li>
+<li><p>페치 조인을 사용할 때만, 연관된 엔티티도 함께 조회(즉시로딩)</p>
+</li>
+<li><p><strong>페치 조인은 객체 그래프를 SQL 한번에 조회하는 개념</strong></p>
+</li>
+<li><p>대부분의 N+1문제를 페치 조인으로 해결한다.</p>
+</li>
+</ul>
+<p><br><br></p>
+<h3 id="패치-조인의-특징과-한계"><a href="#패치-조인의-특징과-한계" class="headerlink" title="패치 조인의 특징과 한계"></a>패치 조인의 특징과 한계</h3><ul>
+<li><p><strong>패치 조인 대상에는 별칭을 줄 수 없다.</strong></p>
+<ul>
+<li><p>하이버네이트는 가능, 가급적 사용하지 않는것이 좋다.</p>
+<ul>
+<li><p>연관관계가 여러개 일때, join을 하기 위해서만 사용하자.</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 예시</span></span><br><span class="line"><span class="keyword">select</span> t <span class="keyword">From</span> Team t</span><br><span class="line"><span class="keyword">join</span> <span class="keyword">fetch</span> t.members m</span><br><span class="line"><span class="keyword">join</span> <span class="keyword">fetch</span> m.something s</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>둘 이상의 컬렉션은 패치 조인 할 수 없다.</strong></p>
+<ul>
+<li>데이터가 잘 안맞는다.</li>
+</ul>
+</li>
+<li><p><strong>컬렉션을 패치 조인하면 페이징 API(setFirstResult, setMaxResult)를 사용할 수 없다.</strong></p>
+<ul>
+<li><p>일대일, 다대일 관계들은 페치조인해도 페이징 가능</p>
+</li>
+<li><p>하이버네이튼 경고 로그를 남기고 메모리에서 페이징(전체를 조회..매우위험)</p>
+</li>
+<li><p>다대일로 변경하여 페치조인하여 해결하거나,  <code>@BatchSize(size = 100)</code> 를 사용하여 레이지 로딩 시, 사이즈만큼 IN 쿼리를 날려 한번에 조회가 가능하다.</p>
+<p><img src="/images/jpa/ORM-JPA/ORM11-13.png" alt="ORM11-13"></p>
+<ul>
+<li><p>size는 보통 1000이하로 크게잡는다.</p>
+</li>
+<li><p>N + 1을 해결하는 방법중 하나</p>
+</li>
+<li><p>실무에서는 글로벌 세팅으로 사용한다.</p>
+<p><img src="/images/jpa/ORM-JPA/ORM11-14.png" alt="ORM11-14"></p>
+<ul>
+<li>@BatchSize를 안써도된다.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>연관된 엔티티들을 SQL한번으로 조회(성능 최적화)</p>
+</li>
+<li><p>글로벌 로딩 전략보다 우선 순위로 적용된다.</p>
+<ul>
+<li><p><code>@OneToMany(fetch = FetchType.LAZY)</code> 보다 우선..</p>
+<p>(실무에서 글로벌 로딩전략은 모두 지연 로딩으로 적용)</p>
+</li>
+</ul>
+</li>
+<li><p>최적화가 필요한곳은 페치 조인 적용</p>
+<ul>
+<li>JPA 성능문제의 70~80% 는 페치조인으로 해결할 수 있다.</li>
+</ul>
+</li>
+</ul>
+<h4 id="페치조인-정리"><a href="#페치조인-정리" class="headerlink" title="페치조인 - 정리"></a>페치조인 - 정리</h4><ul>
+<li><strong>페치 조인은 객체그래프를 유지할 때 사용하면 효과적</strong></li>
+<li>여러 테이블을 조인해서 엔티티가 가진 모양이 아닌 전혀 다른 결과를 내야하면, 패치조인 보다는 일반 조인을 사용하고 필요한 데이터들만 조회해서 DTO로 반환하는 것이 효과적<ul>
+<li>예를들면 통계 데이터</li>
+</ul>
+</li>
+</ul>
+<p><br><br></p>
+<h3 id="JPQL-다형성-쿼리"><a href="#JPQL-다형성-쿼리" class="headerlink" title="JPQL - 다형성 쿼리"></a>JPQL - 다형성 쿼리</h3><ul>
+<li><p>아래 예제 공통 </p>
+<p><img src="/images/jpa/ORM-JPA/ORM11-15.png" alt="ORM11-15"></p>
+</li>
+</ul>
+<h4 id="TYPE"><a href="#TYPE" class="headerlink" title="TYPE"></a>TYPE</h4><ul>
+<li><p>조회 대상을 특정 자식으로 한정</p>
+<ul>
+<li><p>예) item 중 Book과 Movie를 조회하라</p>
+<ul>
+<li><p>JPQL</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> i <span class="keyword">from</span> Item i</span><br><span class="line"><span class="keyword">where</span> <span class="keyword">type</span>(i) <span class="keyword">IN</span> (Book, Movie)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>SQL</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> i.* <span class="keyword">from</span> Item i</span><br><span class="line"><span class="keyword">where</span> i.DTYPE <span class="keyword">IN</span> (<span class="string">'B'</span>, <span class="string">'M'</span>)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="TREAT-JPA2-1"><a href="#TREAT-JPA2-1" class="headerlink" title="TREAT(JPA2.1)"></a>TREAT(JPA2.1)</h4><ul>
+<li><p>자바의 타입 캐스팅과 유사</p>
+</li>
+<li><p>상속 구조에서 부모 타입을 특정 자식 타입으로 다룰 때 사용</p>
+</li>
+<li><p>FROM, WHERE, SELECT (하이버네이트 지원) 사용</p>
+</li>
+<li><p>예) 부모 : Item , 자식 : Book</p>
+<ul>
+<li><p>JPQL</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> i <span class="keyword">from</span> Item i</span><br><span class="line"><span class="keyword">where</span> <span class="keyword">treat</span>(i <span class="keyword">as</span> Book).author = <span class="string">'kim'</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>SQL</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> i.* <span class="keyword">from</span> Item i</span><br><span class="line"><span class="keyword">where</span> i.DTYPE = <span class="string">'B'</span> <span class="keyword">and</span> i.author = <span class="string">'kim'</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>상속관계 매핑 전략에 따라서 쿼리는 다르게 나간다.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><br><br></p>
+<h3 id="JPQL-엔티티-직접-사용"><a href="#JPQL-엔티티-직접-사용" class="headerlink" title="JPQL - 엔티티 직접 사용"></a>JPQL - 엔티티 직접 사용</h3><ul>
+<li><p>JPQL에서 엔티티를 직접 사용하면 SQL에서 해당 엔티티의 기본 키값을 사용한다.</p>
+<ul>
+<li><p>JPQL</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="keyword">count</span>(m.id) <span class="keyword">from</span> <span class="keyword">Member</span> m; </span><br><span class="line"><span class="keyword">select</span> <span class="keyword">count</span>(m) <span class="keyword">from</span> <span class="keyword">Member</span> m;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>전자는 엔티티 아이디를 사용, 후자는 엔티티를 직접사용</li>
+</ul>
+</li>
+<li><p>SQL</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="keyword">count</span>(m.id) <span class="keyword">as</span> cnt <span class="keyword">from</span> <span class="keyword">Member</span> m;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>둘 다 같은 SQL이 실행됨.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>엔티티를 파라미터로 전달</p>
+<p><img src="/images/jpa/ORM-JPA/ORM11-16.png" alt="ORM11-16"></p>
+<ul>
+<li>자동으로 식별자를 전달한다.</li>
+</ul>
+</li>
+<li><p>엔티티 직접 사용 - 외래 키 값</p>
+<p><img src="/images/jpa/ORM-JPA/ORM11-17.png" alt="ORM11-17"></p>
+<ul>
+<li>마찬 가지로 식별자를 전달</li>
+</ul>
+</li>
+</ul>
+<p><br><br></p>
+<h3 id="JPQL-Named-쿼리"><a href="#JPQL-Named-쿼리" class="headerlink" title="JPQL - Named 쿼리"></a>JPQL - Named 쿼리</h3><ul>
+<li><p>미리 정의해서 이름을 부여해두고 사용하는 JPQL</p>
+<p><img src="/images/jpa/ORM-JPA/ORM11-18.png" alt="ORM11-18"></p>
+<ul>
+<li><p>사용</p>
+<p><img src="/images/jpa/ORM-JPA/ORM11-19.png" alt="ORM11-19"></p>
+</li>
+</ul>
+</li>
+<li><p><strong>정적 쿼리만 가능하다.</strong></p>
+</li>
+<li><p>어노테이션, XML에 정의</p>
+</li>
+<li><p>애플리케이션 로딩 시점에 초기화 후, 재사용</p>
+</li>
+<li><p><strong>애플리케이션 로딩 시점에 쿼리를 검증</strong></p>
+<ul>
+<li>배포 전에 알 수 있다.</li>
+</ul>
+</li>
+<li><p><strong>SpringDataJpa에서 인터페이스 위에 @Query로 정의된 쿼리가 NamedQuery로 등록한다.</strong></p>
+<ul>
+<li>어플리케이션 로딩 시점에 파싱을 하여 SQL 문법 오류를 잡아준다.</li>
+<li>이름없는 NamedQuery라고 불린다.</li>
+</ul>
+</li>
+</ul>
+<h4 id="Named-쿼리-환경에-따른-설정"><a href="#Named-쿼리-환경에-따른-설정" class="headerlink" title="Named 쿼리 환경에 따른 설정"></a>Named 쿼리 환경에 따른 설정</h4><ul>
+<li>XML이 우선권을 가진다.(어노테이션 보다)<ul>
+<li>애플리케이션 운영 환경에 따라 다른 XML을 배포할 수 있다.</li>
+</ul>
+</li>
+</ul>
+<p><br><br></p>
+<h3 id="JPQL-벌크연산"><a href="#JPQL-벌크연산" class="headerlink" title="JPQL - 벌크연산"></a>JPQL - 벌크연산</h3><ul>
+<li><p>여러데이터를 수정 삭제하는 작업</p>
+<ul>
+<li>재고가 10개 미만인 모든상품의 가격을 10% 상승하려면?</li>
+</ul>
+</li>
+<li><p>JPA 변경 감지 기능으로 실행하려면 너무 많은 SQL 실행</p>
+<ul>
+<li>전체 리스트 조회</li>
+<li>상품엔티티 가격 변경</li>
+<li>트랜잭션 커밋 시점에 변경 감지하여 동작</li>
+<li>변경된 데이터가 100건이라면 100번의 UPDATE SQL 실행</li>
+</ul>
+</li>
+<li><p>쿼리 한번으로 여러 테이블의 로우를 변경</p>
+</li>
+<li><p><code>executeUpdate()</code> 메소드 사용으로 벌크연산이 가능하다.</p>
+<p><img src="/images/jpa/ORM-JPA/ORM11-20.png" alt="ORM11-20"></p>
+<ul>
+<li>result는 적용된 숫자</li>
+</ul>
+</li>
+<li><p>UPDATE, DELETE 지원</p>
+</li>
+<li><p>INSERT(insert into .. select )는 하이버네이트에서는 지원한다.</p>
+</li>
+</ul>
+<h4 id="벌크-연산-주의"><a href="#벌크-연산-주의" class="headerlink" title="벌크 연산 주의"></a>벌크 연산 주의</h4><ul>
+<li><p>영속성 컨텍스트를 무시하고 데이터 베이스에 직접 쿼리</p>
+</li>
+<li><p>데이터가 꼬일 수 있다.</p>
+</li>
+<li><p>해결책</p>
+<ol>
+<li><p>벌크 연산을 먼저 실행</p>
+</li>
+<li><p><strong>먼저 실행하지 못하면 벌크연산 수행 후 영속성 컨텍스트 초기화</strong></p>
+<ul>
+<li><p>플러쉬는 상관이 없다. 벌크연산도 JPQL이 실행되고 쿼리가 나가기 때문에플러쉬가 된다.</p>
+</li>
+<li><p>벌크연산 전에 flush가 자동 호출된다.</p>
+<p><img src="/images/jpa/ORM-JPA/ORM11-21.png" alt="ORM11-21"></p>
+<ul>
+<li><p><code>em.flush()</code> 가 없어도 flush 된다.</p>
+</li>
+<li><p><code>em.clear()</code> 는  반드시 필요</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p>Spring Data Jpa 에서는 Modifying Query를 제공한다.</p>
+<ul>
+<li>이 또한, 영속성컨텍스트를 자동으로 clear 해주지 않는다.</li>
+</ul>
+</li>
+</ul>
+<p><br><br></p>
+
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/JPA/" rel="tag">JPA</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">Like this article? Support the author with</h3>
+        <div class="buttons is-centered">
+            
+                
+<div class="notification is-danger">
+    You forgot to set the <code>qrcode</code> for Alipay. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                
+<div class="notification is-danger">
+    You forgot to set the <code>qrcode</code> for Wechat. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                <!-- Visit https://www.paypal.com/donate/buttons/ to get your donate button -->
+
+<div class="notification is-danger">
+    You forgot to set the <code>business</code> and <code>currency_code</code> for Paypal. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                
+<div class="notification is-danger">
+    You forgot to set the <code>url</code> Patreon. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2020/01/27/JPA/ORM-JPA10/">
+                <span class="level-item">ORM10 - 객체지향 쿼리언어1 기본문법(JPQL, 조인, 페이징, 서브쿼리, 조건식, 사용자 정의 방언)</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+</div>
+                
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-4-widescreen  has-order-3 column-right is-sticky">
+    
+        
+
+    <div class="card widget" id="toc">
+        <div class="card-content">
+            <div class="menu">
+                <h3 class="menu-label">
+                    Catalogue
+                </h3>
+                <ul class="menu-list"><li>
+        <a class="is-flex" href="#자바-ORM-표준-JPA-프로그래밍-기본편">
+        <span class="has-mr-6">1</span>
+        <span>자바 ORM 표준 JPA 프로그래밍 - 기본편</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#객체지향-쿼리언어2-중급-문법">
+        <span class="has-mr-6">1.1</span>
+        <span>객체지향 쿼리언어2 - 중급 문법</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#JPQL-경로-표현식">
+        <span class="has-mr-6">1.1.1</span>
+        <span>JPQL - 경로 표현식</span>
+        </a></li><li>
+        <a class="is-flex" href="#JPQL-페치조인">
+        <span class="has-mr-6">1.1.2</span>
+        <span>JPQL - 페치조인</span>
+        </a></li><li>
+        <a class="is-flex" href="#패치-조인의-특징과-한계">
+        <span class="has-mr-6">1.1.3</span>
+        <span>패치 조인의 특징과 한계</span>
+        </a></li><li>
+        <a class="is-flex" href="#JPQL-다형성-쿼리">
+        <span class="has-mr-6">1.1.4</span>
+        <span>JPQL - 다형성 쿼리</span>
+        </a></li><li>
+        <a class="is-flex" href="#JPQL-엔티티-직접-사용">
+        <span class="has-mr-6">1.1.5</span>
+        <span>JPQL - 엔티티 직접 사용</span>
+        </a></li><li>
+        <a class="is-flex" href="#JPQL-Named-쿼리">
+        <span class="has-mr-6">1.1.6</span>
+        <span>JPQL - Named 쿼리</span>
+        </a></li><li>
+        <a class="is-flex" href="#JPQL-벌크연산">
+        <span class="has-mr-6">1.1.7</span>
+        <span>JPQL - 벌크연산</span>
+        </a></li></ul></li></ul></li></ul>
+            </div>
+        </div>
+    </div>
+
+    
+        <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            Tag Cloud
+        </h3>
+        <a href="/tags/Algorithm/" style="font-size: 11.11px;">Algorithm</a> <a href="/tags/DataBase/" style="font-size: 10px;">DataBase</a> <a href="/tags/Etc/" style="font-size: 11.11px;">Etc</a> <a href="/tags/Git/" style="font-size: 13.33px;">Git</a> <a href="/tags/Interview/" style="font-size: 14.44px;">Interview</a> <a href="/tags/JPA/" style="font-size: 20px;">JPA</a> <a href="/tags/JSP/" style="font-size: 14.44px;">JSP</a> <a href="/tags/Java/" style="font-size: 18.89px;">Java</a> <a href="/tags/JavaScript/" style="font-size: 12.22px;">JavaScript</a> <a href="/tags/OracleDB/" style="font-size: 14.44px;">OracleDB</a> <a href="/tags/Process/" style="font-size: 11.11px;">Process</a> <a href="/tags/RestAPI/" style="font-size: 14.44px;">RestAPI</a> <a href="/tags/Seminar/" style="font-size: 10px;">Seminar</a> <a href="/tags/SpringBoot/" style="font-size: 20px;">SpringBoot</a> <a href="/tags/SpringSecurity/" style="font-size: 12.22px;">SpringSecurity</a> <a href="/tags/SpringWebMvc/" style="font-size: 16.67px;">SpringWebMvc</a> <a href="/tags/Springframework/" style="font-size: 17.78px;">Springframework</a> <a href="/tags/Springframework-kosta/" style="font-size: 14.44px;">Springframework_kosta</a> <a href="/tags/Web/" style="font-size: 12.22px;">Web</a> <a href="/tags/debug/" style="font-size: 11.11px;">debug</a> <a href="/tags/jQuery/" style="font-size: 12.22px;">jQuery</a> <a href="/tags/%EC%A0%95%EB%B3%B4%EC%B2%98%EB%A6%AC%EA%B8%B0%EC%82%AC-%ED%95%84%EA%B8%B0/" style="font-size: 13.33px;">정보처리기사_필기</a> <a href="/tags/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%ED%9A%8C%EA%B3%A0/" style="font-size: 15.56px;">프로젝트_회고</a>
+    </div>
+</div>
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/blog_logo.png" alt="ORM11 - 객체지향 쿼리언어2 중급문법(경로표현식, 페치조인, 다형성쿼리(상속), NamedQuery, 벌크연산, @BatchSize)" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2020 Bong&#39;s blog&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/cyr9210">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("en");</script>
+
+
+<script>
+var IcarusThemeSettings = {
+    site: {
+        url: 'http://yoursite.com',
+        external_link: {"enable":true,"exclude":[]}
+    },
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+<script src="/js/animation.js"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+<script src="/js/gallery.js" defer></script>
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+<a id="back-to-top" title="Back to Top" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: 'Posts',
+                PAGES: 'Pages',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
+                UNTITLED: '(Untitled)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html >
+<head>
+    <meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 4.2.0" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>스프링 데이터 JPA06 - 스프링 데이터 JPA - Bong&#39;s blog</title>
+
+
+    <meta name="description" content="스프링 데이터 JPA(inflearn) - 백기선스프링 데이터 JPA">
+<meta property="og:type" content="article">
+<meta property="og:title" content="스프링 데이터 JPA06 - 스프링 데이터 JPA">
+<meta property="og:url" content="http://yoursite.com/2019/05/03/spring/springjpa06/index.html">
+<meta property="og:site_name" content="Bong&#39;s blog">
+<meta property="og:description" content="스프링 데이터 JPA(inflearn) - 백기선스프링 데이터 JPA">
+<meta property="og:image" content="http://yoursite.com/images/og_image.png">
+<meta property="article:published_time" content="2019-05-03T09:05:54.000Z">
+<meta property="article:modified_time" content="2020-03-20T07:57:35.786Z">
+<meta property="article:author" content="Bong&#39;s blog">
+<meta property="article:tag" content="JPA">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/images/og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+<style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+    
+    
+    
+    
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+    
+    
+    
+    
+    
+    
+    
+    <link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-2-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/blog_logo.png" alt="스프링 데이터 JPA06 - 스프링 데이터 JPA" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                href="/">Home</a>
+                
+                <a class="navbar-item"
+                href="/archives">Archives</a>
+                
+                <a class="navbar-item"
+                href="/tags">Tags</a>
+                
+                <a class="navbar-item"
+                href="/about">About</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    <a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/cyr9210">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="Search" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-8-widescreen has-order-2 column-main">
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-05-03T09:05:54.000Z">2019-05-03</time>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    24 minutes read (About 3544 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                스프링 데이터 JPA06 - 스프링 데이터 JPA
+            
+        </h1>
+        <div class="content">
+            <p><img src="/images/jpa_logo.png" alt="springf"></p>
+<h1 id="스프링-데이터-JPA-inflearn-백기선"><a href="#스프링-데이터-JPA-inflearn-백기선" class="headerlink" title="스프링 데이터 JPA(inflearn) - 백기선"></a>스프링 데이터 JPA(inflearn) - 백기선</h1><h2 id="스프링-데이터-JPA"><a href="#스프링-데이터-JPA" class="headerlink" title="스프링 데이터 JPA"></a>스프링 데이터 JPA</h2><a id="more"></a>
+<h3 id="JPA-Repository"><a href="#JPA-Repository" class="headerlink" title="JPA Repository"></a>JPA Repository</h3><h4 id="EnableJpaRepositories"><a href="#EnableJpaRepositories" class="headerlink" title="@EnableJpaRepositories"></a>@EnableJpaRepositories</h4><ul>
+<li>스프링 부트 사용할 때는 사용하지 않아도 자동 설정 됨.</li>
+<li>스프링 부트 사용하지 않을 때는 @Configuration과 같이 사용.</li>
+<li>@Repository 안붙여도 된다. (실제 구현체에서 가지고 있다. 중복임..)</li>
+</ul>
+<h4 id="Repository"><a href="#Repository" class="headerlink" title="@Repository"></a>@Repository</h4><ul>
+<li>SQLExcpetion 또는 JPA 관련 예외를 스프링의 DataAccessException으로 변환 해준다.</li>
+</ul>
+<h3 id="엔티티-저장하기"><a href="#엔티티-저장하기" class="headerlink" title="엔티티 저장하기"></a>엔티티 저장하기</h3><h4 id="Transient인지-Detached-인지-어떻게-판단-하는가"><a href="#Transient인지-Detached-인지-어떻게-판단-하는가" class="headerlink" title="Transient인지 Detached 인지 어떻게 판단 하는가?"></a>Transient인지 Detached 인지 어떻게 판단 하는가?</h4><ul>
+<li>엔티티의 @Id 프로퍼티를 찾는다. 해당 프로퍼티가 null이면 Transient 상태로 판단하고 id가 null이 아니면 Detached 상태로 판단한다.</li>
+<li>엔티티가 Persistable 인터페이스를 구현하고 있다면 isNew() 메소드에 위임한다.</li>
+<li>JpaRepositoryFactory를 상속받는 클래스를 만들고 getEntityInfomration()을 오버라이딩해서 자신이 원하는 판단 로직을 구현할 수도 있다.</li>
+</ul>
+<h4 id="EntityManager-persist"><a href="#EntityManager-persist" class="headerlink" title="EntityManager.persist()"></a>EntityManager.persist()</h4><ul>
+<li><a href="https://docs.oracle.com/javaee/6/api/javax/persistence/EntityManager.html#persist">참고문서</a></li>
+<li>Persist() 메소드에 넘긴 그 엔티티 객체를 Persistent 상태로 변경한다.</li>
+</ul>
+<h4 id="EntityManager-merge"><a href="#EntityManager-merge" class="headerlink" title="EntityManager.merge()"></a>EntityManager.merge()</h4><ul>
+<li><a href="https://docs.oracle.com/javaee/6/api/javax/persistence/EntityManager.html#merge">참고문서</a></li>
+<li>Merge() 메소드에 넘긴 그 엔티티의 복사본을 만들고, 그 복사본을 다시 Persistent 상태로 변경하고 그 복사본을 반환한다.</li>
+</ul>
+<h4 id="JpaRepository의-save"><a href="#JpaRepository의-save" class="headerlink" title="JpaRepository의 save()"></a>JpaRepository의 save()</h4><ul>
+<li>JpaRepository의 save()는 단순히 새 엔티티를 추가하는 메소드가 아님<ul>
+<li>Transient 상태의 객체라면 EntityManager.persist()</li>
+<li>Detached 상태의 객체라면 EntityManager.merge()</li>
+<li><strong>merge / persist 관련 오류 발생이 있을 수 있음으로 언제나 Repository에서 리턴되는 값을 사용하자.</strong><br>  <img src="/images/jpa/image1.PNG" alt="springjpa"></li>
+</ul>
+</li>
+</ul>
+<hr>
+<h4 id="테스트-범위에-따라서-달라지는-결과"><a href="#테스트-범위에-따라서-달라지는-결과" class="headerlink" title="테스트 범위에 따라서 달라지는 결과"></a>테스트 범위에 따라서 달라지는 결과</h4><ul>
+<li>@SpringBootTest<ul>
+<li>postRepository.save()에만 트랜잭션이 적용됨</li>
+<li>테스트 내에서는 entitymanager가 객체를 모른다.</li>
+</ul>
+</li>
+<li>@DataJpaTest<ul>
+<li>트랜잭션이 테스트 단위이다.</li>
+<li>postRepository의 오퍼레이션과  EntityManager 모두 한 트랜잭션</li>
+<li>entitymanager가 객체를 안다.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="쿼리-메소드"><a href="#쿼리-메소드" class="headerlink" title="쿼리 메소드"></a>쿼리 메소드</h3><h4 id="쿼리-생성하기"><a href="#쿼리-생성하기" class="headerlink" title="쿼리 생성하기"></a>쿼리 생성하기</h4><ul>
+<li><a href="https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#jpa.query-methods.query-creation">참고문서</a></li>
+<li>And, Or</li>
+<li>Is, Equals</li>
+<li>LessThan, LessThanEqual, GreaterThan, GreaterThanEqual</li>
+<li>After, Before</li>
+<li>IsNull, IsNotNull, NotNull</li>
+<li>Like, NotLike</li>
+<li>StartingWith, EndingWith, Containing</li>
+<li>OrderBy</li>
+<li>Not, In, NotIn</li>
+<li>True, False</li>
+<li>IgnoreCase</li>
+</ul>
+<h4 id="쿼리-찾아쓰기"><a href="#쿼리-찾아쓰기" class="headerlink" title="쿼리 찾아쓰기"></a>쿼리 찾아쓰기</h4><ul>
+<li>엔티티에 정의한 쿼리 찾아 사용하기 JPA Named 쿼리<ul>
+<li>@NamedQuery</li>
+<li>@NamedNativeQuery</li>
+</ul>
+</li>
+<li>리포지토리 메소드에 정의한 쿼리 사용하기<ul>
+<li>@Query</li>
+<li>@Query(nativeQuery=true)<br><br><br></li>
+</ul>
+</li>
+</ul>
+<h3 id="Sort"><a href="#Sort" class="headerlink" title="Sort"></a>Sort</h3><ul>
+<li><strong>이전과 마찬가지로 Pageable이나 Sort를 매개변수로 사용할 수 있는데, @Query와 같이 사용할 때 제약 사항이 하나 있다.</strong></li>
+<li>Sort는 그 안에서 사용한 프로퍼티 또는 alias가 엔티티에 없는 경우에는 예외가 발생합니다.</li>
+<li>Order by 절에서 함수를 호출하는 경우에는 Sort를 사용하지 못합니다. 그 경우에는 JpaSort.unsafe()를 사용 해야 합니다.<ul>
+<li>JpaSort.unsafe()를 사용하면 함수 호출을 할 수 있습니다.</li>
+<li>JpaSort.unsafe(“LENGTH(firstname)”);<br><br><br></li>
+</ul>
+</li>
+</ul>
+<h3 id="Named-Parameter과-SpEL"><a href="#Named-Parameter과-SpEL" class="headerlink" title="Named Parameter과 SpEL"></a>Named Parameter과 SpEL</h3><h4 id="Named-Parameter"><a href="#Named-Parameter" class="headerlink" title="Named Parameter"></a>Named Parameter</h4><ul>
+<li>@Query에서 참조하는 매개변수를 ?1, ?2 이렇게 채번으로 참조하는게 아니라 이름으로 :title 이렇게 참조할 수 있다.  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">@Query(&quot;SELECT p FROM Post AS p WHERE p.title &#x3D; :title&quot;)</span><br><span class="line">List&lt;Post&gt; findByTitle(@Param(&quot;title&quot;) String title, Sort sort);</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h4 id="SpEL"><a href="#SpEL" class="headerlink" title="SpEL"></a>SpEL</h4><ul>
+<li>스프링 표현 언어</li>
+<li><a href="https://docs.spring.io/spring/docs/current/spring-framework-reference/core.html#expressions">참고문서</a></li>
+<li>@Query에서 엔티티 이름을 아래와같이 표현할 수 있습니다(entityName)   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">@Query(&quot;SELECT p FROM #&#123;#entityName&#125; AS p WHERE p.title &#x3D; :title&quot;)</span><br><span class="line">List&lt;Post&gt; findByTitle(@Param(&quot;title&quot;) String title, Sort sort);</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<br>
+
+<h3 id="Update-쿼리-메소드"><a href="#Update-쿼리-메소드" class="headerlink" title="Update 쿼리 메소드"></a>Update 쿼리 메소드</h3><h4 id="Update-또는-Delete-쿼리-직접-정의하기"><a href="#Update-또는-Delete-쿼리-직접-정의하기" class="headerlink" title="Update 또는 Delete 쿼리 직접 정의하기"></a>Update 또는 Delete 쿼리 직접 정의하기</h4><ul>
+<li><p>객체의 변화를 인지하고 데이터베이스에 동기화 (flush)</p>
+</li>
+<li><p>update쿼리를 직접만들일이 별로 없다.</p>
+</li>
+<li><p>하지만 update가 자주 일어나는 경우, 만들어 쓸수 있다.(추천하진 않는다.)</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@Modifying</span><br><span class="line">@Query(&quot;UPDATE Post p SET p.title &#x3D; ?2 WHERE p.id &#x3D; ?1&quot;)</span><br><span class="line">int updateTitle(Long id, String title);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>추천하지 않는 이유</p>
+<ul>
+<li>1차캐싱때문에 Persistent 상태의 객체를 select 하지 않고 그냥 가져온다.(트랜잭션이 끝나지 않았다.)<br>  <img src="/images/jpa/image2.PNG" alt="springjpa"></li>
+<li>문제를 해결하려면…<ul>
+<li>clearAutomatically = true<ul>
+<li>실행 후, Persistent Context에 들어있던 캐쉬를 비워준다.<br>그래야 find할 때,  다시 새로 읽어온다.</li>
+</ul>
+</li>
+<li>flushAutomatically = true<ul>
+<li>실행 전, Persistent Context상태를 flush 한다.<br>데이터 변경사항을 update하기위해<br><br><br></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="EntityGraph"><a href="#EntityGraph" class="headerlink" title="EntityGraph"></a>EntityGraph</h3><ul>
+<li>쿼리 메소드 마다 연관 관계의 Fetch 모드를 설정 할 수 있다.</li>
+<li>예).. fetch = FetchType.LAZY를 기본으로 하되 필요한 경우에따라 EAGER로 사용하고 싶을때</li>
+</ul>
+<h4 id="NamedEntityGraph"><a href="#NamedEntityGraph" class="headerlink" title="@NamedEntityGraph"></a>@NamedEntityGraph</h4><ul>
+<li>@Entity에서 재사용할 여러 엔티티 그룹을 정의할 때 사용<br>  <img src="/images/jpa/image4.PNG" alt="springjpa"><h4 id="EntityGraph-1"><a href="#EntityGraph-1" class="headerlink" title="@EntityGraph"></a>@EntityGraph</h4></li>
+<li>@NamedEntityGraph에 정의되어 있는 엔티티 그룹을 사용 함.<br>  <img src="/images/jpa/image6.PNG" alt="springjpa"></li>
+<li>그래프 타입 설정 가능<ul>
+<li>(기본값) FETCH: 설정한 엔티티 애트리뷰트는 EAGER 패치 나머지는 LAZY 패치.</li>
+<li>LOAD: 설정한 엔티티 애트리뷰트는 EAGER 패치 나머지는 기본 패치 전략 따름.</li>
+</ul>
+</li>
+<li>@NamedEntityGraph 정의 되어있지않아도 attributePaths를 설정하여 사용할 수 있다.<br>  <img src="/images/jpa/image5.PNG" alt="springjpa"></li>
+</ul>
+<h4 id="비교"><a href="#비교" class="headerlink" title="비교"></a>비교</h4><p><img src="/images/jpa/image3.PNG" alt="springjpa"><br><br></p>
+<h3 id="Projection"><a href="#Projection" class="headerlink" title="Projection"></a>Projection</h3><ul>
+<li>엔티티의 일부 데이터만 가져오기.</li>
+</ul>
+<h4 id="인터페이스-기반-프로젝션"><a href="#인터페이스-기반-프로젝션" class="headerlink" title="인터페이스 기반 프로젝션"></a>인터페이스 기반 프로젝션</h4><ul>
+<li>Nested 프로젝션 가능.<ul>
+<li>인터페이스에 메소드 정의<br>  <img src="/images/jpa/image7.PNG" alt="springjpa"></li>
+<li>타입을 해당 인터페이스 타입으로 변경<br>  <img src="/images/jpa/image8.PNG" alt="springjpa">    </li>
+</ul>
+</li>
+<li>Open 프로젝션<ul>
+<li>@Value(SpEL)을 사용해서 연산을 할 수 있다. 스프링 빈의 메소드도 호출 가능.<br><img src="/images/jpa/image9.PNG" alt="springjpa"></li>
+<li>쿼리 최적화를 할 수 없다. SpEL을 엔티티 대상으로 사용하기 때문에.<br><img src="/images/jpa/image10.PNG" alt="springjpa"></li>
+</ul>
+</li>
+<li>Closed 프로젝션 (추천)<ul>
+<li>쿼리를 최적화 할 수 있다. 가져오려는 애트리뷰트가 뭔지 알고 있으니까.</li>
+<li>Java 8의 디폴트 메소드를 사용해서 연산을 할 수 있다.<br><img src="/images/jpa/image11.PNG" alt="springjpa"></li>
+</ul>
+</li>
+</ul>
+<h4 id="클래스-기반-프로젝션"><a href="#클래스-기반-프로젝션" class="headerlink" title="클래스 기반 프로젝션"></a>클래스 기반 프로젝션</h4><ul>
+<li>DTO<br>  <img src="/images/jpa/image12.PNG" alt="springjpa"></li>
+<li>롬복 @Value로 코드 줄일 수 있음<br>  <img src="/images/jpa/image13.PNG" alt="springjpa"></li>
+</ul>
+<h4 id="다이나믹-프로젝션"><a href="#다이나믹-프로젝션" class="headerlink" title="다이나믹 프로젝션"></a>다이나믹 프로젝션</h4><ul>
+<li>프로젝션 용 메소드 하나만 정의하고 실제 프로젝션 타입은 타입 인자로 전달하기.</li>
+<li>그러나 오버로딩이 안됨으로 제네릭을 사용하자.<br>  <img src="/images/jpa/image14.PNG" alt="springjpa"><br>
+
+</li>
+</ul>
+<h3 id="Specifications"><a href="#Specifications" class="headerlink" title="Specifications"></a>Specifications</h3><p>에릭 에반스의 책 DDD에서 언급하는 Specification 개념을 차용 한 것으로 QueryDSL의 Predicate와 비슷하다.</p>
+<ul>
+<li>조건을 하나의 스펙으로 등록이 가능하다.</li>
+</ul>
+<h4 id="설정"><a href="#설정" class="headerlink" title="설정"></a>설정</h4><ul>
+<li><p><a href="https://docs.jboss.org/hibernate/stable/jpamodelgen/reference/en-US/html_single/">참고문서</a></p>
+</li>
+<li><p>의존성 설정</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.hibernate&lt;&#x2F;groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;hibernate-jpamodelgen&lt;&#x2F;artifactId&gt;</span><br><span class="line">&lt;&#x2F;dependency&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>플러그인 설정</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&lt;plugin&gt;</span><br><span class="line">    &lt;groupId&gt;org.bsc.maven&lt;&#x2F;groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;maven-processor-plugin&lt;&#x2F;artifactId&gt;</span><br><span class="line">    &lt;version&gt;2.0.5&lt;&#x2F;version&gt;</span><br><span class="line">    &lt;executions&gt;</span><br><span class="line">        &lt;execution&gt;</span><br><span class="line">            &lt;id&gt;process&lt;&#x2F;id&gt;</span><br><span class="line">            &lt;goals&gt;</span><br><span class="line">                &lt;goal&gt;process&lt;&#x2F;goal&gt;</span><br><span class="line">            &lt;&#x2F;goals&gt;</span><br><span class="line">            &lt;phase&gt;generate-sources&lt;&#x2F;phase&gt;</span><br><span class="line">            &lt;configuration&gt;</span><br><span class="line">                &lt;processors&gt;</span><br><span class="line">                    &lt;processor&gt;org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor&lt;&#x2F;processor&gt;</span><br><span class="line">                &lt;&#x2F;processors&gt;</span><br><span class="line">            &lt;&#x2F;configuration&gt;</span><br><span class="line">        &lt;&#x2F;execution&gt;</span><br><span class="line">    &lt;&#x2F;executions&gt;</span><br><span class="line">    &lt;dependencies&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.hibernate&lt;&#x2F;groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;hibernate-jpamodelgen&lt;&#x2F;artifactId&gt;</span><br><span class="line">            &lt;version&gt;$&#123;hibernate.version&#125;&lt;&#x2F;version&gt;</span><br><span class="line">        &lt;&#x2F;dependency&gt;</span><br><span class="line">    &lt;&#x2F;dependencies&gt;</span><br><span class="line">&lt;&#x2F;plugin&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>IDE에 애노테이션 처리기 설정<br>  <img src="/images/jpa/image15.PNG" alt="springjpa"></p>
+<ul>
+<li>org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor</li>
+</ul>
+</li>
+</ul>
+<h4 id="사용"><a href="#사용" class="headerlink" title="사용"></a>사용</h4><ul>
+<li><p>JpaSpecificationExecutor 상속 추가</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">public interface CommentRepository extends JpaRepository&lt;Comment, Long&gt;, JpaSpecificationExecutor&lt;Comment&gt; &#123;    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Spec 클래스</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">public class CommentSpec &#123;</span><br><span class="line"></span><br><span class="line">    public static Specification&lt;Comment&gt; isBest()&#123;</span><br><span class="line">        return new Specification&lt;Comment&gt;()&#123;</span><br><span class="line"></span><br><span class="line">            @Override</span><br><span class="line">            public Predicate toPredicate(Root&lt;Comment&gt; root, CriteriaQuery&lt;?&gt; criteriaQuery, CriteriaBuilder builder) &#123;</span><br><span class="line"></span><br><span class="line">                return builder.isTrue(root.get(Comment_.best));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;; &#x2F;&#x2F;여기서 root comment  코멘트가 베스트인지</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static Specification&lt;Comment&gt; isGood()&#123;</span><br><span class="line">        return new Specification&lt;Comment&gt;() &#123;</span><br><span class="line">            @Override</span><br><span class="line">            public Predicate toPredicate(Root&lt;Comment&gt; root, CriteriaQuery&lt;?&gt; criteriaQuery, CriteriaBuilder builder) &#123;</span><br><span class="line">                return builder.greaterThan(root.get(Comment_.up), 10);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;; &#x2F;&#x2F; 코멘트의 up이 10개보다 큰것</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>람다 사용 시  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public class CommentSpec &#123;</span><br><span class="line"></span><br><span class="line">    public static Specification&lt;Comment&gt; isBest()&#123;</span><br><span class="line">        return (Specification&lt;Comment&gt;)</span><br><span class="line">                (root, criteriaQuery, builder) -&gt; builder.isTrue(root.get(Comment_.best)); &#x2F;&#x2F;여기서 root comment  코멘트가 베스트인지</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static Specification&lt;Comment&gt; isGood()&#123;</span><br><span class="line">        return (Specification&lt;Comment&gt;)</span><br><span class="line">                (root, criteriaQuery, builder) -&gt; builder.greaterThan(root.get(Comment_.up), 10); &#x2F;&#x2F; 코멘트의 up이 10개보다 큰것</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>test<br>  <img src="/images/jpa/image16.PNG" alt="springjpa"></p>
+<ul>
+<li>여러 조건들에 대하여 조합도 가능하여, 메소드를 많이 늘리지 않고, 사용할 수 있어 편리하다.(단, 테스트는 필수이다.) <br>
+
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="Query-by-Example"><a href="#Query-by-Example" class="headerlink" title="Query by Example"></a>Query by Example</h3><p>필드 이름을 작성할 필요 없이 단순한 인터페이스를 통해 동적으로 쿼리를 만드는 기능을 제공하는 사용자 친화적인 쿼리 기술입니다.</p>
+<ul>
+<li><a href="https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#query-by-example">참고문서</a><h4 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h4></li>
+<li>Example = Probe + ExampleMatcher<ul>
+<li>Probe는 필드에 어떤 값들을 가지고 있는 도메인 객체.</li>
+<li>ExampleMatcher는 Prove에 들어있는 그 필드의 값들을 어떻게 쿼리할 데이터와 비교할지 정의한 것.</li>
+<li>Example은 그 둘을 하나로 합친 것. 이걸로 쿼리를 함.</li>
+</ul>
+</li>
+</ul>
+<h4 id="사용방법"><a href="#사용방법" class="headerlink" title="사용방법"></a>사용방법</h4><ul>
+<li><p>Repository에 QueryByExampleExecutor 상속 추가</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">public interface CommentRepository extends JpaRepository&lt;Comment, Long&gt;, QueryByExampleExecutor&lt;Comment&gt; &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>사용<br>  <img src="/images/jpa/image17.PNG" alt="springjpa"></p>
+</li>
+</ul>
+<h4 id="장점"><a href="#장점" class="headerlink" title="장점"></a>장점</h4><ul>
+<li>별다른 코드 생성기나 애노테이션 처리기 필요 없음.</li>
+<li>도메인 객체 리팩토링 해도 기존 쿼리가 깨질 걱정하지 않아도 됨.(실질적으로는 아니다.)</li>
+</ul>
+<h4 id="단점"><a href="#단점" class="headerlink" title="단점"></a>단점</h4><ul>
+<li>nested 또는 프로퍼티 그룹 제약 조건을 못 만든다.</li>
+<li>조건이 제한적이다. 문자열은 starts/contains/ends/regex 가 가능하고 그밖에 propery는 값이 정확히 일치해야 한다.</li>
+</ul>
+<p><strong>추천하지 않는다. QueryByDSL predicate 또는 Specification을 사용하는것을 추천한다.</strong><br><br><br></p>
+<h3 id="트랜잭션"><a href="#트랜잭션" class="headerlink" title="트랜잭션"></a>트랜잭션</h3><ul>
+<li>스프링 프레임워크에서 지원하는 트랜잭션과 거의 유사하다.</li>
+<li>기본적으로 Repository 기본 메소드들은 기본적으로 @Transactional이 적용되어있다.<ul>
+<li><strong>직접 선언하는 메소드에는 @Transactional 이 필요하다.</strong></li>
+</ul>
+</li>
+</ul>
+<h4 id="Transactional"><a href="#Transactional" class="headerlink" title="@Transactional"></a>@Transactional</h4><ul>
+<li><p><a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/transaction/annotation/Transactional.html">참고문서</a></p>
+</li>
+<li><p>클래스, 인터페이스, 메소드에 사용할 수 있으며, 메소드에 가장 가까운 애노테이션이 우선 순위가 높다.</p>
+</li>
+<li><p>기본적으로 RuntimeException 또는 Error 발생 시, 롤백을 한다.</p>
+<ul>
+<li>checked Exception은 롤백 하지 않음.<ul>
+<li>롤백을 시키고 싶다면 rollbackfor에 설정해주어야한다.</li>
+</ul>
+</li>
+<li>롤백을 하고싶지 안핟면 norollbackfor등의 설정</li>
+</ul>
+</li>
+<li><p>timeout 설정가능</p>
+</li>
+<li><p>트랜잭션 매니저 지정가능</p>
+<ul>
+<li>JPA트랜잭션 매니저를 쓸 것이다.</li>
+</ul>
+</li>
+<li><p>readoOnly (최적화 위해서 사용)</p>
+<ul>
+<li>Flush 모드를 NEVER로 설정하여, Dirty checking을 하지 않도록 한다.<blockquote>
+<p>Dirty Checking이란 상태 변경 검사<br>JPA에서는 트랜잭션이 끝나는 시점에 변화가 있는 모든 엔티티 객체를 데이터베이스에 자동으로 반영해줍니다.</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>Isolation</p>
+<ul>
+<li><p>여러개의 트랜잭션이 동시에 데이터에 접근했을 때, 설정</p>
+</li>
+<li><p>기본값은 데이터베이스에 따라서 정해진다.</p>
+</li>
+<li><p>Read Uncommitted</p>
+<ul>
+<li>한 트랜잭션에서 커밋하지 않은 데이타에 다른 트랜잭션이 접근 가능하다. 즉, 커밋하지 않은 데이타를 읽을 수 있다.</li>
+<li>이 수준은 당연히 위에서 언급한 모든 문제에 대해 발생가능성이 존재한다. 대신, 동시 처리 성능은 가장 높다.</li>
+<li>발생 문제점 : Dirty Read, Non-Repeatable Read, Phantom Read</li>
+</ul>
+</li>
+<li><p>Read Committed</p>
+<ul>
+<li>커밋이 완료된 데이타만 읽을 수 있다.</li>
+<li>Dirty Read가 발생할 여지는 없으나, Read Uncommitted 수준보다 동시 처리 성능은 떨어진다.  대신 Non-Repeatable Read 및 Phantom Read는 발생 가능하다.데이타베이스들은 보통 Read Committed를 디폴트 수준으로 지정한다.</li>
+<li>발생 문제점 : Non-Repeatable Read, Phantom Read</li>
+</ul>
+</li>
+<li><p>Repeatable Read</p>
+<ul>
+<li>트랜잭션 내에서 한번 조회한 데이타를 반복해서 조회해도 같은 데이타가 조회 된다</li>
+<li>이는 개별 데이타 이슈인 Dirty Read나 Non-Repeatable Read는 발생하지 않지만, 결과 집합 자체가 달라지는 Phantom Read는 발생가능하다.</li>
+<li>발생 문제점 : Phantom Read</li>
+</ul>
+</li>
+<li><p>Serializable</p>
+<ul>
+<li>가장 엄격한 격리 수준</li>
+<li>위 3가지 문제점을 모두 커버 가능하다. 하지만 동시 처리 성능은 급격히 떨어질 수 있다.</li>
+</ul>
+</li>
+<li><p>Isolation 관련 문제점</p>
+<ul>
+<li><p>Dirty Read<br>한 트랜잭션(T1)이 데이타에 접근하여 값을 ‘A’에서 ‘B’로 변경했고 아직 커밋을 하지 않았을때, 다른 트랜잭션(T2)이 해당 데이타를 Read 하면?<br>T2가 읽은 데이타는 B가 될 것이다. 하지만 T1이 최종 커밋을 하지 않고 종료된다면, T2가 가진 데이타는 꼬이게 된다.</p>
+</li>
+<li><p>Non-Repeatable Read<br>한 트랜잭션(T1)이 데이타를 Read 하고 있다. 이때 다른 트랜잭션(T2)가 데이타에 접근하여 값을 변경 또는, 데이타를 삭제하고 커밋을 때려버리면?<br>그 후 T1이 다시 해당 데이타를 Read하고자 하면 변경된 데이타 혹은 사라진 데이타를 찾게 된다.</p>
+</li>
+<li><p>Phantom Read<br>트랜잭션(T1) 중에 특정 조건으로 데이타를 검색하여 결과를 얻었다. 이때 다른 트랜잭션(T2)가 접근해 해당 조건의 데이타 일부를 삭제 또는 추가 했을때, 아직 끝나지 않은 T1이 다시 한번 해당 조건으로 데이타를 조회 하면 T2에서 추가/삭제된 데이타가 함께 조회/누락 된다. 그리고 T2가 롤백을 하면? 데이타가 꼬인다</p>
+</li>
+</ul>
+</li>
+<li><p><a href="https://feco.tistory.com/45">참고, 출처 - wmJun</a></p>
+</li>
+</ul>
+</li>
+<li><p>Propagation</p>
+<ul>
+<li>트랜잭션을 어떻게 전파시킬 것 인지 대한 설정</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>Dirty Checking(더티체킹)  시, 변경된 필드값만 updqte 하기위해서는 @DynamicUpdate를 사용한다.</p>
+</blockquote>
+<br>
+
+<h3 id="Auditing"><a href="#Auditing" class="headerlink" title="Auditing"></a>Auditing</h3><ul>
+<li>엔티티의 변경 시점에 언제, 누가 변경했는지에 대한 정보를 기록하는 기능.</li>
+</ul>
+<h4 id="스프링-데이터-JPA의-Auditing"><a href="#스프링-데이터-JPA의-Auditing" class="headerlink" title="스프링 데이터 JPA의 Auditing"></a>스프링 데이터 JPA의 Auditing</h4><p><img src="/images/jpa/image21.PNG" alt="springjpa"></p>
+<ul>
+<li>스프링 부트가 자동 설정 해주지 않는다.</li>
+<li>엔티티 클래스 위에 @EntityListeners(AuditingEntityListener.class) 추가<br>  <img src="/images/jpa/image18.PNG" alt="springjpa"></li>
+<li>AuditorAware 구현체 만들기<br>  <img src="/images/jpa/image19.PNG" alt="springjpa"><ul>
+<li>security를 사용하여 현재 유저정보를 가져올 수 있지만 print문으로 대체하였다.</li>
+</ul>
+</li>
+<li>@EnableJpaAuditing 및 AuditorAware 빈 이름 설정하기.<br>  <img src="/images/jpa/image20.PNG" alt="springjpa"><blockquote>
+<p>빈 이름은 첫글자를 소문자로 변경한것이다.</p>
+</blockquote>
+</li>
+</ul>
+<h4 id="라이프-사이클-이벤트"><a href="#라이프-사이클-이벤트" class="headerlink" title="라이프 사이클 이벤트"></a>라이프 사이클 이벤트</h4><ul>
+<li><a href="https://docs.jboss.org/hibernate/orm/4.0/hem/en-US/html/listeners.html">참고문서</a></li>
+<li>엔티티에 변화가 일어났을 때, 특정한 콜백을 실행할 수 있는 이벤트를 발생시켜준다.</li>
+<li>@PrePersist<ul>
+<li>엔티티가 저장이 되기전에 호출</li>
+<li>예)..<br>  <img src="/images/jpa/image22.PNG" alt="springjpa"></li>
+</ul>
+</li>
+<li>@PreUpdate</li>
+<li>여러개가 있다. 살펴보길..<br><br><br></li>
+</ul>
+
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/JPA/" rel="tag">JPA</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">Like this article? Support the author with</h3>
+        <div class="buttons is-centered">
+            
+                
+<div class="notification is-danger">
+    You forgot to set the <code>qrcode</code> for Alipay. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                
+<div class="notification is-danger">
+    You forgot to set the <code>qrcode</code> for Wechat. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                <!-- Visit https://www.paypal.com/donate/buttons/ to get your donate button -->
+
+<div class="notification is-danger">
+    You forgot to set the <code>business</code> and <code>currency_code</code> for Paypal. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                
+<div class="notification is-danger">
+    You forgot to set the <code>url</code> Patreon. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2019/05/03/spring/springjpa05/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">스프링 데이터 JPA05 - 스프링 데이터 Common</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2019/04/30/spring/springjpa04/">
+                <span class="level-item">스프링 데이터 JPA04 - Cascade, Fetch, Query, 스프링 데이터 JPA 소개 및 원리</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+</div>
+                
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-4-widescreen  has-order-3 column-right is-sticky">
+    
+        
+
+    <div class="card widget" id="toc">
+        <div class="card-content">
+            <div class="menu">
+                <h3 class="menu-label">
+                    Catalogue
+                </h3>
+                <ul class="menu-list"><li>
+        <a class="is-flex" href="#스프링-데이터-JPA-inflearn-백기선">
+        <span class="has-mr-6">1</span>
+        <span>스프링 데이터 JPA(inflearn) - 백기선</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#스프링-데이터-JPA">
+        <span class="has-mr-6">1.1</span>
+        <span>스프링 데이터 JPA</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#JPA-Repository">
+        <span class="has-mr-6">1.1.1</span>
+        <span>JPA Repository</span>
+        </a></li><li>
+        <a class="is-flex" href="#엔티티-저장하기">
+        <span class="has-mr-6">1.1.2</span>
+        <span>엔티티 저장하기</span>
+        </a></li><li>
+        <a class="is-flex" href="#쿼리-메소드">
+        <span class="has-mr-6">1.1.3</span>
+        <span>쿼리 메소드</span>
+        </a></li><li>
+        <a class="is-flex" href="#Sort">
+        <span class="has-mr-6">1.1.4</span>
+        <span>Sort</span>
+        </a></li><li>
+        <a class="is-flex" href="#Named-Parameter과-SpEL">
+        <span class="has-mr-6">1.1.5</span>
+        <span>Named Parameter과 SpEL</span>
+        </a></li><li>
+        <a class="is-flex" href="#Update-쿼리-메소드">
+        <span class="has-mr-6">1.1.6</span>
+        <span>Update 쿼리 메소드</span>
+        </a></li><li>
+        <a class="is-flex" href="#EntityGraph">
+        <span class="has-mr-6">1.1.7</span>
+        <span>EntityGraph</span>
+        </a></li><li>
+        <a class="is-flex" href="#Projection">
+        <span class="has-mr-6">1.1.8</span>
+        <span>Projection</span>
+        </a></li><li>
+        <a class="is-flex" href="#Specifications">
+        <span class="has-mr-6">1.1.9</span>
+        <span>Specifications</span>
+        </a></li><li>
+        <a class="is-flex" href="#Query-by-Example">
+        <span class="has-mr-6">1.1.10</span>
+        <span>Query by Example</span>
+        </a></li><li>
+        <a class="is-flex" href="#트랜잭션">
+        <span class="has-mr-6">1.1.11</span>
+        <span>트랜잭션</span>
+        </a></li><li>
+        <a class="is-flex" href="#Auditing">
+        <span class="has-mr-6">1.1.12</span>
+        <span>Auditing</span>
+        </a></li></ul></li></ul></li></ul>
+            </div>
+        </div>
+    </div>
+
+    
+        <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            Tag Cloud
+        </h3>
+        <a href="/tags/Algorithm/" style="font-size: 11.11px;">Algorithm</a> <a href="/tags/DataBase/" style="font-size: 10px;">DataBase</a> <a href="/tags/Etc/" style="font-size: 11.11px;">Etc</a> <a href="/tags/Git/" style="font-size: 13.33px;">Git</a> <a href="/tags/Interview/" style="font-size: 14.44px;">Interview</a> <a href="/tags/JPA/" style="font-size: 20px;">JPA</a> <a href="/tags/JSP/" style="font-size: 14.44px;">JSP</a> <a href="/tags/Java/" style="font-size: 18.89px;">Java</a> <a href="/tags/JavaScript/" style="font-size: 12.22px;">JavaScript</a> <a href="/tags/OracleDB/" style="font-size: 14.44px;">OracleDB</a> <a href="/tags/Process/" style="font-size: 11.11px;">Process</a> <a href="/tags/RestAPI/" style="font-size: 14.44px;">RestAPI</a> <a href="/tags/Seminar/" style="font-size: 10px;">Seminar</a> <a href="/tags/SpringBoot/" style="font-size: 20px;">SpringBoot</a> <a href="/tags/SpringSecurity/" style="font-size: 12.22px;">SpringSecurity</a> <a href="/tags/SpringWebMvc/" style="font-size: 16.67px;">SpringWebMvc</a> <a href="/tags/Springframework/" style="font-size: 17.78px;">Springframework</a> <a href="/tags/Springframework-kosta/" style="font-size: 14.44px;">Springframework_kosta</a> <a href="/tags/Web/" style="font-size: 12.22px;">Web</a> <a href="/tags/debug/" style="font-size: 11.11px;">debug</a> <a href="/tags/jQuery/" style="font-size: 12.22px;">jQuery</a> <a href="/tags/%EC%A0%95%EB%B3%B4%EC%B2%98%EB%A6%AC%EA%B8%B0%EC%82%AC-%ED%95%84%EA%B8%B0/" style="font-size: 13.33px;">정보처리기사_필기</a> <a href="/tags/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%ED%9A%8C%EA%B3%A0/" style="font-size: 15.56px;">프로젝트_회고</a>
+    </div>
+</div>
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/blog_logo.png" alt="스프링 데이터 JPA06 - 스프링 데이터 JPA" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2020 Bong&#39;s blog&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/cyr9210">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("en");</script>
+
+
+<script>
+var IcarusThemeSettings = {
+    site: {
+        url: 'http://yoursite.com',
+        external_link: {"enable":true,"exclude":[]}
+    },
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+<script src="/js/animation.js"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+<script src="/js/gallery.js" defer></script>
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+<a id="back-to-top" title="Back to Top" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: 'Posts',
+                PAGES: 'Pages',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
+                UNTITLED: '(Untitled)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

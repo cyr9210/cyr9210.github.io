@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html >
+<head>
+    <meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 4.2.0" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>게시판 페이징처리, 파일 업로드/다운로드, 썸네일 이미지 게시판 - Bong&#39;s blog</title>
+
+
+    <meta name="description" content="KOSTA DAY43JSP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="게시판 페이징처리, 파일 업로드&#x2F;다운로드, 썸네일 이미지 게시판">
+<meta property="og:url" content="http://yoursite.com/2019/01/07/JSP/JSP05/index.html">
+<meta property="og:site_name" content="Bong&#39;s blog">
+<meta property="og:description" content="KOSTA DAY43JSP">
+<meta property="og:image" content="http://yoursite.com/images/og_image.png">
+<meta property="article:published_time" content="2019-01-06T18:47:33.000Z">
+<meta property="article:modified_time" content="2020-03-20T07:57:35.722Z">
+<meta property="article:author" content="Bong&#39;s blog">
+<meta property="article:tag" content="JSP">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/images/og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+<style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+    
+    
+    
+    
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+    
+    
+    
+    
+    
+    
+    
+    <link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-2-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/blog_logo.png" alt="게시판 페이징처리, 파일 업로드/다운로드, 썸네일 이미지 게시판" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                href="/">Home</a>
+                
+                <a class="navbar-item"
+                href="/archives">Archives</a>
+                
+                <a class="navbar-item"
+                href="/tags">Tags</a>
+                
+                <a class="navbar-item"
+                href="/about">About</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    <a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/cyr9210">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="Search" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-8-widescreen has-order-2 column-main">
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-01-06T18:47:33.000Z">2019-01-07</time>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    9 minutes read (About 1383 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                게시판 페이징처리, 파일 업로드/다운로드, 썸네일 이미지 게시판
+            
+        </h1>
+        <div class="content">
+            <h1 id="KOSTA-DAY43"><a href="#KOSTA-DAY43" class="headerlink" title="KOSTA DAY43"></a>KOSTA DAY43</h1><h2 id="JSP"><a href="#JSP" class="headerlink" title="JSP"></a>JSP</h2><p><img src="/images/JSP_logo.png" alt="JSP"></p>
+<a id="more"></a>
+<h3 id="게시판-페이징-처리"><a href="#게시판-페이징-처리" class="headerlink" title="게시판 페이징 처리"></a>게시판 페이징 처리</h3><p>mvc 패턴의 비지니스로직을 처리하기 위해 Service객체를 생성하여 Service 객체에서 비지니스로직을 처리하는 법에 대해 알아보자.</p>
+<ul>
+<li>기존 : Client → Controller → Action → DAO → mybatis → DB</li>
+<li>Service 객체 추가 : Client → Controller → Action → Service → DAO →mybatis → DB</li>
+</ul>
+<p>Service 객체를 추가하여 페이징 처리 로직과 함께 게시판 리스트를 출력하는 예제를 살펴보자.</p>
+<p><img src="/images/jsp/JSP05-01.png" alt="JSP"></p>
+<ul>
+<li>싱글톤방식을 사용하여 dao객체 및 Service 객체를 생성한다.</li>
+</ul>
+<p><img src="/images/jsp/JSP05-02.png" alt="JSP"></p>
+<ul>
+<li>pageSize = 게시글에 출력될 게시글의 수</li>
+<li>countBoard메소드 실행하여 총 게시물의 갯수를 구한다.</li>
+<li>totalPageCount를 구한다.<br>총갯수 / 출력될 게시글 → 나머지가 있을 시 +1</li>
+<li>startPage/ endPage를 구한다.<br>startPage : 현재페이지-(현재페이지-1)%페이징수 (1<del>5 →1, 6</del>10 →6..)<br>(starPage +5)가 총페이지수 보다 크면 endPage = 총페이지수</li>
+<li>startRow = 게시글의 시작 번호<br>→ (현재페이지 -1) * 페이지당 글 갯수</li>
+<li>listBoard메소드에 startRow값을 넣어 list를 구한다.</li>
+<li>RowBounds(int start, PAGE_SIZE) : 페이징처리 getMapper 메소드</li>
+<li>검색된 결과에 관하여 페이징 처리를 위하여 다음과 같은 처리를 한다.<br>searchKey(검색문자)가 null아 아니라면, search라는 값의 세션을 비운고 해당 조건 및 검색문을 set한다.<br>serarchKey값이 null이지만 search라는 session이 존재할 경우, 생성한 search 객체에 session값을 넣어준다.</li>
+<li>페이징처리 정보와 list객체를 필드로 가지는 listModel객체를 리턴한다.<br>리턴한 값을 action에서 setAttribute 하고, path와 forward타입(dispatcher)을 정하여 컨트롤러에 리턴한다.<br>컨트롤러에서 dispatcher한다.</li>
+</ul>
+<p><img src="/images/jsp/JSP05-03.png" alt="JSP"></p>
+<ul>
+<li>이전아이콘 처리</li>
+<li>다음아이콘 처리</li>
+<li>페이지 넘버처리</li>
+<li>현재페이지 &lt;b&gt;태그 처리<br><br><br></li>
+</ul>
+<h3 id="파일-업로드-다운로드"><a href="#파일-업로드-다운로드" class="headerlink" title="파일 업로드 / 다운로드"></a>파일 업로드 / 다운로드</h3><h4 id="JSP-파일-업로드를-위한-기본적인-조건"><a href="#JSP-파일-업로드를-위한-기본적인-조건" class="headerlink" title="JSP 파일 업로드를 위한 기본적인 조건"></a>JSP 파일 업로드를 위한 기본적인 조건</h4><ul>
+<li>파일을 업로드 할 때, form태그의 method = post 여야 한다.</li>
+<li>enctype : 데이터를 전송하게 될 타입을 지정하는 부분</li>
+<li>form태그에 enctype이 명시되면 서블릿에서 request객체를 이용해서 값을 가져오지 못한다.(하나의 스트림을 통해 전송되기 때문에)<br>스트림으로 넘어온 데이터를 getInputStream() 메소드를 사용해서 사용자가 전송한 스트림을 받아 각각 구분자를 이용하여 잘라내어 사용해야 하는데, 복잡하고 어렵다.<br>→ MultipartRequest 를 사용한다.</li>
+</ul>
+<h4 id="MultipartRequest"><a href="#MultipartRequest" class="headerlink" title="MultipartRequest"></a>MultipartRequest</h4><ul>
+<li>cos.jar 라이브러리 추가가 필요하다.</li>
+<li>MultipartRequest 객체 알아보기</li>
+</ul>
+<p><img src="/images/jsp/JSP05-04.png" alt="JSP"></p>
+<p><img src="/images/jsp/JSP05-05.png" alt="JSP"></p>
+<h4 id="예제"><a href="#예제" class="headerlink" title="예제"></a>예제</h4><p><img src="/images/jsp/JSP05-06.png" alt="JSP"></p>
+<ul>
+<li>form태그에 enctype=”multipart/form-data 설정</li>
+<li>input type= “file”로 설정</li>
+</ul>
+<p><img src="/images/jsp/JSP05-07.png" alt="JSP"></p>
+<ul>
+<li>Board객체에 filename이 들어가 변수를 추가한다.</li>
+</ul>
+<p><img src="/images/jsp/JSP05-08.png" alt="JSP"></p>
+<ul>
+<li>request.getRealPath(“upload”) 를 통해 저장될 경로지정<br>upload의 절대경로</li>
+<li>File size지정</li>
+<li>MultipartRequst객체 multi 생성</li>
+<li>DefaultFileRenamePolicy() : 같은 이름의 파일명 방지 처리</li>
+<li>파일이 있으면 파일명을 보드에 담은 후 insert</li>
+</ul>
+<p>다음은 다운로드 방법에 대해 알아보자.</p>
+<p><img src="/images/jsp/JSP05-09.png" alt="JSP"></p>
+<ul>
+<li>a태그를 통해 다운로드를 위한 페이지로 이동 filename을 get타입으로 가지고 간다.</li>
+</ul>
+<p><img src="/images/jsp/JSP05-10.png" alt="JSP"></p>
+<ul>
+<li>filename을 받아온 후 인코딩 한다.</li>
+<li>경로를 지정한다.</li>
+<li>다운로드 알림창이 뜨도록 하기 위해서 ContentType을 8비트 바이너리로 설정한다.<br>response.setContentType(“application/octet-stream”);</li>
+<li>저장파일이름을 설정한다.<br>response.setHeader(“content-Disposition”, “attatchment;filename=\“” + filename2 + “/””);</li>
+<li>no-cache 설정</li>
+</ul>
+<blockquote>
+<p><strong>JSP에서 No-Cache 설정하는 방법</strong><br>웹개발 하다보면 캐쉬된 페이지때문에 가끔 웹브라우저가 재시동하거나, 웹서버를 재시동하는 경우가 있었을 것이다. 그런 경우 캐쉬에서 불러오는 것이 아니라 항상 최신의 페이지를 보여주도록 하는 방법입니다. 데이터가 넘어가는 경우에만 ‘만료된 페이지입니다’ 라는 메시지를 보여주게 된다.</p>
+</blockquote>
+<p><img src="/images/jsp/JSP05-11.png" alt="JSP"></p>
+<ul>
+<li>버퍼크기 설정<br>byte[] data = new byte[8096];</li>
+<li>파일을 남아있으면 읽어서 data에 저장</li>
+<li>is, os 닫아준다. 서블릿도 닫아준다.<br><br><br></li>
+</ul>
+<h3 id="썸네일-이미지-게시판"><a href="#썸네일-이미지-게시판" class="headerlink" title="썸네일 이미지 게시판"></a>썸네일 이미지 게시판</h3><p><img src="/images/jsp/JSP05-12.png" alt="JSP"></p>
+<ul>
+<li>이미지 파일임을 파악하기 위해 fname으로부터 “.”을 기준으로 분리</li>
+<li>uploadPath/fname 으로 경로지정</li>
+<li>imagePath를 사용하여 File객체로 이미지를 저장</li>
+<li>썸네일 이미지를 위해 썸네일이미지 파일을 위한 경로를 지정한다.</li>
+<li>파일형식이 gif 일때 ImageUtil의 resize 메소드 실행</li>
+<li>썸네일 이미지로 크기를 줄여 객체를 이미지파일을 저장한다.</li>
+</ul>
+<p><img src="/images/jsp/JSP05-13.png" alt="JSP"></p>
+<ul>
+<li>src파일객체를을 FileInputStream객체로 만든다.</li>
+<li>오버로딩된 resize메소드 호출</li>
+<li>썸네일 크기 지정</li>
+<li>BufferedImage 객체를 사용하여 지정한 크기 및 이미지타입설정</li>
+<li>생성한 BufferedImage 객체사용하여 2D graphics 생성</li>
+</ul>
+<p><img src="/images/jsp/JSP05-14.png" alt="JSP"></p>
+<ul>
+<li>head = .jpg 등 형식을 제외한 파일명</li>
+<li>pattern = 형식 (ex&gt; jpg, gif등)</li>
+<li>&lt;img src= “upload(파일위치)/썸네일 파일명&gt;으로 썸네일 이미지 출력<br><br><br></li>
+</ul>
+
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/JSP/" rel="tag">JSP</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">Like this article? Support the author with</h3>
+        <div class="buttons is-centered">
+            
+                
+<div class="notification is-danger">
+    You forgot to set the <code>qrcode</code> for Alipay. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                
+<div class="notification is-danger">
+    You forgot to set the <code>qrcode</code> for Wechat. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                <!-- Visit https://www.paypal.com/donate/buttons/ to get your donate button -->
+
+<div class="notification is-danger">
+    You forgot to set the <code>business</code> and <code>currency_code</code> for Paypal. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                
+<div class="notification is-danger">
+    You forgot to set the <code>url</code> Patreon. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2019/01/09/Process/Process02/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">agile(애자일) 프로세스</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2019/01/04/JSP/JSP04/">
+                <span class="level-item">설계모델, 모델1설계방식, 모델2설계방식(MVC패턴)</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+</div>
+                
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-4-widescreen  has-order-3 column-right is-sticky">
+    
+        
+
+    <div class="card widget" id="toc">
+        <div class="card-content">
+            <div class="menu">
+                <h3 class="menu-label">
+                    Catalogue
+                </h3>
+                <ul class="menu-list"><li>
+        <a class="is-flex" href="#KOSTA-DAY43">
+        <span class="has-mr-6">1</span>
+        <span>KOSTA DAY43</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#JSP">
+        <span class="has-mr-6">1.1</span>
+        <span>JSP</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#게시판-페이징-처리">
+        <span class="has-mr-6">1.1.1</span>
+        <span>게시판 페이징 처리</span>
+        </a></li><li>
+        <a class="is-flex" href="#파일-업로드-다운로드">
+        <span class="has-mr-6">1.1.2</span>
+        <span>파일 업로드 / 다운로드</span>
+        </a></li><li>
+        <a class="is-flex" href="#썸네일-이미지-게시판">
+        <span class="has-mr-6">1.1.3</span>
+        <span>썸네일 이미지 게시판</span>
+        </a></li></ul></li></ul></li></ul>
+            </div>
+        </div>
+    </div>
+
+    
+        <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            Tag Cloud
+        </h3>
+        <a href="/tags/Algorithm/" style="font-size: 11.11px;">Algorithm</a> <a href="/tags/DataBase/" style="font-size: 10px;">DataBase</a> <a href="/tags/Etc/" style="font-size: 11.11px;">Etc</a> <a href="/tags/Git/" style="font-size: 13.33px;">Git</a> <a href="/tags/Interview/" style="font-size: 14.44px;">Interview</a> <a href="/tags/JPA/" style="font-size: 20px;">JPA</a> <a href="/tags/JSP/" style="font-size: 14.44px;">JSP</a> <a href="/tags/Java/" style="font-size: 18.89px;">Java</a> <a href="/tags/JavaScript/" style="font-size: 12.22px;">JavaScript</a> <a href="/tags/OracleDB/" style="font-size: 14.44px;">OracleDB</a> <a href="/tags/Process/" style="font-size: 11.11px;">Process</a> <a href="/tags/RestAPI/" style="font-size: 14.44px;">RestAPI</a> <a href="/tags/Seminar/" style="font-size: 10px;">Seminar</a> <a href="/tags/SpringBoot/" style="font-size: 20px;">SpringBoot</a> <a href="/tags/SpringSecurity/" style="font-size: 12.22px;">SpringSecurity</a> <a href="/tags/SpringWebMvc/" style="font-size: 16.67px;">SpringWebMvc</a> <a href="/tags/Springframework/" style="font-size: 17.78px;">Springframework</a> <a href="/tags/Springframework-kosta/" style="font-size: 14.44px;">Springframework_kosta</a> <a href="/tags/Web/" style="font-size: 12.22px;">Web</a> <a href="/tags/debug/" style="font-size: 11.11px;">debug</a> <a href="/tags/jQuery/" style="font-size: 12.22px;">jQuery</a> <a href="/tags/%EC%A0%95%EB%B3%B4%EC%B2%98%EB%A6%AC%EA%B8%B0%EC%82%AC-%ED%95%84%EA%B8%B0/" style="font-size: 13.33px;">정보처리기사_필기</a> <a href="/tags/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%ED%9A%8C%EA%B3%A0/" style="font-size: 15.56px;">프로젝트_회고</a>
+    </div>
+</div>
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/blog_logo.png" alt="게시판 페이징처리, 파일 업로드/다운로드, 썸네일 이미지 게시판" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2020 Bong&#39;s blog&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/cyr9210">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("en");</script>
+
+
+<script>
+var IcarusThemeSettings = {
+    site: {
+        url: 'http://yoursite.com',
+        external_link: {"enable":true,"exclude":[]}
+    },
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+<script src="/js/animation.js"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+<script src="/js/gallery.js" defer></script>
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+<a id="back-to-top" title="Back to Top" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: 'Posts',
+                PAGES: 'Pages',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
+                UNTITLED: '(Untitled)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

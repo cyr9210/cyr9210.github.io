@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html >
+<head>
+    <meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 4.2.0" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>배열, 자바스크립트 내장객체, 이벤트 - Bong&#39;s blog</title>
+
+
+    <meta name="description" content="KOSTA DAY31JavaScript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="배열, 자바스크립트 내장객체, 이벤트">
+<meta property="og:url" content="http://yoursite.com/2018/12/12/JavaScript/JS02/index.html">
+<meta property="og:site_name" content="Bong&#39;s blog">
+<meta property="og:description" content="KOSTA DAY31JavaScript">
+<meta property="og:image" content="http://yoursite.com/images/og_image.png">
+<meta property="article:published_time" content="2018-12-12T05:05:09.000Z">
+<meta property="article:modified_time" content="2020-03-20T07:57:35.728Z">
+<meta property="article:author" content="Bong&#39;s blog">
+<meta property="article:tag" content="JavaScript">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/images/og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+<style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+    
+    
+    
+    
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+    
+    
+    
+    
+    
+    
+    
+    <link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-2-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/blog_logo.png" alt="배열, 자바스크립트 내장객체, 이벤트" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                href="/">Home</a>
+                
+                <a class="navbar-item"
+                href="/archives">Archives</a>
+                
+                <a class="navbar-item"
+                href="/tags">Tags</a>
+                
+                <a class="navbar-item"
+                href="/about">About</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    <a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/cyr9210">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="Search" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-8-widescreen has-order-2 column-main">
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2018-12-12T05:05:09.000Z">2018-12-12</time>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    8 minutes read (About 1189 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                배열, 자바스크립트 내장객체, 이벤트
+            
+        </h1>
+        <div class="content">
+            <h1 id="KOSTA-DAY31"><a href="#KOSTA-DAY31" class="headerlink" title="KOSTA DAY31"></a>KOSTA DAY31</h1><h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><p><img src="/images/JS_logo.png" alt="JS"></p>
+<a id="more"></a>
+<h3 id="예제"><a href="#예제" class="headerlink" title="예제"></a>예제</h3><p><img src="/images/javascript/JS02-01.png" alt="JS"></p>
+<ul>
+<li>생성한 객체에 cals 함수안에서 <body>태그 안의 f1 폼에 있는 값을 속성 num1, num2에 넣었다.<br>여기서 this는 객체안의 속성 num1, num2를 가르킨다.</li>
+<li>&lt;\input type=”button”&gt;의 id를 받아 plus / minus 를 판단한다.<br>여기서 this는 객체안의 속성값인 아닌 객체밖의 window를 가르킨다.</li>
+<li>sum을 계산하여 출력한다.<br><br><br></li>
+</ul>
+<h3 id="배열"><a href="#배열" class="headerlink" title="배열"></a>배열</h3><ul>
+<li><p>[]배열생성<br><img src="/images/javascript/JS02-02.png" alt="JS"></p>
+</li>
+<li><p>new 연산자로 배열생성<br><img src="/images/javascript/JS02-03.png" alt="JS"></p>
+</li>
+<li><p>new연산자 및 배열값으로 배열생성<br><img src="/images/javascript/JS02-04.png" alt="JS"></p>
+</li>
+<li><p>배열문자열 변환<br>join(“-”) : -값으로 배열 나열 시, 분류<br><img src="/images/javascript/JS02-05.png" alt="JS"><br><img src="/images/javascript/JS02-06.png" alt="JS"></p>
+</li>
+<li><p>concat()<br><img src="/images/javascript/JS02-07.png" alt="JS"></p>
+</li>
+<li><p>slice()<br>slice(a, b); : arr[a] ≤ arr[] &lt; arr[b]<br><img src="/images/javascript/JS02-08.png" alt="JS"></p>
+</li>
+<li><p>splice()<br>splice(a, b); : a=index , b=갯수<br><img src="/images/javascript/JS02-09.png" alt="JS"></p>
+</li>
+<li><p>배열정렬 : sort();<br><img src="/images/javascript/JS02-10.png" alt="JS"></p>
+</li>
+<li><p>내림차순<br><img src="/images/javascript/JS02-11.png" alt="JS"><br><br><br></p>
+</li>
+</ul>
+<h3 id="String-객체"><a href="#String-객체" class="headerlink" title="String 객체"></a>String 객체</h3><p><img src="/images/javascript/JS02-12.png" alt="JS"></p>
+<ul>
+<li>문자열을 사용하거나 조작을 지원하느 객체</li>
+<li>new 연산자를 사용하지 않음</li>
+</ul>
+<h4 id="예제-1"><a href="#예제-1" class="headerlink" title="예제"></a>예제</h4><p><img src="/images/javascript/JS02-13.png" alt="JS"><br><img src="/images/javascript/JS02-14.png" alt="JS"><br><br></p>
+<h3 id="Date-객체"><a href="#Date-객체" class="headerlink" title="Date 객체"></a>Date 객체</h3><p>날짜와 시간을 처리할 수 있도록 지원하는 객체</p>
+<ul>
+<li><p>Date(); : 현재 시간을 불러온다.<br><img src="/images/javascript/JS02-15.png" alt="JS"></p>
+</li>
+<li><p>변수를 생성하여 다중실행 되는것을 방지<br><br><br></p>
+</li>
+</ul>
+<h3 id="정규표현식-객체"><a href="#정규표현식-객체" class="headerlink" title="정규표현식 객체"></a>정규표현식 객체</h3><ul>
+<li><p>문자열.match(/정규표현식/) → 매칭된 결과(문자열)</p>
+</li>
+<li><p>i : 대소문자 구분X<br>g: 전역검사<br><img src="/images/javascript/JS02-16.png" alt="JS"></p>
+</li>
+<li><p>문자열 변환(replace)<br><img src="/images/javascript/JS02-17.png" alt="JS"><br><img src="/images/javascript/JS02-29.png" alt="JS"></p>
+<br>
+
+</li>
+</ul>
+<h3 id="이벤트"><a href="#이벤트" class="headerlink" title="이벤트"></a>이벤트</h3><h4 id="이벤트-관련용어-정리"><a href="#이벤트-관련용어-정리" class="headerlink" title="이벤트 관련용어 정리"></a>이벤트 관련용어 정리</h4><p><img src="/images/javascript/JS02-18.png" alt="JS"></p>
+<ul>
+<li>이벤트 연결 = 윈도우 객체에 onload 속성에 함수 자료형을 할당<br>window.onload = function(){}</li>
+<li>load : 이벤트이름 , 이벤트타입</li>
+<li>onload : 이벤트 속성</li>
+<li>이벤트 속성에 할당한 함수 : 리스너(Event Listener or Event handler)</li>
+</ul>
+<h4 id="고전이벤트모델"><a href="#고전이벤트모델" class="headerlink" title="고전이벤트모델"></a>고전이벤트모델</h4><ul>
+<li>하나의 이벤트에 하나의 리스너만 연결 가능<br><img src="/images/javascript/JS02-19.png" alt="JS"></li>
+</ul>
+<h4 id="인라인-이벤트"><a href="#인라인-이벤트" class="headerlink" title="인라인 이벤트"></a>인라인 이벤트</h4><ul>
+<li>인라인 태그에 이벤트 속성을 부여한다.<br><img src="/images/javascript/JS02-20.png" alt="JS"></li>
+</ul>
+<h4 id="Default-이벤트-제거"><a href="#Default-이벤트-제거" class="headerlink" title="Default 이벤트 제거"></a>Default 이벤트 제거</h4><ul>
+<li>html태그는 이미 이벤트 리스너가 있다. 대표적으로 <a></li>
+<li>default 이벤트제거 방법은 이벤트 리스너에 false 를 리턴한다.<br><img src="/images/javascript/JS02-21.png" alt="JS"></li>
+</ul>
+<h4 id="크로스-브라우징"><a href="#크로스-브라우징" class="headerlink" title="크로스 브라우징"></a>크로스 브라우징</h4><p>이벤트모델은 구IE(인터넷익스플로러8이하) 와 표준모델로 나누어진다. 그렇기 때문에 이벤트 등록을 위해서는 두가지 모두가 호환가능하도록 해야한다.</p>
+<ul>
+<li>jquery에서는 알아서 해주는 부분</li>
+</ul>
+<h5 id="표준모델"><a href="#표준모델" class="headerlink" title="표준모델"></a>표준모델</h5><p><img src="/images/javascript/JS02-22.png" alt="JS"><br><img src="/images/javascript/JS02-23.png" alt="JS"></p>
+<ul>
+<li>여러개의 이벤트리스너 등록이 가능하다.</li>
+</ul>
+<h5 id="IE8-이하모델"><a href="#IE8-이하모델" class="headerlink" title="IE8 이하모델"></a>IE8 이하모델</h5><p><img src="/images/javascript/JS02-24.png" alt="JS"></p>
+<ul>
+<li>이벤트 이름에 반드시 on을 넣어야한다.<br>현재 내 노트북은 IE8이하 버젼이 아니기 때문에 확인할 수 없었다.<br>이제 이 두가지를 모두 호환 가능하도록 크로스 브라우징 하는 방법에 대해알아보자.</li>
+</ul>
+<p><img src="/images/javascript/JS02-25.png" alt="JS"></p>
+<ul>
+<li>if문을 사용하여 addEventListener에 값이 있는지 확인</li>
+<li>값이 있으면 addEventListenr 활용하여 이벤트 추가</li>
+<li>값이 없으면 구버젼 IE 이므로, attachEvent 활용하여 이벤트 추가</li>
+</ul>
+<h4 id="이벤트-전달"><a href="#이벤트-전달" class="headerlink" title="이벤트 전달"></a>이벤트 전달</h4><ul>
+<li>이벤트 버블링 : 자식노드에서 부모노드순으로 이벤트를 실행</li>
+<li>이벤트 캡쳐링 : 버블링과 반대되는 개념으로 부모노드에서 자식노드 순으로 실행( 익스플로러에서 캡쳐링을 지원하지 않아 사용할 일 없다.)</li>
+</ul>
+<p><img src="/images/javascript/JS02-26.png" alt="JS"></p>
+<ul>
+<li>bb는 aa의 자식이므로, bb를 클릭시 bProcess를 실행한 후, aProcess가 실행된다.</li>
+<li>쉽게 말하자면, bb를 클릭한것은 aa를 클릭한것이기도 하기때문에 둘다 실행된다는것이다. 이러한 버블링을 막기위해 하기 예시와 같이 진행할 수 있다.</li>
+</ul>
+<p><img src="/images/javascript/JS02-27.png" alt="JS"></p>
+<ul>
+<li>stopPropagation() 을 활용하여 이벤트 전달을 멈춘다.<br>그러나, IE8이하는 stopPropagation을 사용할 수 없기때문에 크로스 브라우징을 해줘야 한다.<br>그 방법을 알아보자.</li>
+</ul>
+<p><img src="/images/javascript/JS02-28.png" alt="JS"></p>
+<ul>
+<li>구IE 에는 event를 바로 사용호출 못하고 window.event로 가능하다.</li>
+<li>따라서 event라는 변수에 e와 window.event 중 가능 한것을 담는다.<br>(두 모델 모두 event변수안에 event가 담김)</li>
+<li>stopBubble 함수 내용에 따라 각 모델 방식별로 버블링을 제어한다.<br>표준모델 → event.stopPropagation();<br>구모델 → event.cancelBubble = true;<br><br><br></li>
+</ul>
+
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/JavaScript/" rel="tag">JavaScript</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">Like this article? Support the author with</h3>
+        <div class="buttons is-centered">
+            
+                
+<div class="notification is-danger">
+    You forgot to set the <code>qrcode</code> for Alipay. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                
+<div class="notification is-danger">
+    You forgot to set the <code>qrcode</code> for Wechat. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                <!-- Visit https://www.paypal.com/donate/buttons/ to get your donate button -->
+
+<div class="notification is-danger">
+    You forgot to set the <code>business</code> and <code>currency_code</code> for Paypal. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                
+<div class="notification is-danger">
+    You forgot to set the <code>url</code> Patreon. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2018/12/13/JavaScript/JS03/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">this., 브라우저 내장객체(BOM), 문서 내장객체(DOM), Ajax</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2018/12/11/JavaScript/JS01/">
+                <span class="level-item">JavaScript, 문법, 변수, 함수, 객체, Prototype</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+</div>
+                
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-4-widescreen  has-order-3 column-right is-sticky">
+    
+        
+
+    <div class="card widget" id="toc">
+        <div class="card-content">
+            <div class="menu">
+                <h3 class="menu-label">
+                    Catalogue
+                </h3>
+                <ul class="menu-list"><li>
+        <a class="is-flex" href="#KOSTA-DAY31">
+        <span class="has-mr-6">1</span>
+        <span>KOSTA DAY31</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#JavaScript">
+        <span class="has-mr-6">1.1</span>
+        <span>JavaScript</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#예제">
+        <span class="has-mr-6">1.1.1</span>
+        <span>예제</span>
+        </a></li><li>
+        <a class="is-flex" href="#배열">
+        <span class="has-mr-6">1.1.2</span>
+        <span>배열</span>
+        </a></li><li>
+        <a class="is-flex" href="#String-객체">
+        <span class="has-mr-6">1.1.3</span>
+        <span>String 객체</span>
+        </a></li><li>
+        <a class="is-flex" href="#Date-객체">
+        <span class="has-mr-6">1.1.4</span>
+        <span>Date 객체</span>
+        </a></li><li>
+        <a class="is-flex" href="#정규표현식-객체">
+        <span class="has-mr-6">1.1.5</span>
+        <span>정규표현식 객체</span>
+        </a></li><li>
+        <a class="is-flex" href="#이벤트">
+        <span class="has-mr-6">1.1.6</span>
+        <span>이벤트</span>
+        </a></li></ul></li></ul></li></ul>
+            </div>
+        </div>
+    </div>
+
+    
+        <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            Tag Cloud
+        </h3>
+        <a href="/tags/Algorithm/" style="font-size: 11.11px;">Algorithm</a> <a href="/tags/DataBase/" style="font-size: 10px;">DataBase</a> <a href="/tags/Etc/" style="font-size: 11.11px;">Etc</a> <a href="/tags/Git/" style="font-size: 13.33px;">Git</a> <a href="/tags/Interview/" style="font-size: 14.44px;">Interview</a> <a href="/tags/JPA/" style="font-size: 20px;">JPA</a> <a href="/tags/JSP/" style="font-size: 14.44px;">JSP</a> <a href="/tags/Java/" style="font-size: 18.89px;">Java</a> <a href="/tags/JavaScript/" style="font-size: 12.22px;">JavaScript</a> <a href="/tags/OracleDB/" style="font-size: 14.44px;">OracleDB</a> <a href="/tags/Process/" style="font-size: 11.11px;">Process</a> <a href="/tags/RestAPI/" style="font-size: 14.44px;">RestAPI</a> <a href="/tags/Seminar/" style="font-size: 10px;">Seminar</a> <a href="/tags/SpringBoot/" style="font-size: 20px;">SpringBoot</a> <a href="/tags/SpringSecurity/" style="font-size: 12.22px;">SpringSecurity</a> <a href="/tags/SpringWebMvc/" style="font-size: 16.67px;">SpringWebMvc</a> <a href="/tags/Springframework/" style="font-size: 17.78px;">Springframework</a> <a href="/tags/Springframework-kosta/" style="font-size: 14.44px;">Springframework_kosta</a> <a href="/tags/Web/" style="font-size: 12.22px;">Web</a> <a href="/tags/debug/" style="font-size: 11.11px;">debug</a> <a href="/tags/jQuery/" style="font-size: 12.22px;">jQuery</a> <a href="/tags/%EC%A0%95%EB%B3%B4%EC%B2%98%EB%A6%AC%EA%B8%B0%EC%82%AC-%ED%95%84%EA%B8%B0/" style="font-size: 13.33px;">정보처리기사_필기</a> <a href="/tags/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%ED%9A%8C%EA%B3%A0/" style="font-size: 15.56px;">프로젝트_회고</a>
+    </div>
+</div>
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/blog_logo.png" alt="배열, 자바스크립트 내장객체, 이벤트" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2020 Bong&#39;s blog&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/cyr9210">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("en");</script>
+
+
+<script>
+var IcarusThemeSettings = {
+    site: {
+        url: 'http://yoursite.com',
+        external_link: {"enable":true,"exclude":[]}
+    },
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+<script src="/js/animation.js"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+<script src="/js/gallery.js" defer></script>
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+<a id="back-to-top" title="Back to Top" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: 'Posts',
+                PAGES: 'Pages',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
+                UNTITLED: '(Untitled)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

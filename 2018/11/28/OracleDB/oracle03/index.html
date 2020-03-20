@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html >
+<head>
+    <meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 4.2.0" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>ANSI JOIN, INNER JOIN, OUTER JOIN, SELF JOIN, 서브쿼리 - Bong&#39;s blog</title>
+
+
+    <meta name="description" content="KOSTA DAY22DataBase">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ANSI JOIN, INNER JOIN, OUTER JOIN, SELF JOIN, 서브쿼리">
+<meta property="og:url" content="http://yoursite.com/2018/11/28/OracleDB/oracle03/index.html">
+<meta property="og:site_name" content="Bong&#39;s blog">
+<meta property="og:description" content="KOSTA DAY22DataBase">
+<meta property="og:image" content="http://yoursite.com/images/og_image.png">
+<meta property="article:published_time" content="2018-11-28T08:36:11.000Z">
+<meta property="article:modified_time" content="2020-03-20T07:57:35.730Z">
+<meta property="article:author" content="Bong&#39;s blog">
+<meta property="article:tag" content="OracleDB">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/images/og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+<style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+    
+    
+    
+    
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+    
+    
+    
+    
+    
+    
+    
+    <link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-2-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/blog_logo.png" alt="ANSI JOIN, INNER JOIN, OUTER JOIN, SELF JOIN, 서브쿼리" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                href="/">Home</a>
+                
+                <a class="navbar-item"
+                href="/archives">Archives</a>
+                
+                <a class="navbar-item"
+                href="/tags">Tags</a>
+                
+                <a class="navbar-item"
+                href="/about">About</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    <a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/cyr9210">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="Search" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-8-widescreen has-order-2 column-main">
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2018-11-28T08:36:11.000Z">2018-11-28</time>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    4 minutes read (About 654 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                ANSI JOIN, INNER JOIN, OUTER JOIN, SELF JOIN, 서브쿼리
+            
+        </h1>
+        <div class="content">
+            <p><img src="/images/oracledb_logo.png" alt="DB"></p>
+<h1 id="KOSTA-DAY22"><a href="#KOSTA-DAY22" class="headerlink" title="KOSTA DAY22"></a>KOSTA DAY22</h1><h2 id="DataBase"><a href="#DataBase" class="headerlink" title="DataBase"></a>DataBase</h2><a id="more"></a>
+<h3 id="ANSI-JOIN"><a href="#ANSI-JOIN" class="headerlink" title="ANSI JOIN"></a>ANSI JOIN</h3><ul>
+<li>FROM절에서 INNER JOIN 구문 사용</li>
+<li>조인조건은 ON절에 명시</li>
+<li>조인조건 외 조건은 기존대로 WHERE절에 명시</li>
+<li>3개이상 조인<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">테이블1 JOIN 테이블2</span><br><span class="line">ON 공통컬럼1 &#x3D; 공통컬럼1</span><br><span class="line">JOIN 테이블3</span><br><span class="line">ON 공통컬럼2 &#x3D; 공통컬럼2</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h4 id="예제"><a href="#예제" class="headerlink" title="예제"></a>예제</h4><ul>
+<li><p>기존</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SELECT e.employee_id, e.department_id, d.department_name</span><br><span class="line">FROM employees e, departments d</span><br><span class="line">WHERE e.department_id &#x3D; d.department_id</span><br><span class="line">AND last_name &#x3D; ‘King’;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>ANSI JOIN</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SELECT e.employee_id, e.department_id, d.department_name</span><br><span class="line">FROM employees e INNER JOIN departments d</span><br><span class="line">ON e.department_id &#x3D; d.department_id</span><br><span class="line">WHERE last_name &#x3D; ‘King’;</span><br></pre></td></tr></table></figure>
+<br>
+
+</li>
+</ul>
+<h3 id="INNER-JOIN"><a href="#INNER-JOIN" class="headerlink" title="INNER JOIN"></a>INNER JOIN</h3><p><img src="/images/database/DB03-01.png" alt="DB"></p>
+<ul>
+<li>교집합에 해당한다고 볼 수 있다.<br><br><br></li>
+</ul>
+<h3 id="SELF-JOIN"><a href="#SELF-JOIN" class="headerlink" title="SELF JOIN"></a>SELF JOIN</h3><p>TABLE을 자기 자신과 조인시키는 것</p>
+<h4 id="예제-1"><a href="#예제-1" class="headerlink" title="예제"></a>예제</h4><ul>
+<li>‘seattle’ (city)에 근무하는 사원의 이름, 부서번호 직종번호, 직종이름, 도시이름 출력<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SELECT e.last_name || ‘의 매니저는’ || m.last_name || ‘이다.’</span><br><span class="line">FROM employees e INNER JOIN employees m</span><br><span class="line">ON e.manager_id &#x3D; m.employee_id</span><br><span class="line">WHERE e.last_name &#x3D; ‘King’;</span><br></pre></td></tr></table></figure>
+<br>
+
+</li>
+</ul>
+<h3 id="OUTER-JOIN"><a href="#OUTER-JOIN" class="headerlink" title="OUTER JOIN"></a>OUTER JOIN</h3><p>조인을 생성하려 하는 두개의 테이블의 두개 컬럼에서 공통된 값이 없을때 사용</p>
+<h4 id="예제-2"><a href="#예제-2" class="headerlink" title="예제"></a>예제</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM employees; &#x2F;&#x2F;&#x3D;&gt; 107row</span><br><span class="line"></span><br><span class="line">SELECT e.employee_id, e.department_id, d.department_name</span><br><span class="line">FROM employees e, departments d</span><br><span class="line">WHERE e.department_id &#x3D; d.department_id; &#x2F;&#x2F;&#x3D;&gt; 106row</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>부서배치 받지 않은 사원이 있을 수 있다. 이럴 때, OUTER JOIN 사용</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">SELECT e.employee_id, e.department_id, d.department_name</span><br><span class="line">FROM employees e, departments d</span><br><span class="line">WHERE e.department_id &#x3D; d.department_id(+);</span><br><span class="line">&#x2F;* 누락된 곳 반대편에 (+) *&#x2F;</span><br><span class="line"></span><br><span class="line">OR</span><br><span class="line"></span><br><span class="line">ANSI JOIN</span><br><span class="line">SELECT e.employee_id, e.department_id, d.department_name</span><br><span class="line">FROM employees e LEFT JOIN departments d</span><br><span class="line">ON e.department_id &#x3D; d.department_id</span><br><span class="line">&#x2F;* 누락된 곳으로 방향설정 *&#x2F;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/database/DB03-02.png" alt="DB"><br><br></p>
+<h3 id="서브쿼리"><a href="#서브쿼리" class="headerlink" title="서브쿼리"></a>서브쿼리</h3><p>하나의 SQL문 안에 포함되어 있는 또 다른 SQL 문</p>
+<h4 id="서브쿼리-작성-순서"><a href="#서브쿼리-작성-순서" class="headerlink" title="서브쿼리 작성 순서"></a>서브쿼리 작성 순서</h4><ul>
+<li>서브쿼리문 먼저 작성</li>
+<li>메인쿼리 작성</li>
+<li>메인쿼리 필요 위치에 서브쿼리문 삽입</li>
+</ul>
+<h4 id="WHERE절-서브쿼리"><a href="#WHERE절-서브쿼리" class="headerlink" title="WHERE절 서브쿼리"></a>WHERE절 서브쿼리</h4><ul>
+<li>WHERE절에 서브 쿼리를 사용</li>
+</ul>
+<h4 id="예제-3"><a href="#예제-3" class="headerlink" title="예제"></a>예제</h4><ul>
+<li>Chen’ 보다 salary를 많이 받는 직원의 내역을 출력하라.<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT last_name, salary</span><br><span class="line">FROM employees</span><br><span class="line">WHERE salary &gt; (SELECT salary FROM employees WHERE last_name &#x3D; ‘Chen’);</span><br></pre></td></tr></table></figure>
+<br>
+
+</li>
+</ul>
+<h3 id="문제"><a href="#문제" class="headerlink" title="문제"></a>문제</h3><ol>
+<li><p>학생중 기말고사 성적이 가장 낮은 학생의 정보를 검색하라</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">SELECT s.sname, s.sno, s.major FROM student s, score r</span><br><span class="line">WHERE s.SNO &#x3D; r.SNO</span><br><span class="line">GROUP BY s.sname, s.sno, s.major</span><br><span class="line">HAVING sum(result) &#x3D; (SELECT min(sum(result)) FROM score </span><br><span class="line">                        GROUP BY sno);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>화학과 1학년 학생중에 평점이 평균이하인 학생을 검색하라.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">SELECT sname, sno, avr FROM student</span><br><span class="line">WHERE major &#x3D; ‘화학’</span><br><span class="line">AND syear &#x3D; 1</span><br><span class="line">GROUP BY sname, sno, avr</span><br><span class="line">HAVING avr &lt;&#x3D; (SELECT avg(sum(avr)) FROM student</span><br><span class="line">                WHERE MAJOR &#x3D; ‘화학’</span><br><span class="line">                AND SYEAR &#x3D; 1</span><br><span class="line">                GROUP BY sno);</span><br></pre></td></tr></table></figure>
+<br>
+
+
+</li>
+</ol>
+
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/OracleDB/" rel="tag">OracleDB</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">Like this article? Support the author with</h3>
+        <div class="buttons is-centered">
+            
+                
+<div class="notification is-danger">
+    You forgot to set the <code>qrcode</code> for Alipay. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                
+<div class="notification is-danger">
+    You forgot to set the <code>qrcode</code> for Wechat. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                <!-- Visit https://www.paypal.com/donate/buttons/ to get your donate button -->
+
+<div class="notification is-danger">
+    You forgot to set the <code>business</code> and <code>currency_code</code> for Paypal. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                
+<div class="notification is-danger">
+    You forgot to set the <code>url</code> Patreon. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2018/11/29/OracleDB/oracle04/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">다중컬럼 다중로우, FROM절 서브쿼리, 인덱스, 시퀀스, 뷰, PLSQL</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2018/11/27/OracleDB/oracle02/">
+                <span class="level-item">HAVING, 함수, DDL, DML, 제약조건, JOIN</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+</div>
+                
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-4-widescreen  has-order-3 column-right is-sticky">
+    
+        
+
+    <div class="card widget" id="toc">
+        <div class="card-content">
+            <div class="menu">
+                <h3 class="menu-label">
+                    Catalogue
+                </h3>
+                <ul class="menu-list"><li>
+        <a class="is-flex" href="#KOSTA-DAY22">
+        <span class="has-mr-6">1</span>
+        <span>KOSTA DAY22</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#DataBase">
+        <span class="has-mr-6">1.1</span>
+        <span>DataBase</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#ANSI-JOIN">
+        <span class="has-mr-6">1.1.1</span>
+        <span>ANSI JOIN</span>
+        </a></li><li>
+        <a class="is-flex" href="#INNER-JOIN">
+        <span class="has-mr-6">1.1.2</span>
+        <span>INNER JOIN</span>
+        </a></li><li>
+        <a class="is-flex" href="#SELF-JOIN">
+        <span class="has-mr-6">1.1.3</span>
+        <span>SELF JOIN</span>
+        </a></li><li>
+        <a class="is-flex" href="#OUTER-JOIN">
+        <span class="has-mr-6">1.1.4</span>
+        <span>OUTER JOIN</span>
+        </a></li><li>
+        <a class="is-flex" href="#서브쿼리">
+        <span class="has-mr-6">1.1.5</span>
+        <span>서브쿼리</span>
+        </a></li><li>
+        <a class="is-flex" href="#문제">
+        <span class="has-mr-6">1.1.6</span>
+        <span>문제</span>
+        </a></li></ul></li></ul></li></ul>
+            </div>
+        </div>
+    </div>
+
+    
+        <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            Tag Cloud
+        </h3>
+        <a href="/tags/Algorithm/" style="font-size: 11.11px;">Algorithm</a> <a href="/tags/DataBase/" style="font-size: 10px;">DataBase</a> <a href="/tags/Etc/" style="font-size: 11.11px;">Etc</a> <a href="/tags/Git/" style="font-size: 13.33px;">Git</a> <a href="/tags/Interview/" style="font-size: 14.44px;">Interview</a> <a href="/tags/JPA/" style="font-size: 20px;">JPA</a> <a href="/tags/JSP/" style="font-size: 14.44px;">JSP</a> <a href="/tags/Java/" style="font-size: 18.89px;">Java</a> <a href="/tags/JavaScript/" style="font-size: 12.22px;">JavaScript</a> <a href="/tags/OracleDB/" style="font-size: 14.44px;">OracleDB</a> <a href="/tags/Process/" style="font-size: 11.11px;">Process</a> <a href="/tags/RestAPI/" style="font-size: 14.44px;">RestAPI</a> <a href="/tags/Seminar/" style="font-size: 10px;">Seminar</a> <a href="/tags/SpringBoot/" style="font-size: 20px;">SpringBoot</a> <a href="/tags/SpringSecurity/" style="font-size: 12.22px;">SpringSecurity</a> <a href="/tags/SpringWebMvc/" style="font-size: 16.67px;">SpringWebMvc</a> <a href="/tags/Springframework/" style="font-size: 17.78px;">Springframework</a> <a href="/tags/Springframework-kosta/" style="font-size: 14.44px;">Springframework_kosta</a> <a href="/tags/Web/" style="font-size: 12.22px;">Web</a> <a href="/tags/debug/" style="font-size: 11.11px;">debug</a> <a href="/tags/jQuery/" style="font-size: 12.22px;">jQuery</a> <a href="/tags/%EC%A0%95%EB%B3%B4%EC%B2%98%EB%A6%AC%EA%B8%B0%EC%82%AC-%ED%95%84%EA%B8%B0/" style="font-size: 13.33px;">정보처리기사_필기</a> <a href="/tags/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%ED%9A%8C%EA%B3%A0/" style="font-size: 15.56px;">프로젝트_회고</a>
+    </div>
+</div>
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/blog_logo.png" alt="ANSI JOIN, INNER JOIN, OUTER JOIN, SELF JOIN, 서브쿼리" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2020 Bong&#39;s blog&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/cyr9210">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("en");</script>
+
+
+<script>
+var IcarusThemeSettings = {
+    site: {
+        url: 'http://yoursite.com',
+        external_link: {"enable":true,"exclude":[]}
+    },
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+<script src="/js/animation.js"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+<script src="/js/gallery.js" defer></script>
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+<a id="back-to-top" title="Back to Top" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: 'Posts',
+                PAGES: 'Pages',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
+                UNTITLED: '(Untitled)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

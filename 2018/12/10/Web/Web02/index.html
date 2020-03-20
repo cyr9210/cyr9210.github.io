@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html >
+<head>
+    <meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 4.2.0" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>section, article, css, 선택자, float, 박스모델, 포지셔닝 - Bong&#39;s blog</title>
+
+
+    <meta name="description" content="KOSTA DAY29Web">
+<meta property="og:type" content="article">
+<meta property="og:title" content="section, article, css, 선택자, float, 박스모델, 포지셔닝">
+<meta property="og:url" content="http://yoursite.com/2018/12/10/Web/Web02/index.html">
+<meta property="og:site_name" content="Bong&#39;s blog">
+<meta property="og:description" content="KOSTA DAY29Web">
+<meta property="og:image" content="http://yoursite.com/images/og_image.png">
+<meta property="article:published_time" content="2018-12-09T16:09:51.000Z">
+<meta property="article:modified_time" content="2020-03-20T07:57:35.739Z">
+<meta property="article:author" content="Bong&#39;s blog">
+<meta property="article:tag" content="Web">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/images/og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+<style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+    
+    
+    
+    
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+    
+    
+    
+    
+    
+    
+    
+    <link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-2-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/blog_logo.png" alt="section, article, css, 선택자, float, 박스모델, 포지셔닝" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                href="/">Home</a>
+                
+                <a class="navbar-item"
+                href="/archives">Archives</a>
+                
+                <a class="navbar-item"
+                href="/tags">Tags</a>
+                
+                <a class="navbar-item"
+                href="/about">About</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    <a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/cyr9210">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="Search" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-8-widescreen has-order-2 column-main">
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2018-12-09T16:09:51.000Z">2018-12-10</time>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    4 minutes read (About 639 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                section, article, css, 선택자, float, 박스모델, 포지셔닝
+            
+        </h1>
+        <div class="content">
+            <p><img src="/images/html_logo.jpeg" alt="html"></p>
+<h1 id="KOSTA-DAY29"><a href="#KOSTA-DAY29" class="headerlink" title="KOSTA DAY29"></a>KOSTA DAY29</h1><h2 id="Web"><a href="#Web" class="headerlink" title="Web"></a>Web</h2><a id="more"></a>
+<h3 id="section"><a href="#section" class="headerlink" title="section"></a>section</h3><h4 id="HTML을-만들때-주의할점"><a href="#HTML을-만들때-주의할점" class="headerlink" title="HTML을 만들때 주의할점"></a>HTML을 만들때 주의할점</h4><ul>
+<li>웹표준을 지켜야 한다.</li>
+<li>시멘틱한 웹이어야 한다. (메타태그 및 헤드태그를 사용)</li>
+</ul>
+<h4 id="시멘틱태그"><a href="#시멘틱태그" class="headerlink" title="시멘틱태그"></a>시멘틱태그</h4><ul>
+<li>좀 더 문서의 의미를 강조</li>
+<li>div태그 만으로 분류하는 것은 의미 부여가 약함<br><img src="/images/web/Web02-01.png" alt="web"></li>
+</ul>
+<p><img src="/images/web/Web02-02.png" alt="web"></p>
+<ul>
+<li>section : 제목과 단락으로 나누어질 수 있는 경우 사용</li>
+<li>article : 독립적인 내용을 가지고 있을 경우 사용 (예를들어 댓글, 기사 등)</li>
+<li>주관적으로 나누어질 수 있기 때문에 사용자의 마음</li>
+<li>&lt;div&gt;는 여전히 많이 사용됨</li>
+</ul>
+<h4 id="예제"><a href="#예제" class="headerlink" title="예제"></a>예제</h4><p><img src="/images/web/Web02-03.png" alt="web"></p>
+<ul>
+<li>section태그를 사용하여 분류하였다.</li>
+</ul>
+<p><img src="/images/web/Web02-04.png" alt="web"></p>
+<ul>
+<li>article 태그 사용하여 분류<br><br><br></li>
+</ul>
+<h3 id="CSS"><a href="#CSS" class="headerlink" title="CSS"></a>CSS</h3><ul>
+<li><p>인라인 스타일 적용<br><img src="/images/web/Web02-05.png" alt="web"></p>
+</li>
+<li><p>내부스타일 적용<br><img src="/images/web/Web02-06.png" alt="web"></p>
+</li>
+<li><p>외부링크 스타일적용(가장많이쓰임)<br><img src="/images/web/Web02-07.png" alt="web"></p>
+</li>
+<li><p>외부 스타일 적용 (import)<br><img src="/images/web/Web02-08.png" alt="web"><br><br><br></p>
+</li>
+</ul>
+<h3 id="선택자"><a href="#선택자" class="headerlink" title="선택자"></a>선택자</h3><h4 id="일반선택자-복합선택자"><a href="#일반선택자-복합선택자" class="headerlink" title="일반선택자/복합선택자"></a>일반선택자/복합선택자</h4><p><img src="/images/web/Web02-09.png" alt="web"></p>
+<ul>
+<li>클래스 선택자, ID선택자 많이 활용됨</li>
+<li>하위선택자, 자식선택자 많이 활용됨<br>(하위는 자손까지/자식선택자 자식까지만 선택된다.)</li>
+<li>빨간박스의 내용은 JQUERY에서도 사용됨으로 잘 숙지하는것이 좋다.</li>
+</ul>
+<h4 id="속성선택자"><a href="#속성선택자" class="headerlink" title="속성선택자"></a>속성선택자</h4><p><img src="/images/web/Web02-11.png" alt="web"></p>
+<h4 id="font속성"><a href="#font속성" class="headerlink" title="font속성"></a>font속성</h4><p><img src="/images/web/Web02-12.png" alt="web"></p>
+<h4 id="text속성"><a href="#text속성" class="headerlink" title="text속성"></a>text속성</h4><p><img src="/images/web/Web02-13.png" alt="web"></p>
+<h4 id="인터페이스-속성"><a href="#인터페이스-속성" class="headerlink" title="인터페이스 속성"></a>인터페이스 속성</h4><p><img src="/images/web/Web02-14.png" alt="web"></p>
+<ul>
+<li>display : none; → 화면에서 안보이도록 한다.<br><br><br></li>
+</ul>
+<h3 id="float"><a href="#float" class="headerlink" title="float"></a>float</h3><p>박스가 화면의 어느 위치에 배치할 것인지 설정하기 위해 사용한다.</p>
+<p><img src="/images/web/Web02-15.png" alt="web"></p>
+<ul>
+<li>이미지를 인라인 형식처럼 한쪽으로 보냄</li>
+<li>clear : 제외시킴</li>
+<li>margin등의 조건 시, 주의(float대상 크기도 고려해야한다.)<br><br><br></li>
+</ul>
+<h3 id="박스모델"><a href="#박스모델" class="headerlink" title="박스모델"></a>박스모델</h3><p><img src="/images/web/Web02-16.png" alt="web"></p>
+<ul>
+<li>box : width, height</li>
+<li>여백 : padding, margin</li>
+<li>성질 : display, float, position<br><br><br></li>
+</ul>
+<h3 id="포지셔닝"><a href="#포지셔닝" class="headerlink" title="포지셔닝"></a>포지셔닝</h3><ul>
+<li><p>static : 기본값으로 일반적인 내용물의 흐름 상단과 좌측에서의 거리를 지정할 수 없다.</p>
+</li>
+<li><p>relative : 상대적인 top, left 거리를 지정(<strong>원래있어야할 위치 기준</strong>)<br><img src="/images/web/Web02-17.png" alt="web"></p>
+</li>
+<li><p>absolute : <strong>자신의 상위 box속에서</strong> top, left, right, bottom등의 절대적인 위치를 지정(전체를 기준)<br><img src="/images/web/Web02-18.png" alt="web"></p>
+</li>
+<li><p>relative는 다른 박스에 영향을 끼치지 않고, absolute는 영향을 끼친다.</p>
+</li>
+</ul>
+<h4 id="예제-1"><a href="#예제-1" class="headerlink" title="예제"></a>예제</h4><p><img src="/images/web/Web02-19.png" alt="web"><br><img src="/images/web/Web02-20.png" alt="web"><br><br></p>
+
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/Web/" rel="tag">Web</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">Like this article? Support the author with</h3>
+        <div class="buttons is-centered">
+            
+                
+<div class="notification is-danger">
+    You forgot to set the <code>qrcode</code> for Alipay. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                
+<div class="notification is-danger">
+    You forgot to set the <code>qrcode</code> for Wechat. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                <!-- Visit https://www.paypal.com/donate/buttons/ to get your donate button -->
+
+<div class="notification is-danger">
+    You forgot to set the <code>business</code> and <code>currency_code</code> for Paypal. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                
+<div class="notification is-danger">
+    You forgot to set the <code>url</code> Patreon. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2018/12/11/JavaScript/JS01/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">JavaScript, 문법, 변수, 함수, 객체, Prototype</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2018/12/07/Web/Web01/">
+                <span class="level-item">Web, HTML</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+</div>
+                
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-4-widescreen  has-order-3 column-right is-sticky">
+    
+        
+
+    <div class="card widget" id="toc">
+        <div class="card-content">
+            <div class="menu">
+                <h3 class="menu-label">
+                    Catalogue
+                </h3>
+                <ul class="menu-list"><li>
+        <a class="is-flex" href="#KOSTA-DAY29">
+        <span class="has-mr-6">1</span>
+        <span>KOSTA DAY29</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#Web">
+        <span class="has-mr-6">1.1</span>
+        <span>Web</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#section">
+        <span class="has-mr-6">1.1.1</span>
+        <span>section</span>
+        </a></li><li>
+        <a class="is-flex" href="#CSS">
+        <span class="has-mr-6">1.1.2</span>
+        <span>CSS</span>
+        </a></li><li>
+        <a class="is-flex" href="#선택자">
+        <span class="has-mr-6">1.1.3</span>
+        <span>선택자</span>
+        </a></li><li>
+        <a class="is-flex" href="#float">
+        <span class="has-mr-6">1.1.4</span>
+        <span>float</span>
+        </a></li><li>
+        <a class="is-flex" href="#박스모델">
+        <span class="has-mr-6">1.1.5</span>
+        <span>박스모델</span>
+        </a></li><li>
+        <a class="is-flex" href="#포지셔닝">
+        <span class="has-mr-6">1.1.6</span>
+        <span>포지셔닝</span>
+        </a></li></ul></li></ul></li></ul>
+            </div>
+        </div>
+    </div>
+
+    
+        <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            Tag Cloud
+        </h3>
+        <a href="/tags/Algorithm/" style="font-size: 11.11px;">Algorithm</a> <a href="/tags/DataBase/" style="font-size: 10px;">DataBase</a> <a href="/tags/Etc/" style="font-size: 11.11px;">Etc</a> <a href="/tags/Git/" style="font-size: 13.33px;">Git</a> <a href="/tags/Interview/" style="font-size: 14.44px;">Interview</a> <a href="/tags/JPA/" style="font-size: 20px;">JPA</a> <a href="/tags/JSP/" style="font-size: 14.44px;">JSP</a> <a href="/tags/Java/" style="font-size: 18.89px;">Java</a> <a href="/tags/JavaScript/" style="font-size: 12.22px;">JavaScript</a> <a href="/tags/OracleDB/" style="font-size: 14.44px;">OracleDB</a> <a href="/tags/Process/" style="font-size: 11.11px;">Process</a> <a href="/tags/RestAPI/" style="font-size: 14.44px;">RestAPI</a> <a href="/tags/Seminar/" style="font-size: 10px;">Seminar</a> <a href="/tags/SpringBoot/" style="font-size: 20px;">SpringBoot</a> <a href="/tags/SpringSecurity/" style="font-size: 12.22px;">SpringSecurity</a> <a href="/tags/SpringWebMvc/" style="font-size: 16.67px;">SpringWebMvc</a> <a href="/tags/Springframework/" style="font-size: 17.78px;">Springframework</a> <a href="/tags/Springframework-kosta/" style="font-size: 14.44px;">Springframework_kosta</a> <a href="/tags/Web/" style="font-size: 12.22px;">Web</a> <a href="/tags/debug/" style="font-size: 11.11px;">debug</a> <a href="/tags/jQuery/" style="font-size: 12.22px;">jQuery</a> <a href="/tags/%EC%A0%95%EB%B3%B4%EC%B2%98%EB%A6%AC%EA%B8%B0%EC%82%AC-%ED%95%84%EA%B8%B0/" style="font-size: 13.33px;">정보처리기사_필기</a> <a href="/tags/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%ED%9A%8C%EA%B3%A0/" style="font-size: 15.56px;">프로젝트_회고</a>
+    </div>
+</div>
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/blog_logo.png" alt="section, article, css, 선택자, float, 박스모델, 포지셔닝" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2020 Bong&#39;s blog&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/cyr9210">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("en");</script>
+
+
+<script>
+var IcarusThemeSettings = {
+    site: {
+        url: 'http://yoursite.com',
+        external_link: {"enable":true,"exclude":[]}
+    },
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+<script src="/js/animation.js"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+<script src="/js/gallery.js" defer></script>
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+<a id="back-to-top" title="Back to Top" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: 'Posts',
+                PAGES: 'Pages',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
+                UNTITLED: '(Untitled)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

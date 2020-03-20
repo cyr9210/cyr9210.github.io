@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html >
+<head>
+    <meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 4.2.0" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>this., 브라우저 내장객체(BOM), 문서 내장객체(DOM), Ajax - Bong&#39;s blog</title>
+
+
+    <meta name="description" content="KOSTA DAY32JavaScript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="this., 브라우저 내장객체(BOM), 문서 내장객체(DOM), Ajax">
+<meta property="og:url" content="http://yoursite.com/2018/12/13/JavaScript/JS03/index.html">
+<meta property="og:site_name" content="Bong&#39;s blog">
+<meta property="og:description" content="KOSTA DAY32JavaScript">
+<meta property="og:image" content="http://yoursite.com/images/og_image.png">
+<meta property="article:published_time" content="2018-12-13T05:59:01.000Z">
+<meta property="article:modified_time" content="2020-03-20T07:57:35.728Z">
+<meta property="article:author" content="Bong&#39;s blog">
+<meta property="article:tag" content="JavaScript">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/images/og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+<style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+    
+    
+    
+    
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+    
+    
+    
+    
+    
+    
+    
+    <link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-2-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/blog_logo.png" alt="this., 브라우저 내장객체(BOM), 문서 내장객체(DOM), Ajax" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                href="/">Home</a>
+                
+                <a class="navbar-item"
+                href="/archives">Archives</a>
+                
+                <a class="navbar-item"
+                href="/tags">Tags</a>
+                
+                <a class="navbar-item"
+                href="/about">About</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    <a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/cyr9210">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="Search" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-8-widescreen has-order-2 column-main">
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2018-12-13T05:59:01.000Z">2018-12-13</time>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    6 minutes read (About 827 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                this., 브라우저 내장객체(BOM), 문서 내장객체(DOM), Ajax
+            
+        </h1>
+        <div class="content">
+            <h1 id="KOSTA-DAY32"><a href="#KOSTA-DAY32" class="headerlink" title="KOSTA DAY32"></a>KOSTA DAY32</h1><h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><p><img src="/images/JS_logo.png" alt="JS"></p>
+<a id="more"></a>
+<h3 id="This"><a href="#This" class="headerlink" title="This"></a>This</h3><ul>
+<li><p>일반함수 안에서 this는 밖의변수(전역변수)를 가르킨다.<br><img src="/images/javascript/JS03-01.png" alt="JS"></p>
+</li>
+<li><p>생성자함수 안에서 this는 객체의속성을 가르킨다.<br><img src="/images/javascript/JS03-02.png" alt="JS"></p>
+</li>
+<li><p>이벤트리스터 안에서 this(event.target)는 해당 객체를 가르킴<br><img src="/images/javascript/JS03-03.png" alt="JS"></p>
+</li>
+<li><p>this값은 call함수를 사용하여 변경할 수 있다.<br><img src="/images/javascript/JS03-04.png" alt="JS"></p>
+<br>
+
+</li>
+</ul>
+<h3 id="브라우저-내장객체-BOM"><a href="#브라우저-내장객체-BOM" class="headerlink" title="브라우저 내장객체(BOM)"></a>브라우저 내장객체(BOM)</h3><p><img src="/images/javascript/JS03-05.png" alt="JS"></p>
+<ul>
+<li>현재 브라우저가 보여주고 있는 문서에 관한 여러가지 정보 뿐만 아니라 윈도우 정보, 히스토리정보, 문서가 존재하고 있는 위치정보들을 포함</li>
+<li>브라우저 내장객체는 계층구조로 이루어진다.<br>상위객체에서 하위객체의 이름을 .을 이용하여 구분하며 연속적으로 나열하여 사용한다.</li>
+<li>Window, Frame, Document, History, Link, Anchor, Navigator, Image 객체가 들어있다.</li>
+</ul>
+<h4 id="Window-객체"><a href="#Window-객체" class="headerlink" title="Window 객체"></a>Window 객체</h4><p>JS브라우저 내장 객체의 최상위 객체이다.<br>-전체 윈도우에 적용될 내용들을 가지고 있다.</p>
+<ul>
+<li>최상위 객체인 Window는 생략이 가능함</li>
+</ul>
+<h5 id="예제"><a href="#예제" class="headerlink" title="예제"></a>예제</h5><p><img src="/images/javascript/JS03-05.png" alt="JS"><br><img src="/images/javascript/JS03-06.png" alt="JS"></p>
+<ul>
+<li>open을 통해 팝업창을 연다.</li>
+<li>open(‘새창으로 열 페이지 주소’, ‘새창의 이름’, ‘옵션’);<br><br><br></li>
+</ul>
+<h3 id="문서-내장객체-DOM"><a href="#문서-내장객체-DOM" class="headerlink" title="문서 내장객체(DOM)"></a>문서 내장객체(DOM)</h3><p>(X)HTML 문서의 구조를 가리켜 문서객체모델(DOM : Document Object Model)이라고 한다.</p>
+<ul>
+<li>각 태그마다 기능과 속성이 있다.</li>
+<li>IE8이하 및 표준모델들간 호환성이 떨어진다.<br>JQuery에서 이 단점을 모두 해결함</li>
+</ul>
+<h4 id="선택자"><a href="#선택자" class="headerlink" title="선택자"></a>선택자</h4><ul>
+<li>HTML내에서 작성된 스타일(css)은 어떠한 동작을 취했을 때 지정한 요소에 스타일을 적용시킬 수 없다.</li>
+<li>동작의 스타일은 자바스크립트에서 적용<br>HTML내 작성된 스타일 : 정적 / 자바스크립트내 작성된 스타일 : 동적</li>
+<li>직접선택자 : id, class, Form name, Element Name<br>먼거리에 있는 요소를 선택해오는 원거리 선택자</li>
+<li>인접관계 선택자 : parentNode, childNodes, firstChild, children, previousSibling, nextSibling<br>선택한요소를 기준으로 가까운 거리에 있는 요소를 선택하는 근거리 선택자</li>
+</ul>
+<p><img src="/images/javascript/JS03-07.png" alt="JS"></p>
+<p>참고블로그 : <a href="https://starrykss.tistory.com/140?category=611458">별의블로그</a><br><br><br></p>
+<h3 id="AJAX-Asynchronous-Javascript-And-XML"><a href="#AJAX-Asynchronous-Javascript-And-XML" class="headerlink" title="AJAX(Asynchronous Javascript And XML)"></a>AJAX(Asynchronous Javascript And XML)</h3><p>비동기적인 웹 애플리케이션의 제작을 위해 아래와 같은 조합을 이용하는 웹 개발 기법</p>
+<blockquote>
+<p><strong>비동기식</strong><br>서버에 요청한 일에대해 응답을 기다리지 않고 다른작업을 하는것.<br><strong>동기식</strong><br>서버에 요펑한 일의 응답을 기다리고 다음작업을 하는것</p>
+</blockquote>
+<h4 id="비동기식의-장점"><a href="#비동기식의-장점" class="headerlink" title="비동기식의 장점"></a>비동기식의 장점</h4><ul>
+<li>페이지를 리로딩을 하지 않는다.</li>
+<li>한 페이지 안에서 모든일을 한다.(SAP)</li>
+</ul>
+<h4 id="ajax프로그래밍-순서"><a href="#ajax프로그래밍-순서" class="headerlink" title="ajax프로그래밍 순서"></a>ajax프로그래밍 순서</h4><ul>
+<li>사용자에의한 요청 이벤트 발생</li>
+<li>XMLHttpRequest (xhr) 객체 생성<br>(xhr : 서버와 통신을 담당)</li>
+<li>웹서버에 요청 전송하기(응답이 어떤 타입으로 오는지 확인 필요하다.)</li>
+<li>서버로 부터 응답을 받을 콜백함수를 지정한다.<br>(응답시 자동으로 처리하도록)<br><br><br></li>
+</ul>
+
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/JavaScript/" rel="tag">JavaScript</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">Like this article? Support the author with</h3>
+        <div class="buttons is-centered">
+            
+                
+<div class="notification is-danger">
+    You forgot to set the <code>qrcode</code> for Alipay. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                
+<div class="notification is-danger">
+    You forgot to set the <code>qrcode</code> for Wechat. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                <!-- Visit https://www.paypal.com/donate/buttons/ to get your donate button -->
+
+<div class="notification is-danger">
+    You forgot to set the <code>business</code> and <code>currency_code</code> for Paypal. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                
+<div class="notification is-danger">
+    You forgot to set the <code>url</code> Patreon. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2018/12/14/JavaScript/JS04/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">jQuery, 선택자, 이벤트, 스타일, 효과, DOM구현</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2018/12/12/JavaScript/JS02/">
+                <span class="level-item">배열, 자바스크립트 내장객체, 이벤트</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+</div>
+                
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-4-widescreen  has-order-3 column-right is-sticky">
+    
+        
+
+    <div class="card widget" id="toc">
+        <div class="card-content">
+            <div class="menu">
+                <h3 class="menu-label">
+                    Catalogue
+                </h3>
+                <ul class="menu-list"><li>
+        <a class="is-flex" href="#KOSTA-DAY32">
+        <span class="has-mr-6">1</span>
+        <span>KOSTA DAY32</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#JavaScript">
+        <span class="has-mr-6">1.1</span>
+        <span>JavaScript</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#This">
+        <span class="has-mr-6">1.1.1</span>
+        <span>This</span>
+        </a></li><li>
+        <a class="is-flex" href="#브라우저-내장객체-BOM">
+        <span class="has-mr-6">1.1.2</span>
+        <span>브라우저 내장객체(BOM)</span>
+        </a></li><li>
+        <a class="is-flex" href="#문서-내장객체-DOM">
+        <span class="has-mr-6">1.1.3</span>
+        <span>문서 내장객체(DOM)</span>
+        </a></li><li>
+        <a class="is-flex" href="#AJAX-Asynchronous-Javascript-And-XML">
+        <span class="has-mr-6">1.1.4</span>
+        <span>AJAX(Asynchronous Javascript And XML)</span>
+        </a></li></ul></li></ul></li></ul>
+            </div>
+        </div>
+    </div>
+
+    
+        <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            Tag Cloud
+        </h3>
+        <a href="/tags/Algorithm/" style="font-size: 11.11px;">Algorithm</a> <a href="/tags/DataBase/" style="font-size: 10px;">DataBase</a> <a href="/tags/Etc/" style="font-size: 11.11px;">Etc</a> <a href="/tags/Git/" style="font-size: 13.33px;">Git</a> <a href="/tags/Interview/" style="font-size: 14.44px;">Interview</a> <a href="/tags/JPA/" style="font-size: 20px;">JPA</a> <a href="/tags/JSP/" style="font-size: 14.44px;">JSP</a> <a href="/tags/Java/" style="font-size: 18.89px;">Java</a> <a href="/tags/JavaScript/" style="font-size: 12.22px;">JavaScript</a> <a href="/tags/OracleDB/" style="font-size: 14.44px;">OracleDB</a> <a href="/tags/Process/" style="font-size: 11.11px;">Process</a> <a href="/tags/RestAPI/" style="font-size: 14.44px;">RestAPI</a> <a href="/tags/Seminar/" style="font-size: 10px;">Seminar</a> <a href="/tags/SpringBoot/" style="font-size: 20px;">SpringBoot</a> <a href="/tags/SpringSecurity/" style="font-size: 12.22px;">SpringSecurity</a> <a href="/tags/SpringWebMvc/" style="font-size: 16.67px;">SpringWebMvc</a> <a href="/tags/Springframework/" style="font-size: 17.78px;">Springframework</a> <a href="/tags/Springframework-kosta/" style="font-size: 14.44px;">Springframework_kosta</a> <a href="/tags/Web/" style="font-size: 12.22px;">Web</a> <a href="/tags/debug/" style="font-size: 11.11px;">debug</a> <a href="/tags/jQuery/" style="font-size: 12.22px;">jQuery</a> <a href="/tags/%EC%A0%95%EB%B3%B4%EC%B2%98%EB%A6%AC%EA%B8%B0%EC%82%AC-%ED%95%84%EA%B8%B0/" style="font-size: 13.33px;">정보처리기사_필기</a> <a href="/tags/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%ED%9A%8C%EA%B3%A0/" style="font-size: 15.56px;">프로젝트_회고</a>
+    </div>
+</div>
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/blog_logo.png" alt="this., 브라우저 내장객체(BOM), 문서 내장객체(DOM), Ajax" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2020 Bong&#39;s blog&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/cyr9210">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("en");</script>
+
+
+<script>
+var IcarusThemeSettings = {
+    site: {
+        url: 'http://yoursite.com',
+        external_link: {"enable":true,"exclude":[]}
+    },
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+<script src="/js/animation.js"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+<script src="/js/gallery.js" defer></script>
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+<a id="back-to-top" title="Back to Top" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: 'Posts',
+                PAGES: 'Pages',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
+                UNTITLED: '(Untitled)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

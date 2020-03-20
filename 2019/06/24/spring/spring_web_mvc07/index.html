@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html >
+<head>
+    <meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 4.2.0" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>스프링 MVC 설정07 - 핸들러 인터셉터, 리소스 핸들러, HTTP 메세지 컨버터, 기타 설정 - Bong&#39;s blog</title>
+
+
+    <meta name="description" content="스프링 웹 MVC(inflearn) - 백기선Springframework">
+<meta property="og:type" content="article">
+<meta property="og:title" content="스프링 MVC 설정07 - 핸들러 인터셉터, 리소스 핸들러, HTTP 메세지 컨버터, 기타 설정">
+<meta property="og:url" content="http://yoursite.com/2019/06/24/spring/spring_web_mvc07/index.html">
+<meta property="og:site_name" content="Bong&#39;s blog">
+<meta property="og:description" content="스프링 웹 MVC(inflearn) - 백기선Springframework">
+<meta property="og:image" content="http://yoursite.com/images/og_image.png">
+<meta property="article:published_time" content="2019-06-24T11:48:44.000Z">
+<meta property="article:modified_time" content="2020-03-20T07:57:35.772Z">
+<meta property="article:author" content="Bong&#39;s blog">
+<meta property="article:tag" content="SpringWebMvc">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/images/og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+<style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+    
+    
+    
+    
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+    
+    
+    
+    
+    
+    
+    
+    <link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-2-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/blog_logo.png" alt="스프링 MVC 설정07 - 핸들러 인터셉터, 리소스 핸들러, HTTP 메세지 컨버터, 기타 설정" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                href="/">Home</a>
+                
+                <a class="navbar-item"
+                href="/archives">Archives</a>
+                
+                <a class="navbar-item"
+                href="/tags">Tags</a>
+                
+                <a class="navbar-item"
+                href="/about">About</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    <a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/cyr9210">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="Search" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-8-widescreen has-order-2 column-main">
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-06-24T11:48:44.000Z">2019-06-24</time>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    13 minutes read (About 1966 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                스프링 MVC 설정07 - 핸들러 인터셉터, 리소스 핸들러, HTTP 메세지 컨버터, 기타 설정
+            
+        </h1>
+        <div class="content">
+            <h1 id="스프링-웹-MVC-inflearn-백기선"><a href="#스프링-웹-MVC-inflearn-백기선" class="headerlink" title="스프링 웹 MVC(inflearn) - 백기선"></a>스프링 웹 MVC(inflearn) - 백기선</h1><h2 id="Springframework"><a href="#Springframework" class="headerlink" title="Springframework"></a>Springframework</h2><a id="more"></a>
+
+<h3 id="핸들러-인터셉터"><a href="#핸들러-인터셉터" class="headerlink" title="핸들러 인터셉터"></a>핸들러 인터셉터</h3><ul>
+<li><a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/servlet/HandlerInterceptor.html">reference</a> </li>
+</ul>
+<h4 id="HandlerInterceptor"><a href="#HandlerInterceptor" class="headerlink" title="HandlerInterceptor"></a>HandlerInterceptor</h4><ul>
+<li>핸들러 맵핑에 설정할 수 있는 인터셉터</li>
+<li>핸들러를 실행하기 전, 후(아직 랜더링 전) 그리고 완료(랜더링까지 끝난 이후) 시점에 부가 작업을 하고 싶은 경우에 사용할 수 있다.</li>
+<li>여러 핸들러에서 반복적으로 사용하는 코드를 줄이고 싶을 때 사용할 수 있다.<ul>
+<li>로깅, 인증 체크, Locale 변경 등…</li>
+</ul>
+</li>
+</ul>
+<h4 id="boolean-preHandle-request-response-handler"><a href="#boolean-preHandle-request-response-handler" class="headerlink" title="boolean preHandle(request, response, handler)"></a>boolean preHandle(request, response, <strong>handler</strong>)</h4><ul>
+<li>핸들러 실행하기 전에 호출 됨</li>
+<li>핸들러에 대한 정보를 사용할 수 있기 때문에 서블릿 필터에 비해 보다 세밀한 로직을 구현할 수 있다.</li>
+<li>리턴값으로 계속 다음 인터셉터 또는 핸들러로 요청,응답을 전달할지(true) 응답 처리가 이곳에서 끝났는지(false) 알린다.</li>
+</ul>
+<h4 id="void-postHandle-request-response-modelAndView"><a href="#void-postHandle-request-response-modelAndView" class="headerlink" title="void postHandle(request, response, modelAndView)"></a>void postHandle(request, response, <strong>modelAndView</strong>)</h4><ul>
+<li>핸들러 실행이 끝나고 아직 뷰를 랜더링 하기 이전에 호출 됨</li>
+<li>“뷰”에 전달할 추가적이거나 여러 핸들러에 공통적인 모델 정보를 담는데 사용할 수도 있다.</li>
+<li>이 메소드는 인터셉터 역순으로 호출된다.<ul>
+<li>예) preHandle 1 -&gt; preHandle 2 -&gt; 요청처리 -&gt; postHandler2 -&gt; postHandler1</li>
+</ul>
+</li>
+<li>비동기적인 요청 처리 시에는 호출되지 않는다.<ul>
+<li>asyncHandlerInterceptor에서 다룬다. </li>
+</ul>
+</li>
+</ul>
+<h4 id="void-afterCompletion-request-response-handler-ex"><a href="#void-afterCompletion-request-response-handler-ex" class="headerlink" title="void afterCompletion(request, response, handler, ex)"></a>void afterCompletion(request, response, handler, ex)</h4><ul>
+<li>요청 처리가 완전히 끝난 뒤(뷰 랜더링 끝난 뒤)에 호출 됨</li>
+<li>preHandler에서 true를 리턴한 경우에만 호출 됨</li>
+<li>이 메소드는 인터셉터 역순으로 호출된다.</li>
+<li>비동기적인 요청 처리 시에는 호출되지 않는다.</li>
+</ul>
+<h4 id="서블릿-필터와-비교"><a href="#서블릿-필터와-비교" class="headerlink" title="서블릿 필터와 비교"></a>서블릿 필터와 비교</h4><ul>
+<li>서블릿 보다 구체적인 처리가 가능하다.(핸들러, 뷰가 제공된다.)</li>
+<li>서블릿은 보다 일반적인 용도의 기능을 구현하는데 사용하는게 좋다.<ul>
+<li>예) Cross-site scripting (XSS) attack 방지 → 뷰 or 핸들러의 정보는 필요없다..<ul>
+<li>naver에서 만든 LUCY필터가 있다.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="구현"><a href="#구현" class="headerlink" title="구현"></a>구현</h4><p><img src="/images/springwebmvc/springwebmvc07-2.png" alt="springwebmvc"></p>
+<ul>
+<li>implements HandlerInterceptor</li>
+</ul>
+<h4 id="핸들러-인터셉터-등록하기"><a href="#핸들러-인터셉터-등록하기" class="headerlink" title="핸들러 인터셉터 등록하기"></a>핸들러 인터셉터 등록하기</h4><p><img src="/images/springwebmvc/springwebmvc07-1.png" alt="springwebmvc"></p>
+<ul>
+<li>.order로 순서를 정할수 있다.<ul>
+<li>add 순으로 등록된다.</li>
+</ul>
+</li>
+<li>.addPathPattern을 사용하여 원하는 핸들러에만 적용 가능</li>
+</ul>
+<h3 id="testcode"><a href="#testcode" class="headerlink" title="testcode"></a>testcode</h3><p><img src="/images/springwebmvc/springwebmvc07-3.png" alt="springwebmvc"></p>
+<ul>
+<li>AnotherInterceptor는 PathPattern에 걸리지 않아서 제외<br><br><br></li>
+</ul>
+<h3 id="리소스-핸들러"><a href="#리소스-핸들러" class="headerlink" title="리소스 핸들러"></a>리소스 핸들러</h3><ul>
+<li>이미지, 자바스크립트, css, html 파일 같은 리소스를 처리하는 핸들러</li>
+<li><a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/servlet/config/annotation/WebMvcConfigurer.html#addResourceHandlers-org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry-">reference 문서</a></li>
+</ul>
+<h4 id="Default-Servlet"><a href="#Default-Servlet" class="headerlink" title="Default Servlet"></a>Default Servlet</h4><ul>
+<li>서블릿 컨테이너가 기본으로 제공하는 서블릿으로 정적인 리소를 처리할 때, 사용한다.<ul>
+<li>예)..<a href="https://tomcat.apache.org/tomcat-9.0-doc/default-servlet.html">톰캣문서</a></li>
+</ul>
+</li>
+</ul>
+<h4 id="스프링-MVC-리소스-핸들러-맵핑-등록"><a href="#스프링-MVC-리소스-핸들러-맵핑-등록" class="headerlink" title="스프링 MVC 리소스 핸들러 맵핑 등록"></a>스프링 MVC 리소스 핸들러 맵핑 등록</h4><ul>
+<li>가장 낮은 우선 순위로 등록.<ul>
+<li>다른 핸들러 맵핑이 “/” 이하 요청을 처리하도록 허용하고</li>
+<li>최종적으로 리소스 핸들러가 처리하도록.</li>
+</ul>
+</li>
+<li>스프링 부트를 사용하는 경우 </li>
+</ul>
+<h4 id="리소스-핸들러-설정"><a href="#리소스-핸들러-설정" class="headerlink" title="리소스 핸들러 설정"></a>리소스 핸들러 설정</h4><p><img src="/images/springwebmvc/springwebmvc07-4.png" alt="springwebmvc"></p>
+<ul>
+<li><p><strong>file시스템으로 맵핑 시, classpath: 대신 file:로 넣어준다.</strong></p>
+</li>
+<li><p>어떤 요청 패턴을 지원할 것인가</p>
+</li>
+<li><p>어디서 리소스를 찾을 것인가</p>
+</li>
+<li><p>캐싱</p>
+</li>
+<li><p>ResourceResolver: 요청에 해당하는 리소스를 찾는 전략</p>
+<ul>
+<li>캐싱, 인코딩(gzip, brotli), WebJar, …</li>
+</ul>
+</li>
+<li><p>ResourceTransformer: 응답으로 보낼 리소스를 수정하는 전략</p>
+<ul>
+<li>캐싱, CSS 링크, HTML5 AppCache, …</li>
+</ul>
+</li>
+<li><p>ResourceResolver, ResourceTransformer 관련 내용은 <a href="https://www.slideshare.net/rstoya05/resource-handling-spring-framework-41">reference</a>를 참고</p>
+</li>
+<li><p>스프링 부트</p>
+<ul>
+<li>기본 정적 리소스 핸들러와 캐싱 제공<br><br><br></li>
+</ul>
+</li>
+</ul>
+<h3 id="HTTP-메세지-컨버터"><a href="#HTTP-메세지-컨버터" class="headerlink" title="HTTP 메세지 컨버터"></a>HTTP 메세지 컨버터</h3><ul>
+<li>요청 본문에서 메시지를 읽어들이거나(@RequestBody), 응답 본문에 메시지를 작성할 때(@ResponseBody) 사용한다.</li>
+<li>RestController는 모든 메소드에 @ResponseBody가 생략되어있는 것.</li>
+<li>@RequestBody<ul>
+<li>요청 본문의 문자열을 받는다.</li>
+<li>요청 본문의 문자열을 변환<ul>
+<li>xml, JSON등을 객체로 변환</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="기본-HTTP-메시지-컨버터"><a href="#기본-HTTP-메시지-컨버터" class="headerlink" title="기본 HTTP 메시지 컨버터"></a>기본 HTTP 메시지 컨버터</h4><ul>
+<li>바이트 배열 컨버터</li>
+<li>문자열 컨버터</li>
+<li>Resource 컨버터</li>
+<li>Form 컨버터 (폼 데이터 to/from MultiValueMap&lt;String, String&gt;)<ul>
+<li>Map → 폼 데이터 or 폼 데이터 → Map </li>
+</ul>
+</li>
+</ul>
+<h4 id="의존성이-있을-때-등록이되는-메세지-컨버터"><a href="#의존성이-있을-때-등록이되는-메세지-컨버터" class="headerlink" title="의존성이 있을 때 등록이되는 메세지 컨버터"></a>의존성이 있을 때 등록이되는 메세지 컨버터</h4><ul>
+<li>xml<ul>
+<li>(JAXB2 컨버터)</li>
+</ul>
+</li>
+<li>Json    <ul>
+<li>(Jackson2 컨버터)</li>
+<li>(Jackson 컨버터)</li>
+<li>(Gson 컨버터)</li>
+</ul>
+</li>
+<li>feed<ul>
+<li>(Atom 컨버터)</li>
+<li>(RSS 컨버터)</li>
+</ul>
+</li>
+<li>…</li>
+</ul>
+<h4 id="설정-방법"><a href="#설정-방법" class="headerlink" title="설정 방법"></a>설정 방법</h4><ul>
+<li>기본으로 등록해주는 컨버터에 새로운 컨버터 추가하기: extendMessageConverters<br>  <img src="/images/springwebmvc/springwebmvc07-5.png" alt="springwebmvc"><ul>
+<li><a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/servlet/config/annotation/WebMvcConfigurer.html#extendMessageConverters-java.util.List-">reference 문서</a></li>
+</ul>
+</li>
+<li>기본으로 등록해주는 컨버터는 다 무시하고 새로 컨버터 설정하기: configureMessageConverters<br>  <img src="/images/springwebmvc/springwebmvc07-6.png" alt="springwebmvc"><ul>
+<li><a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/servlet/config/annotation/WebMvcConfigurer.html#configureMessageConverters-java.util.List-">reference 문서</a></li>
+</ul>
+</li>
+<li>의존성 추가로 컨버터 등록하기 (제일 많이 사용하게 될 것이며 추천한다.)<ul>
+<li>메이븐 또는 그래들 설정에 의존성을 추가하면 그에 따른 컨버터가 자동으로 등록된다.</li>
+<li>WebMvcConfigurationSupport</li>
+<li>(이 기능 자체는 스프링 프레임워크의 기능임, 스프링 부트 아님.)<br><a href="https://www.baeldung.com/spring-httpmessageconverter-rest">참고</a></li>
+</ul>
+</li>
+</ul>
+<h4 id="JSON용-HTTP-메세지-컨버터"><a href="#JSON용-HTTP-메세지-컨버터" class="headerlink" title="JSON용 HTTP 메세지 컨버터"></a>JSON용 HTTP 메세지 컨버터</h4><ul>
+<li><p>스프링부트를 사용하지 않는 경우 </p>
+<ul>
+<li>사용하고 싶은 JSON 라이브러리를 의존성으로 추가<ul>
+<li>GSON</li>
+<li>JacksonJSON</li>
+<li>JacksonJSON 2</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>스프링 부트를 사용하는 겨우</p>
+<ul>
+<li>기본적으로 JacksonJSON2가 의존성에 들어있다.</li>
+<li>즉, JSON용 HTTP 메세지 컨버터가 등록되어있다.</li>
+</ul>
+</li>
+<li><p>ObjectMapper는 스프링부트에서 의존성을 자동으로 주입해준다.(spring-boot-starter-web 추가 시)</p>
+</li>
+<li><p>TestCode<br>  <img src="/images/springwebmvc/springwebmvc07-7.png" alt="springwebmvc"></p>
+</li>
+<li><p>JsonPath문법</p>
+<ul>
+<li><a href="https://github.com/json-path/JsonPath">https://github.com/json-path/JsonPath</a></li>
+<li><a href="http://jsonpath.com/">http://jsonpath.com/</a></li>
+</ul>
+</li>
+</ul>
+<h4 id="XML용-HTTP-메세지-컨버터"><a href="#XML용-HTTP-메세지-컨버터" class="headerlink" title="XML용 HTTP 메세지 컨버터"></a>XML용 HTTP 메세지 컨버터</h4><ul>
+<li><p>OXM(Object-XML Mapper) 라이브러리 중에 스프링이 지원하는 의존성 추가</p>
+<ul>
+<li>JacksonXML</li>
+<li>JAXB</li>
+</ul>
+</li>
+<li><p>Mashaller : 객체 → xml</p>
+</li>
+<li><p>UnMashaller : xml → 객체</p>
+</li>
+<li><p>스프링 부트가 기본으로 관련 의존성을 추가해주지 않는다.</p>
+</li>
+<li><p>의존성 추가</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;javax.xml.bind&lt;&#x2F;groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;jaxb-api&lt;&#x2F;artifactId&gt;</span><br><span class="line">&lt;&#x2F;dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.glassfish.jaxb&lt;&#x2F;groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;jaxb-runtime&lt;&#x2F;artifactId&gt;</span><br><span class="line">&lt;&#x2F;dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework&lt;&#x2F;groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-oxm&lt;&#x2F;artifactId&gt;</span><br><span class="line">    &lt;version&gt;$&#123;spring-framework.version&#125;&lt;&#x2F;version&gt;</span><br><span class="line">&lt;&#x2F;dependency&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Marshaller 등록</p>
+<ul>
+<li>xml로 변환할 클래스의 패키지이름을 설정해준다.<br>  <img src="/images/springwebmvc/springwebmvc07-8.png" alt="springwebmvc"></li>
+<li>도메인 클래스에 @XmlRootElement 애노테이션 추가<br>  <img src="/images/springwebmvc/springwebmvc07-9.png" alt="springwebmvc"></li>
+</ul>
+</li>
+<li><p>TestCode<br>  <img src="/images/springwebmvc/springwebmvc07-10.png" alt="springwebmvc"></p>
+</li>
+<li><p>Xpath 문법</p>
+<ul>
+<li><a href="https://www.w3schools.com/xml/xpath_syntax.asp">https://www.w3schools.com/xml/xpath_syntax.asp</a></li>
+<li><a href="https://www.freeformatter.com/xpath-tester.html">https://www.freeformatter.com/xpath-tester.html</a><br><br><br></li>
+</ul>
+</li>
+</ul>
+<h3 id="그밖에-WebMvcConfigurer-설정"><a href="#그밖에-WebMvcConfigurer-설정" class="headerlink" title="그밖에 WebMvcConfigurer 설정"></a>그밖에 WebMvcConfigurer 설정</h3><ul>
+<li><p><a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/servlet/config/annotation/WebMvcConfigurer.html">reference 문서</a></p>
+</li>
+<li><p>CORS 설정</p>
+<ul>
+<li>Cross Origin 요청 처리 설정</li>
+<li>같은 도메인에서 온 요청이 아니더라도 처리를 허용하고 싶다면 설정한다.</li>
+</ul>
+</li>
+<li><p>리턴 값 핸들러 설정</p>
+<ul>
+<li>스프링 MVC가 제공하는 기본 리턴 값 핸들러 이외에 리턴 핸들러를 추가하고 싶을 때 설정한다.</li>
+</ul>
+</li>
+<li><p>아큐먼트 리졸버 설정</p>
+<ul>
+<li>스프링 MVC가 제공하는 기본 아규먼트 리졸버 이외에 커스텀한 아규먼트 리졸버를 추가하고 싶을 때 설정한다.</li>
+</ul>
+</li>
+<li><p>뷰 컨트롤러</p>
+<ul>
+<li>단순하게 요청 URL을 특정 뷰로 연결하고 싶을 때 사용할 수 있다.</li>
+</ul>
+</li>
+<li><p>비동기 설정</p>
+<ul>
+<li>비동기 요청 처리에 사용할 타임아웃이나 TaskExecutor를 설정할 수 있다.</li>
+</ul>
+</li>
+<li><p>뷰 리졸버 설정</p>
+<ul>
+<li>핸들러에서 리턴하는 뷰 이름에 해당하는 문자열을 View 인스턴스로 바꿔줄 뷰 리졸버를 설정한다.</li>
+</ul>
+</li>
+<li><p>Content Negotiation 설정</p>
+<ul>
+<li>요청 본문 또는 응답 본문을 어떤 (MIME) 타입으로 보내야 하는지 결정하는 전략을설정한다.<br><br><br></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/SpringWebMvc/" rel="tag">SpringWebMvc</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">Like this article? Support the author with</h3>
+        <div class="buttons is-centered">
+            
+                
+<div class="notification is-danger">
+    You forgot to set the <code>qrcode</code> for Alipay. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                
+<div class="notification is-danger">
+    You forgot to set the <code>qrcode</code> for Wechat. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                <!-- Visit https://www.paypal.com/donate/buttons/ to get your donate button -->
+
+<div class="notification is-danger">
+    You forgot to set the <code>business</code> and <code>currency_code</code> for Paypal. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                
+<div class="notification is-danger">
+    You forgot to set the <code>url</code> Patreon. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2019/06/24/spring/spring_web_mvc08/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">스프링 MVC 활용08 - HTTP 요청 맵핑하기</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2019/06/10/spring/spring_web_mvc06/">
+                <span class="level-item">스프링 MVC 설정06 - 포매터 추가하기, 도메인 클래스 컨버터 자동 등록</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+</div>
+                
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-4-widescreen  has-order-3 column-right is-sticky">
+    
+        
+
+    <div class="card widget" id="toc">
+        <div class="card-content">
+            <div class="menu">
+                <h3 class="menu-label">
+                    Catalogue
+                </h3>
+                <ul class="menu-list"><li>
+        <a class="is-flex" href="#스프링-웹-MVC-inflearn-백기선">
+        <span class="has-mr-6">1</span>
+        <span>스프링 웹 MVC(inflearn) - 백기선</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#Springframework">
+        <span class="has-mr-6">1.1</span>
+        <span>Springframework</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#핸들러-인터셉터">
+        <span class="has-mr-6">1.1.1</span>
+        <span>핸들러 인터셉터</span>
+        </a></li><li>
+        <a class="is-flex" href="#testcode">
+        <span class="has-mr-6">1.1.2</span>
+        <span>testcode</span>
+        </a></li><li>
+        <a class="is-flex" href="#리소스-핸들러">
+        <span class="has-mr-6">1.1.3</span>
+        <span>리소스 핸들러</span>
+        </a></li><li>
+        <a class="is-flex" href="#HTTP-메세지-컨버터">
+        <span class="has-mr-6">1.1.4</span>
+        <span>HTTP 메세지 컨버터</span>
+        </a></li><li>
+        <a class="is-flex" href="#그밖에-WebMvcConfigurer-설정">
+        <span class="has-mr-6">1.1.5</span>
+        <span>그밖에 WebMvcConfigurer 설정</span>
+        </a></li></ul></li></ul></li></ul>
+            </div>
+        </div>
+    </div>
+
+    
+        <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            Tag Cloud
+        </h3>
+        <a href="/tags/Algorithm/" style="font-size: 11.11px;">Algorithm</a> <a href="/tags/DataBase/" style="font-size: 10px;">DataBase</a> <a href="/tags/Etc/" style="font-size: 11.11px;">Etc</a> <a href="/tags/Git/" style="font-size: 13.33px;">Git</a> <a href="/tags/Interview/" style="font-size: 14.44px;">Interview</a> <a href="/tags/JPA/" style="font-size: 20px;">JPA</a> <a href="/tags/JSP/" style="font-size: 14.44px;">JSP</a> <a href="/tags/Java/" style="font-size: 18.89px;">Java</a> <a href="/tags/JavaScript/" style="font-size: 12.22px;">JavaScript</a> <a href="/tags/OracleDB/" style="font-size: 14.44px;">OracleDB</a> <a href="/tags/Process/" style="font-size: 11.11px;">Process</a> <a href="/tags/RestAPI/" style="font-size: 14.44px;">RestAPI</a> <a href="/tags/Seminar/" style="font-size: 10px;">Seminar</a> <a href="/tags/SpringBoot/" style="font-size: 20px;">SpringBoot</a> <a href="/tags/SpringSecurity/" style="font-size: 12.22px;">SpringSecurity</a> <a href="/tags/SpringWebMvc/" style="font-size: 16.67px;">SpringWebMvc</a> <a href="/tags/Springframework/" style="font-size: 17.78px;">Springframework</a> <a href="/tags/Springframework-kosta/" style="font-size: 14.44px;">Springframework_kosta</a> <a href="/tags/Web/" style="font-size: 12.22px;">Web</a> <a href="/tags/debug/" style="font-size: 11.11px;">debug</a> <a href="/tags/jQuery/" style="font-size: 12.22px;">jQuery</a> <a href="/tags/%EC%A0%95%EB%B3%B4%EC%B2%98%EB%A6%AC%EA%B8%B0%EC%82%AC-%ED%95%84%EA%B8%B0/" style="font-size: 13.33px;">정보처리기사_필기</a> <a href="/tags/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%ED%9A%8C%EA%B3%A0/" style="font-size: 15.56px;">프로젝트_회고</a>
+    </div>
+</div>
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/blog_logo.png" alt="스프링 MVC 설정07 - 핸들러 인터셉터, 리소스 핸들러, HTTP 메세지 컨버터, 기타 설정" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2020 Bong&#39;s blog&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/cyr9210">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("en");</script>
+
+
+<script>
+var IcarusThemeSettings = {
+    site: {
+        url: 'http://yoursite.com',
+        external_link: {"enable":true,"exclude":[]}
+    },
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+<script src="/js/animation.js"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+<script src="/js/gallery.js" defer></script>
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+<a id="back-to-top" title="Back to Top" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: 'Posts',
+                PAGES: 'Pages',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
+                UNTITLED: '(Untitled)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

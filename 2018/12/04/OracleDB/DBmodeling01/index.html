@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html >
+<head>
+    <meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 4.2.0" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>실전 데이터 모델링&amp;데이터베이스 설계와 구축 - Bong&#39;s blog</title>
+
+
+    <meta name="description" content="KOSTA DAY25DataBase">
+<meta property="og:type" content="article">
+<meta property="og:title" content="실전 데이터 모델링&amp;데이터베이스 설계와 구축">
+<meta property="og:url" content="http://yoursite.com/2018/12/04/OracleDB/DBmodeling01/index.html">
+<meta property="og:site_name" content="Bong&#39;s blog">
+<meta property="og:description" content="KOSTA DAY25DataBase">
+<meta property="og:image" content="http://yoursite.com/images/og_image.png">
+<meta property="article:published_time" content="2018-12-04T11:42:56.000Z">
+<meta property="article:modified_time" content="2020-03-20T07:57:35.729Z">
+<meta property="article:author" content="Bong&#39;s blog">
+<meta property="article:tag" content="DataBase">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/images/og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+<style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+    
+    
+    
+    
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+    
+    
+    
+    
+    
+    
+    
+    <link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-2-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/blog_logo.png" alt="실전 데이터 모델링&amp;데이터베이스 설계와 구축" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                href="/">Home</a>
+                
+                <a class="navbar-item"
+                href="/archives">Archives</a>
+                
+                <a class="navbar-item"
+                href="/tags">Tags</a>
+                
+                <a class="navbar-item"
+                href="/about">About</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    <a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/cyr9210">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="Search" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-8-widescreen has-order-2 column-main">
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2018-12-04T11:42:56.000Z">2018-12-04</time>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    7 minutes read (About 1049 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                실전 데이터 모델링&amp;데이터베이스 설계와 구축
+            
+        </h1>
+        <div class="content">
+            <p><img src="/images/oracledb_logo.png" alt="DB"></p>
+<h1 id="KOSTA-DAY25"><a href="#KOSTA-DAY25" class="headerlink" title="KOSTA DAY25"></a>KOSTA DAY25</h1><h2 id="DataBase"><a href="#DataBase" class="headerlink" title="DataBase"></a>DataBase</h2><a id="more"></a>
+<h3 id="실전-데이터-모델링-amp-데이터-베이스-설계와-구축"><a href="#실전-데이터-모델링-amp-데이터-베이스-설계와-구축" class="headerlink" title="실전 데이터 모델링 &amp; 데이터 베이스 설계와 구축"></a>실전 데이터 모델링 &amp; 데이터 베이스 설계와 구축</h3><ul>
+<li>우리나라는 데이터 위주의 설계를 하기 때문에 ERP 다이어그램 위주로 설계를 한다.</li>
+</ul>
+<h4 id="데이터-모델링"><a href="#데이터-모델링" class="headerlink" title="데이터 모델링"></a>데이터 모델링</h4><p>정보화 시스템을 구축하기 위해 , 어떤 데이터가 존재하는지 또는 업무가 필요로 하는 정보가 무엇인지를 분석하는 방법</p>
+<ul>
+<li>프로젝트에 참여한 모든 사람은 데이터모델링에 참여하거나, 모델내용을 이해해야한다.</li>
+<li>업무가 관여하는 어떤것(THING)</li>
+<li>업무가 관여하는 어떤것간의 관계(RELATIONSHIPS)</li>
+<li>어떤 것이 가지는 성격(ATTRIBUTES)</li>
+</ul>
+<p><img src="/images/database/DBm01-01.png" alt="DB"></p>
+<h4 id="엔티티-타입"><a href="#엔티티-타입" class="headerlink" title="엔티티 타입"></a>엔티티 타입</h4><ul>
+<li>업무에 필요하고 유용한 정보를 저장하고 관리하기 위한것</li>
+<li>영속적으로 존재하는 단위</li>
+<li>엔티티 타입이 생성되는 의미대로 명명한다.</li>
+</ul>
+<p><img src="/images/database/DBm01-02.png" alt="DB"></p>
+<h4 id="엔티티타입의-특징"><a href="#엔티티타입의-특징" class="headerlink" title="엔티티타입의 특징"></a>엔티티타입의 특징</h4><ul>
+<li><p>업무에 필요하고 관리하고자 하는 정보<br>필요없는관계X<br><img src="/images/database/DBm01-03.png" alt="DB"></p>
+</li>
+<li><p>식별자에 의해 실별이 가능<br>ex) PRIMARY KEY와 같이 주키가 있어 식별이 가능해야 한다.</p>
+</li>
+<li><p>영속적으로 존재하는 엔티티의 집합<br>엔티티의 수가 1개가 아니라 2개이상이어야 한다.<br><img src="/images/database/DBm01-04.png" alt="DB"></p>
+</li>
+<li><p>업무 프로세스에 이용되어야 한다.<br><img src="/images/database/DBm01-05.png" alt="DB"></p>
+</li>
+<li><p>반드시 속성이 있어야 한다.<br><img src="/images/database/DBm01-06.png" alt="DB"></p>
+</li>
+<li><p>최소한개이상의 관계가 있어야 한다.<br>예외가 있을 수 있다. ex) GRADE table</p>
+</li>
+</ul>
+<h4 id="엔티티-타입의-분류"><a href="#엔티티-타입의-분류" class="headerlink" title="엔티티 타입의 분류"></a>엔티티 타입의 분류</h4><p><img src="/images/database/DBm01-07.png" alt="DB"></p>
+<ul>
+<li>기본 : 해당업무에 기본적으로 존재하는 정보</li>
+<li>중심 : 업무에 핵심적인 역할을 하는 정보</li>
+<li>행위 : 기본과 중심 엔티티타입을 근간으로 업무가 흘러가면서 발생되는 엔티티타입</li>
+</ul>
+<h4 id="식별자"><a href="#식별자" class="headerlink" title="식별자"></a>식별자</h4><ul>
+<li>엔티티 타입내에서 엔티티들을 구분할 수 있는 구분자이다.</li>
+<li>주로 PRIMARY KEY라고 생각할 수 있다.</li>
+</ul>
+<h4 id="대리식별자"><a href="#대리식별자" class="headerlink" title="대리식별자"></a>대리식별자</h4><p><img src="/images/database/DBm01-08.png" alt="DB"></p>
+<ul>
+<li>주식별자의 속성이 복합식별자일 경우 여러 개의 속성을 묶어 하나의 속성으로 만들어 주식별자로 활용하는 경우 대리식별자라 한다.</li>
+<li>주키(식별자)가 많으면 작업이 용이하지 않기때문에 사용</li>
+<li>주키로 사용할 것이 마땅치 않을때, 주키가 많을때 대리식별자 사용을 고려해봐야 한다.</li>
+</ul>
+<h4 id="관계"><a href="#관계" class="headerlink" title="관계"></a>관계</h4><p>두개의 엔티티타입 사이의 논리적인 관계(서로에게 영향을 주는 형태)</p>
+<p><img src="/images/database/DBm01-09.png" alt="DB"></p>
+<ul>
+<li>존재에 의한 관계 / 행위에 의한 관계</li>
+</ul>
+<h4 id="관계의-카디넬러티"><a href="#관계의-카디넬러티" class="headerlink" title="관계의 카디넬러티"></a>관계의 카디넬러티</h4><ul>
+<li><p>1:1(ONE TO ONE)<br><img src="/images/database/DBm01-10.png" alt="DB"></p>
+</li>
+<li><p>1:M (ONE TO MANY)<br><img src="/images/database/DBm01-11.png" alt="DB"></p>
+</li>
+<li><p>M:M (MANY TO MANY)<br><img src="/images/database/DBm01-12.png" alt="DB"></p>
+</li>
+</ul>
+<h4 id="관계의-종류"><a href="#관계의-종류" class="headerlink" title="관계의 종류"></a>관계의 종류</h4><p>주식별자 / 비식별자</p>
+<p><img src="/images/database/DBm01-13.png" alt="DB"></p>
+<ul>
+<li>주식별자 : 부모의 주식별자 = 자식의 주식별자</li>
+<li>비식별자 : 부모의 주식별자 = 자식의 일반속성</li>
+<li>업무의 로직에 따라서 선택한다.   </li>
+</ul>
+<p><strong>결합력이 강하며, 제한적으로 사용되는 경우에만 주식별자를 사용하는것이 좋다.</strong></p>
+<h4 id="속성"><a href="#속성" class="headerlink" title="속성"></a>속성</h4><p>업무에 필요한 엔티티에서 관리하고자 하는 더 이상 분리되지 않는 최소의 데이터 단위</p>
+<h4 id="정규화"><a href="#정규화" class="headerlink" title="정규화"></a>정규화</h4><p>다양한 유형의 검사를 통해 데이터 모델을 더 구조화 하고 개선시켜 나가는 절차에 관련된 이론이다.</p>
+<ul>
+<li><p>오류를 최소화 시키는 것.</p>
+</li>
+<li><p>중복된 데이터가 없도록 하는것이 기본원칙</p>
+</li>
+<li><p>함수의 종속성<br><img src="/images/database/DBm01-14.png" alt="DB"></p>
+</li>
+<li><p>정규화<br>  <img src="/images/database/DBm01-15.png" alt="DB"></p>
+<ul>
+<li>제1차 정규화 : 중복된 속성값을 갖는 속성을 분리</li>
+<li>제2차 정규화 : 주식별자에 종속적이지 않은 속성을 분리</li>
+<li>제3차 정규화 : 일반속성인데 주키 역할을 하는것과 그것을 종속하는 속성들을 분리<br><br><br></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/DataBase/" rel="tag">DataBase</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">Like this article? Support the author with</h3>
+        <div class="buttons is-centered">
+            
+                
+<div class="notification is-danger">
+    You forgot to set the <code>qrcode</code> for Alipay. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                
+<div class="notification is-danger">
+    You forgot to set the <code>qrcode</code> for Wechat. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                <!-- Visit https://www.paypal.com/donate/buttons/ to get your donate button -->
+
+<div class="notification is-danger">
+    You forgot to set the <code>business</code> and <code>currency_code</code> for Paypal. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+                
+<div class="notification is-danger">
+    You forgot to set the <code>url</code> Patreon. Please set it in <code>_config.yml</code>.
+</div>
+
+                
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2018/12/04/OracleDB/oracletest/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">KOSTA 필기시험(Oracle DB)</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2018/12/03/OracleDB/oracle05/">
+                <span class="level-item">Reference 형 데이터, ROWTYPE, 제어문, 반복문, 예외처리, Cursor, for문, Procedure</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+</div>
+                
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-4-widescreen  has-order-3 column-right is-sticky">
+    
+        
+
+    <div class="card widget" id="toc">
+        <div class="card-content">
+            <div class="menu">
+                <h3 class="menu-label">
+                    Catalogue
+                </h3>
+                <ul class="menu-list"><li>
+        <a class="is-flex" href="#KOSTA-DAY25">
+        <span class="has-mr-6">1</span>
+        <span>KOSTA DAY25</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#DataBase">
+        <span class="has-mr-6">1.1</span>
+        <span>DataBase</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#실전-데이터-모델링-amp-데이터-베이스-설계와-구축">
+        <span class="has-mr-6">1.1.1</span>
+        <span>실전 데이터 모델링 & 데이터 베이스 설계와 구축</span>
+        </a></li></ul></li></ul></li></ul>
+            </div>
+        </div>
+    </div>
+
+    
+        <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            Tag Cloud
+        </h3>
+        <a href="/tags/Algorithm/" style="font-size: 11.11px;">Algorithm</a> <a href="/tags/DataBase/" style="font-size: 10px;">DataBase</a> <a href="/tags/Etc/" style="font-size: 11.11px;">Etc</a> <a href="/tags/Git/" style="font-size: 13.33px;">Git</a> <a href="/tags/Interview/" style="font-size: 14.44px;">Interview</a> <a href="/tags/JPA/" style="font-size: 20px;">JPA</a> <a href="/tags/JSP/" style="font-size: 14.44px;">JSP</a> <a href="/tags/Java/" style="font-size: 18.89px;">Java</a> <a href="/tags/JavaScript/" style="font-size: 12.22px;">JavaScript</a> <a href="/tags/OracleDB/" style="font-size: 14.44px;">OracleDB</a> <a href="/tags/Process/" style="font-size: 11.11px;">Process</a> <a href="/tags/RestAPI/" style="font-size: 14.44px;">RestAPI</a> <a href="/tags/Seminar/" style="font-size: 10px;">Seminar</a> <a href="/tags/SpringBoot/" style="font-size: 20px;">SpringBoot</a> <a href="/tags/SpringSecurity/" style="font-size: 12.22px;">SpringSecurity</a> <a href="/tags/SpringWebMvc/" style="font-size: 16.67px;">SpringWebMvc</a> <a href="/tags/Springframework/" style="font-size: 17.78px;">Springframework</a> <a href="/tags/Springframework-kosta/" style="font-size: 14.44px;">Springframework_kosta</a> <a href="/tags/Web/" style="font-size: 12.22px;">Web</a> <a href="/tags/debug/" style="font-size: 11.11px;">debug</a> <a href="/tags/jQuery/" style="font-size: 12.22px;">jQuery</a> <a href="/tags/%EC%A0%95%EB%B3%B4%EC%B2%98%EB%A6%AC%EA%B8%B0%EC%82%AC-%ED%95%84%EA%B8%B0/" style="font-size: 13.33px;">정보처리기사_필기</a> <a href="/tags/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%ED%9A%8C%EA%B3%A0/" style="font-size: 15.56px;">프로젝트_회고</a>
+    </div>
+</div>
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/blog_logo.png" alt="실전 데이터 모델링&amp;데이터베이스 설계와 구축" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2020 Bong&#39;s blog&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/cyr9210">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("en");</script>
+
+
+<script>
+var IcarusThemeSettings = {
+    site: {
+        url: 'http://yoursite.com',
+        external_link: {"enable":true,"exclude":[]}
+    },
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+<script src="/js/animation.js"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+<script src="/js/gallery.js" defer></script>
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+<a id="back-to-top" title="Back to Top" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: 'Posts',
+                PAGES: 'Pages',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
+                UNTITLED: '(Untitled)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>
