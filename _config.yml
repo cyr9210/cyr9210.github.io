@@ -79,4 +79,5 @@ theme: icarus
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repo: git@github.com:cyr9210/cyr9210.github.io.git
+  repo: https://github.com/cyr9210/cyr9210.github.io.git
+  branch: master
