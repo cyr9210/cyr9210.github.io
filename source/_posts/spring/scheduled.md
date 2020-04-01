@@ -128,6 +128,14 @@ sidebar:
 - fixedDelay vs fixedRate
 
   ![sceduled01](/images/springboot/scheduled/sceduled01.png)
+  
+- zone : timezone 설정가능
+    ```java
+  @Scheduled(cron = "0 5 0 * * ?", zone = "Asia/Seoul")
+  private void scheduleTest() { 
+      logger.error("hello jeong-pro"); 
+  }
+  ```
 
 #### 커스터마이징
 
