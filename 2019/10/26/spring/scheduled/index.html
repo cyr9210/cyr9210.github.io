@@ -18,7 +18,7 @@
 <meta property="og:description" content="@Scheduled 스케줄러">
 <meta property="og:image" content="http://yoursite.com/images/og_image.png">
 <meta property="article:published_time" content="2019-10-26T06:35:24.000Z">
-<meta property="article:modified_time" content="2020-03-20T07:57:35.767Z">
+<meta property="article:modified_time" content="2020-04-01T23:10:51.483Z">
 <meta property="article:author" content="Bong&#39;s blog">
 <meta property="article:tag" content="Springframework">
 <meta name="twitter:card" content="summary">
@@ -143,7 +143,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    5 minutes read (About 778 words)
+                    5 minutes read (About 798 words)
                 </span>
                 
                 
@@ -300,6 +300,10 @@
 <ul>
 <li><p>fixedDelay vs fixedRate</p>
 <p><img src="/images/springboot/scheduled/sceduled01.png" alt="sceduled01"></p>
+</li>
+<li><p>zone : timezone 설정가능</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Scheduled</span>(cron = <span class="string">"0 5 0 * * ?"</span>, zone = <span class="string">"Asia/Seoul"</span>)</span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">scheduleTest</span><span class="params">()</span> </span>&#123; </span><br><span class="line">    logger.error(<span class="string">"hello jeong-pro"</span>); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 </li>
 </ul>
 <h4 id="커스터마이징"><a href="#커스터마이징" class="headerlink" title="커스터마이징"></a>커스터마이징</h4><ol>
