@@ -18,6 +18,7 @@
       <change beforePath="$PROJECT_DIR$/icarus_theme/languages/vn.yml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/icarus_theme/languages/zh-CN.yml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/icarus_theme/languages/zh-TW.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/themes/icarus/languages/de.yml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/themes/icarus/languages/en.yml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/themes/icarus/languages/es.yml" beforeDir="false" />
@@ -38,7 +39,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/themes/icarus" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1ZNq1kJrS1FRu9EtLCtBCXUgHxt" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -90,7 +91,7 @@
       <workItem from="1592902955608" duration="1792000" />
       <workItem from="1592906376567" duration="258000" />
       <workItem from="1592906703909" duration="1875000" />
-      <workItem from="1592951345619" duration="224000" />
+      <workItem from="1592951345619" duration="395000" />
     </task>
     <servers />
   </component>
