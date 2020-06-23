@@ -11,7 +11,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/themes/icarus" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1ZNq1kJrS1FRu9EtLCtBCXUgHxt" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -21,6 +21,7 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="TERMINAL_CUSTOM_COMMANDS_GOT_IT" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/themes/icarus/source/images" />
@@ -59,7 +60,7 @@
       <workItem from="1586853443741" duration="308000" />
       <workItem from="1586853757878" duration="270000" />
       <workItem from="1592522088668" duration="1610000" />
-      <workItem from="1592902955608" duration="1248000" />
+      <workItem from="1592902955608" duration="1792000" />
     </task>
     <servers />
   </component>
