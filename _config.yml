@@ -81,3 +81,20 @@ deploy:
   type: git
   repo: https://github.com/cyr9210/cyr9210.github.io.git
   branch: master
+
+##SEO
+sitemap:
+  path: sitemap.xml
+  tag: false
+  category: false
+
+robotstxt:
+  useragent: "*"
+  allow:
+    - /
+  sitemap: https://cyr9210.github.io/sitemap.xml
+
+feed:
+  type: rss2
+  path: rss2.xml
+  limit: 10

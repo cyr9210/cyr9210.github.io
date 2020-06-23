@@ -4,6 +4,7 @@
     <list default="true" id="cfca3929-1f9b-44c2-992f-5f766e1db665" name="Default Changelist" comment="">
       <change afterPath="$PROJECT_DIR$/themes/icarus/source/images/favicon.ico" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/_config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/_config.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/icarus_theme" beforeDir="false" afterPath="$PROJECT_DIR$/icarus_theme" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/icarus_theme/languages/de.yml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/icarus_theme/languages/en.yml" beforeDir="false" />
@@ -18,7 +19,9 @@
       <change beforePath="$PROJECT_DIR$/icarus_theme/languages/vn.yml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/icarus_theme/languages/zh-CN.yml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/icarus_theme/languages/zh-TW.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/themes/icarus" beforeDir="false" afterPath="$PROJECT_DIR$/themes/icarus" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/themes/icarus/languages/de.yml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/themes/icarus/languages/en.yml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/themes/icarus/languages/es.yml" beforeDir="false" />
@@ -33,6 +36,7 @@
       <change beforePath="$PROJECT_DIR$/themes/icarus/languages/zh-CN.yml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/themes/icarus/languages/zh-TW.yml" beforeDir="false" />
     </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -72,6 +76,18 @@
       <recent name="$PROJECT_DIR$/themes/icarus" />
     </key>
   </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -91,12 +107,13 @@
       <workItem from="1592902955608" duration="1792000" />
       <workItem from="1592906376567" duration="258000" />
       <workItem from="1592906703909" duration="1875000" />
-      <workItem from="1592951345619" duration="395000" />
+      <workItem from="1592951345619" duration="536000" />
+      <workItem from="1592953011025" duration="568000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="2" />
+    <option name="version" value="1" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -115,6 +132,7 @@
                   </entry>
                 </map>
               </option>
+              <option name="COLUMN_ORDER" />
             </State>
           </value>
         </entry>
@@ -140,7 +158,6 @@
         </entry>
       </map>
     </option>
-    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
     <state x="750" y="231" width="991" height="702" key="find.popup" timestamp="1592914365317">
