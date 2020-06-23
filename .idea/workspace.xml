@@ -5,7 +5,19 @@
       <change afterPath="$PROJECT_DIR$/themes/icarus/source/images/favicon.ico" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/icarus_theme" beforeDir="false" afterPath="$PROJECT_DIR$/icarus_theme" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/icarus_theme/languages/de.yml" beforeDir="false" afterPath="$PROJECT_DIR$/icarus_theme/languages/de.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/icarus_theme/languages/de.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/icarus_theme/languages/en.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/icarus_theme/languages/es.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/icarus_theme/languages/fr.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/icarus_theme/languages/id.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/icarus_theme/languages/ja.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/icarus_theme/languages/pl.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/icarus_theme/languages/pt-BR.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/icarus_theme/languages/ru.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/icarus_theme/languages/tr.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/icarus_theme/languages/vn.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/icarus_theme/languages/zh-CN.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/icarus_theme/languages/zh-TW.yml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/themes/icarus/languages/de.yml" beforeDir="false" afterPath="$PROJECT_DIR$/themes/icarus/languages/de.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -14,7 +26,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/themes/icarus" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/icarus_theme" />
   </component>
   <component name="ProjectId" id="1ZNq1kJrS1FRu9EtLCtBCXUgHxt" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -65,7 +77,7 @@
       <workItem from="1592522088668" duration="1610000" />
       <workItem from="1592902955608" duration="1792000" />
       <workItem from="1592906376567" duration="258000" />
-      <workItem from="1592906703909" duration="372000" />
+      <workItem from="1592906703909" duration="1292000" />
     </task>
     <servers />
   </component>
@@ -117,10 +129,10 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="750" y="231" width="991" height="702" key="find.popup" timestamp="1592908098470">
+    <state x="750" y="231" width="991" height="702" key="find.popup" timestamp="1592908679719">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
-    <state x="750" y="231" width="991" height="702" key="find.popup/2560.442.1440.900/0.0.2560.1440@0.0.2560.1440" timestamp="1592908098470" />
+    <state x="750" y="231" width="991" height="702" key="find.popup/2560.442.1440.900/0.0.2560.1440@0.0.2560.1440" timestamp="1592908679719" />
     <state x="945" y="331" width="670" height="676" key="search.everywhere.popup" timestamp="1592904330109">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
