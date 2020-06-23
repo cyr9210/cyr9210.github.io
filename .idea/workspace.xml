@@ -3,7 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="cfca3929-1f9b-44c2-992f-5f766e1db665" name="Default Changelist" comment="">
       <change afterPath="$PROJECT_DIR$/themes/icarus/source/images/favicon.ico" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/icarus_theme" beforeDir="false" afterPath="$PROJECT_DIR$/icarus_theme" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/icarus_theme/languages/de.yml" beforeDir="false" afterPath="$PROJECT_DIR$/icarus_theme/languages/de.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,6 +62,7 @@
       <workItem from="1586853757878" duration="270000" />
       <workItem from="1592522088668" duration="1610000" />
       <workItem from="1592902955608" duration="1792000" />
+      <workItem from="1592906376567" duration="258000" />
     </task>
     <servers />
   </component>
@@ -112,10 +114,10 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="750" y="231" width="991" height="702" key="find.popup" timestamp="1592904342883">
+    <state x="750" y="231" width="991" height="702" key="find.popup" timestamp="1592906438655">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
-    <state x="750" y="231" width="991" height="702" key="find.popup/2560.442.1440.900/0.0.2560.1440@0.0.2560.1440" timestamp="1592904342883" />
+    <state x="750" y="231" width="991" height="702" key="find.popup/2560.442.1440.900/0.0.2560.1440@0.0.2560.1440" timestamp="1592906438655" />
     <state x="945" y="331" width="670" height="676" key="search.everywhere.popup" timestamp="1592904330109">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
