@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="cfca3929-1f9b-44c2-992f-5f766e1db665" name="Default Changelist" comment="">
       <change afterPath="$PROJECT_DIR$/themes/icarus/source/images/favicon.ico" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/_config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/_config.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/icarus_theme" beforeDir="false" afterPath="$PROJECT_DIR$/icarus_theme" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/icarus_theme/languages/de.yml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/icarus_theme/languages/en.yml" beforeDir="false" />
@@ -38,7 +38,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/themes/icarus" />
   </component>
   <component name="ProjectId" id="1ZNq1kJrS1FRu9EtLCtBCXUgHxt" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -89,7 +89,8 @@
       <workItem from="1592522088668" duration="1610000" />
       <workItem from="1592902955608" duration="1792000" />
       <workItem from="1592906376567" duration="258000" />
-      <workItem from="1592906703909" duration="1726000" />
+      <workItem from="1592906703909" duration="1875000" />
+      <workItem from="1592951345619" duration="224000" />
     </task>
     <servers />
   </component>
