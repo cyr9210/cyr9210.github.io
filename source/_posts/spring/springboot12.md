@@ -210,7 +210,7 @@ sidebar:
     - 머신핸들러 요청 시 (Json 응답)
     ![springboot](/images/springboot/springboot12-21.png)
 
-- 스프링 @MVC 예외 처리 방법
+- 스프링 @MVC 예외 처리 방법 (어노테이션 기반)
     - @ExchangepHandler
         ![springboot](/images/springboot/springboot12-22.png)    
     - @ControllerAdvice
@@ -224,7 +224,7 @@ sidebar:
         server.error.path 키값에 값이 있으면 값사용, 없으면 이전 값 사용(/error 또는 error.path)
         ![springboot](/images/springboot/springboot12-24.png)
     - 커스터마이징 방법
-        - ErrorController 구현
+        - ErrorController를 구현하자.
             - 스프링부트에서는 BasicErrorController를 상속받아 만드는것을 추천한다.
             
 - 커스텀 에러 페이지
