@@ -1,300 +1,451 @@
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
-        <title>Resume - 최용락</title>
-        <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
-        <!-- Font Awesome icons (free version)-->
-        <script src="https://use.fontawesome.com/releases/v5.15.1/js/all.js" crossorigin="anonymous"></script>
-        <!-- Google fonts-->
-        <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed:500,700" rel="stylesheet" type="text/css" />
-        <link href="https://fonts.googleapis.com/css?family=Muli:400,400i,800,800i" rel="stylesheet" type="text/css" />
-        <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="css/styles.css" rel="stylesheet" />
-        <style>
-            .label-primary {
-                background-color: #337ab7;
-            }
-            .label-success {
-                background-color: #5cb85c;
-            }
-            .label-info {
-                background-color: #5bc0de;
-            }
-            .label-default {
-                background-color: #777;
-            }
-            .label-warning {
-                background-color: #f0ad4e;
-            }
-            .label-danger {
-                background-color: #d9534f;
-            }
-            .label {
-                display: inline;
-                padding: .2em .6em .3em;
-                font-size: 75%;
-                font-weight: 700;
-                line-height: 1;
-                color: #fff;
-                text-align: center;
-                white-space: nowrap;
-                vertical-align: baseline;
-                border-radius: .25em;
-            }
-        </style>
-    </head>
-    <body id="page-top">
-        <!-- Navigation-->
-        <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
-            <a class="navbar-brand js-scroll-trigger" href="#page-top">
-                <span class="d-block d-lg-none">Clarence Taylor</span>
-<!--                <span class="d-none d-lg-block"><img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="./image/profile.png" alt="" style="height: 100%"/></span>-->
-            </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav">
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#about">About</a></li>
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#introduce">Introduce</a></li>
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#experience">Experience</a></li>
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#education">Education</a></li>
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#awards">Awards</a></li>
-                </ul>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+  <meta charset="utf-8">
+  <title>최용락-이력서</title>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <meta content="" name="keywords">
+  <meta content="" name="description">
+
+  <!-- Favicons -->
+  <link href="img/favicon.ico" rel="icon">
+  <link href="img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Bootstrap CSS File -->
+  <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Libraries CSS Files -->
+  <link href="lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+  <link href="lib/animate/animate.min.css" rel="stylesheet">
+  <link href="lib/ionicons/css/ionicons.min.css" rel="stylesheet">
+  <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+  <link href="lib/lightbox/css/lightbox.min.css" rel="stylesheet">
+
+  <!-- Main Stylesheet File -->
+  <link href="css/style.css" rel="stylesheet">
+
+  <!-- =======================================================
+    Theme Name: DevFolio
+    Theme URL: https://bootstrapmade.com/devfolio-bootstrap-portfolio-html-template/
+    Author: BootstrapMade.com
+    License: https://bootstrapmade.com/license/
+  ======================================================= -->
+</head>
+
+<body id="page-top">
+
+<!--/ Nav Star /-->
+<nav class="navbar navbar-b navbar-trans navbar-expand-md fixed-top" id="mainNav">
+  <div class="navbar-collapse collapse justify-content-center" id="navbarDefault">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link js-scroll active" href="#home">About</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link js-scroll" href="#about">Introduce</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link js-scroll" href="#experience">Experience</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link js-scroll" href="#service">Education</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link js-scroll" href="#work">Awards</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link js-scroll" href="#contact">Contact</a>
+      </li>
+    </ul>
+  </div>
+  </div>
+</nav>
+<!--/ Nav End /-->
+
+<!--/ Intro Skew Star /-->
+<div id="home" class="intro route bg-image" style="background-image: url(img/background_image.jpeg)">
+  <div class="overlay-itro"></div>
+  <div class="intro-content display-table">
+    <div class="table-cell">
+      <div class="container">
+        <!--<p class="display-6 color-d">Hello, world!</p>-->
+        <h1 class="intro-title mb-4">최용락, 자기소개서 && 이력서</h1>
+        <p class="intro-subtitle"><span class="text-slider-items">Server Engineer, Backend Developer</span><strong
+                class="text-slider"></strong></p>
+        <!-- <p class="pt-3"><a class="btn btn-primary btn js-scroll px-4" href="#about" role="button">Learn More</a></p> -->
+      </div>
+    </div>
+  </div>
+</div>
+<!--/ Intro Skew End /-->
+
+<section id="about" class="about-mf sect-pt4 route">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="box-shadow-full">
+          <div class="skill-mf">
+            <div class="row">
+              <div class="col-2"></div>
+              <div class="col-4">
+                <div class="about-img">
+                  <img src="img/me.png" class="img-fluid rounded b-shadow-a" alt="">
+                </div>
+              </div>
+              <div class="col-6" style="display: inline-block;">
+                <div class="about-info" style="margin-top: 30%;">
+                  <p><span class="title-s">이름: </span> <span>최용락</span></p>
+                  <p><span class="title-s">Email: </span> <span>jipsyer@naver.com</span></p>
+                  <p><span class="title-s">Phone: </span> <span>010-2010-7418</span></p>
+                  <p>
+                    <span class="title-s">Skill: </span>
+                    <label class="bg-warning" style="color: white; padding: 5px; border: darkblue; border-radius: 10px;">Java</label>
+                    <label class="bg-success" style="color: white; padding: 5px; border: darkblue; border-radius: 10px;">Spring</label>
+                    <label class="bg-info" style="color: white; padding: 5px; border: darkblue; border-radius: 10px;">JPA</label>
+                    <label class="bg-primary" style="color: white; padding: 5px; border: darkblue; border-radius: 10px;">MySql</label>
+                    <label class="bg-secondary" style="color: white; padding: 5px; border: darkblue; border-radius: 10px;">Redis</label>
+                    <label class="bg-danger" style="color: white; padding: 5px; border: darkblue; border-radius: 10px;">RabbitMQ</label>
+                  </p>
+                </div>
+              </div>
             </div>
-        </nav>
-        <!-- Page Content-->
-        <div class="container-fluid p-0">
-            <!-- About-->
-            <section class="resume-section" id="about">
-                <div class="resume-section-content">
-                    <h1 class="mb-0" style="font-size: 500%">
-                        안녕하세요.
-                        <span class="text-primary">최용락</span>
-                        입니다.
-                    </h1>
-                    <div class="subheading mb-5">
-                        Phone : 010-2010-7418
-                        <a href="mailto:jipsyer@naver.com">Mail : jipsyer@naver.com</a>
-                    </div>
-                    <p class="lead mb-5">
-                        <img src="./image/me.png" style="width: 30%"><br>
-                        <br>
-                        생년월일 : 1992.01.10<br>
-                        병역여부 : 공군 만기제대(11년 4월 ~ 13년 4월)<br>
-                        최종학력 : 공주대학교-자동차 공학과 (~2017.2)<br>
-                    </p>
-                    <div class="social-icons">
-                        <a class="social-icon" href="https://github.com/cyr9210"><i class="fab fa-github"></i></a>
-                        <a class="social-icon" href="https://blog.devbong.com/"><b>Blog</b></i></a>
-                        <a class="social-icon" href="https://www.linkedin.com/in/%EC%9A%A9%EB%9D%BD-%EC%B5%9C-1b8085183/"><i class="fab fa-linkedin-in"></i></a>
-                    </div>
+          </div>
+          <br/><br/><br/>
+            <div class="profile-about-me">
+              <div class="about-me pt-4 pt-md-0">
+                <div class="title-box-2">
+                  <h5 class="title-left">
+                    About me
+                  </h5>
                 </div>
-            </section>
-            <hr class="m-0" />
-
-            <!-- Interests-->
-            <section class="resume-section" id="introduce">
-                <div class="resume-section-content">
-                    <h2 class="mb-5">Introduce</h2>
-                    <h5>자기소개</h5>
-                    <p>
-                        안녕하세요. Backend 개발자 최용락입니다.<br>
-                        개발자로 경력은 만 2년이 조금 넘었습니다.<br>
-                        현재 근무 중인 알서포트에 19년도에 입사하여 지금까지 웹 백엔드 개발팀에서 근무하고 있습니다.<br>
-                        자바를 사용한 웹서비스 개발을 해왔고, 자사 서비스 개발/운영 및 솔루션 개발을 경험하였습니다.<br>
-                        새로운 것을 배우고 경험하는 것, 문제를 해결하기 위해 같이 고민하고 이야기 나누는 것을 좋아합니다.<br>
-                        실력 있고, 커뮤니케이션이 잘 되는 개발자가 되기를 희망하고 노력하고 있습니다.<br>
-                    </p>
-                    <br>
-                    <h5>개발자가 된 과정</h5>
-                    <p>
-                        자동차 공학이라는 개발과 상관없는 학과를 졸업하고, 자동차 1차 협력사의 부품 설계사로 근무를 하던 직무가 적성에 맞지 않아 퇴사를 하게 되었습니다.<br>
-                        어떤 일을 해야 하나 고민을 하던 중에 친구의 추천으로 개발을 아주 가벼운 마음으로 시작하게 되었습니다.<br>
-                        아주 운이 좋게도 저는 개발과 잘 맞았고, 무엇보다 재미있었습니다.<br>
-                        '세상에 재밌는 일이라는 것은 존재하지 않는다' 라고 생각해왔는데,
-                        처음으로 어떤 일에 몰두하여 밤을 새우기도 하고, 어떤 문제를 만났을 때 해결하기 위해 고민하고 해결하는 과정들에서 재미를 느꼈습니다.<br>
-                        저는 개발자가 되기로 결정했고, 좋은 개발자가 되기 위해 노력 중입니다.
-                    </p>
-                    <br>
-                    <h5>이직을 준비하는 이유</h5>
-                    <p>
-                        현재 근무하고 있는 회사에서 많은 것을 배우고 성장했다고 생각하고, 아직도 배울 것이 많다고 생각합니다.<br>
-                        그럼에도 불구하고 이직을 준비하게 된 이유는 좀 더 많이 알고 싶고, 경함하고 싶다는 갈증 때문입니다.<br>
-                        현재 회사는 B2B 성격이 강한 회사로 대부분의 서비스가 B2B 서비스입니다.<br>
-                        따라서 요구사항 또한 기업에 맞추거나, 솔루션 사업도 하고 있기 때문에 솔루션으로으 확장을 염두하여 제한사항이 생기기도 했습니다.<br>
-                        내부 고객/비지니스 고객들을 무시하는 것은 아니지만, 내 가족이나 친구들 주위 사람들에게 제공되고 사용하는 서비스에서 일해보고 싶다는 생각이 커져갔습니다.<br>
-                        또 더 많은 트래픽을 경험해보고 싶고, 더 많은 문제들을 만나고 해결하는 경험을 하고 싶습니다.
-                    </p>
-                    <br>
-                    <h5>좋은개발자가 되기위한 노력</h5>
-                    <p>
-                        비전공자인 만큼 기초적인 지식들이 많이 부족하다고 생각합니다.<br>
-                        그 부분이 개발자로 제 가장 큰 약점인 것을 알고, 그런 부분들을 보강하기 위해 책을 보고, 강의를 듣고 있습니다.<br>
-                        모르는 것을 물어보는 것을 창피해 하지 않고, 완벽히 숙지하기 위해 기록하고 공부하고 있습니다.<br>
-                        공부한 내용들을 개인적으로 정리하고, 블로그에 올리기도 하고 있습니다.<br>
-                        클린코드를 작성하기 위해 노력하고, 테스트를 잘 작성하기 위해 항상 고민합니다.<br>
-                        3년 동안 이런 노력들을 하며 성장을 했고, 앞으로도 이 노력들을 게을리하지 않아 좋은 개발자가 되기 위해 노력할 것입니다.
-                    </p>
-                </div>
-            </section>
-            <hr class="m-0" />
-
-            <!-- Experience-->
-            <section class="resume-section" id="experience">
-                <div class="resume-section-content">
-                    <h2 class="mb-5">Experience</h2>
-
-                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
-                        <div class="flex-grow-1">
-                            <h3 class="mb-0"><a href="https://www.rsupport.com/ko-kr/">Rsupport</a></h3>
-                            <br>
-                            <div class="subheading mb-3">Remote Studio (개발중)</div>
-                            <p>
-                                유투버등의 개인 방송인들을 위한 서비스로 송출 화면을 커스터마이징 할 수 있도록 도와주는 서비스입니다.<br>
-                                현재 개인 방송인들은 대부분은 OBS를 프로그램을 사용하여 화면을 꾸며 송출하고 있는데, 웹을 통해서 PD가 제어를 도와주고 웹으로 방송에 참여도 가능하도록 도와주는 서비스입니다..<br>
-                                2020년에 기획된 신규 서비스로 초반 작업은 당시 같은 프로젝트를 리딩해주시던 시니어 개발자님이 작업을 하셨지만, 2021년부터 다른 서비스들에 작업이 많아지며 신규 프로젝트 작업에 어려움이 있어 신규 프로젝트를 전담하여 작업할 사람이 필요해졌습니다.<br>
-                                당시 같은 프로젝트에는 4명의 백엔드 개발자가 있었고, 저에게 먼저 제안을 주셔서 고민끝에 서비스가 신선하고 재밌어보였고, 신규프로젝트를 진행하면 새로운 기술들을 도입해볼수도 있을거라는 설렘으로 제안을 수락하며 프로젝트에 합류하게 되었습니다.<br>
-                                <br>
-                                <b>SpringDataRest</b><br>
-                                SpringDataRest는 Repository에 선언만으로 기본적인 CRUD API REST하게 만들어주며 반복되는 작업들을 줄여줍니다.<br>
-                                장점과 단점에 대해서 얘기해본다면, 장점으로는 무엇보다 도메인에 대한 간단한 CRUD API는 무척 빠르게 완성된다는점과<br>
-                                그렇게 자동으로 생성되는 API들과 통일성을 갖기위해 직접 작성하는 API들도 보다 링크정보에 신경을 쓰게되고 보다 REST한 API를 개발 할 수 있었습니다.<br>
-                                단점은 자유도가 떨어집니다.<br>
-                                생각보다 관련 자료들은 적었고 자료가 적은만큼 제가 원하는 동작을 하게 만드는게 쉽지 않았습니다.<br>
-                                매번 어떠한 문제를 만나면 해결하기위해서 온갖 삽질을 하며 해결해야했습니다. 어떨때는 만족스로운 해결책을 찾지 못하고 우회하여 해결하기도 해야했습니다.<br>
-                                <br>
-                                <b>flyway</b><br>
-                                기존 사내 프로젝트들은 스키마 변경 작업에 대하여 DBA들이 스키마의 변경을 반영 후, 저장소에 적용한 쿼리문을 repository에 쌓고 저장하는 식으로 작업을 하였습니다.<br>
-                                이러한 작업들이 간단한 스키마 변경작업에도 로드를 걸리게 하였고, 불편함을 느꼈습니다.<br>
-                                flyway 데이터베이스 관리 툴로 스키마 변경에 대한 이력관리를 해줍니다.<br>
-                                적용할 sql 문들을 정해진 위치에서 관리를하며, 어플리케이션 실행 시, 반영 및 유효성 체크를 해주기 때문에 보다 안전하고 편리하게 Database의 변경사항을 관리할 수 있습니다.<br>
-                                사내에서는 처음으로 적용을 해보았기 때문에 적용과정에 많은 문제들을 만났고, Best Practice가 되기 위해 여러 방법으로 사용해보고 있습니다.<br>
-                                각 환경별 DB초기화 방법이라던지 어떤식으로 운영을하지에 대한 고민을 많이 할 수 있는 시간이 되었습니다.<br>
-                                <span class="label label-primary">Spring Boot</span>
-                                <span class="label label-danger">Spring-Data-Jpa</span>
-                                <span class="label label-info">Spring-Data-Rest</span>
-                                <span class="label label-success">Rest Docs</span>
-                                <span class="label label-warning">HATEOAS</span>
-                                <span class="label label-default">JUnit5</span>
-                            </p>
-                            <br><br>
-                            <div class="subheading mb-3"><a href="https://www.remotemeeting.com/ko/home">Remote Meeting</a></div>
-                            <p>
-                                WebRtc 기술을 사용하여 설치파일이 없이 화상회의를 지원하는 서비스 입니다.<br>
-                                레거시 프로젝트로 지저분하고 복잡한 소스코드들이 많았고 그런 부분들을 보다 클린한 코드로 개선하면서 신규기능을 개발하는 즐거움과는
-                                또다른 리팩터링을 하는 개발에 재미도 알게 되었습니다.<br>
-                                코로나 펜데믹으로 인해 갑작스럽게 사용량이 많이 늘었으며,
-                                너무 갑작스럽게 늘어난 사용량때문에 발생하는 장애들을 마주하고 고민하여 해결하는 과정들로 백엔드 개발자로써 해봐야할 좋은 경험들을 할 수 있었습니다.<br>
-                                <br>
-                                <b>RabbitMQ</b><br>
-                                해결했던 문제들중 기억에 남았던 내용들을 적어보자면,<br>
-                                RabbitMQ Management를 통해서 모니터링중 incoming 작업은 0인데 unacked가 계속 쌓여있는 문제점을 발견하게 되었습니다.<br>
-                                해당 큐는 외부 API와 통신을 하는 큐였는데, 당연하게도 처리속도가 느린 이 큐는 작업들이 쌓였습니다.<br>
-                                처음에는 당연히 처리속도가 느리니 쌓일 수 있겠다고 생각하고 컨슈머를 늘려줘야겠다고 생각했는데, 이상하게도 idle 상태의 컨슈머가 있는 상황이었습니다.<br>
-                                Prefetch Count는 큐의 메세지를 Consumer의 메모리에 쌓아놓을 수 있는 최대 메세지의 양입니다. <br>
-                                기본값은 250으로 250개의 메세지를 한번에 리스너 메로리에 넣어놓습니다.<br>
-                                컨슈머는 하나씩 메세지를 꺼내서 처리하는데, 처리속도가 느린작업의 경우 노는 컨슈머가 발생할 수 있었습니다. <br>
-                                이러한 옵션을 알게되어 처리속도가 긴 작업들의 경우 Prefetch Count를 1로 줄이고 컨슈머를 늘리는 작업을 하였습니다.<br>
-                                <br>
-                                <b>mysql index</b><br>
-                                아주 기본적이지만 인덱스로 인한 이슈도 있었습니다.<br>
-                                검색조건이 되는 컬럼에 인덱스가 빠져 슬로우 쿼리가 발생했습니다.<br>
-                                코드상에는 분명히 unique 옵션을 주어 인덱스가 있을거라고 생각을 했는데 실제로는 해당 컬럼에 인덱스 걸려있지 않았습니다.<br>
-                                운영 DB에만 발생한 상황이었고, 스테이징 서버 및 로컬에는 인덱스가 걸려있었습니다.<br>
-                                해당이슈는 mysql의 버전이 상이하여 해당 문제를 발견하지 못했던 이슈였습니다.<br>
-                                운영DB의 경우 인덱스 컬럼의 사이즈가 767byte로 제한되어 있었는데 해당 컬럼 사이즈가 이를 초과하여 인덱스 추가에 실패하였습니다.<br>
-                                스테이징이나 로컬의 경우 운영DB보다 버전이 높았는데, 이버전들에서는 제한 사이즈를 늘린 버전이었기 때문에 문제없이 인덱스 컬럼이 들어갔었던 것 입니다.<br>
-                                이후로 스테이징 서버와 운영서버의 환경들을 통일 시키기 위해 주의 기울였던 기억이 납니다.<br>
-                                <span class="label label-primary">Spring</span>
-                                <span class="label label-danger">JPA</span>
-                                <span class="label label-info">SWAGGER</span>
-                                <span class="label label-success">redis</span>
-                                <span class="label label-warning">RabbitMQ</span>
-                            </p>
-                            <br><br>
-                            <div class="subheading mb-3"><a href="https://www.remoteseminar.com/ko/">Remote Seminar</a></div>
-                            <p>
-                                WebRtc 기술을 사용하여 webinar(web + seminar) 온라이 세미나, 컨퍼런스를 지원하는 서비스입니다.<br>
-                                개발자로써 처음 맡게된 프로젝트, 프론트와 백이 구분된 프로젝트였으며 저는 서버 REST API를 개발하였습니다.<br>
-                                사내에서도 기존프로젝트에서는 사용하지 않았던 Rest Docs, HATEOAS, Junit5 등의 기술들도 도입하였습니다.<br>
-                                당시 프로젝트는 신규 프로젝트로 사수 개발자와 구조와 사용 기술에 대해 많이 대화하고 의견을 내는 좋은 경험을 할 수 있었습니다.<br>
-                                <span class="label label-primary">Spring Boot</span>
-                                <span class="label label-danger">Spring-Data-JPA</span>
-                                <span class="label label-info">Rest Docs</span>
-                                <span class="label label-success">HATEOAS</span>
-                                <span class="label label-warning">JUnit5</span>
-                            </p>
-                        </div>
-                        <div class="flex-shrink-0"><span class="text-primary">March 2013 - Present</span></div>
-                    </div>
-
-
-                    <div class="d-flex flex-column flex-md-row justify-content-between">
-                        <div class="flex-grow-1">
-                            <h3 class="mb-0"><a href="http://www.secokomos.com/main/main.php">KOMOS</a></h3>
-                            <div class="subheading mb-3">설계팀 - 스티어링 휠, 휠버커류 설계</div>
-                            <p>
-                                현대 기아 자동차의 1차벤더 설계팀원으로 스티어링 휠(핸들), 휠커버류의 제품설계를 담당하였습니다.<br>
-                                당시 담당 차종으로는 베뉴(인도) 스티어링 휠, 니로 하이브리드 액센트 캡, 코나 아이언맨 에디션 휠캡 및 액센트 캡 등이 있습니다.
-                            </p>
-                        </div>
-                        <div class="flex-shrink-0"><span class="text-primary">2019.06 ~ </span></div>
-                    </div>
-                </div>
-            </section>
-            <hr class="m-0" />
-            <!-- Education-->
-            <section class="resume-section" id="education">
-                <div class="resume-section-content">
-                    <h2 class="mb-5">Education</h2>
-                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
-                        <div class="flex-grow-1">
-                            <h3 class="mb-0">NEXTSTEP</h3>
-                            <div class="subheading mb-3">클린코드를 위한 TDD, 리팩토링 with Java</div>
-                            <div>TDD, 리팩토링, 클린코드, 순수 자바로 객체지향 프로그래밍, 레거시 코드 리팩토링</div>
-                        </div>
-                        <div class="flex-shrink-0"><span class="text-primary">2021.03 ~ 2021.05</span></div>
-                    </div>
-                    <div class="d-flex flex-column flex-md-row justify-content-between">
-                        <div class="flex-grow-1">
-                            <h3 class="mb-0">KOSTA</h3>
-                            <div class="subheading mb-3">Web Framework 개발자 양성자 과정</div>
-                            <div>Java, Spring, JSP, css, html, ORACLE</div>
-                        </div>
-                        <div class="flex-shrink-0"><span class="text-primary">2018.11 ~ 2019.02</span></div>
-                    </div>
-                </div>
-            </section>
-            <hr class="m-0" />
-
-            <!-- Awards-->
-            <section class="resume-section" id="awards">
-                <div class="resume-section-content">
-                    <h2 class="mb-5">Awards & Certifications</h2>
-                    <ul class="fa-ul mb-0">
-                        <li>
-                            <span class="fa-li"><i class="fas fa-trophy text-warning"></i></span>
-                            Rsupport - 최우수 신규입사자<br>
-                            <img src="./image/award1.png" style="width: 30%">
-                        </li>
-                        <li>
-                            <span class="fa-li"><i class="fas fa-trophy text-warning"></i></span>
-                            KOSTA - 최우수 프로젝트<br>
-                            <img src="./image/award2.png" style="width: 30%">
-                        </li>
-                    </ul>
-                </div>
-            </section>
+                <p class="lead">
+                  <b>자기소개?</b><br>
+                  안녕하세요. Backend 개발자 최용락입니다.
+                  개발자로 경력은 만 2년이 조금 넘었습니다.
+                  현재 근무 중인 알서포트에 19년도에 입사하여 지금까지 웹 백엔드 개발팀에서 근무하고 있습니다.
+                  자바를 사용한 웹서비스 개발을 해왔고, 자사 서비스 개발/운영 및 솔루션 개발을 경험하였습니다.
+                  새로운 것을 배우고 경험하는 것, 문제를 해결하기 위해 같이 고민하고 이야기 나누는 것을 좋아합니다.
+                  실력 있고, 커뮤니케이션이 잘 되는 개발자가 되기를 희망하고 노력하고 있습니다.
+                </p>
+                <p class="lead">
+                  <b>개발자가 된 과정</b><br>
+                  자동차 공학이라는 개발과 상관없는 학과를 졸업하고, 자동차 1차 협력사의 부품 설계사로 근무를 하던 직무가 적성에 맞지 않아 퇴사를 하게 되었습니다.
+                  어떤 일을 해야 하나 고민을 하던 중에 친구의 추천으로 개발을 아주 가벼운 마음으로 시작하게 되었습니다.
+                  아주 운이 좋게도 저는 개발과 잘 맞았고, 무엇보다 재미있었습니다.
+                  '세상에 재밌는 일이라는 것은 존재하지 않는다' 라고 생각해왔는데, 처음으로 어떤 일에 몰두하여 밤을 새우기도 하고, 어떤 문제를 만났을 때 해결하기 위해 고민하고 해결하는 과정들에서
+                  재미를 느꼈습니다.
+                  저는 개발자가 되기로 결정했고, 좋은 개발자가 되기 위해 노력 중입니다.
+                </p>
+                <p class="lead">
+                  <b>이직을 준비하는 이유</b><br>
+                  현재 근무하고 있는 회사에서 많은 것을 배우고 성장했다고 생각하고, 아직도 배울 것이 많다고 생각합니다.
+                  그럼에도 불구하고 이직을 준비하게 된 이유는 좀 더 많이 알고 싶고, 경함하고 싶다는 갈증 때문입니다.
+                  현재 회사는 B2B 성격이 강한 회사로 대부분의 서비스가 B2B 서비스입니다.
+                  따라서 요구사항 또한 기업에 맞추거나, 솔루션 사업도 하고 있기 때문에 솔루션으로의 확장을 염두하여 제한사항이 생기기도 했습니다.
+                  내부 고객/비지니스 고객들을 무시하는 것은 아니지만, 내 가족이나 친구들 주위 사람들에게 제공되고 사용하는 서비스에서 일해보고 싶다는 생각이 커져갔습니다.
+                  또 더 많은 트래픽을 경험해보고 싶고, 더 많은 문제들을 만나고 해결하는 경험을 하고 싶습니다.
+                </p>
+                <p class="lead">
+                  <b>좋은개발자가 되기위한 노력</b><br>
+                  비전공자인 만큼 기초적인 지식들이 많이 부족하다고 생각합니다.
+                  그 부분이 개발자로 제 가장 큰 약점인 것을 알고, 그런 부분들을 보강하기 위해 책을 보고, 강의를 듣고 있습니다.
+                  모르는 것을 물어보는 것을 창피해 하지 않고, 알려준 것을 완벽히 숙지하기 위해 기록하고 공부하고 있습니다.
+                  공부한 내용들을 개인적으로 정리하고, 블로그에 올리기도 하고 있습니다.
+                  클린코드를 작성하기 위해 노력하고, 테스트를 잘 작성하기 위해 항상 고민합니다.
+                  3년 동안 이런 노력들을 하며 성장을 했고, 앞으로도 이 노력들을 게을리하지 않아 좋은 개발자가 되기 위해 노력할 것입니다.
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
-        <!-- Bootstrap core JS-->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
-        <!-- Third party plugin JS-->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
-        <!-- Core theme JS-->
-        <script src="js/scripts.js"></script>
-    </body>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="experience" class="about-mf sect-pt4 route">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="box-shadow-full">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="about-me pt-4 pt-md-0">
+                <div class="title-box-2">
+                  <h5 class="title-left">
+                    Experience
+                  </h5>
+                </div>
+              </div>
+            </div>
+            <br/><br/>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="s-title" style="margin-left: 12px; font-size: 200%;">
+                  <a href="https://rsupport.com">Rsupport - 웹개발1팀(BackEnd Developer)</a><span class="w-date" style="margin-left: 10px; margin-bottom: 10px; font-size: 75%;">2019.06 ~</span>
+                </div>
+                <div class="service-content" style="margin-left: 12px;">
+                  <p class="text-left" style="margin-left: 15px;">
+                  <h4><a href="https://rstudio.tv"><b>Remote Studio(개발중)</b></a><br></h4>
+                  유투버등의 개인 방송인들을 위한 서비스로 송출 화면을 커스터마이징 할 수 있도록 도와주는 서비스입니다.<br>
+                  현재 개인 방송인들은 대부분은 OBS를 프로그램을 사용하여 화면을 꾸며 송출하고 있는데, 웹을 통해서 PD가 제어를 도와주고 웹으로 방송에 참여도 가능하도록 도와주는 서비스입니다.<br>
+                  2020년에 기획된 신규 서비스로 초반 작업은 당시 같은 프로젝트를 리딩해주시던 시니어 개발자님이 작업을 하셨지만, 2021년부터 다른 서비스들에 작업이 많아지며 신규 프로젝트 작업에
+                  어려움이 있어 신규 프로젝트를 전담하여 작업할 사람이 필요해졌습니다.<br>
+                  당시 같은 프로젝트에는 4명의 백엔드 개발자가 있었고, 저에게 먼저 제안을 주셔서 고민끝에 서비스가 신선하고 재밌어보였고, 신규프로젝트를 진행하면 새로운 기술들을 도입해볼수도
+                  있을거라는 설렘으로 제안을 수락하며 프로젝트에 합류하게 되었습니다.<br>
+                  <br>
+                  <br>
+                  <h5>Spring Data Rest</h5>
+                  SpringDataRest는 Repository에 선언만으로 기본적인 CRUD API REST하게 만들어주며 반복되는 작업들을 줄여줍니다.<br>
+                  장점과 단점에 대해서 얘기해본다면, 장점으로는 무엇보다 도메인에 대한 간단한 CRUD API는 무척 빠르게 완성된다는점과
+                  그렇게 자동으로 생성되는 API들과 통일성을 갖기위해 직접 작성하는 API들도 보다 링크정보에 신경을 쓰게되고 보다 REST한 API를 개발 할 수 있었습니다.<br>
+                  단점은 자유도가 떨어집니다.<br>
+                  생각보다 관련 자료들은 적었고 자료가 적은만큼 제가 원하는 동작을 하게 만드는게 쉽지 않았습니다.<br>
+                  매번 어떠한 문제를 만나면 해결하기위해서 온갖 삽질을 하며 해결해야했습니다. 어떨때는 만족스로운 해결책을 찾지 못하고 우회하여 해결하기도 해야했습니다.<br>
+                  <br>
+                  <br>
+                  <h5>flyway</h5>
+                  기존 사내 프로젝트들은 스키마 변경 작업에 대하여 DBA들이 스키마의 변경을 반영 후, 저장소에 적용한 쿼리문을 repository에 쌓고 저장하는 식으로 작업을 하였습니다.<br>
+                  이러한 작업들이 간단한 스키마 변경작업에도 로드를 걸리게 하였고, 불편함을 느꼈습니다.<br>
+                  flyway 데이터베이스 관리 툴로 스키마 변경에 대한 이력관리를 해줍니다.<br>
+                  적용할 sql 문들을 정해진 위치에서 관리를하며, 어플리케이션 실행 시, 반영 및 유효성 체크를 해주기 때문에 보다 안전하고 편리하게 Database의 변경사항을 관리할 수 있습니다.<br>
+                  사내에서는 처음으로 적용을 해보았기 때문에 적용과정에 많은 문제들을 만났고, Best Practice가 되기 위해 여러 방법으로 사용해보고 있습니다.<br>
+                  각 환경별 DB초기화 방법이라던지 어떤식으로 운영을하지에 대한 고민을 많이 할 수 있는 시간이 되었습니다.<br>
+                  </p>
+                  <p class="text-left" style="margin-left: 15px; margin-bottom: 50px;">
+                  <h4><a href="https://www.remotemeeting.com"><b>Remote Meeting</b></a><br></h4>
+                  WebRtc 기술을 사용하여 설치파일이 없이 화상회의를 지원하는 서비스 입니다.<br>
+                  레거시 프로젝트로 지저분하고 복잡한 소스코드들이 많았고 그런 부분들을 보다 클린한 코드로 개선하면서 신규기능을 개발하는 즐거움과는 또다른 리팩터링을 하는 개발에 재미도 알게
+                  되었습니다.<br>
+                  코로나 펜데믹으로 인해 갑작스럽게 사용량이 많이 늘었으며, 너무 갑작스럽게 늘어난 사용량때문에 발생하는 장애들을 마주하고 고민하여 해결하는 과정들로 백엔드 개발자로써 해봐야할 좋은
+                  경험들을 할 수 있었습니다.<br>
+                  <br>
+                  <br>
+                  <h5>RabbitMQ</h5>
+                  해결했던 문제들중 기억에 남았던 내용들을 적어보자면,
+                  RabbitMQ Management를 통해서 모니터링중 incoming 작업은 0인데 unacked가 계속 쌓여있는 문제점을 발견하게 되었습니다.<br>
+                  해당 큐는 외부 API와 통신을 하는 큐였는데, 당연하게도 처리속도가 느린 이 큐는 작업들이 쌓였습니다.<br>
+                  처음에는 당연히 처리속도가 느리니 쌓일 수 있겠다고 생각하고 컨슈머를 늘려줘야겠다고 생각했는데, 이상하게도 idle 상태의 컨슈머가 있는 상황이었습니다.<br>
+                  Prefetch Count는 큐의 메세지를 Consumer의 메모리에 쌓아놓을 수 있는 최대 메세지의 양입니다.<br>
+                  기본값은 250으로 250개의 메세지를 한번에 리스너 메로리에 넣어놓습니다.<br>
+                  컨슈머는 하나씩 메세지를 꺼내서 처리하는데, 처리속도가 느린작업의 경우 노는 컨슈머가 발생할 수 있었습니다.<br>
+                  이러한 옵션을 알게되어 처리속도가 긴 작업들의 경우 Prefetch Count를 1로 줄이고 컨슈머를 늘리는 작업을 하였습니다.<br>
+                  <br>
+                  <br>
+                  <h5>MySql Index</h5>
+                  아주 기본적이지만 인덱스로 인한 이슈도 있었습니다.<br>
+                  검색조건이 되는 컬럼에 인덱스가 빠져 슬로우 쿼리가 발생했습니다.<br>
+                  코드상에는 분명히 unique 옵션을 주어 인덱스가 있을거라고 생각을 했는데 실제로는 해당 컬럼에 인덱스 걸려있지 않았습니다.<br>
+                  운영 DB에만 발생한 상황이었고, 스테이징 서버 및 로컬에는 인덱스가 걸려있었습니다.<br>
+                  해당이슈는 mysql의 버전이 상이하여 해당 문제를 발견하지 못했던 이슈였습니다.<br>
+                  운영DB의 경우 인덱스 컬럼의 사이즈가 767byte로 제한되어 있었는데 해당 컬럼 사이즈가 이를 초과하여 인덱스 추가에 실패하였습니다.<br>
+                  스테이징이나 로컬의 경우 운영DB보다 버전이 높았는데, 이버전들에서는 제한 사이즈를 늘린 버전이었기 때문에 문제없이 인덱스 컬럼이 들어갔었던 것 입니다.<br>
+                  이후로 스테이징 서버와 운영서버의 환경들을 통일 시키기 위해 주의 기울였던 기억이 납니다.<br>
+                  </p>
+                  <p class="text-left" style="margin-left: 15px; margin-bottom: 50px;">
+                  <h4><a href="https://www.remotemeeting.com"><b>Remote Seminar</b></a><br></h4>
+                  WebRtc 기술을 사용하여 webinar(web + seminar) 온라이 세미나, 컨퍼런스를 지원하는 서비스입니다.<br>
+                  개발자로써 처음 맡게된 프로젝트, 프론트와 백이 구분된 프로젝트였으며 저는 서버 REST API를 개발하였습니다.<br>
+                  사내에서도 기존프로젝트에서는 사용하지 않았던 Rest Docs, HATEOAS, Junit5 등의 기술들도 도입하였습니다.<br>
+                  당시 프로젝트는 신규 프로젝트로 사수 개발자와 구조와 사용 기술에 대해 많이 대화하고 의견을 내는 좋은 경험을 할 수 있었습니다.<br>
+                  </p>
+                  <br>
+                  <br>
+                </div>
+              </div>
+            </div>
+            <br/><br/>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="s-title" style="margin-left: 12px; font-size: 200%;">
+                  <a href="http://www.secokomos.com/">KOMOS - 설계팀</a><span class="w-date" style="margin-left: 10px; margin-bottom: 10px; font-size: 75%;">2017.06 ~ 2018.05</span>
+                </div>
+                <br/>
+                <div class="service-content">
+                  <p class="text-left" style="margin-left: 12px;">
+                    현대 기아 자동차의 1차벤더 설계팀원으로 스티어링 휠(핸들), 휠커버류의 제품설계를 담당하였습니다.
+                    당시 담당 차종으로는 베뉴(인도) 스티어링 휠, 니로 하이브리드 액센트 캡, 코나 아이언맨 에디션 휠캡 및 액센트 캡 등이 있습니다.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!--/ Section Services Star /-->
+<section id="service" class="services-mf route">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="title-box text-center">
+          <h3 class="title-a">
+            EDUCATION
+          </h3>
+          <p class="subtitle-a">
+          </p>
+          <div class="line-mf"></div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="service-box">
+          <div class="service-ico">
+            <span class="ico-circle"><i class="ion-android-phone-portrait"></i></span>
+          </div>
+          <div class="service-content">
+            <h2 class="s-title">NEXTSTEP</h2>
+            <p class="s-description text-center">
+              클린코드를 위한 TDD, 리팩토링 WITH JAVA
+              <br><br>
+              TDD, 리팩토링, 클린코드, 순수 자바로 객체지향 프로그래밍, 레거시 코드 리팩토링
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="service-box">
+          <div class="service-ico">
+            <span class="ico-circle"><i class="ion-paintbrush"></i></span>
+          </div>
+          <div class="service-content">
+            <h2 class="s-title">KOSTA</h2>
+            <p class="s-description text-center">
+              WEB FRAMEWORK 개발자 양성자 과정
+              <br><br>
+              Java, Spring, JSP, css, html, ORACLE
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!--/ Section Services End /-->
+
+<!--/ Section Portfolio Star /-->
+<section id="work" class="portfolio-mf sect-pt4 route">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="title-box text-center">
+          <h3 class="title-a">
+            AWARDS
+          </h3>
+          <p class="subtitle-a">
+          </p>
+          <div class="line-mf"></div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="work-box">
+          <!-- 이미지는 사이즈 맞춰야함 work-1에 맞춰야함 안그러면 망함 -->
+          <a href="img/bapsang.png" data-lightbox="gallery-mf">
+            <div class="work-img">
+              <img src="img/award1.png" alt="" class="img-fluid" style="height: 420px">
+            </div>
+            <div class="work-content">
+              <div class="row">
+                <div class="col-sm-8">
+                  <h2 class="w-title">최우수 신규입사자
+                  </h2>
+                  <div class="w-more">
+                    <span class="w-ctegory">Rsupport</span> / <span class="w-date">2020.12</span>
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  <div class="w-like">
+                    <span class="ion-ios-plus-outline"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="work-box">
+          <a href="img/sulsang.png" data-lightbox="gallery-mf">
+            <div class="work-img">
+              <img src="img/award2.png" alt="" class="img-fluid" style="height: 420px">
+            </div>
+            <div class="work-content">
+              <div class="row">
+                <div class="col-sm-8">
+                  <h2 class="w-title">최우수 프로젝트</h2>
+                  <div class="w-more">
+                    <span class="w-ctegory">KOSTA</span> / <span class="w-date">2019.02</span>
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  <div class="w-like">
+                    <span class="ion-ios-plus-outline"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!--/ Section Portfolio End /-->
+
+
+<!--/ Section Contact-Footer Star /-->
+<section class="paralax-mf footer-paralax bg-image sect-mt4 route" style="background-image: url(img/overlay-bg.jpg)">
+  <div class="overlay-mf"></div>
+
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="copyright-box">
+            <p class="copyright">&copy; Copyright <strong>DevFolio</strong>. All Rights Reserved</p>
+            <div class="credits">
+              <!--
+                All the links in the footer should remain intact.
+                You can delete the links only if you purchased the pro version.
+                Licensing information: https://bootstrapmade.com/license/
+                Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/buy/?theme=DevFolio
+              -->
+              Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+</section>
+
+<!--/ Section Contact-footer End /-->
+
+<a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+<div id="preloader"></div>
+
+<!-- JavaScript Libraries -->
+<script src="lib/jquery/jquery.min.js"></script>
+<script src="lib/jquery/jquery-migrate.min.js"></script>
+<script src="lib/popper/popper.min.js"></script>
+<script src="lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="lib/easing/easing.min.js"></script>
+<script src="lib/counterup/jquery.waypoints.min.js"></script>
+<script src="lib/counterup/jquery.counterup.js"></script>
+<script src="lib/owlcarousel/owl.carousel.min.js"></script>
+<script src="lib/lightbox/js/lightbox.min.js"></script>
+<script src="lib/typed/typed.min.js"></script>
+<!-- Contact Form JavaScript File -->
+<script src="contactform/contactform.js"></script>
+
+<!-- Template Main Javascript File -->
+<script src="js/main.js"></script>
+
+</body>
 </html>
